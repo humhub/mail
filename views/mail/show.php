@@ -24,7 +24,7 @@
                             <img src="<?php echo $user->getProfileImage()->getUrl(); ?>"
                                  class="img-rounded tt img_margin" height="29" width="29" data-toggle="tooltip"
                                  data-placement="top" title=""
-                                 data-original-title="<strong><?php echo $user->displayName; ?></strong><br><?php echo $user->title; ?>">
+                                 data-original-title="<strong><?php echo $user->displayName; ?></strong><br><?php echo $user->profile->title; ?>">
                         </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
