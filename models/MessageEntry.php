@@ -142,7 +142,7 @@ class MessageEntry extends HActiveRecord {
         foreach ($this->message->users as $user) {
 
             // User dont wants any emails
-            if ($user->receive_email_messaging == User::RECEIVE_EMAIL_NEVER) {
+            if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
                 continue;
             }
 

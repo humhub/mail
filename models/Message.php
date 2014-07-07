@@ -137,7 +137,7 @@ class Message extends HActiveRecord {
     public function notify($user) {
 
         // User dont wants any emails
-        if ($user->receive_email_messaging == User::RECEIVE_EMAIL_NEVER) {
+        if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
             return;
         }
 
