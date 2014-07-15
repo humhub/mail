@@ -58,7 +58,7 @@ class InviteRecipientForm extends CFormModel {
                 if ($user != null) {
 
                     if ($user->id == Yii::app()->user->id) {
-                        $this->addError($attribute, Yii::t('MailModule.base', "You could not send an email to yourself!"));
+                        $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "You could not send an email to yourself!"));
                     } else {
                         $this->recipients[] = $user;
                     }

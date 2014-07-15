@@ -24,7 +24,7 @@ class ReplyMessageForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'message' => Yii::t('MailModule.base', 'Message'),
+            'message' => Yii::t('MailModule.forms_ReplyMessageForm', 'Message'),
         );
     }
 

@@ -147,14 +147,14 @@ class Message extends HActiveRecord {
         $andAddon = "";
         if (count($this->users) > 2) {
             $counter = count($this->users) - 1;
-            $andAddon = Yii::t('MailModule.base', "and {counter} other users", array("{counter}" => $counter));
+            $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", array("{counter}" => $counter));
         }
 
         $message = new HMailMessage();
         $message->view = 'application.modules.mail.views.emails.NewMessage';
         $message->addFrom(HSetting::Get('systemEmailAddress', 'mailing'), HSetting::Get('systemEmailName', 'mailing'));
         $message->addTo($user->email);
-        $message->subject = Yii::t('MailModule.base', 'New message from {senderName}', array("{senderName}" => $originatorName));
+        $message->subject = Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => $originatorName));
         $message->setBody(array(
             'message' => $this,
             'originatorName' => $originatorName,

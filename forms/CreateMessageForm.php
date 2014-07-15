@@ -34,9 +34,9 @@ class CreateMessageForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'recipient' => Yii::t('MailModule.base', 'Recipient'),
-            'title' => Yii::t('MailModule.base', 'Subject'),
-            'message' => Yii::t('MailModule.base', 'Message'),
+            'recipient' => Yii::t('MailModule.forms_CreateMessageForm', 'Recipient'),
+            'title' => Yii::t('MailModule.forms_CreateMessageForm', 'Subject'),
+            'message' => Yii::t('MailModule.forms_CreateMessageForm', 'Message'),
         );
     }
 
@@ -61,7 +61,7 @@ class CreateMessageForm extends CFormModel {
                 if ($user != null) {
 
                     if ($user->id == Yii::app()->user->id) {
-                        $this->addError($attribute, Yii::t('MailModule.base', "You could not send an email to yourself!"));
+                        $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You could not send an email to yourself!"));
                     } else {
                         $this->recipients[] = $user;
                     }

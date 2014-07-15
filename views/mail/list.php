@@ -42,7 +42,7 @@
 <?php endforeach; ?>
 <?php
 if ($count == 0) {
-    echo '<li class="placeholder">' . Yii::t('MailModule.base', 'There are no messages yet.') . '</li>';
+    echo '<li class="placeholder">' . Yii::t('MailModule.views_mail_list', 'There are no messages yet.') . '</li>';
 }
 ?>
 

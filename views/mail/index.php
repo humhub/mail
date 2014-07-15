@@ -1,11 +1,11 @@
-<?php //echo Yii::t('MailModule.base', 'Messagebox'); ?>
+<?php //echo Yii::t('MailModule.views_mail_index', 'Messagebox'); ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <?php echo Yii::t('MailModule.base', 'Inbox') ?>
+        <?php echo Yii::t('MailModule.views_mail_index', 'Inbox') ?>
 
         <!-- Button to trigger modal write a new message -->
         <?php
-        echo CHtml::link(Yii::t('MailModule.base', 'New message'), $this->createUrl('//mail/mail/create', array('ajax' => 1)), array('class' => 'btn btn-info pull-right', 'data-toggle' => 'modal', 'data-target' => '#globalModal'));
+        echo CHtml::link(Yii::t('MailModule.views_mail_index', 'New message'), $this->createUrl('//mail/mail/create', array('ajax' => 1)), array('class' => 'btn btn-info pull-right', 'data-toggle' => 'modal', 'data-target' => '#globalModal'));
         ?>
 
     </div>
@@ -56,7 +56,7 @@
                                 <?php
                                 // show the new badge, if this message is still unread
                                 if ($message->updated_at > $userMessage->last_viewed) {
-                                    echo '<span class="label label-danger">' . Yii::t('MailModule.base', 'New') . '</span>';
+                                    echo '<span class="label label-danger">' . Yii::t('MailModule.views_mail_index', 'New') . '</span>';
                                 }
                                 ?>
                             </div>
@@ -69,7 +69,7 @@
         <?php endforeach; ?>
         <?php
         if ($count == 0) {
-            echo '<li class="placeholder">' . Yii::t('MailModule.base', 'There are no messages yet.') . '</li>';
+            echo '<li class="placeholder">' . Yii::t('MailModule.views_mail_index', 'There are no messages yet.') . '</li>';
         }
         ?>
 

@@ -119,7 +119,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                         <tr>
                                                             <td valign="top" class="textContent">
-                                                                <h3><?php echo Yii::t('MailModule.base', 'New message'); ?></h3>
+                                                                <h3><?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'New message'); ?></h3>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -147,7 +147,7 @@
                                                     <table align="Right" border="0" cellpadding="0" cellspacing="0" width="480" class="flexibleContainer">
                                                         <tbody><tr>
                                                             <td valign="top" class="textContent">
-                                                                <strong><?php echo $senderName; ?></strong> <?php echo Yii::t('MailModule.base', 'send you a new message in'); ?> <strong><?php echo $message->title; ?></strong><br><br>
+                                                                <strong><?php echo $senderName; ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'send you a new message in'); ?> <strong><?php echo $message->title; ?></strong><br><br>
                                                                 <br>
                                                                 ENTRY????
                                                             </td>
@@ -187,7 +187,7 @@
                                                     <table border="0" cellpadding="0" cellspacing="0" width="260" class="emailButton">
                                                         <tbody><tr>
                                                             <td align="center" valign="middle" class="buttonContent">
-                                                                <a href="<?php echo Yii::app()->createAbsoluteUrl('mail/mail/index', array('id'=>$message->id)); ?>" target="_blank"><?php echo Yii::t('MailModule.base', 'Reply now'); ?></a>
+                                                                <a href="<?php echo Yii::app()->createAbsoluteUrl('mail/mail/index', array('id'=>$message->id)); ?>" target="_blank"><?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'Reply now'); ?></a>
                                                             </td>
                                                         </tr>
                                                         </tbody></table>
@@ -215,7 +215,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="600" id="footerTable">
                     <tr>
                         <td align="center" valign="top">
-                            <?php echo Yii::t('MailModule.base', 'Copyright © 2013 by humhub'); ?> | <a href="<?php echo Yii::app()->createAbsoluteUrl('//user/account/emailing'); ?>"><?php echo Yii::t('MailModule.base', 'Email preferences') ?></a>
+                            <?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'Copyright © 2013 by humhub'); ?> | <a href="<?php echo Yii::app()->createAbsoluteUrl('//user/account/emailing'); ?>"><?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'Email preferences') ?></a>
                         </td>
                     </tr>
                 </table>

@@ -4,14 +4,14 @@
         <?php if ($message == null) { ?>
 
             <div class="panel-body">
-                <?php echo Yii::t('MailModule.base', 'There are no messages yet.'); ?>
+                <?php echo Yii::t('MailModule.views_mail_show', 'There are no messages yet.'); ?>
             </div>
         <?php } else { ?>
 
 
         <!--    <a href="--><?php //echo $this->createUrl('//mail/mail/create') ?><!--" class="btn btn-primary"><i-->
         <!--            class="fa fa-plus icon-white"></i> -->
-        <?php //echo Yii::t('MailModule.base', "Write new message"); ?><!--</a>-->
+        <?php //echo Yii::t('MailModule.views_mail_show', "Write new message"); ?><!--</a>-->
 
         <div class="panel-heading">
             <?php echo $message->title; ?>
@@ -81,20 +81,20 @@
                 </div>
                 <hr>
 
-                <?php echo CHtml::submitButton(Yii::t('MailModule.base', 'Send'), array('class' => 'btn btn-primary')); ?>
+                <?php echo CHtml::submitButton(Yii::t('MailModule.views_mail_show', 'Send'), array('class' => 'btn btn-primary')); ?>
 
 
                 <div class="pull-right">
 
                     <!-- Button to trigger modal to add user to conversation -->
                     <?php
-                    echo CHtml::link('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.base', 'Add user'), $this->createUrl('//mail/mail/adduser', array('id' => $message->id, 'ajax' => 1)), array('class' => 'btn btn-info', 'data-toggle' => 'modal', 'data-target' => '#globalModal'));
+                    echo CHtml::link('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add user'), $this->createUrl('//mail/mail/adduser', array('id' => $message->id, 'ajax' => 1)), array('class' => 'btn btn-info', 'data-toggle' => 'modal', 'data-target' => '#globalModal'));
                     ?>
 
                     <?php if (count($message->users) > 2 && $message->originator->id != Yii::app()->user->id): ?>
                         <a class="btn btn-danger"
                            href="<?php echo $this->createUrl('leave', array('id' => $message->id)); ?>"><i
-                                class="fa fa-sign-out"></i> <?php echo Yii::t('MailModule.base', "Leave discussion"); ?>
+                                class="fa fa-sign-out"></i> <?php echo Yii::t('MailModule.views_mail_show', "Leave discussion"); ?>
                         </a>
                     <?php endif; ?>
                 </div>

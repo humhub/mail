@@ -9,7 +9,7 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t("Message.Module", "Add more participants to your conversation..."); ?></h4>
+                id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_adduser", "Add more participants to your conversation..."); ?></h4>
         </div>
         <div class="modal-body">
 
@@ -34,7 +34,7 @@
         </div>
         <div class="modal-footer">
             <hr/>
-            <?php echo HHtml::ajaxButton(Yii::t('SpaceModule.base', 'Send'), array('//mail/mail/adduser', 'id' => $message->id), array(
+            <?php echo HHtml::ajaxButton(Yii::t('MailModule.views_mail_adduser', 'Send'), array('//mail/mail/adduser', 'id' => $message->id), array(
                 'type' => 'POST',
                 'beforeSend' => 'function(){ $("#adduser-loader").removeClass("hidden"); }',
                 'success' => 'function(html){ $("#globalModal").html(html); }',
@@ -43,7 +43,7 @@
 
 
             <button type="button" class="btn btn-primary"
-                    data-dismiss="modal"><?php echo Yii::t('base', 'Close'); ?></button>
+                    data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_adduser', 'Close'); ?></button>
 
             <div class="col-md-1 modal-loader">
                 <div id="adduser-loader" class="loader loader-small hidden"></div>

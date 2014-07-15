@@ -10,7 +10,7 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t("Message.Module", "New message"); ?></h4>
+                id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_create", "New message"); ?></h4>
         </div>
         <div class="modal-body">
 
@@ -27,7 +27,7 @@
             //        'multiple' => true,
             //        'id' => 'user_select',
             //        'class' => 'user span12',
-            //        'data-placeholder' => Yii::t('UserModule.base', 'Add user...'),
+            //        'data-placeholder' => Yii::t('MailModule.views_mail_create', 'Add user...'),
             //    ));
             // attach mention widget to it
             $this->widget('application.modules_core.user.widgets.UserPickerWidget', array(
@@ -54,7 +54,7 @@
         </div>
         <div class="modal-footer">
             <hr/>
-            <?php echo HHtml::ajaxButton(Yii::t('SpaceModule.base', 'Send'), array('//mail/mail/create'), array(
+            <?php echo HHtml::ajaxButton(Yii::t('MailModule.views_mail_create', 'Send'), array('//mail/mail/create'), array(
                 'type' => 'POST',
                 'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
                 'success' => 'function(html){ $("#globalModal").html(html); }',
@@ -63,7 +63,7 @@
 
 
             <button type="button" class="btn btn-primary"
-                    data-dismiss="modal"><?php echo Yii::t('base', 'Close'); ?></button>
+                    data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
 
             <div class="col-md-1 modal-loader">
                 <div id="create-message-loader" class="loader loader-small hidden"></div>
