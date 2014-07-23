@@ -67,7 +67,7 @@ class MailModule extends HWebModule
         $event->sender->addItem(array(
             'label' => Yii::t('MailModule.base', 'Messages'),
             'url' => Yii::app()->createUrl('//mail/mail/index', array()),
-            'icon' => 'mail',
+            'icon' => '<i class="fa fa-envelope"></i>',
             'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'mail'),
             'sortOrder' => 300,
         ));

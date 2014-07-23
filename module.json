@@ -3,7 +3,7 @@
     "name": "Mail",
     "description": "User to user mailing system",
     "keywords": ["mail", "messaging", "communication"],
-    "version": "0.5.2",
+    "version": "0.5.3",
     "humhub": {
         "minVersion": "0.5"
     }
