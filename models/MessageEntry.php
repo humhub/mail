@@ -22,28 +22,32 @@
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class MessageEntry extends HActiveRecord {
+class MessageEntry extends HActiveRecord
+{
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return MessageEntry the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'message_entry';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
@@ -59,7 +63,8 @@ class MessageEntry extends HActiveRecord {
     /**
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
@@ -72,7 +77,8 @@ class MessageEntry extends HActiveRecord {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'message_id' => 'Message',
@@ -90,7 +96,8 @@ class MessageEntry extends HActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
@@ -107,8 +114,8 @@ class MessageEntry extends HActiveRecord {
         $criteria->compare('updated_by', $this->updated_by);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
     /**
@@ -117,7 +124,8 @@ class MessageEntry extends HActiveRecord {
      *
      * @return string
      */
-    public function getSnippet() {
+    public function getSnippet()
+    {
 
         $snippet = "";
         $lines = explode("\n", $this->content);
@@ -133,8 +141,8 @@ class MessageEntry extends HActiveRecord {
     /**
      * Notify User in this message entry
      */
-    public function notify() {
-
+    public function notify()
+    {
 
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
@@ -145,7 +153,6 @@ class MessageEntry extends HActiveRecord {
             #if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
             #    continue;
             #}
-
             // Ignore this user itself
             if ($user->id == $this->user_id)
                 continue;
@@ -154,7 +161,7 @@ class MessageEntry extends HActiveRecord {
             $message->view = 'application.modules.mail.views.emails.NewMessageEntry';
             $message->addFrom(HSetting::Get('systemEmailAddress', 'mailing'), HSetting::Get('systemEmailName', 'mailing'));
             $message->addTo($user->email);
-            $message->subject = 'New message in discussion from ' . $senderName;
+            $message->subject = Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName));
             $message->setBody(array(
                 'message' => $this->message,
                 'entry' => $this,
