@@ -5,7 +5,7 @@
     "keywords": ["mail", "messaging", "communication"],
     "version": "0.5.4",
     "humhub": {
-        "minVersion": "0.8.0"
+        "minVersion": "0.8.1"
     },
     "screenshots": ["assets/screen1.jpg"]
 }
