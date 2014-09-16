@@ -17,5 +17,9 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'send you a new message in' => '',
+  'Add user' => '',
+  'Leave discussion' => '',
+  'Send' => '',
+  'There are no messages yet.' => '',
+  'Write new message' => '',
 );

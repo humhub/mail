@@ -17,5 +17,8 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'send you a new message in' => '',
+  'Message' => '',
+  'Recipient' => '',
+  'Subject' => '',
+  'You could not send an email to yourself!' => '',
 );
