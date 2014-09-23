@@ -17,7 +17,9 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  '<strong>New</strong> message' => '',
+  'Copyright © 2013 by humhub' => '',
+  'Email preferences' => '',
+  'New message' => '',
   'Reply now' => '',
   'send you a new message:' => '',
 );
