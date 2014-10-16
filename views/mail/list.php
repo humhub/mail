@@ -24,9 +24,9 @@
                             <small>(<?php echo count($users) . ' recipients'; ?>)</small>
                         </strong>
                         <br>
-                        <h5><?php print Helpers::truncateText($message->title, 35); ?></h5>
+                        <h5><?php print CHtml::encode(Helpers::truncateText($message->title, 35)); ?></h5>
                         <?php $text = strip_tags($message->getLastEntry()->content); ?>
-                        <?php echo Helpers::truncateText($text, 200); ?>
+                        <?php echo CHtml::encode(Helpers::truncateText($text, 200)); ?>
                         <br><span class="time"
                                   title="<?php echo $message->updated_at; ?>"><?php echo $message->updated_at; ?></span>
                         <?php if ($message->updated_at > $userMessage->last_viewed) : ?> <span

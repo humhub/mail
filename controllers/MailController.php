@@ -50,8 +50,12 @@ class MailController extends Controller
         $mailsPerPage = 10;
 
         // Current page
-        $page = (int)Yii::app()->request->getParam('page', 1);
-
+        $page = (int) Yii::app()->request->getParam('page', 1);
+        $currentId = 0;
+        if (isset($_GET['id'])) {
+            $currentId = (int) $_GET['id'];
+        }
+        
         // Count all Message
         $allMessageCount = UserMessage::model()->countByAttributes(array('user_id' => Yii::app()->user->id));
 
@@ -71,7 +75,8 @@ class MailController extends Controller
             'userMessages' => $userMessages,
             'mailCount' => $allMessageCount,
             'pageSize' => $mailsPerPage,
-            'pages' => $pages
+            'pages' => $pages,
+            'currentId' => $currentId
         ));
 
     }
@@ -142,9 +147,9 @@ class MailController extends Controller
             // Reply Form
             $replyForm = new ReplyMessageForm;
             if (isset($_POST['ReplyMessageForm'])) {
-
-                $replyForm->attributes = $_POST['ReplyMessageForm'];
-
+                $replyForm->attributes = Yii::app()->input->stripClean($_POST['ReplyMessageForm']);
+                
+                
                 if ($replyForm->validate()) {
 
                     // Attach Message Entry
@@ -166,8 +171,7 @@ class MailController extends Controller
             $inviteForm = new InviteRecipientForm;
             $inviteForm->message = $message;
             if (isset($_POST['InviteRecipientForm'])) {
-
-                $inviteForm->attributes = $_POST['InviteRecipientForm'];
+                $inviteForm->attributes = Yii::app()->input->stripClean($_POST['InviteRecipientForm']);
 
                 if ($inviteForm->validate()) {
 
@@ -220,8 +224,7 @@ class MailController extends Controller
         // Reply Form
         $replyForm = new ReplyMessageForm;
         if (isset($_POST['ReplyMessageForm'])) {
-
-            $replyForm->attributes = $_POST['ReplyMessageForm'];
+            $replyForm->attributes = Yii::app()->input->stripClean($_POST['ReplyMessageForm']);
 
             if ($replyForm->validate()) {
 
@@ -248,8 +251,7 @@ class MailController extends Controller
         $inviteForm = new InviteRecipientForm;
         $inviteForm->message = $message;
         if (isset($_POST['InviteRecipientForm'])) {
-
-            $inviteForm->attributes = $_POST['InviteRecipientForm'];
+            $inviteForm->attributes = Yii::app()->input->stripClean($_POST['InviteRecipientForm']);
 
             if ($inviteForm->validate()) {
 
@@ -294,7 +296,7 @@ class MailController extends Controller
         }
 
         if (isset($_POST['CreateMessageForm'])) {
-            $model->attributes = $_POST['CreateMessageForm'];
+            $model->attributes = Yii::app()->input->stripClean($_POST['CreateMessageForm']);
 
             $title = $model->title;
             $title = Yii::app()->input->stripClean($title);

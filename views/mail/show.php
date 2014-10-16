@@ -53,7 +53,7 @@
                             <h4 class="media-heading" style="font-size: 14px;"><?php echo $entry->user->displayName; ?>
                                 <small><span class="time"><?php echo $entry->created_at; ?></span></small>
                             </h4>
-                            <span class="content"><?php echo HHtml::enrichText($entry->content); ?></span>
+                            <span class="content"><?php echo HHtml::enrichText(CHtml::encode($entry->content)); ?></span>
                         </div>
                     </div>
 

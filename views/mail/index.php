@@ -48,10 +48,10 @@
                                 <h4 class="media-heading"><?php echo $message->getLastEntry()->user->displayName; ?> <small><span class="time"><?php echo $message->updated_at; ?></span></small></h4>
                                 <!--<i class="fa fa-paper-clip"></i> <i class="fa fa-star"></i>-->
 
-                                <h5><?php print Helpers::truncateText($message->title, 75); ?></h5>
+                                <h5><?php print CHtml::encode(Helpers::truncateText($message->title, 75)); ?></h5>
 
                                 <?php $text = strip_tags($message->getLastEntry()->content);  ?>
-                                <?php echo Helpers::truncateText($text, 200); ?>
+                                <?php echo CHtml::encode(Helpers::truncateText($text, 200)); ?>
                                 <!--<span class="badge pull-right"><?php /*echo count($message->entries); */?></span>-->
                                 <?php
                                 // show the new badge, if this message is still unread
@@ -96,10 +96,10 @@
 
 <script type="text/javascript">
 
-    <?php if (isset($_GET['id'])) { ?>
+    <?php if ($currentId != "" && $currentId != 0) { ?>
     // load message details by the committed id
-    showMessageDetails('<?php echo $this->createUrl('show', array('id' => $_GET['id'], 'ajax' => 1)); ?>');
-    selectEntry(<?php echo $_GET['id']; ?>);
+    showMessageDetails('<?php echo $this->createUrl('show', array('id' => $currentId, 'ajax' => 1)); ?>');
+    selectEntry(<?php echo $currentId; ?>);
     <?php } else { ?>
     // load the latest message details
     showMessageDetails('<?php echo $this->createUrl('show', array('id' => $firstMessageId, 'ajax' => 1)); ?>');
