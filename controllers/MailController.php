@@ -282,7 +282,7 @@ class MailController extends Controller
      * Creates a new Message
      * and redirects to it.
      */
-    public function actionCreate()
+    public function actionCreate($guid = null)
     {
 
         $model = new CreateMessageForm;
@@ -343,6 +343,15 @@ class MailController extends Controller
                 $this->htmlRedirect($this->createUrl('index'));
             }
         }
+
+	    if ($guid !== null) {
+
+		    $user = User::model()->findByAttributes(array('guid' => $guid));
+
+		    if (isset($user)) {
+			    $model->recipient = $guid;
+		    }
+	    }
 
         $output = $this->renderPartial('create', array('model' => $model));
         Yii::app()->clientScript->render($output);
