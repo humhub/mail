@@ -47,7 +47,7 @@
         $('#dropdown-messages').find('ul').remove();
 
         // append title and loader to dropdown
-        $('#dropdown-messages').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('MailModule.widgets_views_mailNotification', 'Messages'); ?> <?php echo CHtml::link(Yii::t('MailModule.widgets_views_mailNotification', 'New message'), $this->createUrl('//mail/mail/create', array('ajax' => 1)), array('class' => 'btn btn-info btn-xs', 'id' => 'create-message-button', 'data-toggle' => 'modal', 'data-target' => '#globalModal')); ?></li> <ul class="media-list"><li id="loader_messages"><div class="loader"></div></li></ul><li><div class="dropdown-footer"><a class="btn btn-default col-md-12" href="<?php echo Yii::app()->createUrl('//mail/mail/index'); ?>"><?php echo Yii::t('MailModule.widgets_views_mailNotification', 'Show all messages'); ?></a></div></li>');
+        $('#dropdown-messages').append('<li class="dropdown-header"><div class="arrow"></div><?php echo Yii::t('MailModule.widgets_views_mailNotification', 'Messages'); ?> <?php $this->widget('application.modules.mail.widgets.NewMessageButtonWidget', array('type'=>'info','size'=>'xs' ,'id'=>'create-message-button')); ?></li> <ul class="media-list"><li id="loader_messages"><div class="loader"></div></li></ul><li><div class="dropdown-footer"><a class="btn btn-default col-md-12" href="<?php echo Yii::app()->createUrl('//mail/mail/index'); ?>"><?php echo Yii::t('MailModule.widgets_views_mailNotification', 'Show all messages'); ?></a></div></li>');
 
         // load newest notifications
         $.ajax({
