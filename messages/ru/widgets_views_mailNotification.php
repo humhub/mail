@@ -1,6 +1,6 @@
 <?php
 return array (
   'Messages' => 'Сообщения',
-  'New message' => 'Новое сообщение',
+  'New message' => 'Написать',
   'Show all messages' => 'Показать все сообщения',
 );
