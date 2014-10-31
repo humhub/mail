@@ -1,4 +1,4 @@
 <?php
 return array (
-  'send you a new message in' => 'te envía un nuevo mensaje en',
+  'send you a new message in' => 'te ha enviado un nuevo mensaje en',
 );
