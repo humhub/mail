@@ -17,7 +17,6 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Write an answer...' => '@@填写回复信息...@@',
   'Inbox' => '收件箱',
   'Messagebox' => '消息框',
   'New' => '新的',

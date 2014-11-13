@@ -17,5 +17,5 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'send you a new message in' => '发送给你一个新消息',
+  'send you a new message in' => '',
 );
