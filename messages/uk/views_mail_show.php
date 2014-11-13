@@ -21,5 +21,6 @@ return array (
   'Leave discussion' => '',
   'Send' => '',
   'There are no messages yet.' => '',
+  'Write an answer...' => '',
   'Write new message' => '',
 );
