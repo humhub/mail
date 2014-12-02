@@ -17,9 +17,10 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Add user' => '',
-  'Leave discussion' => '',
-  'Send' => '',
-  'There are no messages yet.' => '',
-  'Write new message' => '',
+  'Write an answer...' => '',
+  'Add user' => 'Aggiungi utente',
+  'Leave discussion' => 'Abbandona la discussione',
+  'Send' => 'Invia',
+  'There are no messages yet.' => 'Non ci sono messaggi.',
+  'Write new message' => 'Scrivi un nuovo messaggio',
 );

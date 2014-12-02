@@ -77,7 +77,7 @@
 
                 <?php //echo $form->errorSummary($replyForm); ?>
                 <div class="form-group">
-                    <?php echo $form->textArea($replyForm, 'message', array('class' => 'form-control', 'rows' => '4', 'placeholder' => 'Write an answer...')); ?>
+                    <?php echo $form->textArea($replyForm, 'message', array('class' => 'form-control', 'rows' => '4', 'placeholder' => Yii::t('MailModule.views_mail_show', 'Write an answer...'))); ?>
                 </div>
                 <hr>
 
