@@ -2,6 +2,6 @@
 return array (
   'Groups' => 'Skupiny',
   'Members' => 'Členové',
-  'Spaces' => 'Místa',
+  'Spaces' => 'Prostory',
   'User Posts' => 'Příspěvky uživatelů',
 );
