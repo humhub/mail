@@ -1,4 +1,4 @@
 <?php
 return array (
-  'New message in discussion from %displayName%' => 'Nuevo mensaje en el debat de %displayName%',
+  'New message in discussion from %displayName%' => 'Nueva respuesta en el mensaje de %displayName%',
 );
