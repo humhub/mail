@@ -19,5 +19,5 @@
 return array (
   '<strong>New</strong> message' => '',
   'Reply now' => '现在回复',
-  'send you a new message:' => '发送给你一个新消息:',
+  'sent you a new message:' => '发送给你一个新消息:',
 );
