@@ -17,5 +17,5 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'send you a new message in' => 'sendete dir eine neue Nachricht in',
+  'sent you a new message in' => 'sendete dir eine neue Nachricht in',
 );

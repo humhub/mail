@@ -678,7 +678,7 @@ td[class="image-124px"] img{
                                                             <tr>
                                                                 <td style="font-size: 13px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#555555; font-weight:300; text-align:left; ">
 
-                                                                    <strong><?php echo $senderName; ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'send you a new message in'); ?> <strong><?php echo $message->title; ?></strong>
+                                                                    <strong><?php echo $senderName; ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'sent you a new message in'); ?> <strong><?php echo $message->title; ?></strong>
                                                                     <br>
                                                                     <br>
                                                                     <?php echo $message->getLastEntry()->content; ?>
