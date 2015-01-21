@@ -116,16 +116,6 @@ class UserMessage extends HActiveRecord
 	 */
 	public function leave() {
 
-		$message = Message::model()->findByPk($this->message_id);
-
-		if ($message->users < 3) {
-			// delete whole message
-			$message->delete();
-		} else {
-			// remove only this user
-			$this->delete();
-		}
-
-
+		$this->delete();
 	}
 }
