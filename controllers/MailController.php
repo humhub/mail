@@ -171,10 +171,10 @@ class MailController extends Controller
                     $messageEntry->content = $this->cleanUpMessage($replyForm->message);
                     $messageEntry->save();
                     $messageEntry->notify();
-                    
-                    // Update Modified_at Value
+                        
+                        // Update Modified_at Value
                     $message->save();
-					$userMessage->save();
+                    $userMessage->save();
                     
                     $this->redirect($this->createUrl('index', array(
                         'id' => $message->id
