@@ -156,7 +156,6 @@ class MailController extends Controller
             ));
             $userMessage->scenario = 'last_viewed';
             $userMessage->last_viewed = new CDbExpression('NOW()');
-            $userMessage->save();
             
             // Reply Form
             $replyForm = new ReplyMessageForm();
@@ -175,12 +174,14 @@ class MailController extends Controller
                     
                     // Update Modified_at Value
                     $message->save();
+					$userMessage->save();
                     
                     $this->redirect($this->createUrl('index', array(
                         'id' => $message->id
                     )));
                 }
             }
+            $userMessage->save();
             
             // Invite Form
             $inviteForm = new InviteRecipientForm();
