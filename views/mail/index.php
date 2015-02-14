@@ -55,7 +55,7 @@
                                 <!--<span class="badge pull-right"><?php /*echo count($message->entries); */?></span>-->
                                 <?php
                                 // show the new badge, if this message is still unread
-                                if ($message->updated_at > $userMessage->last_viewed) {
+                                if ($message->updated_at > $userMessage->last_viewed AND $message->getLastEntry()->user->id <> Yii::app()->user->id) {
                                     echo '<span class="label label-danger">' . Yii::t('MailModule.views_mail_index', 'New') . '</span>';
                                 }
                                 ?>
