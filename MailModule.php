@@ -77,5 +77,4 @@ class MailModule extends HWebModule
     {
         $event->sender->addWidget('application.modules.mail.widgets.MailNotificationWidget', array(), array('sortOrder' => 90));
     }
-
 }
