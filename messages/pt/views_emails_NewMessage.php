@@ -19,5 +19,5 @@
 return array (
   '<strong>New</strong> message' => '',
   'Reply now' => '',
-  'send you a new message:' => '',
+  'sent you a new message:' => '',
 );
