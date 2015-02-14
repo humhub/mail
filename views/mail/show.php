@@ -91,7 +91,7 @@
                     
                             $this->widget('application.modules.mail.widgets.ConfirmWidget', array(
                                 'uniqueID' => 'modal_maildelete_' . $entry->id,
-                                'title' => Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deleting'),
+                                'title' => Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deletion'),
                                 'message' => Yii::t('MailModule.views_mail_show', 'Do you really want to delete this message?'),
                                 'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Delete'),
                                 'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
