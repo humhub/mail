@@ -17,6 +17,15 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
+  '<strong>Confirm</strong> deleting conversation' => '',
+  '<strong>Confirm</strong> leaving conversation' => '',
+  '<strong>Confirm</strong> message deletion' => '',
+  'Cancel' => '',
+  'Delete' => '',
+  'Do you really want to delete this conversation?' => '',
+  'Do you really want to delete this message?' => '',
+  'Do you really want to leave this conversation?' => '',
+  'Leave' => '',
   'Write an answer...' => '',
   'Add user' => '添加用户',
   'Leave discussion' => '退出讨论',

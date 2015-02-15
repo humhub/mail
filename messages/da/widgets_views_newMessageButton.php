@@ -17,19 +17,6 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  '<strong>Confirm</strong> deleting conversation' => '',
-  '<strong>Confirm</strong> leaving conversation' => '',
-  '<strong>Confirm</strong> message deletion' => '',
-  'Cancel' => '',
-  'Delete' => '',
-  'Do you really want to delete this conversation?' => '',
-  'Do you really want to delete this message?' => '',
-  'Do you really want to leave this conversation?' => '',
-  'Leave' => '',
-  'Add user' => 'Adicionar usuário',
-  'Leave discussion' => 'Deixar discussão',
-  'Send' => 'Enviar',
-  'There are no messages yet.' => 'Não há mensagens ainda.',
-  'Write an answer...' => 'Escreva uma resposta ...',
-  'Write new message' => 'Escrever nova mensagem',
+  'New message' => '',
+  'Send message' => '',
 );
