@@ -45,7 +45,7 @@
 
                             <div class="media-body">
 
-                                <h4 class="media-heading"><?php echo $message->getLastEntry()->user->displayName; ?> <small><span class="time"><?php echo $message->updated_at; ?></span></small></h4>
+                                <h4 class="media-heading"><?php echo CHtml::encode($message->getLastEntry()->user->displayName); ?> <small><span class="time"><?php echo $message->updated_at; ?></span></small></h4>
                                 <!--<i class="fa fa-paper-clip"></i> <i class="fa fa-star"></i>-->
 
                                 <h5><?php print CHtml::encode(Helpers::truncateText($message->title, 75)); ?></h5>

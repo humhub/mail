@@ -59,7 +59,7 @@
         					<img src="<?php echo $user->getProfileImage()->getUrl(); ?>"
         					class="img-rounded tt img_margin" height="29" width="29"
         					data-toggle="tooltip" data-placement="top" title=""
-        					data-original-title="<strong> <?php echo $user->displayName; ?></strong><br><?php echo $user->profile->title; ?>">
+        					data-original-title="<strong> <?php echo CHtml::encode($user->displayName); ?></strong><br><?php echo CHtml::encode($user->profile->title); ?>">
                         </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -105,7 +105,7 @@
                        <?php endif;?>
                        
                         <div class="media-body">
-						<h4 class="media-heading" style="font-size: 14px;"><?php echo $entry->user->displayName; ?>
+						<h4 class="media-heading" style="font-size: 14px;"><?php echo CHtml::encode($entry->user->displayName); ?>
                                 <small><span class="time"><?php echo $entry->created_at; ?></span></small>
 						</h4>
 						<span class="content"><?php echo HHtml::enrichText(CHtml::encode($entry->content)); ?></span>

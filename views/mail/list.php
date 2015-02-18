@@ -20,7 +20,7 @@
 
                     <!-- show content -->
                     <div class="media-body">
-                        <strong><?php echo $message->getLastEntry()->user->displayName; ?>
+                        <strong><?php echo CHtml::encode($message->getLastEntry()->user->displayName); ?>
                             <small>(<?php echo count($users) . ' recipients'; ?>)</small>
                         </strong>
                         <br>

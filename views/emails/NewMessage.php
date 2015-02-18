@@ -477,7 +477,7 @@ td[class="image-124px"] img{
                                                         <table align="center" border="0" cellspacing="0" cellpadding="0" >
                                                             <tr>
                                                                 <td  style="font-size: 12px; line-height: 27px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:300; text-align:center;" >
-                                                                    <span style="text-decoration: none; color: #ffffff;"><a href="<?php echo Yii::app()->createAbsoluteUrl('//'); ?>" style="font-size: 18px; line-height: 27px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;"><?php echo Yii::app()->name; ?></a></span>
+                                                                    <span style="text-decoration: none; color: #ffffff;"><a href="<?php echo Yii::app()->createAbsoluteUrl('//'); ?>" style="font-size: 18px; line-height: 27px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; color:#ffffff; font-weight:600; text-align:left;"><?php echo CHtml::encode(Yii::app()->name); ?></a></span>
 
                                                                 </td>
                                                             </tr>
@@ -678,11 +678,11 @@ td[class="image-124px"] img{
                                                             <tr>
                                                                 <td style="font-size: 13px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#555555; font-weight:300; text-align:left; ">
 
-                                                                    <strong><?php echo $originatorName; ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessage', 'sent you a new message:'); ?>
+                                                                    <strong><?php echo CHtml::encode($originatorName); ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessage', 'sent you a new message:'); ?>
                                                                     <br/>
-                                                                    <strong><?php echo $message->title; ?></strong>
+                                                                    <strong><?php echo CHtml::encode($message->title); ?></strong>
                                                                     <br>
-                                                                    <?php echo $message->getLastEntry()->content; ?>
+                                                                    <?php echo CHtml::encode($message->getLastEntry()->content); ?>
 
 
                                                                 </td>
