@@ -439,8 +439,8 @@ class MailController extends Controller
             $this->redirect($this->createUrl('index'));
         } else {
             $messageEntry->delete();
-            $this->redirect($this->createUrl('show', array(
-                        'id' => $messageEntry->message_id
+            $this->redirect($this->createUrl('index', array(
+                'id' => $messageEntry->message_id
             )));
         }
     }
