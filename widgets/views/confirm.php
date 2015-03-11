@@ -8,7 +8,7 @@ $confirm = 'function(html){ $("#confirmModal_' . $uniqueID . '").html(html);}';
 ?>
 
     <!-- create button element -->
-    <button class="" data-toggle="modal"
+    <button class="btn btn-primary btn-sm" data-toggle="modal"
             data-target="#confirmModal_<?php echo $uniqueID; ?>" >
         <?php echo $linkContent; ?>
     </button>
