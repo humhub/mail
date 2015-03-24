@@ -17,6 +17,6 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'New message' => '',
-  'Send message' => '',
+  'New message' => 'Yeni Mesaj',
+  'Send message' => 'Mesaj Gönder',
 );
