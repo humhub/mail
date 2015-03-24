@@ -26,7 +26,7 @@ return array (
   'Do you really want to delete this message?' => '',
   'Do you really want to leave this conversation?' => '',
   'Leave' => '',
-  'Write an answer...' => 'Yeni Mesaj Yaz',
+  'Write an answer...' => 'Bir cevap yaz',
   'Add user' => 'Kullanıcı ekle',
   'Leave discussion' => 'Tartışmadan ayrıl',
   'Send' => 'Gönder',
