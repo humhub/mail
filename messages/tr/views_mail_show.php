@@ -17,15 +17,15 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  '<strong>Confirm</strong> deleting conversation' => '',
-  '<strong>Confirm</strong> leaving conversation' => '',
-  '<strong>Confirm</strong> message deletion' => '',
+  '<strong>Confirm</strong> deleting conversation' => '<strong>Konuşmayı</strong> sil',
+  '<strong>Confirm</strong> leaving conversation' => '<strong>Konuşmadan</strong> ayrıl',
+  '<strong>Confirm</strong> message deletion' => '<strong>Mesajı</strong> sil',
   'Cancel' => 'İptal',
   'Delete' => 'Sil',
-  'Do you really want to delete this conversation?' => '',
-  'Do you really want to delete this message?' => '',
-  'Do you really want to leave this conversation?' => '',
-  'Leave' => '',
+  'Do you really want to delete this conversation?' => 'Konuşmayı silmek istiyor musun?',
+  'Do you really want to delete this message?' => 'Mesajı silmek istiyor musun?',
+  'Do you really want to leave this conversation?' => 'Konuşmadan ayrılmak istiyor musun?',
+  'Leave' => 'Ayrıl',
   'Write an answer...' => 'Bir cevap yaz',
   'Add user' => 'Kullanıcı ekle',
   'Leave discussion' => 'Tartışmadan ayrıl',
