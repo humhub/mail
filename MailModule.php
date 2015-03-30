@@ -63,6 +63,9 @@ class MailModule extends HWebModule
      */
     public static function onTopMenuInit($event)
     {
+        if (Yii::app()->user->isGuest) {
+            return;
+        }
 
         $event->sender->addItem(array(
             'label' => Yii::t('MailModule.base', 'Messages'),
@@ -75,6 +78,10 @@ class MailModule extends HWebModule
 
     public static function onNotificationAddonInit($event)
     {
+        if (Yii::app()->user->isGuest) {
+            return;
+        }
+
         $event->sender->addWidget('application.modules.mail.widgets.MailNotificationWidget', array(), array('sortOrder' => 90));
     }
 
