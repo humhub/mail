@@ -5,6 +5,7 @@ Yii::app()->moduleManager->register(array(
     'class' => 'application.modules.mail.MailModule',
     'import' => array(
         'application.modules.mail.*',
+        'application.modules.mail.models.*',
     ),
     // Events to Catch 
     'events' => array(
@@ -12,6 +13,7 @@ Yii::app()->moduleManager->register(array(
         array('class' => 'IntegrityChecker', 'event' => 'onRun', 'callback' => array('MailModule', 'onIntegrityCheck')),
         array('class' => 'TopMenuWidget', 'event' => 'onInit', 'callback' => array('MailModule', 'onTopMenuInit')),
         array('class' => 'NotificationAddonWidget', 'event' => 'onInit', 'callback' => array('MailModule', 'onNotificationAddonInit')),
+        array('class' => 'ProfileHeaderControlsWidget', 'event' => 'onInit', 'callback' => array('MailModule', 'onProfileHeaderControlsInit')),
     ),
 ));
 ?>

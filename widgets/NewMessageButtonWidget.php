@@ -18,9 +18,6 @@ class NewMessageButtonWidget extends HWidget
     public function run()
     {
 
-        $assetPrefix = Yii::app()->assetManager->publish(dirname(__FILE__) . '/../resources', true, 0, defined('YII_DEBUG'));
-        Yii::app()->clientScript->registerCssFile($assetPrefix . '/mail.css');
-
         $class = 'btn btn-' . $this->type;
         if (!empty($this->size)) {
             $class .= ' btn-' . $this->size;

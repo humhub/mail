@@ -85,4 +85,13 @@ class MailModule extends HWebModule
         $event->sender->addWidget('application.modules.mail.widgets.MailNotificationWidget', array(), array('sortOrder' => 90));
     }
 
+    public static function onProfileHeaderControlsInit($event)
+    {
+        if (Yii::app()->user->isGuest || $event->sender->user->id == Yii::app()->user->id) {
+            return;
+        }
+
+        $event->sender->addWidget('application.modules.mail.widgets.NewMessageButtonWidget', array('guid' => $event->sender->user->guid, 'type' => 'success'), array('sortOrder' => 90));
+    }
+
 }

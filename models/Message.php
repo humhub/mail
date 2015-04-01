@@ -18,28 +18,32 @@
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class Message extends HActiveRecord {
+class Message extends HActiveRecord
+{
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Message the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'message';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
@@ -55,7 +59,8 @@ class Message extends HActiveRecord {
     /**
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
@@ -68,7 +73,8 @@ class Message extends HActiveRecord {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'title' => 'Title',
@@ -80,31 +86,10 @@ class Message extends HActiveRecord {
     }
 
     /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
-        $criteria = new CDbCriteria;
-
-        $criteria->compare('id', $this->id);
-        $criteria->compare('title', $this->title, true);
-        $criteria->compare('created_at', $this->created_at, true);
-        $criteria->compare('created_by', $this->created_by);
-        $criteria->compare('updated_at', $this->updated_at, true);
-        $criteria->compare('updated_by', $this->updated_by);
-
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-        ));
-    }
-
-    /**
      * Returns the last message of this conversation
      */
-    public function getLastEntry() {
+    public function getLastEntry()
+    {
 
         $criteria = new CDbCriteria;
         $criteria->limit = 1;
@@ -115,10 +100,66 @@ class Message extends HActiveRecord {
     }
 
     /**
+     * Deletes message entry by given Id
+     * If it's the last entry, the whole message will be deleted.
+     * 
+     * @param MessageEntry $entry
+     */
+    public function deleteEntry($entry)
+    {
+        if ($entry->message->id == $this->id) {
+            if (count($this->entries) > 1) {
+                $entry->delete();
+            } else {
+                $this->delete();
+            }
+        }
+    }
+
+    /**
+     * User leaves a message 
+     * 
+     * If it's the last user, the whole message will be deleted.
+     * 
+     * @param int $userId
+     */
+    public function leave($userId)
+    {
+        $userMessage = UserMessage::model()->findByAttributes(array(
+            'message_id' => $this->id,
+            'user_id' => $userId
+        ));
+
+        if (count($this->users) > 1) {
+            $userMessage->delete();
+        } else {
+            $this->delete();
+        }
+    }
+
+    /**
+     * Marks a message as seen for given userId
+     * 
+     * @param int $userId
+     */
+    public function seen($userId)
+    {
+        // Update User Message Entry
+        $userMessage = UserMessage::model()->findByAttributes(array(
+            'user_id' => $userId,
+            'message_id' => $this->id
+        ));
+        if ($userMessage !== null) {
+            $userMessage->last_viewed = new CDbExpression('NOW()');
+            $userMessage->save();
+        }
+    }
+
+    /**
      * Deletes a message, including all dependencies.
      */
-    public function delete() {
-
+    public function delete()
+    {
         foreach (MessageEntry::model()->findAllByAttributes(array('message_id' => $this->id)) as $messageEntry) {
             $messageEntry->delete();
         }
@@ -134,7 +175,8 @@ class Message extends HActiveRecord {
      * Notify given user, about this message
      * An email will sent.
      */
-    public function notify($user) {
+    public function notify($user)
+    {
 
         // User dont wants any emails
         #if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {

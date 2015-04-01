@@ -12,12 +12,6 @@
                 id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_adduser", "Add more participants to your conversation..."); ?></h4>
         </div>
         <div class="modal-body">
-
-
-            <?php //echo $form->errorSummary($inviteForm); ?>
-
-
-
             <?php echo $form->textField($inviteForm, 'recipient', array('id' => 'addUserFrom_mail')); ?>
             <?php echo $form->error($inviteForm, 'recipient'); ?>
             <?php
@@ -30,18 +24,16 @@
                 'focus' => true,
             ));
             ?>
-
         </div>
         <div class="modal-footer">
             <hr/>
-            <?php echo HHtml::ajaxButton(Yii::t('MailModule.views_mail_adduser', 'Send'), array('//mail/mail/adduser', 'id' => $message->id), array(
+            <?php
+            echo HHtml::ajaxButton(Yii::t('MailModule.views_mail_adduser', 'Send'), array('//mail/mail/adduser', 'id' => $inviteForm->message->id), array(
                 'type' => 'POST',
                 'beforeSend' => 'function(){ $("#adduser-loader").removeClass("hidden"); }',
                 'success' => 'function(html){ $("#globalModal").html(html); }',
-            ), array('class' => 'btn btn-primary'));
+                    ), array('class' => 'btn btn-primary'));
             ?>
-
-
             <button type="button" class="btn btn-primary"
                     data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_adduser', 'Close'); ?></button>
 
@@ -52,28 +44,6 @@
 
         <?php $this->endWidget(); ?>
     </div>
-
 </div>
-
-
-<script type="text/javascript">
-
-
-    // set focus to input for space name
-    $('#SpaceCreateForm_title').focus();
-
-    /*
-     * Modal handling by close event
-     */
-    $('#globalModal').on('hidden.bs.modal', function (e) {
-
-        // Reload whole page (to see changes on it)
-        //window.location.reload();
-
-        // just close modal and reset modal content to default (shows the loader)
-        $('#globalModal').html('<div class="modal-dialog"><div class="modal-content"><div class="modal-body"><div class="loader"></div></div></div></div>');
-    })
-</script>
-
 
 

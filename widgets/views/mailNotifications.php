@@ -22,7 +22,7 @@
         var $newMessages = parseInt(0);
 
         // load data
-        jQuery.getJSON("<?php echo $this->createUrl('//mail/mail/GetMessageCount'); ?>", function (json) {
+        jQuery.getJSON("<?php echo $this->createUrl('//mail/mail/GetNewMessageCountJson'); ?>", function(json) {
 
             // show or hide the badge for new messages
             $newMessages = parseInt(json.newMessages);
@@ -40,7 +40,7 @@
 
 
     // open the messages menu
-    $('#icon-messages').click(function () {
+    $('#icon-messages').click(function() {
 
         // remove all <li> entries from dropdown
         $('#dropdown-messages').find('li').remove();
@@ -52,10 +52,10 @@
         // load newest notifications
         $.ajax({
             'type': 'GET',
-            'url': '<?php echo $this->createUrl('//mail/mail/list', array('ajax' => 1)); ?>',
+            'url': '<?php echo $this->createUrl('//mail/mail/notificationList'); ?>',
             'cache': false,
             'data': jQuery(this).parents("form").serialize(),
-            'success': function (html) {
+            'success': function(html) {
                 jQuery("#loader_messages").replaceWith(html)
             }});
 

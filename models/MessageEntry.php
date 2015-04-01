@@ -74,6 +74,19 @@ class MessageEntry extends HActiveRecord
         );
     }
 
+    public function beforeSave()
+    {
+        if ($this->isNewRecord) {
+            
+            // Updates the updated_at attribute
+            $this->message->save();
+            
+        }
+        
+        return parent::beforeSave();
+    }
+    
+    
     /**
      * @return array customized attribute labels (name=>label)
      */

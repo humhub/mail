@@ -18,104 +18,67 @@
  */
 class UserMessage extends HActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return UserMessage the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'user_message';
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return UserMessage the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('message_id, user_id', 'required'),
-			array('message_id, user_id, is_originator, created_by, updated_by', 'numerical', 'integerOnly'=>true),
-			array('last_viewed, created_at, updated_at', 'safe'),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('message_id, user_id, is_originator, last_viewed, created_at, created_by, updated_at, updated_by', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'user_message';
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'message' => array(self::BELONGS_TO, 'Message', 'message_id'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        return array(
+            array('message_id, user_id', 'required'),
+            array('message_id, user_id, is_originator, created_by, updated_by', 'numerical', 'integerOnly' => true),
+            array('last_viewed, created_at, updated_at', 'safe'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('message_id, user_id, is_originator, last_viewed, created_at, created_by, updated_at, updated_by', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'message_id' => 'Message',
-			'user_id' => 'User',
-			'is_originator' => 'Is Originator',
-			'last_viewed' => 'Last Viewed',
-			'created_at' => 'Created At',
-			'created_by' => 'Created By',
-			'updated_at' => 'Updated At',
-			'updated_by' => 'Updated By',
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'message' => array(self::BELONGS_TO, 'Message', 'message_id'),
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'message_id' => 'Message',
+            'user_id' => 'User',
+            'is_originator' => 'Is Originator',
+            'last_viewed' => 'Last Viewed',
+            'created_at' => 'Created At',
+            'created_by' => 'Created By',
+            'updated_at' => 'Updated At',
+            'updated_by' => 'Updated By',
+        );
+    }
 
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('message_id',$this->message_id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('is_originator',$this->is_originator);
-		$criteria->compare('last_viewed',$this->last_viewed,true);
-		$criteria->compare('created_at',$this->created_at,true);
-		$criteria->compare('created_by',$this->created_by);
-		$criteria->compare('updated_at',$this->updated_at,true);
-		$criteria->compare('updated_by',$this->updated_by);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
-
-
-	/**
-	 * Leaves a conversation
-	 *
-	 * If this is a two person conversation, the conversation will be deleted.
-	 * If there are more than two persons, we just leave.
-	 */
-	public function leave() {
-
-		$this->delete();
-	}
 }
