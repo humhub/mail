@@ -4,8 +4,6 @@ return array (
   '<strong>Confirm</strong> leaving conversation' => '',
   '<strong>Confirm</strong> message deletion' => '',
   'Add user' => '',
-  'Cancel' => 'Hủy',
-  'Delete' => 'Xóa',
   'Do you really want to delete this conversation?' => '',
   'Do you really want to delete this message?' => '',
   'Do you really want to leave this conversation?' => '',
@@ -14,5 +12,7 @@ return array (
   'Send' => '',
   'There are no messages yet.' => '',
   'Write an answer...' => '',
-  'Write new message' => '',
+  'Write new message' => '@@@@',
+  'Cancel' => 'Hủy',
+  'Delete' => 'Xóa',
 );

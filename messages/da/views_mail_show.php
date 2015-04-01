@@ -11,8 +11,8 @@ return array (
   'Do you really want to leave this conversation?' => '',
   'Leave' => '',
   'Leave discussion' => '',
+  'Write an answer...' => '',
+  'Write new message' => '@@@@',
   'Send' => 'Send',
   'There are no messages yet.' => 'Der er ingen beskeder endnu.',
-  'Write an answer...' => '',
-  'Write new message' => '',
 );

@@ -1,5 +1,6 @@
 <?php
 return array (
+  'Write new message' => '@@Yeni bir mesaj yaz@@',
   '<strong>Confirm</strong> deleting conversation' => '<strong>Konuşmayı</strong> sil',
   '<strong>Confirm</strong> leaving conversation' => '<strong>Konuşmadan</strong> ayrıl',
   '<strong>Confirm</strong> message deletion' => '<strong>Mesajı</strong> sil',
@@ -14,5 +15,4 @@ return array (
   'Send' => 'Gönder',
   'There are no messages yet.' => 'Henüz mesaj bulunmuyor.',
   'Write an answer...' => 'Bir cevap yaz',
-  'Write new message' => 'Yeni bir mesaj yaz',
 );

@@ -14,5 +14,5 @@ return array (
   'Send' => '',
   'There are no messages yet.' => '',
   'Write an answer...' => '',
-  'Write new message' => '',
+  'Write new message' => '@@@@',
 );

@@ -1,5 +1,6 @@
 <?php
 return array (
+  'Write new message' => '@@نوشتن پیغام جدید@@',
   '<strong>Confirm</strong> deleting conversation' => '<strong>تایید</strong> حذف مکالمه',
   '<strong>Confirm</strong> leaving conversation' => '<strong>تایید</strong>  ترک مکالمه',
   '<strong>Confirm</strong> message deletion' => '<strong>تایید</strong>  حذف پیغام',
@@ -14,5 +15,4 @@ return array (
   'Send' => 'ارسال',
   'There are no messages yet.' => 'هنوز هیچ پیغامی وجود ندارد.',
   'Write an answer...' => 'نوشتن پاسخ . . .',
-  'Write new message' => 'نوشتن پیغام جدید',
 );

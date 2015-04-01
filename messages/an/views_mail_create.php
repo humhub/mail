@@ -1,7 +1,7 @@
 <?php
 return array (
-  'Add user...' => '',
-  'Close' => 'Zavřít',
   'New message' => '',
   'Send' => '',
+  'Add user...' => '@@@@',
+  'Close' => 'Zavřít',
 );
