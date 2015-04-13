@@ -1,6 +1,5 @@
 <?php
 return array (
-  'Write new message' => '@@Написать новое сообщение@@',
   '<strong>Confirm</strong> deleting conversation' => '<strong>Подтвердите</strong> удаление переписки',
   '<strong>Confirm</strong> leaving conversation' => '<strong>Подтвердите</strong> выход из переписки',
   '<strong>Confirm</strong> message deletion' => '<strong>Подтвердите</strong> удаление сообщения',
@@ -15,4 +14,5 @@ return array (
   'Send' => 'Отправить',
   'There are no messages yet.' => 'Здесь пока нет сообщений.',
   'Write an answer...' => 'Написать ответ ...',
+  'Write new message' => 'Написать новое сообщение',
 );
