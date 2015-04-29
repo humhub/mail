@@ -3,7 +3,7 @@
     "name": "Mail",
     "description": "Private messaging system to communicate with one or more users.",
     "keywords": ["mail", "messaging", "communication"],
-    "version": "0.6.1",
+    "version": "0.6.2",
     "humhub": {
         "minVersion": "0.11.1"
     },

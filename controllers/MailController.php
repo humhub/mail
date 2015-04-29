@@ -291,8 +291,8 @@ class MailController extends Controller
                 )));
             }
         }
-        
-        $this->renderPartial('editEntry', array('entry'=>$entry), false, true);
+
+        $this->renderPartial('editEntry', array('entry' => $entry), false, true);
     }
 
     /**
@@ -327,19 +327,11 @@ class MailController extends Controller
     public function actionGetNewMessageCountJson()
     {
         $json = array();
+        $json['newMessages'] = UserMessage::getNewMessageCount();
 
-        // New message count
-        $sql = "SELECT count(message_id)
-                FROM user_message
-                LEFT JOIN message on message.id = user_message.message_id
-                WHERE user_message.user_id = :user_id AND (message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL) AND message.updated_by <> :user_id";
-        $connection = Yii::app()->db;
-        $command = $connection->createCommand($sql);
-        $userId = Yii::app()->user->id;
-        $command->bindParam(":user_id", $userId);
-        $json['newMessages'] = $command->queryScalar();
-
+        header('Content-type: application/json');
         echo CJSON::encode($json);
+        Yii::app()->end();
     }
 
     /**

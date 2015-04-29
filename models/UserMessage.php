@@ -81,4 +81,29 @@ class UserMessage extends HActiveRecord
         );
     }
 
+    /**
+     * Returns the new message count for given User Id
+     * 
+     * @param int $userId
+     * @return int
+     */
+    public static function getNewMessageCount($userId = null)
+    {
+        if ($userId === null) {
+            $userId = Yii::app()->user->id;
+        }
+
+        $json = array();
+
+        // New message count
+        $sql = "SELECT count(message_id)
+                FROM user_message
+                LEFT JOIN message on message.id = user_message.message_id
+                WHERE user_message.user_id = :user_id AND (message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL) AND message.updated_by <> :user_id";
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $command->bindParam(":user_id", $userId);
+        return $command->queryScalar();
+    }
+
 }

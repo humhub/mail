@@ -22,7 +22,9 @@ class MailNotificationWidget extends HWidget
      */
     public function run()
     {
-        $this->render('mailNotifications', array());
+        $this->render('mailNotifications', array(
+            'newMailMessageCount' => UserMessage::getNewMessageCount()
+        ));
     }
 
 }

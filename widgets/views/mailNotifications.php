@@ -9,38 +9,37 @@
 
 <script type="text/javascript">
 
-    // load number of new messages at page loading
-    getMessageCount();
+    /**
+     * Refresh New Mail Message Count (Badge)
+     */
+    reloadMessageCountInterval = 60000;
+    setInterval(function () {
+        jQuery.getJSON("<?php echo $this->createUrl('//mail/mail/GetNewMessageCountJson'); ?>", function (json) {
+            setMailMessageCount(parseInt(json.newMessages));
+        });
+    }, reloadMessageCountInterval);
 
-    // load number of new messages in a loop
-    setInterval(getMessageCount, 60000);
+    setMailMessageCount(<?php echo $newMailMessageCount;?>);
 
 
-    // load and show new count of  messages
-    function getMessageCount() {
-
-        var $newMessages = parseInt(0);
-
-        // load data
-        jQuery.getJSON("<?php echo $this->createUrl('//mail/mail/GetNewMessageCountJson'); ?>", function(json) {
-
-            // show or hide the badge for new messages
-            $newMessages = parseInt(json.newMessages);
-            if ($newMessages == 0) {
-                $('#badge-messages').css('display', 'none');
-            } else {
-                $('#badge-messages').empty();
-                $('#badge-messages').append($newMessages);
-                $('#badge-messages').fadeIn('fast');
-            }
-
-        })
-
+    /**
+     * Sets current message count
+     */
+    function setMailMessageCount(count) {
+        // show or hide the badge for new messages
+        if (count == 0) {
+            $('#badge-messages').css('display', 'none');
+        } else {
+            $('#badge-messages').empty();
+            $('#badge-messages').append(count);
+            $('#badge-messages').fadeIn('fast');
+        }
     }
 
 
+
     // open the messages menu
-    $('#icon-messages').click(function() {
+    $('#icon-messages').click(function () {
 
         // remove all <li> entries from dropdown
         $('#dropdown-messages').find('li').remove();
@@ -55,7 +54,7 @@
             'url': '<?php echo $this->createUrl('//mail/mail/notificationList'); ?>',
             'cache': false,
             'data': jQuery(this).parents("form").serialize(),
-            'success': function(html) {
+            'success': function (html) {
                 jQuery("#loader_messages").replaceWith(html)
             }});
 
