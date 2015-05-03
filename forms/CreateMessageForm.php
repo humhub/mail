@@ -61,7 +61,7 @@ class CreateMessageForm extends CFormModel {
                 if ($user != null) {
 
                     if ($user->id == Yii::app()->user->id) {
-                        $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You could not send an email to yourself!"));
+                        $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You cannot send a email to yourself!"));
                     } else {
                         $this->recipients[] = $user;
                     }
