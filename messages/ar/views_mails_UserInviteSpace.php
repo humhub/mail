@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Sign up now' => '',
+  'Sign up now' => 'اشترك الان',
 );

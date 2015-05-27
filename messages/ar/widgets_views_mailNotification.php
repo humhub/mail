@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Messages' => '',
-  'New message' => '',
-  'Show all messages' => '',
+  'Messages' => 'الرسائل',
+  'New message' => 'رسالة جديدة',
+  'Show all messages' => 'عرض كل الرسائل',
 );

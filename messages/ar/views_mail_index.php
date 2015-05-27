@@ -1,7 +1,7 @@
 <?php
 return array (
-  'Inbox' => '',
-  'New' => '',
-  'New message' => '',
-  'There are no messages yet.' => '',
+  'Inbox' => 'البريد الوارد',
+  'New' => 'جديد',
+  'New message' => 'رسالة جديدة',
+  'There are no messages yet.' => 'لا توجد رسائل',
 );

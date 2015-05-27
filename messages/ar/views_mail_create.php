@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Close' => '',
-  'New message' => '',
-  'Send' => '',
+  'Close' => 'اغلاق',
+  'New message' => 'رسالة جديدة',
+  'Send' => 'ارسال',
 );
