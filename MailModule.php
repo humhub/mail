@@ -35,9 +35,10 @@ class MailModule extends HWebModule
             $messageEntry->delete();
         }
 
+        
         // Leaves all my conversations
-        foreach (UserMessage::model()->findAllByAttributes(array('created_by' => $event->sender->id)) as $userMessage) {
-            $userMessage->leave();
+        foreach (UserMessage::model()->findAllByAttributes(array('user_id' => $event->sender->id)) as $userMessage) {
+            $userMessage->message->leave($event->sender->id);
         }
 
         return true;
