@@ -1,5 +1,6 @@
 <?php
 return array (
+  'Write new message' => '@@Skriv ny besked@@',
   '<strong>Confirm</strong> deleting conversation' => '<strong>Bekræft</strong> sletning af samtale',
   '<strong>Confirm</strong> leaving conversation' => '<strong>Bekræft</strong> afslutning af samtale',
   '<strong>Confirm</strong> message deletion' => '<strong>Bekræft</strong> sletning af besked',
@@ -14,5 +15,4 @@ return array (
   'Send' => 'Send',
   'There are no messages yet.' => 'Der er ingen beskeder endnu.',
   'Write an answer...' => 'Skriv et svar...',
-  'Write new message' => 'Skriv ny besked',
 );
