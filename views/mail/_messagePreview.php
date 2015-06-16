@@ -14,7 +14,7 @@ $message = $userMessage->message;
             <img class="media-object img-rounded pull-left" data-src="holder.js/32x32" alt="32x32" style="width: 32px; height: 32px;" src="<?php echo $message->getLastEntry()->user->getProfileImage()->getUrl(); ?>">
             <div class="media-body">
                 <h4 class="media-heading"><?php echo CHtml::encode($message->getLastEntry()->user->displayName); ?> <small><?php echo HHtml::timeago($message->updated_at); ?></small></h4>
-                <h5><?php print CHtml::encode(Helpers::truncateText($message->title, 75)); ?></h5>
+                <h5><?php echo CHtml::encode(Helpers::truncateText($message->title, 75)); ?></h5>
                 <?php echo Helpers::truncateText(HMarkdownPreview::Render($message->getLastEntry()->content), 200); ?>
                 <?php
                 // show the new badge, if this message is still unread
