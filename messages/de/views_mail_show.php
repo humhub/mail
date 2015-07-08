@@ -1,8 +1,8 @@
 <?php
 return array (
-  '<strong>Confirm</strong> deleting conversation' => '',
-  '<strong>Confirm</strong> leaving conversation' => '',
-  '<strong>Confirm</strong> message deletion' => '',
+  '<strong>Confirm</strong> deleting conversation' => '<strong>Bestätige</strong> Löschung der Konversation',
+  '<strong>Confirm</strong> leaving conversation' => '<strong>Bestatige</strong> verlassen der Konversation',
+  '<strong>Confirm</strong> message deletion' => '<strong>Bestätige</strong> Löschung der Nachricht ',
   'Add user' => 'Füge Empfänger hinzu',
   'Cancel' => 'Abbrechen',
   'Delete' => 'Löschen',

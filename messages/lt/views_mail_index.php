@@ -1,7 +1,7 @@
 <?php
 return array (
-  'Inbox' => '',
-  'New' => '',
-  'New message' => '',
-  'There are no messages yet.' => '',
+  'Inbox' => 'Gautieji',
+  'New' => 'Naujas',
+  'New message' => 'Nauja žinutė',
+  'There are no messages yet.' => 'Kol kas nėra žinučių.',
 );

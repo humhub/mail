@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Messages' => '',
-  'New message' => '',
-  'Show all messages' => '',
+  'Messages' => 'Žinutės',
+  'New message' => 'Nauja žinutė',
+  'Show all messages' => 'Rodyti visas žinutes',
 );
