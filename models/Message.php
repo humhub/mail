@@ -1,5 +1,13 @@
 <?php
 
+namespace module\mail\models;
+
+use Yii;
+use humhub\components\ActiveRecord;
+use humhub\models\Setting;
+use humhub\modules\user\models\User;
+use module\mail\models\MessageEntry;
+
 /**
  * This is the model class for table "message".
  *
@@ -18,23 +26,13 @@
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class Message extends HActiveRecord
+class Message extends ActiveRecord
 {
-
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return Message the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'message';
     }
@@ -47,12 +45,9 @@ class Message extends HActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('created_by, updated_by', 'numerical', 'integerOnly' => true),
-            array('title', 'length', 'max' => 255),
-            array('created_at, updated_at', 'safe'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('id, title, created_at, created_by, updated_at, updated_by', 'safe', 'on' => 'search'),
+            array(['created_by', 'updated_by'], 'integer'),
+            array(['title'], 'string', 'max' => 255),
+            array(['created_at', 'updated_at'], 'safe'),
         );
     }
 
@@ -68,6 +63,24 @@ class Message extends HActiveRecord
             'users' => array(self::MANY_MANY, 'User', 'user_message(message_id, user_id)'),
             'originator' => array(self::BELONGS_TO, 'User', 'created_by'),
         );
+    }
+
+    public function getEntries()
+    {
+        $query = $this->hasMany(MessageEntry::className(), ['message_id' => 'id']);
+        $query->addOrderBy(['created_at' => SORT_ASC]);
+        return $query;
+    }
+
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])
+                        ->viaTable('user_message', ['message_id' => 'id']);
+    }
+
+    public function getOriginator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     /**
@@ -90,13 +103,7 @@ class Message extends HActiveRecord
      */
     public function getLastEntry()
     {
-
-        $criteria = new CDbCriteria;
-        $criteria->limit = 1;
-        $criteria->order = "created_at DESC";
-        $criteria->condition = "message_id=" . $this->id;
-
-        return MessageEntry::model()->find($criteria);
+        return MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1)->one();
     }
 
     /**
@@ -125,9 +132,9 @@ class Message extends HActiveRecord
      */
     public function leave($userId)
     {
-        $userMessage = UserMessage::model()->findByAttributes(array(
-            'message_id' => $this->id,
-            'user_id' => $userId
+        $userMessage = UserMessage::findOne(array(
+                    'message_id' => $this->id,
+                    'user_id' => $userId
         ));
 
         if (count($this->users) > 1) {
@@ -145,12 +152,12 @@ class Message extends HActiveRecord
     public function seen($userId)
     {
         // Update User Message Entry
-        $userMessage = UserMessage::model()->findByAttributes(array(
-            'user_id' => $userId,
-            'message_id' => $this->id
+        $userMessage = UserMessage::findOne(array(
+                    'user_id' => $userId,
+                    'message_id' => $this->id
         ));
         if ($userMessage !== null) {
-            $userMessage->last_viewed = new CDbExpression('NOW()');
+            $userMessage->last_viewed = new \yii\db\Expression('NOW()');
             $userMessage->save();
         }
     }
@@ -160,11 +167,11 @@ class Message extends HActiveRecord
      */
     public function delete()
     {
-        foreach (MessageEntry::model()->findAllByAttributes(array('message_id' => $this->id)) as $messageEntry) {
+        foreach (MessageEntry::findAll(array('message_id' => $this->id)) as $messageEntry) {
             $messageEntry->delete();
         }
 
-        foreach (UserMessage::model()->findAllByAttributes(array('message_id' => $this->id)) as $userMessage) {
+        foreach (UserMessage::findAll(array('message_id' => $this->id)) as $userMessage) {
             $userMessage->delete();
         }
 
@@ -177,38 +184,25 @@ class Message extends HActiveRecord
      */
     public function notify($user)
     {
-
-        // User dont wants any emails
-        #if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
-        #    return;
-        #}
-
-        $originatorName = $this->originator->displayName;
-        $originatorGuid = $this->originator->guid;
-
         $andAddon = "";
         if (count($this->users) > 2) {
             $counter = count($this->users) - 1;
             $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", array("{counter}" => $counter));
         }
 
-        $message = new HMailMessage();
-        $message->view = 'application.modules.mail.views.emails.NewMessage';
-        $message->addFrom(HSetting::Get('systemEmailAddress', 'mailing'), HSetting::Get('systemEmailName', 'mailing'));
-        $message->addTo($user->email);
-        $message->subject = Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => $originatorName));
-        $message->setBody(array(
+        Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
+
+        $mail = Yii::$app->mailer->compose(['html' => '@mailmodule/views/emails/NewMessage'], [
             'message' => $this,
-            'originatorName' => $originatorName,
             'originator' => $this->originator,
             'andAddon' => $andAddon,
             'entry' => $this->getLastEntry(),
             'user' => $user,
-            'originatorGuid' => $originatorGuid,
-                ), 'text/html');
-
-
-        Yii::app()->mail->send($message);
+        ]);
+        $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
+        $mail->setTo($user->email);
+        $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
+        $mail->send();
     }
 
 }

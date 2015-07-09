@@ -1,10 +1,17 @@
 <?php
 
+namespace module\mail\models\forms;
+
+use Yii;
+use yii\base\Model;
+use humhub\modules\user\models\User;
+
 /**
  * @package humhub.modules.mail.forms
  * @since 0.5
  */
-class CreateMessageForm extends CFormModel {
+class CreateMessage extends Model
+{
 
     public $recipient;
     public $message;
@@ -20,9 +27,10 @@ class CreateMessageForm extends CFormModel {
     /**
      * Declares the validation rules.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
-            array('message, recipient, title', 'required'),
+            array(['message', 'recipient', 'title'], 'required'),
             array('recipient', 'checkRecipient')
         );
     }
@@ -32,7 +40,8 @@ class CreateMessageForm extends CFormModel {
      * If not declared here, an attribute would have a label that is
      * the same as its name with the first letter in upper case.
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'recipient' => Yii::t('MailModule.forms_CreateMessageForm', 'Recipient'),
             'title' => Yii::t('MailModule.forms_CreateMessageForm', 'Subject'),
@@ -46,7 +55,8 @@ class CreateMessageForm extends CFormModel {
      * @param type $attribute
      * @param type $params
      */
-    public function checkRecipient($attribute, $params) {
+    public function checkRecipient($attribute, $params)
+    {
 
         // Check if email field is not empty
         if ($this->$attribute != "") {
@@ -57,15 +67,14 @@ class CreateMessageForm extends CFormModel {
                 $userGuid = preg_replace("/[^A-Za-z0-9\-]/", '', $userGuid);
 
                 // Try load user
-                $user = User::model()->findByAttributes(array('guid' => $userGuid));
+                $user = User::findOne(['guid' => $userGuid]);
                 if ($user != null) {
 
-                    if ($user->id == Yii::app()->user->id) {
+                    if ($user->id == Yii::$app->user->id) {
                         $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You cannot send a email to yourself!"));
                     } else {
                         $this->recipients[] = $user;
                     }
-
                 }
             }
         }
@@ -74,7 +83,8 @@ class CreateMessageForm extends CFormModel {
     /**
      * Returns an Array with selected recipients
      */
-    public function getRecipients() {
+    public function getRecipients()
+    {
         return $this->recipients;
     }
 

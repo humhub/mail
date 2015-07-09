@@ -1,5 +1,13 @@
 <?php
 
+namespace module\mail\models;
+
+use Yii;
+use humhub\components\ActiveRecord;
+use humhub\modules\user\models\User;
+use humhub\models\Setting;
+use module\mail\models\Message;
+
 /**
  * This is the model class for table "message_entry".
  *
@@ -22,23 +30,13 @@
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class MessageEntry extends HActiveRecord
+class MessageEntry extends ActiveRecord
 {
-
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return MessageEntry the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'message_entry';
     }
@@ -51,84 +49,31 @@ class MessageEntry extends HActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('message_id, user_id, content', 'required'),
-            array('message_id, user_id, file_id, created_by, updated_by', 'numerical', 'integerOnly' => true),
-            array('created_at, updated_at', 'safe'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('id, message_id, user_id, file_id, content, created_at, created_by, updated_at, updated_by', 'safe', 'on' => 'search'),
+            array(['message_id', 'user_id', 'content'], 'required'),
+            array(['message_id', 'user_id', 'file_id', 'created_by', 'updated_by'], 'integer'),
+            array(['created_at', 'updated_at'], 'safe'),
         );
     }
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
+    public function getUser()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'message' => array(self::BELONGS_TO, 'Message', 'message_id'),
-            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-            'file' => array(self::BELONGS_TO, 'File', 'file_id'),
-        );
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function beforeSave()
+    public function getMessage()
+    {
+        return $this->hasOne(Message::className(), ['id' => 'message_id']);
+    }
+
+    public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
-            
+
             // Updates the updated_at attribute
             $this->message->save();
-            
         }
-        
-        return parent::beforeSave();
-    }
-    
-    
-    /**
-     * @return array customized attribute labels (name=>label)
-     */
-    public function attributeLabels()
-    {
-        return array(
-            'id' => 'ID',
-            'message_id' => 'Message',
-            'user_id' => 'User',
-            'file_id' => 'File',
-            'content' => 'Content',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
-        );
-    }
 
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search()
-    {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
-        $criteria = new CDbCriteria;
-
-        $criteria->compare('id', $this->id);
-        $criteria->compare('message_id', $this->message_id);
-        $criteria->compare('user_id', $this->user_id);
-        $criteria->compare('file_id', $this->file_id);
-        $criteria->compare('content', $this->content, true);
-        $criteria->compare('created_at', $this->created_at, true);
-        $criteria->compare('created_by', $this->created_by);
-        $criteria->compare('updated_at', $this->updated_at, true);
-        $criteria->compare('updated_by', $this->updated_by);
-
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-        ));
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -156,35 +101,27 @@ class MessageEntry extends HActiveRecord
      */
     public function notify()
     {
-
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
 
         foreach ($this->message->users as $user) {
 
-            // User dont wants any emails
-            #if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
-            #    continue;
-            #}
-            // Ignore this user itself
             if ($user->id == $this->user_id)
                 continue;
 
-            $message = new HMailMessage();
-            $message->view = 'application.modules.mail.views.emails.NewMessageEntry';
-            $message->addFrom(HSetting::Get('systemEmailAddress', 'mailing'), HSetting::Get('systemEmailName', 'mailing'));
-            $message->addTo($user->email);
-            $message->subject = Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName));
-            $message->setBody(array(
+            Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
+
+            $mail = Yii::$app->mailer->compose(['html' => '@mailmodule/views/emails/NewMessageEntry'], [
                 'message' => $this->message,
                 'entry' => $this,
                 'user' => $user,
                 'sender' => $this->user,
-                'senderName' => $senderName,
-                'senderGuid' => $senderGuid,
                 'originator' => $this->message->originator,
-                    ), 'text/html');
-            Yii::app()->mail->send($message);
+            ]);
+            $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
+            $mail->setTo($user->email);
+            $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
+            $mail->send();
         }
     }
 

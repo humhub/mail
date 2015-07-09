@@ -1,10 +1,15 @@
 <?php
 
+namespace module\mail\widgets;
+
+use Yii;
+use humhub\components\Widget;
+
 /**
  * @package humhub.modules.mail
  * @since   0.5.9
  */
-class NewMessageButtonWidget extends HWidget
+class NewMessageButton extends Widget
 {
 
     public $guid = null;
@@ -36,7 +41,7 @@ class NewMessageButtonWidget extends HWidget
             $params['buttonLabel'] = Yii::t('MailModule.widgets_views_newMessageButton', 'New message');
         }
 
-        $this->render('newMessageButton', $params);
+        return $this->render('newMessageButton', $params);
     }
 
 }

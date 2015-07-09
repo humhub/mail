@@ -1,11 +1,12 @@
+<?php
+
+use yii\helpers\Url;
+use humhub\compat\CActiveForm;
+?>
+
 <div class="modal-dialog">
     <div class="modal-content">
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'create-message-form',
-            'enableAjaxValidation' => false,
-        ));
-        ?>
+        <?php $form = CActiveForm::begin(); ?>
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -20,11 +21,11 @@
             <?php echo $form->textField($model, 'recipient', array('class' => 'form-control', 'id' => 'recipient')); ?>
 
             <?php
-            $this->widget('application.modules_core.user.widgets.UserPickerWidget', array(
+            echo \humhub\modules\user\widgets\UserPicker::widget(array(
                 'inputId' => 'recipient',
                 'model' => $model,
                 'attribute' => 'recipient',
-                'userGuid' => Yii::app()->user->guid,
+                'userGuid' => Yii::$app->user->guid,
                 'focus' => true,
             ));
             ?>
@@ -38,7 +39,7 @@
             <div class="form-group">
                 <?php echo $form->labelEx($model, 'message'); ?>
                 <?php echo $form->textArea($model, 'message', array('class' => 'form-control', 'rows' => '7', 'id' => 'newMessageText')); ?>
-                <?php $this->widget('application.widgets.MarkdownEditorWidget', array('fieldId' => 'newMessageText')); ?>
+                <?php echo \humhub\widgets\MarkdownEditor::widget(array('fieldId' => 'newMessageText')); ?>
                 <?php echo $form->error($model, 'message'); ?>
             </div>
 
@@ -46,11 +47,18 @@
         <div class="modal-footer">
             <hr/>
             <?php
-            echo HHtml::ajaxButton(Yii::t('MailModule.views_mail_create', 'Send'), array('//mail/mail/create'), array(
-                'type' => 'POST',
-                'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
-                'success' => 'function(html){ $("#globalModal").html(html); }',
-                    ), array('class' => 'btn btn-primary'));
+            echo \humhub\widgets\AjaxButton::widget([
+                'label' => Yii::t('MailModule.views_mail_create', 'Send'),
+                'ajaxOptions' => [
+                    'type' => 'POST',
+                    'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
+                    'success' => 'function(html){ $("#globalModal").html(html); }',
+                    'url' => Url::to(['/mail/mail/create']),
+                ],
+                'htmlOptions' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ]);
             ?>
 
             <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
@@ -60,7 +68,7 @@
             </div>
         </div>
 
-<?php $this->endWidget(); ?>
+        <?php CActiveForm::end(); ?>
     </div>
 
 </div>
