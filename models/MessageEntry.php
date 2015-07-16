@@ -1,12 +1,12 @@
 <?php
 
-namespace module\mail\models;
+namespace humhub\modules\mail\models;
 
 use Yii;
 use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
 use humhub\models\Setting;
-use module\mail\models\Message;
+use humhub\modules\mail\models\Message;
 
 /**
  * This is the model class for table "message_entry".

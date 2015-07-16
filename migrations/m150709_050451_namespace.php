@@ -2,7 +2,7 @@
 
 use yii\db\Schema;
 use humhub\components\Migration;
-use module\mail\models\MessageEntry;
+use humhub\modules\mail\models\MessageEntry;
 
 class m150709_050451_namespace extends Migration
 {

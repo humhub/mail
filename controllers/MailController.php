@@ -1,18 +1,18 @@
 <?php
 
-namespace module\mail\controllers;
+namespace humhub\modules\mail\controllers;
 
 use Yii;
 use yii\helpers\Url;
 use yii\web\HttpException;
 use humhub\components\Controller;
 use humhub\modules\file\models\File;
-use module\mail\models\Message;
-use module\mail\models\MessageEntry;
-use module\mail\models\UserMessage;
-use module\mail\models\forms\InviteRecipient;
-use module\mail\models\forms\ReplyMessage;
-use module\mail\models\forms\CreateMessage;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\models\forms\InviteRecipient;
+use humhub\modules\mail\models\forms\ReplyMessage;
+use humhub\modules\mail\models\forms\CreateMessage;
 
 /**
  * MailController provides messaging actions.
@@ -286,7 +286,7 @@ class MailController extends Controller
     }
 
     /**
-     * Returns the number of new messages as JSON 
+     * Returns the number of new messages as JSON
      */
     public function actionGetNewMessageCountJson()
     {
@@ -304,7 +304,7 @@ class MailController extends Controller
      *
      * If insufficed privileges or not found null will be returned.
      *
-     * @param int $id            
+     * @param int $id
      */
     private function getMessage($id)
     {

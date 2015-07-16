@@ -1,12 +1,12 @@
 <?php
 
-namespace module\mail\models;
+namespace humhub\modules\mail\models;
 
 use Yii;
 use humhub\components\ActiveRecord;
 use humhub\models\Setting;
 use humhub\modules\user\models\User;
-use module\mail\models\MessageEntry;
+use humhub\modules\mail\models\MessageEntry;
 
 /**
  * This is the model class for table "message".
@@ -109,7 +109,7 @@ class Message extends ActiveRecord
     /**
      * Deletes message entry by given Id
      * If it's the last entry, the whole message will be deleted.
-     * 
+     *
      * @param MessageEntry $entry
      */
     public function deleteEntry($entry)
@@ -124,10 +124,10 @@ class Message extends ActiveRecord
     }
 
     /**
-     * User leaves a message 
-     * 
+     * User leaves a message
+     *
      * If it's the last user, the whole message will be deleted.
-     * 
+     *
      * @param int $userId
      */
     public function leave($userId)
@@ -146,7 +146,7 @@ class Message extends ActiveRecord
 
     /**
      * Marks a message as seen for given userId
-     * 
+     *
      * @param int $userId
      */
     public function seen($userId)

@@ -1,6 +1,6 @@
 <?php
 
-namespace module\mail\models\forms;
+namespace humhub\modules\mail\models\forms;
 
 use Yii;
 use yii\base\Model;

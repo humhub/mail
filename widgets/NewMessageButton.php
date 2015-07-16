@@ -1,6 +1,6 @@
 <?php
 
-namespace module\mail\widgets;
+namespace humhub\modules\mail\widgets;
 
 use Yii;
 use humhub\components\Widget;

@@ -1,9 +1,9 @@
 <?php
 
-namespace module\mail\widgets;
+namespace humhub\modules\mail\widgets;
 
 use humhub\components\Widget;
-use module\mail\models\UserMessage;
+use humhub\modules\mail\models\UserMessage;
 
 /**
  * @package humhub.modules.mail

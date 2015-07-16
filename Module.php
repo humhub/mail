@@ -1,6 +1,6 @@
 <?php
 
-namespace module\mail;
+namespace humhub\modules\mail;
 
 /**
  * MailModule provides messaging functions inside the application.
@@ -10,5 +10,5 @@ namespace module\mail;
  */
 class Module extends \humhub\components\Module
 {
-    
+
 }

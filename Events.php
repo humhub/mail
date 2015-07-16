@@ -6,15 +6,15 @@
  * @license https://www.humhub.com/licences
  */
 
-namespace module\mail;
+namespace humhub\modules\mail;
 
 use Yii;
 use yii\helpers\Url;
-use module\mail\models\Message;
-use module\mail\models\MessageEntry;
-use module\mail\models\UserMessage;
-use module\mail\widgets\NewMessageButton;
-use module\mail\widgets\Notifications;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\widgets\NewMessageButton;
+use humhub\modules\mail\widgets\Notifications;
 
 /**
  * Description of Events

@@ -6,19 +6,24 @@
  * @license https://www.humhub.com/licences
  */
 
-namespace module\mail;
+namespace humhub\modules\mail;
 
 use yii\web\AssetBundle;
 
 class Assets extends AssetBundle
 {
 
-    public $sourcePath = '@module/mail/assets';
     public $css = [
         'mail.css',
     ];
     public $js = [
         'mail.js'
     ];
+
+    public function init()
+    {
+        $this->sourcePath = dirname(__FILE__) . '/assets';
+        parent::init();
+    }
 
 }

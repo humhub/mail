@@ -1,11 +1,11 @@
 <?php
 
-namespace module\mail\models;
+namespace humhub\modules\mail\models;
 
 use Yii;
 use humhub\components\ActiveRecord;
-use module\mail\models\Message;
-use module\mail\models\User;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\User;
 
 /**
  * This is the model class for table "user_message".
@@ -75,7 +75,7 @@ class UserMessage extends ActiveRecord
 
     /**
      * Returns the new message count for given User Id
-     * 
+     *
      * @param int $userId
      * @return int
      */
