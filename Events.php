@@ -78,7 +78,7 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addWidget(NewMessageButton::className(), array('guid' => $event->sender->user->guid, 'type' => 'success'), array('sortOrder' => 90));
+        $event->sender->addWidget(NewMessageButton::className(), array('guid' => $event->sender->user->guid, 'type' => 'info'), array('sortOrder' => 90));
     }
 
 }
