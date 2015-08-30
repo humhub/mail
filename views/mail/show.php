@@ -29,7 +29,7 @@ use humhub\compat\CActiveForm;
                             'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Leave'),
                             'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
                             'linkContent' => '<i class="fa fa-sign-out"></i> ',
-                            'class' => 'btn btn-primary btn-sm',
+                            'cssClass' => 'btn btn-primary btn-sm',
                             'linkHref' => Url::to(["/mail/mail/leave", 'id' => $message->id])
                         ));
                         ?>
@@ -43,7 +43,7 @@ use humhub\compat\CActiveForm;
                             'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Delete'),
                             'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
                             'linkContent' => '<i class="fa fa-times"></i> ',
-                            'class' => 'btn btn-primary btn-sm',
+                            'cssClass' => 'btn btn-primary btn-sm',
                             'linkHref' => Url::to(["/mail/mail/leave", 'id' => $message->id])
                         ));
                         ?>
@@ -78,7 +78,7 @@ use humhub\compat\CActiveForm;
 
                         <?php if ($entry->created_by == Yii::$app->user->id): ?>
                             <div class="pull-right">
-                                <?php echo Html::a('<i class="fa fa-pencil-square-o"></i>', ["/mail/mail/edit-entry", 'messageEntryId' => $entry->id], array('data-toggle' => 'modal', 'data-target' => '#globalModal', 'class' => '')); ?>
+                                <?php echo Html::a('<i class="fa fa-pencil-square-o"></i>', ["/mail/mail/edit-entry", 'messageEntryId' => $entry->id], array('data-target' => '#globalModal', 'class' => '')); ?>
                             </div>
                         <?php endif; ?>
 
@@ -132,7 +132,6 @@ use humhub\compat\CActiveForm;
                     <?php
                     echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add user'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
                         'class' => 'btn btn-info',
-                        'data-toggle' => 'modal',
                         'data-target' => '#globalModal'
                     ));
                     ?>

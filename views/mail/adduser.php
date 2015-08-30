@@ -42,9 +42,6 @@ use humhub\compat\CActiveForm;
             <button type="button" class="btn btn-primary"
                     data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_adduser', 'Close'); ?></button>
 
-            <div class="col-md-1 modal-loader">
-                <div id="adduser-loader" class="loader loader-small hidden"></div>
-            </div>
         </div>
 
         <?php CActiveForm::end(); ?>

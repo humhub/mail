@@ -25,37 +25,41 @@ use humhub\compat\CActiveForm;
 
         </div>
         <div class="modal-footer">
-            <hr/>
-            <?php
-            echo \humhub\widgets\AjaxButton::widget([
-                'label' => Yii::t('MailModule.views_mail_edit', 'Save'),
-                'ajaxOptions' => [
-                    'type' => 'POST',
-                    'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
-                    'success' => 'function(html){ $("#globalModal").html(html); }',
-                    'url' => Url::to(['/mail/mail/edit-entry', 'messageEntryId' => $entry->id]),
-                ],
-                'htmlOptions' => [
-                    'class' => 'btn btn-primary'
-                ]
-            ]);
-            ?>
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <?php
+                    echo \humhub\widgets\AjaxButton::widget([
+                        'label' => Yii::t('MailModule.views_mail_edit', 'Save'),
+                        'ajaxOptions' => [
+                            'type' => 'POST',
+                            'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
+                            'success' => 'function(html){ $("#globalModal").html(html); }',
+                            'url' => Url::to(['/mail/mail/edit-entry', 'messageEntryId' => $entry->id]),
+                        ],
+                        'htmlOptions' => [
+                            'class' => 'btn btn-primary'
+                        ]
+                    ]);
+                    ?>
 
-            <?php
-            echo humhub\widgets\ModalConfirm::widget(array(
-                'uniqueID' => 'modal_maildelete_' . $entry->id,
-                'title' => Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deletion'),
-                'message' => Yii::t('MailModule.views_mail_show', 'Do you really want to delete this message?'),
-                'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Delete'),
-                'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
-                'linkContent' => Yii::t('MailModule.views_mail_show', 'Delete'),
-                'class' => 'btn btn-danger',
-                'linkHref' => Url::to(["/mail/mail/delete-entry", 'messageEntryId' => $entry->id])
-            ));
-            ?>            
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
 
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
-
+                </div>
+                <div class="col-md-6 text-right">
+                    <?php
+                    echo humhub\widgets\ModalConfirm::widget(array(
+                        'uniqueID' => 'modal_maildelete_' . $entry->id,
+                        'title' => Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deletion'),
+                        'message' => Yii::t('MailModule.views_mail_show', 'Do you really want to delete this message?'),
+                        'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Delete'),
+                        'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
+                        'linkContent' => Yii::t('MailModule.views_mail_show', 'Delete'),
+                        'cssClass' => 'btn btn-danger',
+                        'linkHref' => Url::to(["/mail/mail/delete-entry", 'messageEntryId' => $entry->id])
+                    ));
+                    ?>
+                </div>
+            </div>
 
             <div class="col-md-1 modal-loader">
                 <div id="create-message-loader" class="loader loader-small hidden"></div>
