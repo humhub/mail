@@ -179,9 +179,9 @@ class Message extends HActiveRecord
     {
 
         // User dont wants any emails
-        #if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
-        #    return;
-        #}
+        if ($user->getSetting("receive_email_messaging", "core") == User::RECEIVE_EMAIL_NEVER) {
+           return;
+        }
 
         $originatorName = $this->originator->displayName;
         $originatorGuid = $this->originator->guid;
