@@ -10,6 +10,7 @@ use humhub\modules\file\models\File;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
+use humhub\modules\User\models\User;
 use humhub\modules\mail\models\forms\InviteRecipient;
 use humhub\modules\mail\models\forms\ReplyMessage;
 use humhub\modules\mail\models\forms\CreateMessage;
