@@ -17,6 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'You cannot send a email to yourself!' => '',
     'You could not send an email to yourself!' => 'Você não pode enviar um e-mail para si!',
+    'You cannot send a email to yourself!' => 'Você NÃO PODE enviar um e-mail para si mesmo!',
 ];
