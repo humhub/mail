@@ -1,30 +1,35 @@
 <?php
 
-use humhub\compat\CActiveForm;
+use yii\widgets\ActiveForm;
+
+
 ?>
 <div class="modal-dialog">
     <div class="modal-content">
-        <?php $form = CActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['id' => 'add-user-form']); ?>
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
                 id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_adduser", "Add more participants to your conversation..."); ?></h4>
         </div>
         <div class="modal-body">
-            <?php echo $form->textField($inviteForm, 'recipient', array('id' => 'addUserFrom_mail')); ?>
-            <?php echo $form->error($inviteForm, 'recipient'); ?>
+
+            <div class="form-group">
+                <?php echo $form->field($inviteForm, 'recipient', ['inputOptions' => ['id' => 'addUserFrom_mail']]); ?>
+            </div>
+
             <?php
             echo humhub\modules\user\widgets\UserPicker::widget(array(
                 'inputId' => 'addUserFrom_mail',
                 'model' => $inviteForm, // CForm Instanz
                 'attribute' => 'recipient',
                 'userGuid' => Yii::$app->user->guid,
+                'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
                 'focus' => true,
             ));
             ?>
         </div>
         <div class="modal-footer">
-            <hr/>
             <?php
             echo \humhub\widgets\AjaxButton::widget([
                 'label' => Yii::t('MailModule.views_mail_adduser', 'Send'),
@@ -44,7 +49,7 @@ use humhub\compat\CActiveForm;
 
         </div>
 
-        <?php CActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
 

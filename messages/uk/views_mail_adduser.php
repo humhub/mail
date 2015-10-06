@@ -16,8 +16,9 @@
  *
  * NOTE, this file must be saved in UTF-8 encoding.
  */
-return array (
-  'Add more participants to your conversation...' => '',
-  'Close' => '',
-  'Send' => '',
+return array(
+    'Add more participants to your conversation...' => '',
+    'Close' => '',
+    'Send' => '',
+    'Add recipients' => ''
 );

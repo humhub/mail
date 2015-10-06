@@ -29,6 +29,7 @@ use humhub\compat\CActiveForm;
                             'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Leave'),
                             'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
                             'linkContent' => '<i class="fa fa-sign-out"></i> ',
+                            'linkTooltipText' => Yii::t('MailModule.views_mail_show', 'Leave conversation'),
                             'cssClass' => 'btn btn-primary btn-sm',
                             'linkHref' => Url::to(["/mail/mail/leave", 'id' => $message->id])
                         ));
@@ -43,6 +44,7 @@ use humhub\compat\CActiveForm;
                             'buttonTrue' => Yii::t('MailModule.views_mail_show', 'Delete'),
                             'buttonFalse' => Yii::t('MailModule.views_mail_show', 'Cancel'),
                             'linkContent' => '<i class="fa fa-times"></i> ',
+                            'linkTooltipText' => Yii::t('MailModule.views_mail_show', 'Delete conversation'),
                             'cssClass' => 'btn btn-primary btn-sm',
                             'linkHref' => Url::to(["/mail/mail/leave", 'id' => $message->id])
                         ));

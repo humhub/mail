@@ -19,6 +19,7 @@
 return [
     'Message' => '',
     'Recipient' => '',
+    'Add recipients' => '',
     'Subject' => '',
     'You cannot send a email to yourself!' => '',
     'You could not send an email to yourself!' => '@@@@',
