@@ -138,7 +138,7 @@ use humhub\compat\CActiveForm;
                     ));
                     ?>
 
-                    <?php if (count($message->users) > 2 && $message->originator->id != Yii::$app->user->id): ?>
+                    <?php if (count($message->users) > 2): ?>
                         <a class="btn btn-danger"
                            href="<?php echo Url::to(['leave', 'id' => $message->id]); ?>"><i
                                 class="fa fa-sign-out"></i> <?php echo Yii::t('MailModule.views_mail_show', "Leave discussion"); ?>
