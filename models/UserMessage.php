@@ -1,5 +1,12 @@
 <?php
 
+namespace humhub\modules\mail\models;
+
+use Yii;
+use humhub\components\ActiveRecord;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\User;
+
 /**
  * This is the model class for table "user_message".
  *
@@ -16,23 +23,13 @@
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class UserMessage extends HActiveRecord
+class UserMessage extends ActiveRecord
 {
-
-    /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return UserMessage the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'user_message';
     }
@@ -43,25 +40,20 @@ class UserMessage extends HActiveRecord
     public function rules()
     {
         return array(
-            array('message_id, user_id', 'required'),
-            array('message_id, user_id, is_originator, created_by, updated_by', 'numerical', 'integerOnly' => true),
-            array('last_viewed, created_at, updated_at', 'safe'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('message_id, user_id, is_originator, last_viewed, created_at, created_by, updated_at, updated_by', 'safe', 'on' => 'search'),
+            array(['message_id', 'user_id'], 'required'),
+            array(['message_id', 'user_id', 'is_originator', 'created_by', 'updated_by'], 'integer'),
+            array(['last_viewed', 'created_at', 'updated_at'], 'safe'),
         );
     }
 
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
+    public function getMessage()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'message' => array(self::BELONGS_TO, 'Message', 'message_id'),
-        );
+        return $this->hasOne(Message::className(), ['id' => 'message_id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -83,27 +75,25 @@ class UserMessage extends HActiveRecord
 
     /**
      * Returns the new message count for given User Id
-     * 
+     *
      * @param int $userId
      * @return int
      */
     public static function getNewMessageCount($userId = null)
     {
         if ($userId === null) {
-            $userId = Yii::app()->user->id;
+            $userId = Yii::$app->user->id;
         }
 
         $json = array();
 
-        // New message count
-        $sql = "SELECT count(message_id)
-                FROM user_message
-                LEFT JOIN message on message.id = user_message.message_id
-                WHERE user_message.user_id = :user_id AND (message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL) AND message.updated_by <> :user_id";
-        $connection = Yii::app()->db;
-        $command = $connection->createCommand($sql);
-        $command->bindParam(":user_id", $userId);
-        return $command->queryScalar();
+        $query = self::find();
+        $query->joinWith('message');
+        $query->where(['user_message.user_id' => $userId]);
+        $query->andWhere("message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL");
+        $query->andWhere(["<>", 'message.updated_by', $userId]);
+
+        return $query->count();
     }
 
 }

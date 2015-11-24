@@ -1,10 +1,17 @@
 <?php
 
+namespace humhub\modules\mail\models\forms;
+
+use Yii;
+use yii\base\Model;
+use humhub\modules\user\models\User;
+
 /**
  * @package humhub.modules.mail.forms
  * @since 0.5
  */
-class InviteRecipientForm extends CFormModel {
+class InviteRecipient extends Model
+{
 
     public $recipient;
     public $message; // message
@@ -19,7 +26,8 @@ class InviteRecipientForm extends CFormModel {
     /**
      * Declares the validation rules.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('recipient', 'required'),
             array('recipient', 'checkRecipient')
@@ -31,7 +39,8 @@ class InviteRecipientForm extends CFormModel {
      * If not declared here, an attribute would have a label that is
      * the same as its name with the first letter in upper case.
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'recipient' => 'Recipient',
         );
@@ -43,7 +52,8 @@ class InviteRecipientForm extends CFormModel {
      * @param type $attribute
      * @param type $params
      */
-    public function checkRecipient($attribute, $params) {
+    public function checkRecipient($attribute, $params)
+    {
 
         // Check if email field is not empty
         if ($this->$attribute != "") {
@@ -54,10 +64,10 @@ class InviteRecipientForm extends CFormModel {
                 $userGuid = preg_replace("/[^A-Za-z0-9\-]/", '', $userGuid);
 
                 // Try load user
-                $user = User::model()->findByAttributes(array('guid' => $userGuid));
+                $user = User::findOne(['guid' => $userGuid]);
                 if ($user != null) {
 
-                    if ($user->id == Yii::app()->user->id) {
+                    if ($user->id == Yii::$app->user->id) {
                         $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "You cannot send a email to yourself!"));
                     } else {
                         $this->recipients[] = $user;
@@ -70,7 +80,8 @@ class InviteRecipientForm extends CFormModel {
     /**
      * Returns an Array with selected recipients
      */
-    public function getRecipients() {
+    public function getRecipients()
+    {
         return $this->recipients;
     }
 

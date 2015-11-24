@@ -1,5 +1,20 @@
 <?php
 
+namespace humhub\modules\mail\controllers;
+
+use Yii;
+use yii\helpers\Url;
+use yii\web\HttpException;
+use humhub\components\Controller;
+use humhub\modules\file\models\File;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\models\UserMessage;
+use humhub\modules\User\models\User;
+use humhub\modules\mail\models\forms\InviteRecipient;
+use humhub\modules\mail\models\forms\ReplyMessage;
+use humhub\modules\mail\models\forms\CreateMessage;
+
 /**
  * MailController provides messaging actions.
  *
@@ -9,36 +24,13 @@
 class MailController extends Controller
 {
 
-    /**
-     *
-     * @return array action filters
-     */
-    public function filters()
+    public function behaviors()
     {
-        return array(
-            'accessControl'
-                ) // perform access control for CRUD operations
-        ;
-    }
-
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * 
-     * @return array access control rules
-     */
-    public function accessRules()
-    {
-        return array(
-            array(
-                'allow',
-                'users' => array('@')
-            ),
-            array(
-                'deny', // deny all users
-                'users' => array('*')
-            )
-        );
+        return [
+            'acl' => [
+                'class' => \humhub\components\behaviors\AccessControl::className(),
+            ]
+        ];
     }
 
     /**
@@ -47,32 +39,29 @@ class MailController extends Controller
     public function actionIndex()
     {
         // Initially displayed message
-        $messageId = (int) Yii::app()->request->getParam('id');
+        $messageId = (int) Yii::$app->request->get('id');
 
-        $criteria = new CDbCriteria();
-        $criteria->join = "LEFT JOIN message on message.id = t.message_id";
-        $criteria->condition = "t.user_id=:userId";
-        $criteria->params = array(':userId' => Yii::app()->user->id);
-        $criteria->order = "message.updated_at DESC";
+        $query = UserMessage::find();
+        $query->joinWith('message');
+        $query->where(['user_message.user_id' => Yii::$app->user->id]);
+        $query->orderBy('message.updated_at DESC');
 
-        $pagination = new CPagination(UserMessage::model()->count($criteria));
-        $pagination->setPageSize(10);
-        $pagination->applyLimit($criteria);
+        $countQuery = clone $query;
+        $messageCount = $countQuery->count();
+        $pagination = new \yii\data\Pagination(['totalCount' => $messageCount, 'pageSize' => 25]);
+        $query->offset($pagination->offset)->limit($pagination->limit);
 
-        $userMessages = UserMessage::model()->findAll($criteria);
+        $userMessages = $query->all();
 
-        // If no messageId is given, use first 
-        if (($messageId == "" || $this->getMessage($messageId) === null) && count($userMessages) != 0) {
+        // If no messageId is given, use first if available
+        if (($messageId == "" || $this->getMessage($messageId) === null) && $messageCount != 0) {
             $messageId = $userMessages[0]->message->id;
         }
 
-        if ($messageId != "") {
-            Yii::app()->clientScript->registerScript("loadInitialMessage", 'loadMessage(' . CHtml::encode($messageId) . ');');
-        }
-
-        $this->render('/mail/index', array(
-            'userMessages' => $userMessages,
-            'pagination' => $pagination
+        return $this->render('/mail/index', array(
+                    'userMessages' => $userMessages,
+                    'messageId' => $messageId,
+                    'pagination' => $pagination
         ));
     }
 
@@ -82,16 +71,13 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $criteria = new CDbCriteria();
-        $criteria->join = "LEFT JOIN message on message.id = t.message_id";
-        $criteria->condition = "t.user_id=:userId";
-        $criteria->params = array(':userId' => Yii::app()->user->id);
-        $criteria->order = "message.updated_at DESC";
-        $criteria->limit = 5;
+        $query = UserMessage::find();
+        $query->joinWith('message');
+        $query->where(['user_message.user_id' => Yii::$app->user->id]);
+        $query->orderBy('message.updated_at DESC');
+        $query->limit(5);
 
-        $userMessages = UserMessage::model()->findAll($criteria);
-
-        $this->renderPartial('notificationList', array('userMessages' => $userMessages), false, true);
+        return $this->renderAjax('notificationList', array('userMessages' => $query->all()));
     }
 
     /**
@@ -100,42 +86,35 @@ class MailController extends Controller
     public function actionShow()
     {
         // Load Message
-        $id = (int) Yii::app()->request->getQuery('id');
+        $id = (int) Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 
         if ($message == null) {
-            throw new CHttpException(404, 'Could not find message!');
+            throw new HttpException(404, 'Could not find message!');
         }
 
         // Reply Form
-        $replyForm = new ReplyMessageForm();
-        if (isset($_POST['ReplyMessageForm'])) {
-            $replyForm->attributes = $_POST['ReplyMessageForm'];
+        $replyForm = new ReplyMessage();
+        if ($replyForm->load(Yii::$app->request->post()) && $replyForm->validate()) {
+            // Attach Message Entry
+            $messageEntry = new MessageEntry();
+            $messageEntry->message_id = $message->id;
+            $messageEntry->user_id = Yii::$app->user->id;
+            $messageEntry->content = $replyForm->message;
+            $messageEntry->save();
+            $messageEntry->notify();
+            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
-            if ($replyForm->validate()) {
-
-                // Attach Message Entry
-                $messageEntry = new MessageEntry();
-                $messageEntry->message_id = $message->id;
-                $messageEntry->user_id = Yii::app()->user->id;
-                $messageEntry->content = $replyForm->message;
-                $messageEntry->save();
-                $messageEntry->notify();
-                File::attachPrecreated($messageEntry, Yii::app()->request->getParam('fileUploaderHiddenGuidField'));
-
-                $this->redirect($this->createUrl('index', array(
-                            'id' => $message->id
-                )));
-            }
+            return $this->redirect(['index', 'id' => $message->id]);
         }
 
         // Marks message as seen
-        $message->seen(Yii::app()->user->id);
+        $message->seen(Yii::$app->user->id);
 
-        $this->renderPartial('/mail/show', array(
-            'message' => $message,
-            'replyForm' => $replyForm,
-                ), false, true);
+        return $this->renderAjax('/mail/show', [
+                    'message' => $message,
+                    'replyForm' => $replyForm,
+        ]);
     }
 
     /**
@@ -145,34 +124,31 @@ class MailController extends Controller
      */
     public function actionAddUser()
     {
-        $id = Yii::app()->request->getQuery('id');
+        $id = Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 
         if ($message == null) {
-            throw new CHttpException(404, 'Could not find message!');
+            throw new HttpException(404, 'Could not find message!');
         }
 
         // Invite Form
-        $inviteForm = new InviteRecipientForm();
+        $inviteForm = new InviteRecipient();
         $inviteForm->message = $message;
-        if (isset($_POST['InviteRecipientForm'])) {
-            $inviteForm->attributes = Yii::app()->input->stripClean($_POST['InviteRecipientForm']);
-            if ($inviteForm->validate()) {
-                foreach ($inviteForm->getRecipients() as $user) {
-                    // Attach User Message
-                    $userMessage = new UserMessage();
-                    $userMessage->message_id = $message->id;
-                    $userMessage->user_id = $user->id;
-                    $userMessage->is_originator = 0;
-                    $userMessage->save();
-                    $message->notify($user);
-                }
-                $this->htmlRedirect($this->createUrl('index', array('id' => $message->id)));
+
+        if ($inviteForm->load(Yii::$app->request->post()) && $inviteForm->validate()) {
+            foreach ($inviteForm->getRecipients() as $user) {
+                // Attach User Message
+                $userMessage = new UserMessage();
+                $userMessage->message_id = $message->id;
+                $userMessage->user_id = $user->id;
+                $userMessage->is_originator = 0;
+                $userMessage->save();
+                $message->notify($user);
             }
+            return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
-        $output = $this->renderPartial('/mail/adduser', array('inviteForm' => $inviteForm));
-        Yii::app()->clientScript->render($output);
-        echo $output;
+
+        return $this->renderAjax('/mail/adduser', array('inviteForm' => $inviteForm));
     }
 
     /**
@@ -181,63 +157,57 @@ class MailController extends Controller
      */
     public function actionCreate()
     {
-        $userGuid = Yii::app()->request->getParam('userGuid');
-        $model = new CreateMessageForm();
+        $userGuid = Yii::$app->request->get('userGuid');
+        $model = new CreateMessage();
 
         // Preselect user if userGuid is given
         if ($userGuid != "") {
-            $user = User::model()->findByAttributes(array('guid' => $userGuid));
+            $user = User::findOne(array('guid' => $userGuid));
             if (isset($user)) {
                 $model->recipient = $user->guid;
             }
         }
 
-        if (isset($_POST['CreateMessageForm'])) {
-            $model->attributes = $_POST['CreateMessageForm'];
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            if ($model->validate()) {
+            // Create new Message
+            $message = new Message();
+            $message->title = $model->title;
+            $message->save();
 
-                // Create new Message
-                $message = new Message();
-                $message->title = $model->title;
-                $message->save();
+            // Attach Message Entry
+            $messageEntry = new MessageEntry();
+            $messageEntry->message_id = $message->id;
+            $messageEntry->user_id = Yii::$app->user->id;
+            $messageEntry->content = $model->message;
+            $messageEntry->save();
+            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
-                // Attach Message Entry
-                $messageEntry = new MessageEntry();
-                $messageEntry->message_id = $message->id;
-                $messageEntry->user_id = Yii::app()->user->id;
-                $messageEntry->content = $model->message;
-                $messageEntry->save();
-                File::attachPrecreated($messageEntry, Yii::app()->request->getParam('fileUploaderHiddenGuidField'));
-
-                // Attach also Recipients
-                foreach ($model->getRecipients() as $recipient) {
-                    $userMessage = new UserMessage();
-                    $userMessage->message_id = $message->id;
-                    $userMessage->user_id = $recipient->id;
-                    $userMessage->save();
-                }
-
-                // Inform recipients (We need to add all before)
-                foreach ($model->getRecipients() as $recipient) {
-                    $message->notify($recipient);
-                }
-
-                // Attach User Message
+            // Attach also Recipients
+            foreach ($model->getRecipients() as $recipient) {
                 $userMessage = new UserMessage();
                 $userMessage->message_id = $message->id;
-                $userMessage->user_id = Yii::app()->user->id;
-                $userMessage->is_originator = 1;
-                $userMessage->last_viewed = new CDbExpression('NOW()');
+                $userMessage->user_id = $recipient->id;
                 $userMessage->save();
-
-                $this->htmlRedirect($this->createUrl('index', array('id' => $message->id)));
             }
+
+            // Inform recipients (We need to add all before)
+            foreach ($model->getRecipients() as $recipient) {
+                $message->notify($recipient);
+            }
+
+            // Attach User Message
+            $userMessage = new UserMessage();
+            $userMessage->message_id = $message->id;
+            $userMessage->user_id = Yii::$app->user->id;
+            $userMessage->is_originator = 1;
+            $userMessage->last_viewed = new \yii\db\Expression('NOW()');
+            $userMessage->save();
+
+            return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
 
-        $output = $this->renderPartial('create', array('model' => $model));
-        Yii::app()->clientScript->render($output);
-        echo $output;
+        return $this->renderAjax('create', array('model' => $model));
     }
 
     /**
@@ -250,19 +220,19 @@ class MailController extends Controller
     {
         $this->forcePostRequest();
 
-        $id = Yii::app()->request->getQuery('id');
+        $id = Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 
         if ($message == null) {
-            throw new CHttpException(404, 'Could not find message!');
+            throw new HttpException(404, 'Could not find message!');
         }
 
-        $message->leave(Yii::app()->user->id);
+        $message->leave(Yii::$app->user->id);
 
-        if (Yii::app()->request->isAjaxRequest) {
-            $this->htmlRedirect($this->createUrl('index'));
+        if (Yii::$app->request->isAjax) {
+            return $this->htmlRedirect(['index']);
         } else {
-            $this->redirect($this->createUrl('index'));
+            return $this->redirect(['index']);
         }
     }
 
@@ -271,28 +241,23 @@ class MailController extends Controller
      */
     public function actionEditEntry()
     {
-        $messageEntryId = (int) Yii::app()->request->getQuery('messageEntryId');
-        $entry = MessageEntry::model()->findByPk($messageEntryId);
+        $messageEntryId = (int) Yii::$app->request->get('messageEntryId');
+        $entry = MessageEntry::findOne(['id' => $messageEntryId]);
 
         // Check if message entry exists and it´s by this user
-        if ($entry == null || $entry->user_id != Yii::app()->user->id) {
-            throw new CHttpException(404, 'Could not find message entry!');
+        if ($entry == null || $entry->user_id != Yii::$app->user->id) {
+            throw new HttpException(404, 'Could not find message entry!');
         }
-        // Reply Form
-        if (isset($_POST['MessageEntry'])) {
-            $entry->content = $_POST['MessageEntry']['content'];
+        if ($entry->load(Yii::$app->request->post()) && $entry->validate()) {
+            // ?
+            //$entry->content = $_POST['MessageEntry']['content'];
+            $entry->save();
+            File::attachPrecreated($entry, Yii::$app->request->get('fileUploaderHiddenGuidField'));
 
-            if ($entry->validate()) {
-                $entry->save();
-                File::attachPrecreated($entry, Yii::app()->request->getParam('fileUploaderHiddenGuidField'));
-
-                $this->htmlRedirect($this->createUrl('index', array(
-                            'id' => $entry->message->id
-                )));
-            }
+            return $this->htmlRedirect(['index', 'id' => $entry->message->id]);
         }
 
-        $this->renderPartial('editEntry', array('entry' => $entry), false, true);
+        return $this->renderAjax('editEntry', array('entry' => $entry));
     }
 
     /**
@@ -304,34 +269,34 @@ class MailController extends Controller
     {
         $this->forcePostRequest();
 
-        $messageEntryId = (int) Yii::app()->request->getQuery('messageEntryId');
-        $entry = MessageEntry::model()->findByPk($messageEntryId);
+        $messageEntryId = (int) Yii::$app->request->get('messageEntryId');
+        $entry = MessageEntry::findOne(['id' => $messageEntryId]);
 
         // Check if message entry exists and it´s by this user
-        if ($entry == null || $entry->user_id != Yii::app()->user->id) {
-            throw new CHttpException(404, 'Could not find message entry!');
+        if ($entry == null || $entry->user_id != Yii::$app->user->id) {
+            throw new HttpException(404, 'Could not find message entry!');
         }
 
         $entry->message->deleteEntry($entry);
 
-        if (Yii::app()->request->isAjaxRequest) {
-            $this->htmlRedirect($this->createUrl('index', array('id' => $entry->message_id)));
+        if (Yii::$app->request->isAjax) {
+            return $this->htmlRedirect(['index', 'id' => $entry->message_id]);
         } else {
-            $this->redirect($this->createUrl('index', array('id' => $entry->message_id)));
+            return $this->redirect(['index', 'id' => $entry->message_id]);
         }
     }
 
     /**
-     * Returns the number of new messages as JSON 
+     * Returns the number of new messages as JSON
      */
     public function actionGetNewMessageCountJson()
     {
+        Yii::$app->response->format = 'json';
+
         $json = array();
         $json['newMessages'] = UserMessage::getNewMessageCount();
 
-        header('Content-type: application/json');
-        echo CJSON::encode($json);
-        Yii::app()->end();
+        return $json;
     }
 
     /**
@@ -340,20 +305,18 @@ class MailController extends Controller
      *
      * If insufficed privileges or not found null will be returned.
      *
-     * @param int $id            
+     * @param int $id
      */
     private function getMessage($id)
     {
-        $message = Message::model()->findByAttributes(array(
-            'id' => $id
-        ));
+        $message = Message::findOne(['id' => $id]);
 
         if ($message != null) {
 
-            $userMessage = UserMessage::model()->findByAttributes(array(
-                'user_id' => Yii::app()->user->id,
-                'message_id' => $message->id
-            ));
+            $userMessage = UserMessage::findOne([
+                        'user_id' => Yii::$app->user->id,
+                        'message_id' => $message->id
+            ]);
             if ($userMessage != null) {
                 return $message;
             }
