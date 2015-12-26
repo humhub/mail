@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'You could not send an email to yourself!' => 'Вы не можете отправить письмо себе!',
     'Message' => 'Сообщение',
     'Recipient' => 'Получатель',
     'Subject' => 'Тема',

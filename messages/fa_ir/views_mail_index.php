@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@پیغام‌ها@@',
     'Inbox' => 'دریافتی‌ها',
     'New' => 'جدید',
     'New message' => 'پیغام جدید',

@@ -17,7 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Write new message' => '@@Escribir nuevo mensaje@@',
+    'Delete conversation' => '',
+    'Leave conversation' => '',
     '<strong>Confirm</strong> deleting conversation' => '<strong>Confirmar</strong> eliminación de la conversación',
     '<strong>Confirm</strong> leaving conversation' => '<strong>Confirmar</strong> salida de la conversación',
     '<strong>Confirm</strong> message deletion' => '<strong>Confirmar</strong> eliminación del mensaje',

@@ -18,7 +18,6 @@
  */
 return [
     'You cannot send a email to yourself!' => '',
-    'You could not send an email to yourself!' => 'No pots enviar-te un missatge a tu mateix!',
     'Message' => 'Missatge',
     'Recipient' => 'Destinatari',
     'Subject' => 'Assumpte',

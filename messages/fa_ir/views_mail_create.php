@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add user...' => '@@اضافه کردن کاربر . . .@@',
+    'Add recipients' => '',
     'Close' => 'بستن',
     'New message' => 'پیغام جدید',
     'Send' => 'ارسال',

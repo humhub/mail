@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@Skrzynka wiadomości @@',
     'Inbox' => 'Skrzynka odbiorcza ',
     'New' => 'Nowa ',
     'New message' => 'Nowa wiadomość ',

@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@受信箱@@',
     'Inbox' => '受信トレイ',
     'New' => '新規',
     'New message' => '新規メッセージ',

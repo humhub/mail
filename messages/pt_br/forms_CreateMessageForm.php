@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'You could not send an email to yourself!' => 'Você não deveria enviar um e-mail para si! Ora bolas!',
     'Message' => 'Mensagem',
     'Recipient' => 'Destinatário',
     'Subject' => 'Assunto',
