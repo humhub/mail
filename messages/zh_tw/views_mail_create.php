@@ -16,9 +16,9 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return [
-    'Add recipients' => '',
-    'Close' => '',
-    'New message' => '',
-    'Send' => '',
-];
+return array (
+  'Add recipients' => '添加其他人',
+  'Close' => '關閉',
+  'New message' => '新訊息',
+  'Send' => '寄送',
+);

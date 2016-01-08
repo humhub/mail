@@ -16,6 +16,7 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return [
-    'You cannot send a email to yourself!' => '',
-];
+return array (
+  'You cannot send a email to yourself!' => '你不能寄信給自己！',
+  'You could not send an email to yourself!' => '你不可以寄信給自己！',
+);
