@@ -21,5 +21,4 @@ return [
     'New' => '',
     'New message' => '',
     'There are no messages yet.' => '',
-    'Messagebox' => '@@@@',
 ];

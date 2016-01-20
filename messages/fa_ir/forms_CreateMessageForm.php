@@ -18,7 +18,6 @@
  */
 return [
     'You cannot send a email to yourself!' => '',
-    'You could not send an email to yourself!' => 'شما نمی‌توانید به خودتان ایمیل بفرستید!',
     'Message' => 'پیغام',
     'Recipient' => 'گیرنده',
     'Subject' => 'موضوع',

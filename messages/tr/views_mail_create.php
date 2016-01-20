@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add user...' => '@@Kullanıcı ekle...@@',
+    'Add recipients' => '',
     'Close' => 'Kapat',
     'New message' => 'Yeni mesaj',
     'Send' => 'Gönder',

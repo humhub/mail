@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add user...' => '@@Přidat uživatele...@@',
+    'Add recipients' => '',
     'Close' => 'Zavřít',
     'New message' => 'Nová zpráva',
     'Send' => 'Poslat',

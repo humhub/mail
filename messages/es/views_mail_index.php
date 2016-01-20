@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@Bandeja de mensajes@@',
     'Inbox' => 'Bandeja de entrada',
     'New' => 'Nuevo',
     'New message' => 'Nuevo mensaje',

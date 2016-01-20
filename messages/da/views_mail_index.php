@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@Meddelelsesboks@@',
     'Inbox' => 'Indbakke',
     'New' => 'Ny',
     'New message' => 'Ny besked',

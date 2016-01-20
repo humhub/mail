@@ -18,7 +18,6 @@
  */
 return [
     'You cannot send a email to yourself!' => '',
-    'You could not send an email to yourself!' => '自分自身にメールは送信できません！',
     'Message' => 'メッセージ',
     'Recipient' => '受信者',
     'Subject' => '件名',

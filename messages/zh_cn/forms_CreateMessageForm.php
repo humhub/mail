@@ -18,7 +18,6 @@
  */
 return [
     'You cannot send a email to yourself!' => '',
-    'You could not send an email to yourself!' => '你不能发邮件给自己!',
     'Message' => '消息',
     'Recipient' => '收件人',
     'Subject' => '主题',

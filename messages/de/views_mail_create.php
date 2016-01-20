@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add user...' => '@@Füge Empfänger hinzu...@@',
+    'Add recipients' => '',
     'Close' => 'Schließen',
     'New message' => 'Neue Nachricht',
     'Send' => 'Senden',

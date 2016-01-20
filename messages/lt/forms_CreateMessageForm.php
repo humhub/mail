@@ -18,7 +18,6 @@
  */
 return [
     'You cannot send a email to yourself!' => '',
-    'You could not send an email to yourself!' => 'Jūs negalite išsiųsti elektroninio laiško sau!',
     'Message' => 'Žinutė',
     'Recipient' => 'Gavėjas',
     'Subject' => 'Tema',

@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@@@',
     'Inbox' => 'Safata d\'entrada',
     'New' => 'Nou',
     'New message' => 'Nou missatge',

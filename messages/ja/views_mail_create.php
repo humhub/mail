@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add user...' => '@@ユーザーを追加...@@',
+    'Add recipients' => '',
     'Close' => '閉じる',
     'New message' => '新しいメッセージ',
     'Send' => '送信',

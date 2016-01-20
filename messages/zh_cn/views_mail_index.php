@@ -17,7 +17,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Messagebox' => '@@消息框@@',
     'Inbox' => '收件箱',
     'New' => '新的',
     'New message' => '新消息',
