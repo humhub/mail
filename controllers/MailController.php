@@ -105,7 +105,7 @@ class MailController extends Controller
             $messageEntry->notify();
             File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
-            return $this->redirect(['index', 'id' => $message->id]);
+            return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
 
         // Marks message as seen
