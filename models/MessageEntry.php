@@ -111,7 +111,10 @@ class MessageEntry extends ActiveRecord
 
             Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
 
-            $mail = Yii::$app->mailer->compose(['html' => '@mailmodule/views/emails/NewMessageEntry'], [
+            $mail = Yii::$app->mailer->compose([
+                'html' => '@mailmodule/views/emails/NewMessageEntry',
+                'text' => '@mailmodule/views/emails/plaintext/NewMessageEntry'
+            ], [
                 'message' => $this->message,
                 'entry' => $this,
                 'user' => $user,
