@@ -192,7 +192,10 @@ class Message extends ActiveRecord
 
         Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
 
-        $mail = Yii::$app->mailer->compose(['html' => '@mailmodule/views/emails/NewMessage'], [
+        $mail = Yii::$app->mailer->compose([
+            'html' => '@mailmodule/views/emails/NewMessage',
+            'text' => '@mailmodule/views/emails/plaintext/NewMessage'
+        ], [
             'message' => $this,
             'originator' => $this->originator,
             'andAddon' => $andAddon,

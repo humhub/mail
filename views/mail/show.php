@@ -55,7 +55,7 @@ use humhub\compat\CActiveForm;
                             <img src="<?php echo $user->getProfileImage()->getUrl(); ?>"
                                  class="img-rounded tt img_margin" height="29" width="29"
                                  data-toggle="tooltip" data-placement="top" title=""
-                                 data-original-title="<strong> <?php echo Html::encode($user->displayName); ?></strong><br><?php echo Html::encode($user->profile->title); ?>">
+                                 data-original-title="<?php echo Html::encode($user->displayName); ?>">
                         </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
