@@ -19,14 +19,28 @@ use yii\widgets\ActiveForm;
             </div>
 
             <?php
-            echo humhub\modules\user\widgets\UserPicker::widget(array(
-                'inputId' => 'addUserFrom_mail',
-                'model' => $inviteForm, // CForm Instanz
-                'attribute' => 'recipient',
-                'userGuid' => Yii::$app->user->guid,
-                'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
-                'focus' => true,
-            ));
+            if(version_compare(Yii::$app->version, '1.0.0-beta.5', 'lt')) {
+                echo humhub\modules\user\widgets\UserPicker::widget(array(
+                    'inputId' => 'addUserFrom_mail',
+                    'model' => $inviteForm, // CForm Instanz
+                    'attribute' => 'recipient',
+                    'userGuid' => Yii::$app->user->guid,
+                    'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
+                    'focus' => true,
+            )); 
+            } else {
+                echo humhub\modules\user\widgets\UserPicker::widget(array(
+                    'inputId' => 'addUserFrom_mail',
+                    'model' => $inviteForm, // CForm Instanz
+                    'attribute' => 'recipient',
+                    'userGuid' => Yii::$app->user->guid,
+                    'data' => ['id' => $inviteForm->message->id],
+                    'userSearchUrl' => \yii\helpers\Url::toRoute('/mail/mail/search-add-user'),
+                    'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
+                    'focus' => true,
+                ));
+            }
+            
             ?>
         </div>
         <div class="modal-footer">

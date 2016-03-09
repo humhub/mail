@@ -77,6 +77,15 @@ class Message extends ActiveRecord
         return $this->hasMany(User::className(), ['id' => 'user_id'])
                         ->viaTable('user_message', ['message_id' => 'id']);
     }
+    
+    public function isParticipant($user) {
+        foreach($this->users as $participant) {
+            if($participant->guid === $user->guid) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public function getOriginator()
     {

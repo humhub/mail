@@ -11,4 +11,18 @@ namespace humhub\modules\mail;
 class Module extends \humhub\components\Module
 {
 
+    /**
+     * @inheritdoc
+     */
+    public function getPermissions($contentContainer = null)
+    {
+        if ($contentContainer !== null) {
+            return [
+                new permissions\SendMail()
+            ];
+        }
+
+        return [];
+    }
+
 }
