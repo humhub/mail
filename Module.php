@@ -16,7 +16,7 @@ class Module extends \humhub\components\Module
      */
     public function getPermissions($contentContainer = null)
     {
-        if ($contentContainer !== null) {
+        if ($contentContainer !== null && $contentContainer instanceof \humhub\modules\user\models\User) {
             return [
                 new permissions\SendMail()
             ];
