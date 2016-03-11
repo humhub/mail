@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
                 'model' => $model,
                 'attribute' => 'recipient',
                 'userGuid' => Yii::$app->user->guid,
-                'userSearchUrl' => Url::toRoute(['/mail/mail/search-user']),
+                'userSearchUrl' => Url::toRoute(['/mail/mail/search-user', 'keyword' => '-keywordPlaceholder-']),
                 'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
                 'focus' => true,
             ));
