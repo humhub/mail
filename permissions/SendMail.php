@@ -31,11 +31,15 @@ class SendMail extends \humhub\libs\BasePermission
     {
         if(version_compare(Yii::$app->version, '1.1', 'lt')) {
             return parent::getDefaultState($groupId);
-        } else if($groupId == User::USERGROUP_FRIEND && Yii::$app->getModule('friendship')->getIsEnabled()) {
-            return self::STATE_ALLOW;
-        } else {
-            return parent::getDefaultState($groupId);
+        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
+            if($groupId === User::USERGROUP_FRIEND) {
+                return self::STATE_ALLOW;
+            } else {
+                return self::STATE_DENY;
+            }
         }
+        
+        return parent::getDefaultState($groupId);
     }
 
     /**
