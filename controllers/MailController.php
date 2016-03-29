@@ -3,7 +3,7 @@
 namespace humhub\modules\mail\controllers;
 
 use Yii;
-use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\web\HttpException;
 use humhub\components\Controller;
 use humhub\modules\file\models\File;
@@ -14,6 +14,7 @@ use humhub\modules\User\models\User;
 use humhub\modules\mail\models\forms\InviteRecipient;
 use humhub\modules\mail\models\forms\ReplyMessage;
 use humhub\modules\mail\models\forms\CreateMessage;
+use \humhub\modules\mail\permissions\SendMail;
 
 /**
  * MailController provides messaging actions.
@@ -89,9 +90,7 @@ class MailController extends Controller
         $id = (int) Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 
-        if ($message == null) {
-            throw new HttpException(404, 'Could not find message!');
-        }
+        $this->checkMessagePermissions($message);
 
         // Reply Form
         $replyForm = new ReplyMessage();
@@ -116,6 +115,17 @@ class MailController extends Controller
                     'replyForm' => $replyForm,
         ]);
     }
+    
+    private function checkMessagePermissions($message)
+    {
+        if ($message == null) {
+            throw new HttpException(404, 'Could not find message!');
+        }
+        
+        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
+            throw new HttpException(403, 'Access denied!');
+        }
+    }
 
     /**
      * Shows the invite user form
@@ -127,9 +137,7 @@ class MailController extends Controller
         $id = Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 
-        if ($message == null) {
-            throw new HttpException(404, 'Could not find message!');
-        }
+        $this->checkMessagePermissions($message);
 
         // Invite Form
         $inviteForm = new InviteRecipient();
@@ -137,18 +145,125 @@ class MailController extends Controller
 
         if ($inviteForm->load(Yii::$app->request->post()) && $inviteForm->validate()) {
             foreach ($inviteForm->getRecipients() as $user) {
-                // Attach User Message
-                $userMessage = new UserMessage();
-                $userMessage->message_id = $message->id;
-                $userMessage->user_id = $user->id;
-                $userMessage->is_originator = 0;
-                $userMessage->save();
-                $message->notify($user);
+                if (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail())) {
+                    // Attach User Message
+                    $userMessage = new UserMessage();
+                    $userMessage->message_id = $message->id;
+                    $userMessage->user_id = $user->id;
+                    $userMessage->is_originator = 0;
+                    $userMessage->save();
+                    $message->notify($user);
+                }
             }
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
 
         return $this->renderAjax('/mail/adduser', array('inviteForm' => $inviteForm));
+    }
+    
+    /**
+     * Used by user picker, searches user which are allwed messaging permissions
+     * for the current user (v1.1).
+     * 
+     * @return type
+     */
+    public function actionSearchUser()
+    {
+        Yii::$app->response->format = 'json';
+
+        $maxResults = 10;
+        $keyword = Yii::$app->request->get('keyword');
+
+        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
+            return $this->findUserByFilter($keyword, $maxResults);
+        } else {
+            return \humhub\modules\user\models\UserFilter::forUser()->getUserPickerResult($keyword, $maxResults, false, new SendMail());
+        }
+    }
+
+    /**
+     * Used by user picker for adding additional users to a conversaion, 
+     * searches user which are allwed messaging permissions for the current user (v1.1).
+     * Disables users already participating in a conversation.
+     * 
+     * @return type
+     */
+    public function actionSearchAddUser()
+    {
+        Yii::$app->response->format = 'json';
+
+        
+        $keyword = Yii::$app->request->get('keyword');
+        $message = $this->getMessage(Yii::$app->request->get('id'));
+
+        if ($message == null) {
+            throw new HttpException(404, 'Could not find message!');
+        }
+        
+        $maxResults = 10;        
+        $result = null;
+        
+        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
+            $result = $this->findUserByFilter($keyword, $maxResults);
+        } else {
+            $result = \humhub\modules\user\models\UserFilter::forUser()->getUserPickerResult($keyword, $maxResults, false, new SendMail());
+        }
+        
+        //Disable already participating users
+        $i = 0;
+        foreach($result as $user) {
+            $result[$i++]['disabled'] = $this->isParticipant($message, $user);
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Checks if a user (user json representation) is participant of a given
+     * message.
+     * 
+     * @param type $message
+     * @param type $user
+     * @return boolean
+     */
+    private function isParticipant($message, $user) {
+        foreach($message->users as $participant) {
+            if($participant->guid === $user['guid']) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * @deprecated
+     */
+    private function findUserByFilter($keyword, $maxResult)
+    {
+        $query = User::find()->limit($maxResult)->joinWith('profile');
+
+        foreach (explode(" ", $keyword) as $part) {
+            $query->orFilterWhere(['like', 'user.email', $part]);
+            $query->orFilterWhere(['like', 'user.username', $part]);
+            $query->orFilterWhere(['like', 'profile.firstname', $part]);
+            $query->orFilterWhere(['like', 'profile.lastname', $part]);
+            $query->orFilterWhere(['like', 'profile.title', $part]);
+        }
+
+        $query->active();
+
+        $results = [];
+        foreach ($query->all() as $user) {
+            if ($user != null) {
+                $userInfo = array();
+                $userInfo['guid'] = $user->guid;
+                $userInfo['displayName'] = Html::encode($user->displayName);
+                $userInfo['image'] = $user->getProfileImage()->getUrl();
+                $userInfo['link'] = $user->getUrl();
+                $results[] = $userInfo;
+            }
+        }
+        return $results;
     }
 
     /**
@@ -163,7 +278,7 @@ class MailController extends Controller
         // Preselect user if userGuid is given
         if ($userGuid != "") {
             $user = User::findOne(array('guid' => $userGuid));
-            if (isset($user)) {
+            if (isset($user) && (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()))) {
                 $model->recipient = $user->guid;
             }
         }
@@ -193,7 +308,11 @@ class MailController extends Controller
 
             // Inform recipients (We need to add all before)
             foreach ($model->getRecipients() as $recipient) {
-                $message->notify($recipient);
+                try {
+                    $message->notify($recipient);
+                } catch(\Exception $e) {
+                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
+                }
             }
 
             // Attach User Message
@@ -207,19 +326,19 @@ class MailController extends Controller
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
 
-        return $this->renderAjax('create', array('model' => $model));
+
+
+        return $this->renderPartial('create', array('model' => $model));
     }
 
     /**
      * Leave Message / Conversation
      *
-     * Leave is only possible when at least to people are in the
+     * Leave is only possible when at least two people are in the
      * conversation.
      */
     public function actionLeave()
     {
-        $this->forcePostRequest();
-
         $id = Yii::$app->request->get('id');
         $message = $this->getMessage($id);
 

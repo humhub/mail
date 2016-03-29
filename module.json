@@ -3,9 +3,9 @@
     "name": "Mail",
     "description": "Private messaging system to communicate with one or more users.",
     "keywords": ["mail", "messaging", "communication"],
-    "version": "0.7.8",
+    "version": "0.8.3",
     "humhub": {
-        "minVersion": "0.20"
+        "minVersion": "1.0"
     },
     "screenshots": ["assets/screen1.jpg"]
 }
