@@ -325,10 +325,8 @@ class MailController extends Controller
 
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
-
-
-
-        return $this->renderPartial('create', array('model' => $model));
+        
+        return $this->renderAjax('create', array('model' => $model));
     }
 
     /**
