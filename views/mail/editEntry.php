@@ -32,7 +32,7 @@ use humhub\compat\CActiveForm;
                         'label' => Yii::t('MailModule.views_mail_edit', 'Save'),
                         'ajaxOptions' => [
                             'type' => 'POST',
-                            'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
+                            'beforeSend' => '$.proxy(function() { $("#create-message-loader").removeClass("hidden"); $(this).prop("disabled",true);},this)',
                             'success' => 'function(html){ $("#globalModal").html(html); }',
                             'url' => Url::to(['/mail/mail/edit-entry', 'messageEntryId' => $entry->id]),
                         ],

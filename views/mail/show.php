@@ -118,6 +118,7 @@ use humhub\compat\CActiveForm;
                     'label' => Yii::t('MailModule.views_mail_show', 'Send'),
                     'ajaxOptions' => [
                         'type' => 'POST',
+                        'beforeSend' => '$.proxy(function() { $(this).prop("disabled",true); },this)',
                         'success' => 'function(html){ $("#mail_message_details").html(html); }',
                         'url' => Url::to(['/mail/mail/show', 'id' => $message->id]),
                     ],
