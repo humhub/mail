@@ -99,7 +99,7 @@ use humhub\widgets\MarkdownView;
                                                         <!-- START: USER IMAGE -->
                                                         <a href="<?php echo $originator->createUrl(null, [], true); ?>">
                                                             <img
-                                                                src="<?php echo $originator->getProfileImage()->getUrl(); ?>"
+                                                                src="<?php echo $sender->getProfileImage()->getUrl("", true); ?>"
                                                                 width="50"
                                                                 alt=""
                                                                 style="max-width:50px; display:block !important; border-radius: 4px;"
