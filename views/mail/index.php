@@ -11,7 +11,7 @@ if ($messageId != "") {
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?php echo Yii::t('MailModule.views_mail_index', 'Inbox') ?>
+                    <?php echo Yii::t('MailModule.views_mail_index', 'Conversions') ?>
                     <?php echo Html::a(Yii::t('MailModule.views_mail_index', 'New message'), ['/mail/mail/create'], array('class' => 'btn btn-info pull-right', 'data-target' => '#globalModal')); ?>
                 </div>
 
