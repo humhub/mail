@@ -16,9 +16,9 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return [
-    'Inbox' => '',
-    'New' => '',
-    'New message' => '',
-    'There are no messages yet.' => '',
-];
+return array (
+  'Inbox' => '收件箱',
+  'New' => '',
+  'New message' => '寫新信',
+  'There are no messages yet.' => '沒有任何訊息',
+);
