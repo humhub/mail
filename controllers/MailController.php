@@ -14,7 +14,8 @@ use humhub\modules\User\models\User;
 use humhub\modules\mail\models\forms\InviteRecipient;
 use humhub\modules\mail\models\forms\ReplyMessage;
 use humhub\modules\mail\models\forms\CreateMessage;
-use \humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\user\widgets\UserPicker;
 
 /**
  * MailController provides messaging actions.
@@ -170,19 +171,28 @@ class MailController extends Controller
     public function actionSearchUser()
     {
         Yii::$app->response->format = 'json';
-
-        $maxResults = 10;
-        $keyword = Yii::$app->request->get('keyword');
-
+        return $this->getUserPickerResult(Yii::$app->request->get('keyword'));
+    }
+    
+    private function getUserPickerResult($keyword) {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return $this->findUserByFilter($keyword, $maxResults);
+            return $this->findUserByFilter($keyword, 10);
+        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
+            return UserPicker::filter([
+                'keyword' => $keyword,
+                'permission' => new SendMail(),
+                'fillUser' => true
+            ]);
         } else {
-            return \humhub\modules\user\models\UserFilter::forUser()->getUserPickerResult($keyword, $maxResults, false, new SendMail());
+            return UserPicker::filter([
+                'keyword' => $keyword,
+                'permission' => new SendMail()
+            ]);
         }
     }
 
     /**
-     * Used by user picker for adding additional users to a conversaion, 
+     * User picker search for adding additional users to a conversaion, 
      * searches user which are allwed messaging permissions for the current user (v1.1).
      * Disables users already participating in a conversation.
      * 
@@ -191,28 +201,19 @@ class MailController extends Controller
     public function actionSearchAddUser()
     {
         Yii::$app->response->format = 'json';
-
-        
-        $keyword = Yii::$app->request->get('keyword');
         $message = $this->getMessage(Yii::$app->request->get('id'));
 
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
-        
-        $maxResults = 10;        
-        $result = null;
-        
-        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            $result = $this->findUserByFilter($keyword, $maxResults);
-        } else {
-            $result = \humhub\modules\user\models\UserFilter::forUser()->getUserPickerResult($keyword, $maxResults, false, new SendMail());
-        }
+             
+        $result = $this->getUserPickerResult(Yii::$app->request->get('keyword'));
         
         //Disable already participating users
-        $i = 0;
-        foreach($result as $user) {
-            $result[$i++]['disabled'] = $this->isParticipant($message, $user);
+        foreach($result as $i=>$user) {
+            if($this->isParticipant($message, $user)) {
+                $result[$i++]['disabled'] = true;
+            }
         }
         
         return $result;
@@ -443,5 +444,4 @@ class MailController extends Controller
 
         return null;
     }
-
 }
