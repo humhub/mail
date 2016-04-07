@@ -42,7 +42,7 @@ class InviteRecipient extends Model
     public function attributeLabels()
     {
         return array(
-            'recipient' => 'Recipient',
+            'recipient' => Yii::t('MailModule.forms_InviteRecipientForm', 'Recipient'),
         );
     }
 

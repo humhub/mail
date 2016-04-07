@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'You cannot send a email to yourself!' => '',
+    'You cannot send a email to yourself!' => '你不能给自己发邮件！',
     'Message' => '消息',
     'Recipient' => '收件人',
     'Subject' => '主题',

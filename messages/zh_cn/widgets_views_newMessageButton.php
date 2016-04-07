@@ -1,5 +1,5 @@
 <?php
 return array (
   'New message' => '新消息',
-  'Send message' => '',
+  'Send message' => '发送消息',
 );
