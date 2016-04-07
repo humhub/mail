@@ -76,7 +76,8 @@ class Events extends \yii\base\Object
     public static function onProfileHeaderControlsInit($event)
     {
         $profileUser = $event->sender->user;
-        if (Yii::$app->user->isGuest || $profileUser->id == Yii::$app->user->id || !$profileUser->getPermissionManager()->can(new SendMail()) ) {
+        $notPermitted = version_compare(Yii::$app->version, '1.1', '>=') && !$profileUser->getPermissionManager()->can(new SendMail());
+        if (Yii::$app->user->isGuest || $profileUser->id == Yii::$app->user->id || $notPermitted) {
             return;
         }
 

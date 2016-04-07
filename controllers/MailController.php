@@ -278,7 +278,7 @@ class MailController extends Controller
 
         // Preselect user if userGuid is given
         if ($userGuid != "") {
-            $user = User::findOne(array('guid' => $userGuid));
+            $user = User::findOne(['guid' => $userGuid]);
             if (isset($user) && (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()))) {
                 $model->recipient = $user->guid;
             }
