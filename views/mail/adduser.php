@@ -49,7 +49,7 @@ use yii\widgets\ActiveForm;
                 'label' => Yii::t('MailModule.views_mail_adduser', 'Send'),
                 'ajaxOptions' => [
                     'type' => 'POST',
-                    'beforeSend' => 'function(){ $("#adduser-loader").removeClass("hidden"); }',
+                    'beforeSend' => '$.proxy(function() { $("#adduser-loader").removeClass("hidden"); $(this).prop("disabled",true); },this)',
                     'success' => 'function(html){ $("#globalModal").html(html); }',
                     'url' => ['/mail/mail/add-user', 'id'=>$inviteForm->message->id]
                 ],
