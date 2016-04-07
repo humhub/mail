@@ -15,6 +15,7 @@ use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\Notifications;
+use humhub\modules\mail\permissions\SendMail;
 
 /**
  * Description of Events
@@ -74,7 +75,8 @@ class Events extends \yii\base\Object
 
     public static function onProfileHeaderControlsInit($event)
     {
-        if (Yii::$app->user->isGuest || $event->sender->user->id == Yii::$app->user->id) {
+        $profileUser = $event->sender->user;
+        if (Yii::$app->user->isGuest || $profileUser->id == Yii::$app->user->id || !$profileUser->getPermissionManager()->can(new SendMail()) ) {
             return;
         }
 
