@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Inbox' => 'Boîte de réception',
+    'Conversions' => 'Conversations',
     'New' => 'Nouveau',
     'New message' => 'Nouveau message',
     'There are no messages yet.' => 'Il n\'y a aucun message.',
