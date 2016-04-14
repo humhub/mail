@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add recipients' => '',
+    'Add recipients' => '增加收件人',
     'Close' => '关闭',
     'New message' => '新的消息',
     'Send' => '发送',

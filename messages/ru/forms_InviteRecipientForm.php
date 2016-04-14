@@ -18,4 +18,5 @@
  */
 return [
     'You cannot send a email to yourself!' => 'Вы не можете отправить сообщение самому себе!',
+    'Recipient' => '',
 ];

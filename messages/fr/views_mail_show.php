@@ -17,10 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Delete conversation' => '',
-    'Leave conversation' => '',
+    'Delete conversation' => 'Supprimer la conversation',
+    'Leave conversation' => 'Quitter la conversation',
     '<strong>Confirm</strong> deleting conversation' => '<strong>Confirmer</strong> la suppression de la conversation',
-    '<strong>Confirm</strong> leaving conversation' => '<strong>Confirmation</strong>',
+    '<strong>Confirm</strong> leaving conversation' => '<strong>Confirmer</strong> le départ de la conversation',
     '<strong>Confirm</strong> message deletion' => '<strong>Confirmer</strong> la suppression du message',
     'Add user' => 'Ajouter un utilisateur',
     'Cancel' => 'Annuler',
@@ -31,6 +31,6 @@ return [
     'Leave' => 'Quitter',
     'Leave discussion' => 'Quitter la discussion',
     'Send' => 'Envoyer',
-    'There are no messages yet.' => 'Il n\'y a aucun message.',
+    'There are no messages yet.' => 'Il n\'y a encore aucun message.',
     'Write an answer...' => 'Écrire une réponse...',
 ];
