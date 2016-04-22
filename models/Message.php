@@ -99,11 +99,11 @@ class Message extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Title',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
+            'title' => Yii::t('MailModule.base', 'Title'),
+            'created_at' => Yii::t('MailModule.base', 'Created At'),
+            'created_by' => Yii::t('MailModule.base', 'Created By'),
+            'updated_at' => Yii::t('MailModule.base', 'Updated At'),
+            'updated_by' => Yii::t('MailModule.base', 'Updated By'),
         );
     }
 
