@@ -62,14 +62,14 @@ class UserMessage extends ActiveRecord
     public function attributeLabels()
     {
         return array(
-            'message_id' => 'Message',
-            'user_id' => 'User',
-            'is_originator' => 'Is Originator',
-            'last_viewed' => 'Last Viewed',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
+            'message_id' => Yii::t('MailModule.base', 'Message'),
+            'user_id' => Yii::t('MailModule.base', 'User'),
+            'is_originator' => Yii::t('MailModule.base', 'Is Originator'),
+            'last_viewed' => Yii::t('MailModule.base', 'Last Viewed'),
+            'created_at' => Yii::t('MailModule.base', 'Created At'),
+            'created_by' => Yii::t('MailModule.base', 'Created By'),
+            'updated_at' => Yii::t('MailModule.base', 'Updated At'),
+            'updated_by' => Yii::t('MailModule.base', 'Updated By'),
         );
     }
 
