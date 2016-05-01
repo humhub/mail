@@ -146,7 +146,7 @@ class Message extends ActiveRecord
                     'user_id' => $userId
         ));
 
-        if (count($this->users) > 1) {
+        if (count($this->users) > 2) {
             $userMessage->delete();
         } else {
             $this->delete();
