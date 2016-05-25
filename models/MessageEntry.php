@@ -103,7 +103,7 @@ class MessageEntry extends ActiveRecord
     {
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
-
+        
         foreach ($this->message->users as $user) {
 
             if ($user->id == $this->user_id)
@@ -121,7 +121,13 @@ class MessageEntry extends ActiveRecord
                 'sender' => $this->user,
                 'originator' => $this->message->originator,
             ]);
-            $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
+            
+            if (version_compare(Yii::$app->version, '1.1', 'lt')) {
+                $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
+            } else {
+                $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
+            }
+            
             $mail->setTo($user->email);
             $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
             $mail->send();
