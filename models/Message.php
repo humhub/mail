@@ -77,10 +77,11 @@ class Message extends ActiveRecord
         return $this->hasMany(User::className(), ['id' => 'user_id'])
                         ->viaTable('user_message', ['message_id' => 'id']);
     }
-    
-    public function isParticipant($user) {
-        foreach($this->users as $participant) {
-            if($participant->guid === $user->guid) {
+
+    public function isParticipant($user)
+    {
+        foreach ($this->users as $participant) {
+            if ($participant->guid === $user->guid) {
                 return true;
             }
         }
@@ -211,7 +212,13 @@ class Message extends ActiveRecord
             'entry' => $this->getLastEntry(),
             'user' => $user,
         ]);
-        $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
+
+        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
+            $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
+        } else {
+            $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
+        }
+
         $mail->setTo($user->email);
         $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
         $mail->send();
