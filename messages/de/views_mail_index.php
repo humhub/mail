@@ -1,8 +1,7 @@
 <?php
 return array (
-  'Messagebox' => '@@Nachrichten@@',
-  'Inbox' => 'Posteingang',
+  'Conversations' => 'Unterhaltungen',
   'New' => 'Neu',
   'New message' => 'Neue Nachricht',
-  'There are no messages yet.' => 'Aktuell hast du keine Nachrichten',
+  'There are no messages yet.' => 'Es sind keine Nachrichten vorhanden.',
 );

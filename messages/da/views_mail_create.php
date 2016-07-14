@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Add user...' => '@@Tilføj bruger...@@',
+  'Add recipients' => 'Tilføjet modtagere',
   'Close' => 'Luk',
   'New message' => 'Ny besked',
   'Send' => 'Send',

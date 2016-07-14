@@ -1,4 +1,4 @@
 <?php
 return array (
-  'There are no messages yet.' => 'Aktuell keine Nachrichten vorhanden.',
+  'There are no messages yet.' => 'Es sind keine Nachrichten vorhanden.',
 );

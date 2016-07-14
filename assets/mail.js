@@ -15,9 +15,6 @@ function loadMessage(messageId) {
             },
             'success': function(html) {
                 $("#mail_message_details").html(html);
-
-                // Call message count of MailNotifications
-                getMessageCount();
             }});
     } else {
         // Somewhere outside

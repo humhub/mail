@@ -1,11 +1,12 @@
+<?php
+
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+?>
+
 <div class="modal-dialog">
     <div class="modal-content">
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'create-message-form',
-            'enableAjaxValidation' => false,
-        ));
-        ?>
+        <?php $form = ActiveForm::begin(['id' => 'create-message-form']); ?>
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -16,51 +17,53 @@
 
             <?php echo $form->errorSummary($model); ?>
 
-            <?php echo $form->labelEx($model, 'recipient'); ?>
-            <?php echo $form->textField($model, 'recipient', array('class' => 'form-control', 'id' => 'recipient')); ?>
+            <div class="form-group">
+                <?php echo $form->field($model, 'recipient', ['inputOptions' => ['id' => 'recipient']]); ?>
+            </div>
 
             <?php
-            $this->widget('application.modules_core.user.widgets.UserPickerWidget', array(
+            echo \humhub\modules\user\widgets\UserPicker::widget(array(
                 'inputId' => 'recipient',
                 'model' => $model,
                 'attribute' => 'recipient',
-                'userGuid' => Yii::app()->user->guid,
+                'userGuid' => Yii::$app->user->guid,
+                'userSearchUrl' => Url::toRoute(['/mail/mail/search-user', 'keyword' => '-keywordPlaceholder-']),
+                'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
                 'focus' => true,
             ));
             ?>
 
             <div class="form-group">
-                <?php echo $form->labelEx($model, 'title'); ?>
-                <?php echo $form->textField($model, 'title', array('class' => 'form-control')); ?>
-                <?php echo $form->error($model, 'title'); ?>
+                <?php echo $form->field($model, 'title'); ?>
             </div>
 
             <div class="form-group">
-                <?php echo $form->labelEx($model, 'message'); ?>
-                <?php echo $form->textArea($model, 'message', array('class' => 'form-control', 'rows' => '7', 'id' => 'newMessageText')); ?>
-                <?php $this->widget('application.widgets.MarkdownEditorWidget', array('fieldId' => 'newMessageText')); ?>
-                <?php echo $form->error($model, 'message'); ?>
+                <?php echo $form->field($model, 'message', ['inputOptions' => ['class' => 'form-control', 'id' => 'newMessageText']])->textarea(); ?>
+                <?php echo \humhub\widgets\MarkdownEditor::widget(array('fieldId' => 'newMessageText')); ?>
             </div>
 
         </div>
         <div class="modal-footer">
-            <hr/>
             <?php
-            echo HHtml::ajaxButton(Yii::t('MailModule.views_mail_create', 'Send'), array('//mail/mail/create'), array(
-                'type' => 'POST',
-                'beforeSend' => 'function(){ $("#create-message-loader").removeClass("hidden"); }',
-                'success' => 'function(html){ $("#globalModal").html(html); }',
-                    ), array('class' => 'btn btn-primary'));
+            echo \humhub\widgets\AjaxButton::widget([
+                'label' => Yii::t('MailModule.views_mail_create', 'Send'),
+                'ajaxOptions' => [
+                    'type' => 'POST',
+                    'beforeSend' => '$.proxy(function() { $(this).prop("disabled",true); },this)',
+                    'success' => 'function(html){ $("#globalModal").html(html); }',
+                    'url' => Url::to(['/mail/mail/create']),
+                ],
+                'htmlOptions' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ]);
             ?>
 
             <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
 
-            <div class="col-md-1 modal-loader">
-                <div id="create-message-loader" class="loader loader-small hidden"></div>
-            </div>
         </div>
 
-<?php $this->endWidget(); ?>
+        <?php ActiveForm::end(); ?>
     </div>
 
 </div>

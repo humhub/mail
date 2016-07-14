@@ -3,5 +3,5 @@ return array (
   'Message' => 'Bericht',
   'Recipient' => 'Ontvanger',
   'Subject' => 'Onderwerp',
-  'You could not send an email to yourself!' => 'Je kan jezelf geen e-mail sturen',
+  'You cannot send a email to yourself!' => 'Je kunt jezelf geen mail sturen!',
 );

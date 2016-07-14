@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Add user...' => '@@Gebruiker toevoegen...@@',
+  'Add recipients' => 'Ontvangers toevoegen',
   'Close' => 'Sluiten',
   'New message' => 'Nieuwe bericht',
   'Send' => 'Verstuur',

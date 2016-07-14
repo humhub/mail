@@ -1,4 +1,5 @@
 <?php
 return array (
-  'You could not send an email to yourself!' => 'Вы не можете отправить письмо себе!',
+  'Recipient' => 'Получатель',
+  'You cannot send a email to yourself!' => 'Вы не можете отправить сообщение самому себе!',
 );

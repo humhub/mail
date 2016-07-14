@@ -1,4 +1,9 @@
-<?php $this->beginContent('application.views.mail.template'); ?>
+<?php
+
+use yii\helpers\Url;
+use yii\helpers\Html;
+use humhub\widgets\MarkdownView;
+?>
 <!-- START LAYOUT-1/1 -->
 <tr>
     <td align="center" valign="top"   class="fix-box">
@@ -92,9 +97,9 @@
 
                                                     <td valign="top" align="left" style="padding-right:20px;">
                                                         <!-- START: USER IMAGE -->
-                                                        <a href="<?php echo Yii::app()->createAbsoluteUrl('user/profile', array('uguid' => $originatorGuid)); ?>">
+                                                        <a href="<?php echo $originator->createUrl(null, [], true); ?>">
                                                             <img
-                                                                src="<?php echo $originator->getProfileImage()->getUrl(); ?>"
+                                                                src="<?php echo $originator->getProfileImage()->getUrl("", true); ?>"
                                                                 width="50"
                                                                 alt=""
                                                                 style="max-width:50px; display:block !important; border-radius: 4px;"
@@ -112,11 +117,11 @@
                                                             <tr>
                                                                 <td style="font-size: 13px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:#555555; font-weight:300; text-align:left; ">
 
-                                                                    <strong><?php echo CHtml::encode($originatorName); ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessage', 'sent you a new message:'); ?>
+                                                                    <strong><?php echo Html::encode($originator->displayName); ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessage', 'sent you a new message:'); ?>
                                                                     <br/>
-                                                                    <strong><?php echo CHtml::encode($message->title); ?></strong>
+                                                                    <strong><?php echo Html::encode($message->title); ?></strong>
                                                                     <br>
-                                                                        <?php $this->widget('application.widgets.MarkdownViewWidget', array('markdown' => $entry->content)); ?>
+                                                                    <?php echo MarkdownView::widget(array('markdown' => $entry->content)); ?>
 
 
                                                                 </td>
@@ -136,8 +141,6 @@
                                         <td height="15" class="col-underline"></td>
                                     </tr>
                                     <!--end space height -->
-
-
                                     <tr>
                                         <td valign="top" width="auto" align="center">
                                             <!-- start button -->
@@ -146,7 +149,7 @@
                                                     <td width="auto"  align="center" valign="middle" height="32" style=" background-color:#7191a8;  border-radius:5px; background-clip: padding-box;font-size:14px; font-family:Open Sans, Arial,Tahoma, Helvetica, sans-serif; text-align:center;  color:#ffffff; font-weight: 600; padding-left:30px; padding-right:30px; padding-top: 5px; padding-bottom: 5px;">
 
                                                         <span style="color: #ffffff; font-weight: 300;">
-                                                            <a href="<?php echo Yii::app()->createAbsoluteUrl('mail/mail/index', array('id' => $message->id)); ?>" style="text-decoration: none; color: #ffffff; font-weight: 300;">
+                                                            <a href="<?php echo Url::to(['/mail/mail/index', 'id' => $message->id], true); ?>" style="text-decoration: none; color: #ffffff; font-weight: 300;">
                                                                 <strong><?php echo Yii::t('MailModule.views_emails_NewMessage', 'Reply now'); ?></strong>
                                                             </a>
                                                         </span>
@@ -184,4 +187,3 @@
     </td>
 </tr>
 <!-- END LAYOUT-1/2 -->
-<?php $this->endContent(); ?>

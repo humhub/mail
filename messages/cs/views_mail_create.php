@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Add user...' => '@@Přidat uživatele...@@',
+  'Add recipients' => 'Přidat příjemce',
   'Close' => 'Zavřít',
   'New message' => 'Nová zpráva',
   'Send' => 'Poslat',

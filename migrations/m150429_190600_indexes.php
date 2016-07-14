@@ -1,6 +1,8 @@
 <?php
 
-class m150429_190600_indexes extends EDbMigration
+use yii\db\Migration;
+
+class m150429_190600_indexes extends Migration
 {
 
     public function up()

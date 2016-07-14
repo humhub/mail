@@ -3,5 +3,5 @@ return array (
   'Message' => 'Mesaj',
   'Recipient' => 'Alıcı',
   'Subject' => 'Konu',
-  'You could not send an email to yourself!' => 'Kendinize eposta gönderemezsiniz!',
+  'You cannot send a email to yourself!' => 'Kendinize e-posta gönderemessiniz!',
 );

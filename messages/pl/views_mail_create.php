@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Add user...' => '@@Dodaj użytkownika... @@',
+  'Add recipients' => 'Dodaj odbiorców',
   'Close' => 'Zamknij ',
   'New message' => 'Nowa wiadomość ',
   'Send' => 'Wyślij ',

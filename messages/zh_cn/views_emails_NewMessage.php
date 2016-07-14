@@ -17,7 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  '<strong>New</strong> message' => '',
+  '<strong>New</strong> message' => '新<strong>消息</strong>',
   'Reply now' => '现在回复',
   'sent you a new message:' => '发送给你一个新消息:',
 );
