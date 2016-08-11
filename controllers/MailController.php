@@ -146,7 +146,7 @@ class MailController extends Controller
 
         if ($inviteForm->load(Yii::$app->request->post()) && $inviteForm->validate()) {
             foreach ($inviteForm->getRecipients() as $user) {
-                if (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail())) {
+                if (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()) || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin())) {
                     // Attach User Message
                     $userMessage = new UserMessage();
                     $userMessage->message_id = $message->id;
@@ -275,17 +275,19 @@ class MailController extends Controller
     {
         $userGuid = Yii::$app->request->get('userGuid');
         $model = new CreateMessage();
-
+        
         // Preselect user if userGuid is given
         if ($userGuid != "") {
             $user = User::findOne(['guid' => $userGuid]);
-            if (isset($user) && (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()))) {
+            if (isset($user) && (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()) 
+                    || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin()))) {
                 $model->recipient = $user->guid;
             }
         }
 
+       
+        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
             // Create new Message
             $message = new Message();
             $message->title = $model->title;
