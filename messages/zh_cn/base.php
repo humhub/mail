@@ -17,14 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created At' => '',
-    'Created By' => '',
-    'Is Originator' => '',
-    'Last Viewed' => '',
-    'Message' => '',
-    'Title' => '',
-    'Updated At' => '',
-    'Updated By' => '',
-    'User' => '',
+    'Created At' => '创建时间',
+    'Created By' => '创建人',
+    'Is Originator' => '是否原作者',
+    'Last Viewed' => '最后浏览',
+    'Message' => '消息',
+    'Title' => '标题',
+    'Updated At' => '修改时间',
+    'Updated By' => '修改人',
+    'User' => '用户',
     'Messages' => '<strong>消息</strong>',
 ];
