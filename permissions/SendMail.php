@@ -23,6 +23,16 @@ class SendMail extends \humhub\libs\BasePermission
     public $defaultAllowedGroups = [
         User::USERGROUP_USER
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($config = array())
+    {
+        parent::__construct($config);
+        $this->title = \Yii::t('MailModule.permissions', 'Send Mail');
+        $this->description = \Yii::t('MailModule.permissions', 'Allows the user to send mails');
+    }
     
     /**
      * @inheritdoc
@@ -52,12 +62,12 @@ class SendMail extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    protected $title = "Send Mail";
+    protected $title;
 
     /**
      * @inheritdoc
      */
-    protected $description = "Allows the user to send mails";
+    protected $description;
 
     /**
      * @inheritdoc
