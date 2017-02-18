@@ -2,6 +2,9 @@
 
 namespace humhub\modules\mail;
 
+use humhub\modules\user\models\User;
+use humhub\modules\space\models\Space;
+
 /**
  * MailModule provides messaging functions inside the application.
  *
@@ -14,15 +17,25 @@ class Module extends \humhub\components\Module
     /**
      * @inheritdoc
      */
+    public function getName()
+    {
+        return  ('Mail');
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getPermissions($contentContainer = null)
     {
-        if ($contentContainer !== null && $contentContainer instanceof \humhub\modules\user\models\User) {
-            return [
-                new permissions\SendMail()
-            ];
+        if ($contentContainer instanceof Space) {
+            return [];
+        } elseif ($contentContainer instanceof User) {
+            return [];
         }
 
-        return [];
+        return [
+            new permissions\SendMail(),
+        ];
     }
 
 }

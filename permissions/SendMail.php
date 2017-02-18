@@ -20,48 +20,22 @@ class SendMail extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    public $defaultAllowedGroups = [
-        User::USERGROUP_USER
-    ];
-    
-    /**
-     * @inheritdoc
-     */
-    public function getDefaultState($groupId)
+    protected $moduleId = 'mail';
+
+    public function __construct($config = array())
     {
-        if(version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return parent::getDefaultState($groupId);
-        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
-            if($groupId === User::USERGROUP_FRIEND) {
-                return self::STATE_ALLOW;
-            } else {
-                return self::STATE_DENY;
-            }
-        }
-        
-        return parent::getDefaultState($groupId);
+        parent::__construct($config);
+        $this->title = 'Send Mail';
+        $this->description = 'Can send and receive messages from users with mail previlieges. ';
     }
 
     /**
      * @inheritdoc
      */
-    protected $fixedGroups = [
-        User::USERGROUP_GUEST
-    ];
+    public function getDefaultState($groupId)
+    {
+        return parent::getDefaultState($groupId);
 
-    /**
-     * @inheritdoc
-     */
-    protected $title = "Send Mail";
-
-    /**
-     * @inheritdoc
-     */
-    protected $description = "Allows the user to send mails";
-
-    /**
-     * @inheritdoc
-     */
-    protected $moduleId = 'mail';
+    }
 
 }

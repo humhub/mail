@@ -26,11 +26,33 @@ use humhub\modules\user\widgets\UserPicker;
 class MailController extends Controller
 {
 
+    public function init()
+    {
+        return parent::init() ;
+    }
+
+    /**
+     * Get group and user access rules for email. As long as one of them is allowed,
+     * either the group the user is apart of or the user has permissions for email,
+     * then the user will have access to email.
+     *
+     * Added by Jeremiah to add group email permissions.
+     *
+     * @return array
+     */
+    public static function getAccessRules()
+    {
+        return [
+            ['permissions' => \humhub\modules\mail\permissions\SendMail::className()]
+        ];
+    }
+
     public function behaviors()
     {
         return [
             'acl' => [
                 'class' => \humhub\components\behaviors\AccessControl::className(),
+                'rules' => static::getAccessRules(), //added by Jeremiah to allow for group permission
             ]
         ];
     }
