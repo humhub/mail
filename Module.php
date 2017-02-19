@@ -30,7 +30,9 @@ class Module extends \humhub\components\Module
         if ($contentContainer instanceof Space) {
             return [];
         } elseif ($contentContainer instanceof User) {
-            return [];
+            return [
+                new permissions\SendMail(),
+            ];
         }
 
         return [

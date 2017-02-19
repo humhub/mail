@@ -45,28 +45,30 @@ class Events extends \yii\base\Object
 
     /**
      * On build of the TopMenu, check if module is enabled
-     * When enabled add a menu item
+     * When enabled and the user or the users group has access to
+     * mail privileges add a menu item.
      *
      * @param type $event
      */
     public static function onTopMenuInit($event)
     {
-        if (Yii::$app->user->isGuest) {
-            return;
+
+        if (Yii::$app->user->can(new SendMail())) {
+            $event->sender->addItem(array(
+                'label' => Yii::t('MailModule.base', 'Messages'),
+                'url' => Url::to(['/mail/mail/index']),
+                'icon' => '<i class="fa fa-envelope"></i>',
+                'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
+                'sortOrder' => 300,
+            ));
         }
 
-        $event->sender->addItem(array(
-            'label' => Yii::t('MailModule.base', 'Messages'),
-            'url' => Url::to(['/mail/mail/index']),
-            'icon' => '<i class="fa fa-envelope"></i>',
-            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
-            'sortOrder' => 300,
-        ));
+       return;
     }
 
     public static function onNotificationAddonInit($event)
     {
-        if (Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest || (!Yii::$app->user->can(new permissions\SendMail()))) {
             return;
         }
 
