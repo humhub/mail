@@ -28,15 +28,18 @@ class Module extends \humhub\components\Module
     public function getPermissions($contentContainer = null)
     {
         if ($contentContainer instanceof Space) {
-            return [];
+            return [
+                new permissions\SendMail()
+            ];
         } elseif ($contentContainer instanceof User) {
             return [
-                new permissions\SendMail(),
+                new permissions\RecieveMail(),
             ];
         }
 
         return [
             new permissions\SendMail(),
+            new permissions\RecieveMail(),
         ];
     }
 

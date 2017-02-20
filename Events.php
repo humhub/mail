@@ -8,6 +8,7 @@
 
 namespace humhub\modules\mail;
 
+
 use Yii;
 use yii\helpers\Url;
 use humhub\modules\mail\models\Message;
@@ -16,6 +17,7 @@ use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\Notifications;
 use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\permissions\RecieveMail;
 
 /**
  * Description of Events
@@ -78,9 +80,16 @@ class Events extends \yii\base\Object
     public static function onProfileHeaderControlsInit($event)
     {
         $profileUser = $event->sender->user;
+
+
+        $recieveMail = $profileUser->can(new permissions\RecieveMail());
         $permitted = true;
         if(version_compare(Yii::$app->version, '1.1', '>=')) {
-            $permitted = $profileUser->getPermissionManager()->can(new SendMail()) || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin());
+
+
+            if (!(Yii::$app->user->can(new permissions\SendMail()) && $profileUser->can(new permissions\RecieveMail()))){
+               $permitted = false;
+            }
         }
         
         if (Yii::$app->user->isGuest || $profileUser->id == Yii::$app->user->id || !$permitted) {
