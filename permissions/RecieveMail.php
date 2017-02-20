@@ -29,7 +29,7 @@ class RecieveMail extends \humhub\libs\BasePermission
      */
     protected $moduleId = 'mail';
 
-    protected $defaultState = self::STATE_ALLOW;
+    protected $defaultState = self::STATE_DENY;
 
     public function __construct($config = array())
     {
