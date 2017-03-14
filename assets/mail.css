@@ -1,3 +1,11 @@
+.back-to-top {
+    cursor: pointer;
+    position: fixed;
+    top: 120px;
+    right: 10px;
+    display:block;
+}
+
 .media-list li.new {
    background-color: #e9f9ff; 
 }
