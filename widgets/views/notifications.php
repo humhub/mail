@@ -46,6 +46,13 @@ Assets::register($this);
         }
     }
 
+    // V1.2 force update when pjax load
+    $(document).on('humhub:ready', function () {
+        jQuery.getJSON("<?php echo Url::to(['/mail/mail/get-new-message-count-json']); ?>", function (json) {
+            setMailMessageCount(parseInt(json.newMessages));
+        });
+    });
+
 
 
     // open the messages menu
@@ -65,7 +72,7 @@ Assets::register($this);
             'data': jQuery(this).parents("form").serialize(),
             'success': function (html) {
                 jQuery("#loader_messages").replaceWith(html);
-        }});
+            }});
     })
 </script>
 
