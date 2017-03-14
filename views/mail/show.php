@@ -70,7 +70,7 @@ use humhub\compat\CActiveForm;
             <ul class="media-list">
                 <!-- BEGIN: Results -->
                 <?php foreach ($message->entries as $entry) : ?>
-                    <div class="media" style="margin-top: 0;">
+                    <div id="msg_<?php echo $entry->id; ?>" class="media" style="margin-top: 0;">
                         <a class="pull-left" href="<?php echo $entry->user->getUrl(); ?>"> <img
                                 class="media-object img-rounded"
                                 src="<?php echo $entry->user->getProfileImage()->getUrl(); ?>"
