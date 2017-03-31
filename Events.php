@@ -77,7 +77,7 @@ class Events extends \yii\base\Object
     {
         $profileUser = $event->sender->user;
         $permitted = true;
-        if(version_compare(Yii::$app->version, '1.1', '>=')) {
+        if (version_compare(Yii::$app->version, '1.1', '>=')) {
             $permitted = $profileUser->getPermissionManager()->can(new SendMail()) || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin());
         }
 
