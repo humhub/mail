@@ -11,18 +11,19 @@ if ($messageId != "") {
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?php echo Yii::t('MailModule.views_mail_index', 'Conversations') ?>
-                    <?php echo Html::a(Yii::t('MailModule.views_mail_index', 'New message'), ['/mail/mail/create'], array('class' => 'btn btn-info pull-right', 'data-target' => '#globalModal')); ?>
+                    <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?>
+                    <?= Html::a(Yii::t('MailModule.views_mail_index', 'New message'), ['/mail/mail/create'], ['class' => 'btn btn-info pull-right', 'data-target' => '#globalModal']); ?>
                 </div>
 
                 <hr>
+
                 <ul id="inbox" class="media-list">
                     <?php if (count($userMessages) != 0) : ?>
                         <?php foreach ($userMessages as $userMessage) : ?>
-                            <?php echo $this->render('_messagePreview', array('userMessage' => $userMessage)); ?>
+                            <?= $this->render('_messagePreview', ['userMessage' => $userMessage]); ?>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <li class="placeholder"><?php echo Yii::t('MailModule.views_mail_index', 'There are no messages yet.'); ?></li>
+                    <?php else : ?>
+                        <li class="placeholder"><?= Yii::t('MailModule.views_mail_index', 'There are no messages yet.'); ?></li>
                     <?php endif; ?>
                 </ul>
             </div>

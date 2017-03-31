@@ -48,11 +48,11 @@ class MessageEntry extends ActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
-            array(['message_id', 'user_id', 'content'], 'required'),
-            array(['message_id', 'user_id', 'file_id', 'created_by', 'updated_by'], 'integer'),
-            array(['created_at', 'updated_at'], 'safe'),
-        );
+        return [
+            [['message_id', 'user_id', 'content'], 'required'],
+            [['message_id', 'user_id', 'file_id', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+        ];
     }
 
     public function getUser()
@@ -84,7 +84,6 @@ class MessageEntry extends ActiveRecord
      */
     public function getSnippet()
     {
-
         $snippet = "";
         $lines = explode("\n", $this->content);
 
@@ -103,9 +102,8 @@ class MessageEntry extends ActiveRecord
     {
         $senderName = $this->user->displayName;
         $senderGuid = $this->user->guid;
-        
-        foreach ($this->message->users as $user) {
 
+        foreach ($this->message->users as $user) {
             if ($user->id == $this->user_id)
                 continue;
 
@@ -121,15 +119,15 @@ class MessageEntry extends ActiveRecord
                 'sender' => $this->user,
                 'originator' => $this->message->originator,
             ]);
-            
+
             if (version_compare(Yii::$app->version, '1.1', 'lt')) {
                 $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
             } else {
                 $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
             }
-            
+
             $mail->setTo($user->email);
-            $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
+            $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', ['%displayName%' => $senderName]));
             $mail->send();
         }
     }

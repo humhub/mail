@@ -10,25 +10,26 @@ use humhub\compat\CActiveForm;
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_edit", "Edit message entry"); ?></h4>
+            <h4 class="modal-title" id="myModalLabel">
+                <?= Yii::t("MailModule.views_mail_edit", "Edit message entry"); ?>
+            </h4>
         </div>
         <div class="modal-body">
 
-            <?php echo $form->errorSummary($entry); ?>
+            <?= $form->errorSummary($entry); ?>
 
             <div class="form-group">
-                <?php echo $form->textArea($entry, 'content', array('class' => 'form-control', 'rows' => '7', 'id' => 'newMessageEntryText')); ?>
-                <?php echo humhub\widgets\MarkdownEditor::widget(array('fieldId' => 'newMessageEntryText')); ?>
-                <?php echo $form->error($entry, 'content'); ?>
+                <?= $form->textArea($entry, 'content', ['class' => 'form-control', 'rows' => '7', 'id' => 'newMessageEntryText']); ?>
+                <?= humhub\widgets\MarkdownEditor::widget(['fieldId' => 'newMessageEntryText']); ?>
+                <?= $form->error($entry, 'content'); ?>
             </div>
 
         </div>
         <div class="modal-footer">
             <div class="row">
                 <div class="col-md-6 text-left">
-                    <?php
-                    echo \humhub\widgets\AjaxButton::widget([
+                    <?=
+                    humhub\widgets\AjaxButton::widget([
                         'label' => Yii::t('MailModule.views_mail_edit', 'Save'),
                         'ajaxOptions' => [
                             'type' => 'POST',
@@ -42,12 +43,14 @@ use humhub\compat\CActiveForm;
                     ]);
                     ?>
 
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <?= Yii::t('MailModule.views_mail_create', 'Close'); ?>
+                    </button>
 
                 </div>
                 <div class="col-md-6 text-right">
-                    <?php
-                    echo humhub\widgets\ModalConfirm::widget(array(
+                    <?=
+                    humhub\widgets\ModalConfirm::widget([
                         'uniqueID' => 'modal_maildelete_' . $entry->id,
                         'title' => Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deletion'),
                         'message' => Yii::t('MailModule.views_mail_show', 'Do you really want to delete this message?'),
@@ -56,7 +59,7 @@ use humhub\compat\CActiveForm;
                         'linkContent' => Yii::t('MailModule.views_mail_show', 'Delete'),
                         'cssClass' => 'btn btn-danger',
                         'linkHref' => Url::to(["/mail/mail/delete-entry", 'messageEntryId' => $entry->id])
-                    ));
+                    ]);
                     ?>
                 </div>
             </div>

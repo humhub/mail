@@ -28,11 +28,11 @@ class NewMessageButton extends Widget
             $class .= ' btn-' . $this->size;
         }
 
-        $params = array(
+        $params = [
             'guid' => $this->guid,
             'id' => $this->id,
             'class' => $class,
-        );
+        ];
 
         // if guid is set, then change button label to "Send message"
         if (!empty($this->guid)) {
@@ -45,5 +45,3 @@ class NewMessageButton extends Widget
     }
 
 }
-
-?>

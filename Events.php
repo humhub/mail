@@ -55,13 +55,13 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addItem(array(
+        $event->sender->addItem([
             'label' => Yii::t('MailModule.base', 'Messages'),
             'url' => Url::to(['/mail/mail/index']),
             'icon' => '<i class="fa fa-envelope"></i>',
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
             'sortOrder' => 300,
-        ));
+        ]);
     }
 
     public static function onNotificationAddonInit($event)
@@ -70,7 +70,7 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addWidget(Notifications::className(), array(), array('sortOrder' => 90));
+        $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
     }
 
     public static function onProfileHeaderControlsInit($event)
@@ -80,12 +80,12 @@ class Events extends \yii\base\Object
         if(version_compare(Yii::$app->version, '1.1', '>=')) {
             $permitted = $profileUser->getPermissionManager()->can(new SendMail()) || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin());
         }
-        
+
         if (Yii::$app->user->isGuest || $profileUser->id == Yii::$app->user->id || !$permitted) {
             return;
         }
 
-        $event->sender->addWidget(NewMessageButton::className(), array('guid' => $event->sender->user->guid, 'type' => 'info'), array('sortOrder' => 90));
+        $event->sender->addWidget(NewMessageButton::className(), ['guid' => $event->sender->user->guid, 'type' => 'info'], ['sortOrder' => 90]);
     }
 
 }

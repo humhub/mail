@@ -44,11 +44,11 @@ class Message extends ActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
-            array(['created_by', 'updated_by'], 'integer'),
-            array(['title'], 'string', 'max' => 255),
-            array(['created_at', 'updated_at'], 'safe'),
-        );
+        return [
+            [['created_by', 'updated_by'], 'integer'],
+            [['title'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'safe'],
+        ];
     }
 
     /**
@@ -58,17 +58,18 @@ class Message extends ActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-            'entries' => array(self::HAS_MANY, 'MessageEntry', 'message_id', 'order' => 'created_at ASC'),
-            'users' => array(self::MANY_MANY, 'User', 'user_message(message_id, user_id)'),
-            'originator' => array(self::BELONGS_TO, 'User', 'created_by'),
-        );
+        return [
+            'entries' => [self::HAS_MANY, 'MessageEntry', 'message_id', 'order' => 'created_at ASC'],
+            'users' => [self::MANY_MANY, 'User', 'user_message(message_id, user_id)'],
+            'originator' => [self::BELONGS_TO, 'User', 'created_by'],
+        ];
     }
 
     public function getEntries()
     {
         $query = $this->hasMany(MessageEntry::className(), ['message_id' => 'id']);
         $query->addOrderBy(['created_at' => SORT_ASC]);
+
         return $query;
     }
 
@@ -85,6 +86,7 @@ class Message extends ActiveRecord
                 return true;
             }
         }
+
         return false;
     }
 
@@ -98,14 +100,14 @@ class Message extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'id' => 'ID',
             'title' => Yii::t('MailModule.base', 'Title'),
             'created_at' => Yii::t('MailModule.base', 'Created At'),
             'created_by' => Yii::t('MailModule.base', 'Created By'),
             'updated_at' => Yii::t('MailModule.base', 'Updated At'),
             'updated_by' => Yii::t('MailModule.base', 'Updated By'),
-        );
+        ];
     }
 
     /**
@@ -142,10 +144,10 @@ class Message extends ActiveRecord
      */
     public function leave($userId)
     {
-        $userMessage = UserMessage::findOne(array(
+        $userMessage = UserMessage::findOne([
                     'message_id' => $this->id,
                     'user_id' => $userId
-        ));
+        ]);
 
         if (count($this->users) > 2) {
             $userMessage->delete();
@@ -197,7 +199,7 @@ class Message extends ActiveRecord
         $andAddon = "";
         if (count($this->users) > 2) {
             $counter = count($this->users) - 1;
-            $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", array("{counter}" => $counter));
+            $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", ["{counter}" => $counter]);
         }
 
         Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
@@ -220,7 +222,7 @@ class Message extends ActiveRecord
         }
 
         $mail->setTo($user->email);
-        $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
+        $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', ["{senderName}" => \yii\helpers\Html::encode($this->originator->displayName)]));
         $mail->send();
     }
 

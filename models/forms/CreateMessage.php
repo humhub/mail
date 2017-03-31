@@ -22,17 +22,17 @@ class CreateMessage extends Model
      *
      * @var type
      */
-    public $recipients = array();
+    public $recipients = [];
 
     /**
      * Declares the validation rules.
      */
     public function rules()
     {
-        return array(
-            array(['message', 'recipient', 'title'], 'required'),
-            array('recipient', 'checkRecipient')
-        );
+        return [
+            [['message', 'recipient', 'title'], 'required'],
+            ['recipient', 'checkRecipient']
+        ];
     }
 
     /**
@@ -42,11 +42,11 @@ class CreateMessage extends Model
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'recipient' => Yii::t('MailModule.forms_CreateMessageForm', 'Recipient'),
             'title' => Yii::t('MailModule.forms_CreateMessageForm', 'Subject'),
             'message' => Yii::t('MailModule.forms_CreateMessageForm', 'Message'),
-        );
+        ];
     }
 
     /**
@@ -57,7 +57,6 @@ class CreateMessage extends Model
      */
     public function checkRecipient($attribute, $params)
     {
-
         // Check if email field is not empty
         if ($this->$attribute != "") {
 
@@ -69,7 +68,6 @@ class CreateMessage extends Model
                 // Try load user
                 $user = User::findOne(['guid' => $userGuid]);
                 if ($user != null) {
-
                     if ($user->id == Yii::$app->user->id) {
                         $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You cannot send a email to yourself!"));
                     } else {

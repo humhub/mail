@@ -8,8 +8,8 @@
 
 namespace humhub\modules\mail\permissions;
 
-use humhub\modules\user\models\User;
 use Yii;
+use humhub\modules\user\models\User;
 
 /**
  * Send Mail Permission
@@ -23,22 +23,22 @@ class SendMail extends \humhub\libs\BasePermission
     public $defaultAllowedGroups = [
         User::USERGROUP_USER
     ];
-    
+
     /**
      * @inheritdoc
      */
     public function getDefaultState($groupId)
     {
-        if(version_compare(Yii::$app->version, '1.1', 'lt')) {
+        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
             return parent::getDefaultState($groupId);
-        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
-            if($groupId === User::USERGROUP_FRIEND) {
+        } else if (Yii::$app->getModule('friendship')->getIsEnabled()) {
+            if ($groupId === User::USERGROUP_FRIEND) {
                 return self::STATE_ALLOW;
             } else {
                 return self::STATE_DENY;
             }
         }
-        
+
         return parent::getDefaultState($groupId);
     }
 

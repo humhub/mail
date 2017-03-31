@@ -21,17 +21,17 @@ class InviteRecipient extends Model
      *
      * @var type
      */
-    public $recipients = array();
+    public $recipients = [];
 
     /**
      * Declares the validation rules.
      */
     public function rules()
     {
-        return array(
-            array('recipient', 'required'),
-            array('recipient', 'checkRecipient')
-        );
+        return [
+            ['recipient', 'required'],
+            ['recipient', 'checkRecipient']
+        ];
     }
 
     /**
@@ -41,9 +41,9 @@ class InviteRecipient extends Model
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'recipient' => Yii::t('MailModule.forms_InviteRecipientForm', 'Recipient'),
-        );
+        ];
     }
 
     /**
@@ -54,7 +54,6 @@ class InviteRecipient extends Model
      */
     public function checkRecipient($attribute, $params)
     {
-
         // Check if email field is not empty
         if ($this->$attribute != "") {
 

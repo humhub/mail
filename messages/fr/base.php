@@ -1,5 +1,5 @@
 <?php
-return array (
+return [
   'Created At' => 'Créé le',
   'Created By' => 'Créé par',
   'Is Originator' => 'Est à l\'origine',
@@ -10,4 +10,4 @@ return array (
   'Updated At' => 'Mis à jour le',
   'Updated By' => 'Mis à jour par',
   'User' => 'Utilisateur',
-);
+];

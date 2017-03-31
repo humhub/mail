@@ -39,11 +39,11 @@ class UserMessage extends ActiveRecord
      */
     public function rules()
     {
-        return array(
-            array(['message_id', 'user_id'], 'required'),
-            array(['message_id', 'user_id', 'is_originator', 'created_by', 'updated_by'], 'integer'),
-            array(['last_viewed', 'created_at', 'updated_at'], 'safe'),
-        );
+        return [
+            [['message_id', 'user_id'], 'required'],
+            [['message_id', 'user_id', 'is_originator', 'created_by', 'updated_by'], 'integer'],
+            [['last_viewed', 'created_at', 'updated_at'], 'safe'],
+        ];
     }
 
     public function getMessage()
@@ -61,7 +61,7 @@ class UserMessage extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'message_id' => Yii::t('MailModule.base', 'Message'),
             'user_id' => Yii::t('MailModule.base', 'User'),
             'is_originator' => Yii::t('MailModule.base', 'Is Originator'),
@@ -70,7 +70,7 @@ class UserMessage extends ActiveRecord
             'created_by' => Yii::t('MailModule.base', 'Created By'),
             'updated_at' => Yii::t('MailModule.base', 'Updated At'),
             'updated_by' => Yii::t('MailModule.base', 'Updated By'),
-        );
+        ];
     }
 
     /**
@@ -85,7 +85,7 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
-        $json = array();
+        $json = [];
 
         $query = self::find();
         $query->joinWith('message');

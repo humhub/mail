@@ -10,19 +10,20 @@ use yii\widgets\ActiveForm;
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_create", "New message"); ?></h4>
+            <h4 class="modal-title" id="myModalLabel">
+                <?= Yii::t("MailModule.views_mail_create", "New message"); ?>
+            </h4>
         </div>
         <div class="modal-body">
 
-            <?php echo $form->errorSummary($model); ?>
+            <?= $form->errorSummary($model); ?>
 
             <div class="form-group">
-                <?php echo $form->field($model, 'recipient', ['inputOptions' => ['id' => 'recipient']]); ?>
+                <?= $form->field($model, 'recipient', ['inputOptions' => ['id' => 'recipient']]); ?>
             </div>
 
-            <?php
-            echo \humhub\modules\user\widgets\UserPicker::widget(array(
+            <?:
+            humhub\modules\user\widgets\UserPicker::widget([
                 'inputId' => 'recipient',
                 'model' => $model,
                 'attribute' => 'recipient',
@@ -30,22 +31,22 @@ use yii\widgets\ActiveForm;
                 'userSearchUrl' => Url::toRoute(['/mail/mail/search-user', 'keyword' => '-keywordPlaceholder-']),
                 'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
                 'focus' => true,
-            ));
+            ]);
             ?>
 
             <div class="form-group">
-                <?php echo $form->field($model, 'title'); ?>
+                <?= $form->field($model, 'title'); ?>
             </div>
 
             <div class="form-group">
-                <?php echo $form->field($model, 'message', ['inputOptions' => ['class' => 'form-control', 'id' => 'newMessageText']])->textarea(); ?>
-                <?php echo \humhub\widgets\MarkdownEditor::widget(array('fieldId' => 'newMessageText')); ?>
+                <?= $form->field($model, 'message', ['inputOptions' => ['class' => 'form-control', 'id' => 'newMessageText']])->textarea(); ?>
+                <?= humhub\widgets\MarkdownEditor::widget(['fieldId' => 'newMessageText']); ?>
             </div>
 
         </div>
         <div class="modal-footer">
-            <?php
-            echo \humhub\widgets\AjaxButton::widget([
+            <?=
+            humhub\widgets\AjaxButton::widget([
                 'label' => Yii::t('MailModule.views_mail_create', 'Send'),
                 'ajaxOptions' => [
                     'type' => 'POST',
@@ -59,7 +60,9 @@ use yii\widgets\ActiveForm;
             ]);
             ?>
 
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <?= Yii::t('MailModule.views_mail_create', 'Close'); ?>
+            </button>
 
         </div>
 
@@ -69,7 +72,7 @@ use yii\widgets\ActiveForm;
 </div>
 
 
-<script type="text/javascript">
+<script>
     // set focus to input for space name
     $('#recipient').focus();
 </script>

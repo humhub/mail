@@ -60,11 +60,11 @@ class MailController extends Controller
             $messageId = $userMessages[0]->message->id;
         }
 
-        return $this->render('/mail/index', array(
+        return $this->render('/mail/index', [
                     'userMessages' => $userMessages,
                     'messageId' => $messageId,
                     'pagination' => $pagination
-        ));
+        ]);
     }
 
     /**
@@ -79,7 +79,7 @@ class MailController extends Controller
         $query->orderBy('message.updated_at DESC');
         $query->limit(5);
 
-        return $this->renderAjax('notificationList', array('userMessages' => $query->all()));
+        return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
     }
 
     /**
@@ -116,14 +116,14 @@ class MailController extends Controller
                     'replyForm' => $replyForm,
         ]);
     }
-    
+
     private function checkMessagePermissions($message)
     {
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
-        
-        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
+
+        if (!$message->isParticipant(Yii::$app->user->getIdentity())) {
             throw new HttpException(403, 'Access denied!');
         }
     }
@@ -159,13 +159,13 @@ class MailController extends Controller
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
 
-        return $this->renderAjax('/mail/adduser', array('inviteForm' => $inviteForm));
+        return $this->renderAjax('/mail/adduser', ['inviteForm' => $inviteForm]);
     }
-    
+
     /**
      * Used by user picker, searches user which are allwed messaging permissions
      * for the current user (v1.1).
-     * 
+     *
      * @return type
      */
     public function actionSearchUser()
@@ -173,7 +173,7 @@ class MailController extends Controller
         Yii::$app->response->format = 'json';
         return $this->getUserPickerResult(Yii::$app->request->get('keyword'));
     }
-    
+
     private function getUserPickerResult($keyword) {
         if (version_compare(Yii::$app->version, '1.1', 'lt')) {
             return $this->findUserByFilter($keyword, 10);
@@ -192,10 +192,10 @@ class MailController extends Controller
     }
 
     /**
-     * User picker search for adding additional users to a conversaion, 
+     * User picker search for adding additional users to a conversaion,
      * searches user which are allwed messaging permissions for the current user (v1.1).
      * Disables users already participating in a conversation.
-     * 
+     *
      * @return type
      */
     public function actionSearchAddUser()
@@ -206,33 +206,34 @@ class MailController extends Controller
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
-             
+
         $result = $this->getUserPickerResult(Yii::$app->request->get('keyword'));
-        
+
         //Disable already participating users
-        foreach($result as $i=>$user) {
-            if($this->isParticipant($message, $user)) {
+        foreach ($result as $i=>$user) {
+            if ($this->isParticipant($message, $user)) {
                 $result[$i++]['disabled'] = true;
             }
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Checks if a user (user json representation) is participant of a given
      * message.
-     * 
+     *
      * @param type $message
      * @param type $user
      * @return boolean
      */
     private function isParticipant($message, $user) {
-        foreach($message->users as $participant) {
-            if($participant->guid === $user['guid']) {
+        foreach ($message->users as $participant) {
+            if ($participant->guid === $user['guid']) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -264,6 +265,7 @@ class MailController extends Controller
                 $results[] = $userInfo;
             }
         }
+
         return $results;
     }
 
@@ -275,18 +277,16 @@ class MailController extends Controller
     {
         $userGuid = Yii::$app->request->get('userGuid');
         $model = new CreateMessage();
-        
+
         // Preselect user if userGuid is given
         if ($userGuid != "") {
             $user = User::findOne(['guid' => $userGuid]);
-            if (isset($user) && (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()) 
+            if (isset($user) && (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail())
                     || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin()))) {
                 $model->recipient = $user->guid;
             }
         }
 
-       
-        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // Create new Message
             $message = new Message();
@@ -328,7 +328,7 @@ class MailController extends Controller
 
             return $this->htmlRedirect(['index', 'id' => $message->id]);
         }
-        
+
         return $this->renderAjax('create', array('model' => $model));
     }
 
@@ -377,7 +377,7 @@ class MailController extends Controller
             return $this->htmlRedirect(['index', 'id' => $entry->message->id]);
         }
 
-        return $this->renderAjax('editEntry', array('entry' => $entry));
+        return $this->renderAjax('editEntry', ['entry' => $entry]);
     }
 
     /**
@@ -413,7 +413,7 @@ class MailController extends Controller
     {
         Yii::$app->response->format = 'json';
 
-        $json = array();
+        $json = [];
         $json['newMessages'] = UserMessage::getNewMessageCount();
 
         return $json;
