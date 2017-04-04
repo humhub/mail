@@ -28,7 +28,7 @@ function loadMessage(messageId) {
 }
 
 function scrollToLastMsg(recursion = false) {
-    var msgContainer = $('#layout-content');
+    var msgContainer = $('.panel.panel-default');
     var msgContainerTop = msgContainer.offset().top;
 
     for (i = -2; i < 1; i++) {
