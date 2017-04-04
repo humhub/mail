@@ -7,7 +7,7 @@ return array (
   'Message' => 'Wiadomość',
   'Messages' => 'Wiadomości ',
   'Title' => 'Tytuł',
-  'Updated At' => '',
+  'Updated At' => 'Zaktualizowana o ',
   'Updated By' => '',
   'User' => 'Użytkownik',
 );
