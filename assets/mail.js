@@ -15,6 +15,18 @@ function loadMessage(messageId) {
             },
             'success': function(html) {
                 $("#mail_message_details").html(html);
+                
+                //if there is no last, use the only one .eq(0)
+                for (i = -1; i < 1; i++) {
+                    var lastMsg = $('#mail_message_details .media-list div.media').eq(i);
+                    if (lastMsg.size()) {
+                        $('html, body').animate({
+                            scrollTop: lastMsg.offset().top - $('#mail_message_details').offset().top
+                        }, 2000);
+                        break;
+                    }
+                }
+                
             }});
     } else {
         // Somewhere outside
