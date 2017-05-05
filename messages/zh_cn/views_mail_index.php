@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Conversations' => '',
+    'Conversations' => '对话',
     'New' => '新的',
     'New message' => '新消息',
     'There are no messages yet.' => '还没有消息.',
