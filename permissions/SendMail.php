@@ -2,7 +2,7 @@
 
 /**
  * @link https://www.humhub.org/
- * @copyright Copyright (c) 2015 HumHub GmbH & Co. KG
+ * @copyright Copyright (c) 2017 HumHub GmbH & Co. KG
  * @license https://www.humhub.com/licences
  */
 
@@ -48,16 +48,26 @@ class SendMail extends \humhub\libs\BasePermission
     protected $fixedGroups = [
         User::USERGROUP_GUEST
     ];
+    
+    /**
+     * @inheritdoc
+     */
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->title = Yii::t('MailModule.permissions', 'Send Mail');
+        $this->description = Yii::t('MailModule.permissions', 'Allows the user to send mails');
+    }
 
     /**
      * @inheritdoc
      */
-    protected $title = "Send Mail";
+    protected $title;
 
     /**
      * @inheritdoc
      */
-    protected $description = "Allows the user to send mails";
+    protected $description;
 
     /**
      * @inheritdoc
