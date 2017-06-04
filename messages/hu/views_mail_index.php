@@ -1,7 +1,7 @@
 <?php
 return array (
-  'Conversations' => '',
+  'Conversations' => 'Beszélgetések',
   'New' => 'Új',
-  'New message' => '',
-  'There are no messages yet.' => '',
+  'New message' => 'Új üzenet',
+  'There are no messages yet.' => 'Még nincsenek üzenetek.',
 );
