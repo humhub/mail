@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\models\forms;
 
+use Yii;
 use yii\base\Model;
 
 /**
@@ -18,9 +19,9 @@ class ReplyMessage extends Model
      */
     public function rules()
     {
-        return array(
-            array('message', 'required'),
-        );
+        return [
+            ['message', 'required'],
+        ];
     }
 
     /**
@@ -30,9 +31,9 @@ class ReplyMessage extends Model
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'message' => Yii::t('MailModule.forms_ReplyMessageForm', 'Message'),
-        );
+        ];
     }
 
 }
