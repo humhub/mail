@@ -13,7 +13,7 @@ return array (
   'Leave' => '',
   'Leave conversation' => '',
   'Leave discussion' => '',
-  'Send' => '',
+  'Send' => 'Kirim',
   'There are no messages yet.' => '',
   'Write an answer...' => '',
 );

@@ -2,12 +2,12 @@
 return array (
   'Created At' => 'Vytvořeno',
   'Created By' => 'Vytvořil(a)',
-  'Is Originator' => '',
-  'Last Viewed' => '',
+  'Is Originator' => 'Je originátorem',
+  'Last Viewed' => 'Poslední zobrazení',
   'Message' => 'Zpráva',
   'Messages' => 'Zprávy',
   'Title' => 'Název',
   'Updated At' => 'Aktualizováno',
-  'Updated By' => '',
+  'Updated By' => 'Aktualizoval/a',
   'User' => 'Uživatel',
 );

@@ -4,7 +4,7 @@ return array (
   'Created By' => '',
   'Is Originator' => '',
   'Last Viewed' => '',
-  'Message' => '',
+  'Message' => 'Pesan',
   'Messages' => '',
   'Title' => 'Judul',
   'Updated At' => '',

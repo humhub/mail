@@ -2,5 +2,5 @@
 return array (
   'Add more participants to your conversation...' => '',
   'Close' => 'Tutup',
-  'Send' => '',
+  'Send' => 'Kirim',
 );

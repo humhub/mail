@@ -2,6 +2,6 @@
 return array (
   'Add recipients' => '',
   'Close' => 'Zatvori',
-  'New message' => '',
+  'New message' => 'Új üzenet',
   'Send' => 'Beküldés',
 );

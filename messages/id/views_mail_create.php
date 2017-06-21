@@ -3,5 +3,5 @@ return array (
   'Add recipients' => '',
   'Close' => 'Tutup',
   'New message' => '',
-  'Send' => '',
+  'Send' => 'Kirim',
 );
