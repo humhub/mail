@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Message' => 'Thông điệp',
+  'Message' => 'Tin nhắn',
 );
