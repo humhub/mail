@@ -1,4 +1,4 @@
 <?php
 return array (
-  'New message in discussion from %displayName%' => 'Thông điệp mới trong thảo luận từ %displayName%',
+  'New message in discussion from %displayName%' => 'Tin nhắn mới trong cuộc thảo luận từ %displayName%',
 );

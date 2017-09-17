@@ -1,5 +1,5 @@
 <?php
 return array (
-  'New message from {senderName}' => 'Thông điệp mới từ {senderName}',
-  'and {counter} other users' => 'và {counter} những users khác',
+  'New message from {senderName}' => 'Tin nhắn mới từ {senderName}',
+  'and {counter} other users' => 'và {counter} những người dùng khác',
 );
