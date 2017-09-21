@@ -26,12 +26,10 @@ use humhub\modules\user\widgets\UserPicker;
 class MailController extends Controller
 {
 
-    public function behaviors()
+    public function getAccessRules()
     {
         return [
-            'acl' => [
-                'class' => \humhub\components\behaviors\AccessControl::className(),
-            ]
+            ['login']
         ];
     }
 
