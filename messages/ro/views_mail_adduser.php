@@ -1,6 +1,6 @@
 <?php
 return array (
   'Add more participants to your conversation...' => '',
-  'Close' => '',
+  'Close' => 'Închide',
   'Send' => '',
 );

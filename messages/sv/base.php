@@ -17,14 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Allow others to send you private messages' => '',
     'Created At' => '',
     'Created By' => '',
     'Is Originator' => '',
     'Last Viewed' => '',
-    'Message' => '',
+    'Receive private messages' => '',
     'Title' => '',
     'Updated At' => '',
     'Updated By' => '',
     'User' => '',
+    'Message' => 'Medelande',
     'Messages' => 'Meddelanden',
 ];

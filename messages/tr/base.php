@@ -17,14 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created At' => '',
-    'Created By' => '',
+    'Allow others to send you private messages' => '',
     'Is Originator' => '',
     'Last Viewed' => '',
-    'Message' => '',
-    'Title' => '',
-    'Updated At' => '',
-    'Updated By' => '',
-    'User' => '',
+    'Receive private messages' => '',
+    'Created At' => 'Oluşturma zamanı',
+    'Created By' => 'Oluşturan',
+    'Message' => 'Mesaj',
     'Messages' => 'Mesajlar',
+    'Title' => 'Başlık',
+    'Updated At' => 'Güncelleme zamanı',
+    'Updated By' => 'Güncelleyen',
+    'User' => 'Kullanıcı',
 ];

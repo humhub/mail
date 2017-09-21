@@ -17,14 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created At' => '',
-    'Created By' => '',
+    'Allow others to send you private messages' => '',
     'Is Originator' => '',
-    'Last Viewed' => '',
-    'Message' => '',
-    'Messages' => '',
-    'Title' => '',
-    'Updated At' => '',
-    'Updated By' => '',
-    'User' => '',
+    'Receive private messages' => '',
+    'Created At' => 'Létrehozva',
+    'Created By' => 'Létrehozta',
+    'Last Viewed' => 'Utoljára megtekintve',
+    'Message' => 'Üzenet',
+    'Messages' => 'Üzenetek',
+    'Title' => 'Naslov',
+    'Updated At' => 'Szerkesztve',
+    'Updated By' => 'Szerkesztette',
+    'User' => 'Felhasználó',
 ];

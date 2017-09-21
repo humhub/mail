@@ -17,14 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created At' => '',
-    'Created By' => '',
+    'Allow others to send you private messages' => '',
     'Is Originator' => '',
     'Last Viewed' => '',
-    'Message' => '',
-    'Title' => '',
-    'Updated At' => '',
-    'Updated By' => '',
-    'User' => '',
+    'Receive private messages' => '',
+    'Created At' => '创建于',
+    'Created By' => '创建人',
+    'Message' => '消息',
     'Messages' => '<strong>消息</strong>',
+    'Title' => '标题',
+    'Updated At' => '修改于',
+    'Updated By' => '修改人',
+    'User' => '用户',
 ];

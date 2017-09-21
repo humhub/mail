@@ -17,14 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created At' => '',
-    'Created By' => '',
-    'Is Originator' => '',
-    'Last Viewed' => '',
-    'Message' => '',
-    'Title' => '',
-    'Updated At' => '',
-    'Updated By' => '',
-    'User' => '',
+    'Allow others to send you private messages' => '',
+    'Receive private messages' => '',
+    'Created At' => 'Criado Em',
+    'Created By' => 'Criado Por',
+    'Is Originator' => 'É Originador',
+    'Last Viewed' => 'Última Visualização',
+    'Message' => 'Mensagem',
     'Messages' => 'Mensagens',
+    'Title' => 'Título',
+    'Updated At' => 'Atualizado Em',
+    'Updated By' => 'Atualizado Por',
+    'User' => 'Usuário',
 ];

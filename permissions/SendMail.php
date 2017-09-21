@@ -20,27 +20,15 @@ class SendMail extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    public $defaultAllowedGroups = [
-        User::USERGROUP_USER
-    ];
-    
+    protected $moduleId = 'mail';
+
     /**
      * @inheritdoc
      */
-    public function getDefaultState($groupId)
-    {
-        if(version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return parent::getDefaultState($groupId);
-        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
-            if($groupId === User::USERGROUP_FRIEND) {
-                return self::STATE_ALLOW;
-            } else {
-                return self::STATE_DENY;
-            }
-        }
-        
-        return parent::getDefaultState($groupId);
-    }
+    public $defaultAllowedGroups = [
+        User::USERGROUP_USER,
+        User::USERGROUP_FRIEND
+    ];
 
     /**
      * @inheritdoc
@@ -52,16 +40,17 @@ class SendMail extends \humhub\libs\BasePermission
     /**
      * @inheritdoc
      */
-    protected $title = "Send Mail";
+    public function getTitle()
+    {
+        return Yii::t('MailModule.base', 'Receive private messages');
+    }
 
     /**
      * @inheritdoc
      */
-    protected $description = "Allows the user to send mails";
-
-    /**
-     * @inheritdoc
-     */
-    protected $moduleId = 'mail';
+    public function getDescription()
+    {
+        return Yii::t('MailModule.base', 'Allow others to send you private messages');
+    }
 
 }

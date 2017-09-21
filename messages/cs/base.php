@@ -17,14 +17,16 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created At' => '',
-    'Created By' => '',
-    'Is Originator' => '',
-    'Last Viewed' => '',
-    'Message' => '',
-    'Title' => '',
-    'Updated At' => '',
-    'Updated By' => '',
-    'User' => '',
+    'Allow others to send you private messages' => '',
+    'Receive private messages' => '',
+    'Created At' => 'Vytvořeno',
+    'Created By' => 'Vytvořil(a)',
+    'Is Originator' => 'Je originátorem',
+    'Last Viewed' => 'Poslední zobrazení',
+    'Message' => 'Zpráva',
     'Messages' => 'Zprávy',
+    'Title' => 'Název',
+    'Updated At' => 'Aktualizováno',
+    'Updated By' => 'Aktualizoval/a',
+    'User' => 'Uživatel',
 ];
