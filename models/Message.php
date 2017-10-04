@@ -2,11 +2,14 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\modules\mail\notifications\ConversationNotificationCategory;
+
+use humhub\modules\notification\targets\BaseTarget;
+use humhub\modules\notification\targets\MailTarget;
 use Yii;
 use humhub\components\ActiveRecord;
 use humhub\models\Setting;
 use humhub\modules\user\models\User;
-use humhub\modules\mail\models\MessageEntry;
 
 /**
  * This is the model class for table "message".
@@ -48,20 +51,6 @@ class Message extends ActiveRecord
             array(['created_by', 'updated_by'], 'integer'),
             array(['title'], 'string', 'max' => 255),
             array(['created_at', 'updated_at'], 'safe'),
-        );
-    }
-
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
-        return array(
-            'entries' => array(self::HAS_MANY, 'MessageEntry', 'message_id', 'order' => 'created_at ASC'),
-            'users' => array(self::MANY_MANY, 'User', 'user_message(message_id, user_id)'),
-            'originator' => array(self::BELONGS_TO, 'User', 'created_by'),
         );
     }
 
@@ -194,6 +183,14 @@ class Message extends ActiveRecord
      */
     public function notify($user)
     {
+
+        /* @var $mailTarget BaseTarget */
+        $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
+
+        if(!$mailTarget || !$mailTarget->isCategoryEnabled(new ConversationNotificationCategory(), $user)) {
+            return;
+        }
+
         $andAddon = "";
         if (count($this->users) > 2) {
             $counter = count($this->users) - 1;

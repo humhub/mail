@@ -2,6 +2,9 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\modules\mail\notifications\MailNotificationCategory;
+use humhub\modules\notification\targets\BaseTarget;
+use humhub\modules\notification\targets\MailTarget;
 use Yii;
 use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
@@ -106,8 +109,16 @@ class MessageEntry extends ActiveRecord
         
         foreach ($this->message->users as $user) {
 
-            if ($user->id == $this->user_id)
+            /* @var $mailTarget BaseTarget */
+            $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
+
+            if(!$mailTarget || !$mailTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
+                return;
+            }
+
+            if ($user->id == $this->user_id) {
                 continue;
+            }
 
             Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
 

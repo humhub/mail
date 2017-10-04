@@ -2,6 +2,10 @@
 
 namespace humhub\modules\mail;
 
+use humhub\modules\mail\notifications\ConversationNotificationCategory;
+use humhub\modules\mail\notifications\MailNotificationDummy;
+use humhub\modules\mail\notifications\MailNotificationDummy2;
+
 /**
  * MailModule provides messaging functions inside the application.
  *
@@ -23,6 +27,14 @@ class Module extends \humhub\components\Module
         }
 
         return [];
+    }
+
+    public function getNotifications()
+    {
+        return [
+            MailNotificationDummy::class,
+            MailNotificationDummy2::class
+        ];
     }
 
 }
