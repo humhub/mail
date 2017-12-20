@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Messages' => '',
-  'New message' => '',
-  'Show all messages' => '',
+  'Messages' => 'Poruke',
+  'New message' => 'Nova poruka',
+  'Show all messages' => 'Prikaži sve poruke',
 );

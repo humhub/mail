@@ -1,5 +1,5 @@
 <?php
 return array (
-  'New message' => '',
-  'Send message' => '',
+  'New message' => 'Nova poruka',
+  'Send message' => 'Pošalji poruku',
 );

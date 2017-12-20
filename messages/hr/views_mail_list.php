@@ -1,4 +1,4 @@
 <?php
 return array (
-  'There are no messages yet.' => '',
+  'There are no messages yet.' => 'Još nema poruka.',
 );
