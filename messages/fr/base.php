@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Allow others to send you private messages' => 'Autoriser les autres à vous envoyer des messages privés',
+  'Allow others to send you private messages' => 'Autoriser les autres utilisateurs à vous envoyer des messages privés',
   'Created At' => 'Créé le',
   'Created By' => 'Créé par',
   'Is Originator' => 'Est à l\'origine',
