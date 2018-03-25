@@ -18,6 +18,9 @@
  */
 return [
     'Allow others to send you private messages' => '',
+    'Conversation' => '',
+    'Receive Notifications when someone opens a new conversation.' => '',
+    'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
     'Created At' => 'Creato il',
     'Created By' => 'Creato da',
