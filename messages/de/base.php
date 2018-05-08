@@ -12,7 +12,7 @@ return array (
   'Receive Notifications when someone sends you a message.' => 'Benachrichtigungen erhalten, wenn dir jemand eine Nachricht schickt.',
   'Receive private messages' => 'Private Nachrichten erhalten',
   'Title' => 'Betreff',
-  'Updated At' => 'Zuletzt aktualisiert am',
-  'Updated By' => 'Zuletzt aktualisiert durch',
+  'Updated At' => 'Aktualisiert am',
+  'Updated By' => 'Aktualisiert durch',
   'User' => 'Benutzer',
 );
