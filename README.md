@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/humhub/humhub-modules-mail.svg?branch=master)](https://travis-ci.com/humhub/humhub-modules-mail)
+
 ## Description
 
 Private messaging system to communicate with one or more users.
