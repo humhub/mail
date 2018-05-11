@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/humhub/humhub-modules-mail.svg?branch=master)](https://travis-ci.com/humhub/humhub-modules-mail)
+[![Build Status](https://travis-ci.org/humhub/humhub-modules-mail.svg?branch=master)](https://travis-ci.org/humhub/humhub-modules-mail)
 
 ## Description
 
