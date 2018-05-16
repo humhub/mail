@@ -2,9 +2,11 @@
 
 namespace humhub\modules\mail;
 
-use humhub\modules\mail\notifications\ConversationNotificationCategory;
 use humhub\modules\mail\notifications\MailNotificationDummy;
 use humhub\modules\mail\notifications\MailNotificationDummy2;
+use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\user\models\User;
 
 /**
  * MailModule provides messaging functions inside the application.
@@ -20,9 +22,13 @@ class Module extends \humhub\components\Module
      */
     public function getPermissions($contentContainer = null)
     {
-        if ($contentContainer !== null && $contentContainer instanceof \humhub\modules\user\models\User) {
+        if(!$contentContainer) {
             return [
-                new permissions\SendMail()
+                new StartConversation()
+            ];
+        } else if ($contentContainer instanceof User) {
+            return [
+                new SendMail()
             ];
         }
 

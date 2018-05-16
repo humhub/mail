@@ -8,6 +8,8 @@
 
 namespace humhub\modules\mail;
 
+use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\user\models\User;
 use Yii;
 use yii\helpers\Url;
 use humhub\modules\mail\models\Message;
@@ -55,13 +57,13 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addItem(array(
+        $event->sender->addItem([
             'label' => Yii::t('MailModule.base', 'Messages'),
             'url' => Url::to(['/mail/mail/index']),
             'icon' => '<i class="fa fa-envelope"></i>',
             'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
             'sortOrder' => 300,
-        ));
+        ]);
     }
 
     public static function onNotificationAddonInit($event)
@@ -70,22 +72,24 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addWidget(Notifications::className(), array(), array('sortOrder' => 90));
+        $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
     }
 
     public static function onProfileHeaderControlsInit($event)
     {
-        $profileUser = $event->sender->user;
-        $permitted = true;
-        if(version_compare(Yii::$app->version, '1.1', '>=')) {
-            $permitted = $profileUser->getPermissionManager()->can(new SendMail()) || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin());
-        }
-        
-        if (Yii::$app->user->isGuest || $profileUser->id == Yii::$app->user->id || !$permitted) {
+        /** @var User $profileContainer */
+        $profileContainer = $event->sender->user;
+
+        if($profileContainer->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
             return;
         }
 
-        $event->sender->addWidget(NewMessageButton::className(), array('guid' => $event->sender->user->guid, 'type' => 'info'), array('sortOrder' => 90));
+        // Is the current logged user allowed to send mails to profile user?
+        if(!Yii::$app->user->isAdmin() && !$profileContainer->can(SendMail::class)) {
+            return;
+        }
+
+        $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'type' => 'info'], ['sortOrder' => 90]);
     }
 
 }

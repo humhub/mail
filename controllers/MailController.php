@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\modules\mail\permissions\StartConversation;
 use Yii;
 use yii\helpers\Html;
 use yii\web\HttpException;
@@ -29,7 +30,8 @@ class MailController extends Controller
     public function getAccessRules()
     {
         return [
-            ['login']
+            ['login'],
+            ['permission' => StartConversation::class, 'actions' => ['create', 'add-user']]
         ];
     }
 
@@ -58,11 +60,11 @@ class MailController extends Controller
             $messageId = $userMessages[0]->message->id;
         }
 
-        return $this->render('/mail/index', array(
+        return $this->render('/mail/index', [
                     'userMessages' => $userMessages,
                     'messageId' => $messageId,
                     'pagination' => $pagination
-        ));
+        ]);
     }
 
     /**

@@ -1,10 +1,13 @@
 <?php
 
+use humhub\modules\mail\permissions\StartConversation;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use humhub\widgets\ModalConfirm;
 use humhub\widgets\TimeAgo;
 use humhub\compat\CActiveForm;
+
+$canStartConversation = Yii::$app->user->can(StartConversation::class);
 ?>
 <div class="panel panel-default">
 
@@ -132,12 +135,14 @@ use humhub\compat\CActiveForm;
                 <div class="pull-right">
 
                     <!-- Button to trigger modal to add user to conversation -->
-                    <?php
-                    echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add user'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
-                        'class' => 'btn btn-info',
-                        'data-target' => '#globalModal'
-                    ));
-                    ?>
+                    <?php if($canStartConversation) : ?>
+                        <?php
+                        echo Html::a('<i class="fa fa-plus"></i> ' . Yii::t('MailModule.views_mail_show', 'Add user'), ['/mail/mail/add-user', 'id' => $message->id, 'ajax' => 1], array(
+                            'class' => 'btn btn-info',
+                            'data-target' => '#globalModal'
+                        ));
+                        ?>
+                    <?php endif; ?>
 
                     <?php if (count($message->users) > 2): ?>
                         <a class="btn btn-danger"

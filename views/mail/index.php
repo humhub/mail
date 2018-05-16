@@ -1,18 +1,23 @@
 <?php
 
+use humhub\modules\mail\permissions\StartConversation;
 use yii\helpers\Html;
 
 if ($messageId != "") {
     $this->registerJs('loadMessage(' . Html::encode($messageId) . ');');
 }
+
+$canStartConversation = Yii::$app->user->can(StartConversation::class);
 ?>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?php echo Yii::t('MailModule.views_mail_index', 'Conversations') ?>
-                    <?php echo Html::a(Yii::t('MailModule.views_mail_index', 'New message'), ['/mail/mail/create'], array('class' => 'btn btn-info pull-right', 'data-target' => '#globalModal')); ?>
+                    <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?>
+                    <?php if($canStartConversation) : ?>
+                        <?= Html::a(Yii::t('MailModule.views_mail_index', 'New message'), ['/mail/mail/create'], ['class' => 'btn btn-info pull-right', 'data-target' => '#globalModal']); ?>
+                    <?php endif; ?>
                 </div>
 
                 <hr>
