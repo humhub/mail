@@ -18,8 +18,11 @@
  */
 return [
     'Allow others to send you private messages' => '',
+    'Conversation' => '',
     'Is Originator' => '',
     'Last Viewed' => '',
+    'Receive Notifications when someone opens a new conversation.' => '',
+    'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
     'Created At' => '创建于',
     'Created By' => '创建人',

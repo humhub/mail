@@ -17,14 +17,17 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Allow others to send you private messages' => '',
-    'Receive private messages' => '',
+    'Conversation' => '',
+    'Receive Notifications when someone opens a new conversation.' => '',
+    'Receive Notifications when someone sends you a message.' => '',
+    'Allow others to send you private messages' => 'Permitir que outros enviem mensagens privadas para você',
     'Created At' => 'Criado Em',
     'Created By' => 'Criado Por',
     'Is Originator' => 'É Originador',
     'Last Viewed' => 'Última Visualização',
     'Message' => 'Mensagem',
     'Messages' => 'Mensagens',
+    'Receive private messages' => 'Receber mensagens privadas',
     'Title' => 'Título',
     'Updated At' => 'Atualizado Em',
     'Updated By' => 'Atualizado Por',

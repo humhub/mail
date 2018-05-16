@@ -2,5 +2,5 @@
 return array (
   'Messages' => 'Messages',
   'New message' => 'Nouveau message',
-  'Show all messages' => 'Montrer tous les messages',
+  'Show all messages' => 'Afficher tous les messages',
 );

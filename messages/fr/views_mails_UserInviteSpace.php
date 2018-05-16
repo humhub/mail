@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Sign up now' => 'Enregistrez-vous maintenant',
+  'Sign up now' => 'S\'inscrire maintenant',
 );
