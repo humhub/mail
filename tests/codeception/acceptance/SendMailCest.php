@@ -32,7 +32,7 @@ class SendMailCest
         $I->click('#create-message-button');
         $I->expectTo('see create new message form');
         $I->waitForElementVisible('#create-message-form', 10);
-        $this->sendMessage($I, 'User2', 'Hello there!', 'Just a test message.');
+        $this->sendMessage($I, 'Sara', 'Hello there!', 'Just a test message.');
         $I->expectTo('see my message overview with the new conversation');
         $I->see('Conversations');
         $I->see('Hello there!');
@@ -44,7 +44,7 @@ class SendMailCest
         $I->fillField('#addUserFrom_mail_tag_input_field', 'Admin');
         $I->wait(5);
         $I->click('Admin');
-        $I->click('/html/body/div[8]/div/div/form/div[3]/button[1]'); //Send
+        $I->click('#add-user-form .btn-primary'); //Send
         $I->wait(5);
         $I->logout();
         
