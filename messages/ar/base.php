@@ -18,6 +18,7 @@
  */
 return [
     'Allow others to send you private messages' => '',
+    'Allow users to start new conversations' => '',
     'Conversation' => '',
     'Created At' => '',
     'Is Originator' => '',
@@ -25,6 +26,7 @@ return [
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
+    'Start new conversations' => '',
     'Updated At' => '',
     'Updated By' => '',
     'Created By' => 'تم وضعه بواسطة',

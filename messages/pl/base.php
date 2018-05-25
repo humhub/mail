@@ -18,11 +18,13 @@
  */
 return [
     'Allow others to send you private messages' => '',
+    'Allow users to start new conversations' => '',
     'Conversation' => '',
     'Is Originator' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
+    'Start new conversations' => '',
     'Updated By' => '',
     'Created At' => 'Utworzono',
     'Created By' => 'Utworzone przez',

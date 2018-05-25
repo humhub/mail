@@ -17,10 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Allow users to start new conversations' => '',
     'Conversation' => '',
     'Is Originator' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
+    'Start new conversations' => '',
     'Allow others to send you private messages' => 'Engedélyezed másoknak, hogy privát üzenetet küldjenek.',
     'Created At' => 'Létrehozva',
     'Created By' => 'Létrehozta',

@@ -17,9 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Allow users to start new conversations' => '',
     'Conversation' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
+    'Start new conversations' => '',
     'Allow others to send you private messages' => 'Permitir que outros enviem mensagens privadas para você',
     'Created At' => 'Criado Em',
     'Created By' => 'Criado Por',

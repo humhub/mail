@@ -18,10 +18,12 @@
  */
 return [
     'Allow others to send you private messages' => '',
+    'Allow users to start new conversations' => '',
     'Conversation' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
+    'Start new conversations' => '',
     'Created At' => 'Izveidota',
     'Created By' => 'Izveidoja',
     'Is Originator' => 'Ir iniciātors',
