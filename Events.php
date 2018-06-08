@@ -58,13 +58,15 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addItem([
-            'label' => Yii::t('MailModule.base', 'Messages'),
-            'url' => Url::to(['/mail/mail/index']),
-            'icon' => '<i class="fa fa-envelope"></i>',
-            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
-            'sortOrder' => 300,
-        ]);
+        if(!ConfigureForm::getModule()->showInTopNav()){
+            $event->sender->addItem([
+                'label' => Yii::t('MailModule.base', 'Messages'),
+                'url' => Url::to(['/mail/mail/index']),
+                'icon' => '<i class="fa fa-envelope"></i>',
+                'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
+                'sortOrder' => 300,
+            ]);
+        }
     }
 
     public static function onNotificationAddonInit($event)
@@ -73,9 +75,7 @@ class Events extends \yii\base\Object
             return;
         }
 
-        if(!ConfigureForm::getModule()->showInTopNav()){
-            $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
-        }
+        $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
     }
 
     public static function onProfileHeaderControlsInit($event)
