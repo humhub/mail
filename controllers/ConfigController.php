@@ -16,7 +16,6 @@ use humhub\models\Setting;
  * ConfigController handles the configuration requests.
  *
  * @package humhub.modules.mail.controllers
- * @since 1.0
  * @author Gaik Akopian
  */
 class ConfigController extends \humhub\modules\admin\components\Controller
