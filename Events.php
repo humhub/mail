@@ -18,6 +18,7 @@ use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\Notifications;
 use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\models\ConfigureForm;
 
 /**
  * Description of Events
@@ -57,13 +58,15 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addItem([
-            'label' => Yii::t('MailModule.base', 'Messages'),
-            'url' => Url::to(['/mail/mail/index']),
-            'icon' => '<i class="fa fa-envelope"></i>',
-            'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
-            'sortOrder' => 300,
-        ]);
+        if(!ConfigureForm::getModule()->showInTopNav()){
+            $event->sender->addItem([
+                'label' => Yii::t('MailModule.base', 'Messages'),
+                'url' => Url::to(['/mail/mail/index']),
+                'icon' => '<i class="fa fa-envelope"></i>',
+                'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
+                'sortOrder' => 300,
+            ]);
+        }
     }
 
     public static function onNotificationAddonInit($event)
