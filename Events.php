@@ -18,6 +18,7 @@ use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\Notifications;
 use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\models\ConfigureForm;
 
 /**
  * Description of Events
@@ -72,7 +73,9 @@ class Events extends \yii\base\Object
             return;
         }
 
-        $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
+        if(!ConfigureForm::getModule()->showInTopNav()){
+            $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
+        }
     }
 
     public static function onProfileHeaderControlsInit($event)
