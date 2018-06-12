@@ -26,7 +26,7 @@ class ConfigureForm extends \yii\base\Model
     /**
      * @return Module
      */
-    public function getModule()
+    public static function getModule()
     {
         return Yii::$app->getModule('mail');
     }
