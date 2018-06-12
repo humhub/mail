@@ -49,7 +49,7 @@ class ConfigureForm extends \yii\base\Model
     public function attributeLabels()
     {
         return [
-            'showInTopNav' => Yii::t('CfilesModule.base', 'Show menu item in top Navigation')
+            'showInTopNav' => Yii::t('MailModule.base', 'Show menu item in top Navigation')
         ];
     }
 
