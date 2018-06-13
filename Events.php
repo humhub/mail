@@ -58,6 +58,14 @@ class Events extends \yii\base\Object
             return;
         }
 
+        $showInTopNav = false;
+
+        // Workaround for module update problem
+        if (method_exists(ConfigureForm::getModule(), 'showInTopNav')) {
+            $showInTopNav = ConfigureForm::getModule()->showInTopNav();
+        }
+
+
         if(!ConfigureForm::getModule()->showInTopNav()){
             $event->sender->addItem([
                 'label' => Yii::t('MailModule.base', 'Messages'),
