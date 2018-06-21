@@ -73,7 +73,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
             <ul class="media-list">
                 <!-- BEGIN: Results -->
                 <?php foreach ($message->entries as $entry) : ?>
-                    <div class="media" style="margin-top: 0;">
+                    <div id="msg_<?php echo $entry->id; ?>" class="media" style="margin-top: 0;">
                         <a class="pull-left" href="<?php echo $entry->user->getUrl(); ?>"> <img
                                 class="media-object img-rounded"
                                 src="<?php echo $entry->user->getProfileImage()->getUrl(); ?>"
@@ -154,6 +154,12 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
                 <?php CActiveForm::end(); ?>
             </div>
+            
+            
+<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+</a>
+
         <?php } ?>
 
     </div>
