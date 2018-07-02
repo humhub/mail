@@ -1,3 +1,12 @@
+Changelog
+=========
+
+
+0.9.14  (July 2, 2018)
+-----------------------
+- Fix: PHP 7.2 compatibility issues
+
+
 0.9.13  (Nune 13, 2018)
 ----------------------
 - Enh: Added option to hide main navigation "Message" entry

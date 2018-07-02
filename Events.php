@@ -25,7 +25,7 @@ use humhub\modules\mail\models\ConfigureForm;
  *
  * @author luke
  */
-class Events extends \yii\base\Object
+class Events
 {
 
     /**
