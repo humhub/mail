@@ -3,5 +3,5 @@ return array (
   'Groups' => 'Grupos',
   'Members' => 'Miembros',
   'Spaces' => 'Espacios',
-  'User Posts' => '',
+  'User Posts' => 'Publicacions d\'usuario',
 );

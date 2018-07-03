@@ -1,7 +1,7 @@
 <?php
 return array (
-  'Groups' => '',
-  'Members' => '',
+  'Groups' => 'Grupper',
+  'Members' => 'Medlemmar',
   'Spaces' => 'Nätverk ',
-  'User Posts' => '',
+  'User Posts' => 'Användarinlägg',
 );

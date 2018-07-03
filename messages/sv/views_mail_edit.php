@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Edit message entry' => '',
+  'Edit message entry' => 'Ändra meddelandeinlägg',
   'Save' => 'Spara',
 );
