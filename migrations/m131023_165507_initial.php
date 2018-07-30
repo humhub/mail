@@ -8,7 +8,7 @@ class m131023_165507_initial extends Migration
     public function up()
     {
 
-        $this->createTable('user_message', array(
+        $this->createTable('user_message', [
             'message_id' => 'int(11) NOT NULL',
             'user_id' => 'int(11) NOT NULL',
             'is_originator' => 'tinyint(4) DEFAULT NULL',
@@ -17,20 +17,21 @@ class m131023_165507_initial extends Migration
             'created_by' => 'int(11) DEFAULT NULL',
             'updated_at' => 'datetime DEFAULT NULL',
             'updated_by' => 'int(11) DEFAULT NULL',
-                ), '');
+        ], '');
+
         $this->addPrimaryKey('pk_user_message', 'user_message', 'message_id,user_id');
 
 
-        $this->createTable('message', array(
+        $this->createTable('message', [
             'id' => 'pk',
             'title' => 'varchar(255) DEFAULT NULL',
             'created_at' => 'datetime DEFAULT NULL',
             'created_by' => 'int(11) DEFAULT NULL',
             'updated_at' => 'datetime DEFAULT NULL',
             'updated_by' => 'int(11) DEFAULT NULL',
-                ), '');
+        ], '');
 
-        $this->createTable('message_entry', array(
+        $this->createTable('message_entry', [
             'id' => 'pk',
             'message_id' => 'int(11) NOT NULL',
             'user_id' => 'int(11) NOT NULL',
@@ -40,7 +41,7 @@ class m131023_165507_initial extends Migration
             'created_by' => 'int(11) DEFAULT NULL',
             'updated_at' => 'datetime DEFAULT NULL',
             'updated_by' => 'int(11) DEFAULT NULL',
-                ), '');
+        ], '');
     }
 
     public function down()

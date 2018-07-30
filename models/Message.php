@@ -2,11 +2,12 @@
 
 namespace humhub\modules\mail\models;
 
+use Yii;
+use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
 
 use humhub\modules\notification\targets\BaseTarget;
 use humhub\modules\notification\targets\MailTarget;
-use Yii;
 use humhub\components\ActiveRecord;
 use humhub\models\Setting;
 use humhub\modules\user\models\User;
@@ -47,24 +48,41 @@ class Message extends ActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
-            array(['created_by', 'updated_by'], 'integer'),
-            array(['title'], 'string', 'max' => 255),
-            array(['created_at', 'updated_at'], 'safe'),
-        );
+        return [
+            [['created_by', 'updated_by'], 'integer'],
+            [['title'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'safe'],
+        ];
     }
 
-    public function getEntries()
+    public function getEntries($from = null)
     {
-        $query = $this->hasMany(MessageEntry::className(), ['message_id' => 'id']);
+        $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
         $query->addOrderBy(['created_at' => SORT_ASC]);
+
+        if($from) {
+            $query->andWhere(['>', 'message_entry.id', $from]);
+        }
+
         return $query;
     }
 
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])
+        return $this->hasMany(User::class, ['id' => 'user_id'])
                         ->viaTable('user_message', ['message_id' => 'id']);
+    }
+
+    public function getUserMessage($userId = null)
+    {
+        if(!$userId) {
+            $userId = Yii::$app->user->id;
+        }
+
+        return UserMessage::findOne([
+            'user_id' => $userId,
+            'message_id' => $this->id
+        ]);
     }
 
     public function isParticipant($user)
@@ -110,6 +128,8 @@ class Message extends ActiveRecord
      * If it's the last entry, the whole message will be deleted.
      *
      * @param MessageEntry $entry
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function deleteEntry($entry)
     {
@@ -180,10 +200,10 @@ class Message extends ActiveRecord
     /**
      * Notify given user, about this message
      * An email will sent.
+     * @param $user User
      */
     public function notify($user)
     {
-
         /* @var $mailTarget BaseTarget */
         $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
 
@@ -194,7 +214,7 @@ class Message extends ActiveRecord
         $andAddon = "";
         if (count($this->users) > 2) {
             $counter = count($this->users) - 1;
-            $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", array("{counter}" => $counter));
+            $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", ["{counter}" => $counter]);
         }
 
         Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
@@ -210,15 +230,9 @@ class Message extends ActiveRecord
             'user' => $user,
         ]);
 
-        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
-        } else {
-            $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
-        }
-
+        $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
         $mail->setTo($user->email);
         $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
         $mail->send();
     }
-
 }

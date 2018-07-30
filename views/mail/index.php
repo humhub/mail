@@ -1,44 +1,49 @@
 <?php
 
 use humhub\modules\mail\permissions\StartConversation;
-use yii\helpers\Html;
+use humhub\modules\mail\widgets\NewMessageButton;
+use humhub\widgets\LinkPager;
+use humhub\modules\mail\widgets\wall\ConversationView;
 
-if ($messageId != "") {
-    $this->registerJs('loadMessage(' . Html::encode($messageId) . ');');
-}
+/* @var $messageId int */
+/* @var $userMessages \humhub\modules\mail\models\UserMessage[] */
+/* @var $pagination \yii\data\Pagination */
+/* @var $canStartConversation boolean */
 
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
 ?>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
+
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?>
+                <div class="panel-heading"  style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
+                    <strong><?= Yii::t('MailModule.views_mail_index', 'Conversations') ?></strong>
                     <?php if($canStartConversation) : ?>
-                        <?= Html::a(Yii::t('MailModule.views_mail_index', 'New message'), ['/mail/mail/create'], ['class' => 'btn btn-info pull-right', 'data-target' => '#globalModal']); ?>
+                        <?= NewMessageButton::widget()?>
                     <?php endif; ?>
                 </div>
 
-                <hr>
+                <hr style="margin-top:0px">
+
                 <ul id="inbox" class="media-list">
-                    <?php if (count($userMessages) != 0) : ?>
-                        <?php foreach ($userMessages as $userMessage) : ?>
-                            <?php echo $this->render('_messagePreview', array('userMessage' => $userMessage)); ?>
-                        <?php endforeach; ?>
+                    <?php if (empty($userMessages)) : ?>
+                        <li class="placeholder"><?= Yii::t('MailModule.views_mail_index', 'There are no messages yet.'); ?></li>
                     <?php else: ?>
-                        <li class="placeholder"><?php echo Yii::t('MailModule.views_mail_index', 'There are no messages yet.'); ?></li>
+                        <?php foreach ($userMessages as $userMessage) : ?>
+                            <?= $this->render('_messagePreview', ['userMessage' => $userMessage]); ?>
+                        <?php endforeach; ?>
                     <?php endif; ?>
                 </ul>
             </div>
+
             <div class="pagination-container">
-                <?= \humhub\widgets\LinkPager::widget(['pagination' => $pagination]); ?>
+                <?= LinkPager::widget(['pagination' => $pagination]); ?>
             </div>
         </div>
+
         <div class="col-md-8 messages">
-            <div id="mail_message_details">
-                <div class="loader"></div>
-            </div>
+            <?= ConversationView::widget(['messageId' => $messageId])?>
         </div>
     </div>
 </div>

@@ -3,9 +3,8 @@
 namespace humhub\modules\mail\models;
 
 use Yii;
+use humhub\modules\user\models\User;
 use humhub\components\ActiveRecord;
-use humhub\modules\mail\models\Message;
-use humhub\modules\mail\models\User;
 
 /**
  * This is the model class for table "user_message".
@@ -19,6 +18,8 @@ use humhub\modules\mail\models\User;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ *
+ * @property-read  Message $message
  *
  * @package humhub.modules.mail.models
  * @since 0.5
@@ -39,21 +40,21 @@ class UserMessage extends ActiveRecord
      */
     public function rules()
     {
-        return array(
-            array(['message_id', 'user_id'], 'required'),
-            array(['message_id', 'user_id', 'is_originator', 'created_by', 'updated_by'], 'integer'),
-            array(['last_viewed', 'created_at', 'updated_at'], 'safe'),
-        );
+        return [
+            [['message_id', 'user_id'], 'required'],
+            [['message_id', 'user_id', 'is_originator', 'created_by', 'updated_by'], 'integer'],
+            [['last_viewed', 'created_at', 'updated_at'], 'safe'],
+        ];
     }
 
     public function getMessage()
     {
-        return $this->hasOne(Message::className(), ['id' => 'message_id']);
+        return $this->hasOne(Message::class, ['id' => 'message_id']);
     }
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -61,7 +62,7 @@ class UserMessage extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'message_id' => Yii::t('MailModule.base', 'Message'),
             'user_id' => Yii::t('MailModule.base', 'User'),
             'is_originator' => Yii::t('MailModule.base', 'Is Originator'),
@@ -70,7 +71,7 @@ class UserMessage extends ActiveRecord
             'created_by' => Yii::t('MailModule.base', 'Created By'),
             'updated_at' => Yii::t('MailModule.base', 'Updated At'),
             'updated_by' => Yii::t('MailModule.base', 'Updated By'),
-        );
+        ];
     }
 
     /**
@@ -85,15 +86,22 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
-        $json = array();
-
-        $query = self::find();
-        $query->joinWith('message');
-        $query->where(['user_message.user_id' => $userId]);
-        $query->andWhere("message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL");
-        $query->andWhere(["<>", 'message.updated_by', $userId]);
-
-        return $query->count();
+        return static::getByUser($userId)
+            ->andWhere("message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL")
+            ->andWhere(["<>", 'message.updated_by', $userId])->count();
     }
+
+    public static function getByUser($userId = null, $orderBy = 'message.updated_at DESC')
+    {
+        if ($userId === null) {
+            $userId = Yii::$app->user->id;
+        }
+
+        return static::find()->joinWith('message')
+            ->where(['user_message.user_id' => $userId])
+            ->orderBy('message.updated_at DESC');
+
+    }
+
 
 }

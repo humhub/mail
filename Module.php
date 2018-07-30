@@ -17,6 +17,12 @@ use yii\helpers\Url;
  */
 class Module extends \humhub\components\Module
 {
+
+    /**
+     * @inheritdoc
+     */
+    public $resourcesPath = 'resources';
+
     /**
      * @inheritdoc
      */
@@ -24,12 +30,13 @@ class Module extends \humhub\components\Module
     {
         return Url::to(['/mail/config']);
     }
+
     /**
      * @inheritdoc
      */
     public function getPermissions($contentContainer = null)
     {
-        if(!$contentContainer) {
+        if (!$contentContainer) {
             return [
                 new StartConversation()
             ];

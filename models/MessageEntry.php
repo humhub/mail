@@ -2,6 +2,8 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\modules\mail\live\NewUserMessage;
+use humhub\modules\mail\live\UserMessageDeleted;
 use humhub\modules\mail\notifications\MailNotificationCategory;
 use humhub\modules\notification\targets\BaseTarget;
 use humhub\modules\notification\targets\MailTarget;
@@ -51,21 +53,21 @@ class MessageEntry extends ActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
-            array(['message_id', 'user_id', 'content'], 'required'),
-            array(['message_id', 'user_id', 'file_id', 'created_by', 'updated_by'], 'integer'),
-            array(['created_at', 'updated_at'], 'safe'),
-        );
+        return [
+            [['message_id', 'user_id', 'content'], 'required'],
+            [['message_id', 'user_id', 'file_id', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+        ];
     }
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function getMessage()
     {
-        return $this->hasOne(Message::className(), ['id' => 'message_id']);
+        return $this->hasOne(Message::class, ['id' => 'message_id']);
     }
 
     public function beforeSave($insert)
@@ -77,6 +79,21 @@ class MessageEntry extends ActiveRecord
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public function afterDelete()
+    {
+        foreach ($this->message->users as $user) {
+            Yii::$app->live->send(new UserMessageDeleted([
+                'contentContainerId' => $user->contentcontainer_id,
+                'message_id' => $this->message_id,
+                'entry_id' => $this->id,
+                'user_id' => $user->id
+            ]));
+        }
+
+
+        parent::afterDelete();
     }
 
     /**
@@ -105,9 +122,14 @@ class MessageEntry extends ActiveRecord
     public function notify()
     {
         $senderName = $this->user->displayName;
-        $senderGuid = $this->user->guid;
         
         foreach ($this->message->users as $user) {
+
+            Yii::$app->live->send(new NewUserMessage([
+                'contentContainerId' => $user->contentcontainer_id,
+                'message_id' => $this->message_id,
+                'user_id' => $user->id
+            ]));
 
             /* @var $mailTarget BaseTarget */
             $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
@@ -132,17 +154,16 @@ class MessageEntry extends ActiveRecord
                 'sender' => $this->user,
                 'originator' => $this->message->originator,
             ]);
-            
-            if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-                $mail->setFrom([Setting::Get('systemEmailAddress', 'mailing') => Setting::Get('systemEmailName', 'mailing')]);
-            } else {
-                $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
-            }
-            
+
+            $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
             $mail->setTo($user->email);
             $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
             $mail->send();
         }
     }
 
+    public function canEdit()
+    {
+        return $this->created_by == Yii::$app->user->id;
+    }
 }

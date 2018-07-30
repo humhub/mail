@@ -65,7 +65,6 @@ class Events
             $showInTopNav = ConfigureForm::getModule()->showInTopNav();
         }
 
-
         if(!ConfigureForm::getModule()->showInTopNav()){
             $event->sender->addItem([
                 'label' => Yii::t('MailModule.base', 'Messages'),

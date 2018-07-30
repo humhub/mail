@@ -2,48 +2,42 @@
 
 namespace humhub\modules\mail\widgets;
 
+use humhub\widgets\ModalButton;
 use Yii;
 use humhub\components\Widget;
 
-/**
- * @package humhub.modules.mail
- * @since   0.5.9
- */
 class NewMessageButton extends Widget
 {
 
-    public $guid = null;
-    public $id = null;
-    public $type = 'default';
-    public $size = null;
+    /**
+     * @var string
+     */
+    public $guid;
+
+    /**
+     * @var int
+     */
+    public $id;
+
+    /**
+     * @var string
+     */
+    public $size;
 
     /**
      * Creates the Wall Widget
      */
     public function run()
     {
-
-        $class = 'btn btn-' . $this->type;
-        if (!empty($this->size)) {
-            $class .= ' btn-' . $this->size;
-        }
-
-        $params = array(
-            'guid' => $this->guid,
-            'id' => $this->id,
-            'class' => $class,
-        );
-
-        // if guid is set, then change button label to "Send message"
-        if (!empty($this->guid)) {
-            $params['buttonLabel'] = Yii::t('MailModule.widgets_views_newMessageButton', 'Send message');
-        } else {
-            $params['buttonLabel'] = Yii::t('MailModule.widgets_views_newMessageButton', 'New message');
-        }
-
-        return $this->render('newMessageButton', $params);
+        return ModalButton::info($this->getLabel())->icon('fa-plus')->load(['/mail/mail/create', 'ajax' => 1, 'userGuid' => $this->guid])->sm()->right();
     }
 
+    public function getLabel()
+    {
+        return ($this->guid)
+            ? Yii::t('MailModule.widgets_views_newMessageButton', 'Send message')
+            : Yii::t('MailModule.widgets_views_newMessageButton', 'New message');
+    }
 }
 
 ?>

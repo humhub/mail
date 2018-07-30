@@ -2,8 +2,10 @@
 
 namespace humhub\modules\mail\controllers;
 
-use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\mail\widgets\wall\ConversationEntry;
 use Yii;
+use humhub\modules\mail\permissions\StartConversation;
+use yii\data\Pagination;
 use yii\helpers\Html;
 use yii\web\HttpException;
 use humhub\components\Controller;
@@ -12,11 +14,11 @@ use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\User\models\User;
-use humhub\modules\mail\models\forms\InviteRecipient;
-use humhub\modules\mail\models\forms\ReplyMessage;
+use humhub\modules\mail\models\forms\InviteParticipantForm;
+use humhub\modules\mail\models\forms\ReplyForm;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\permissions\SendMail;
-use humhub\modules\user\widgets\UserPicker;
+use humhub\modules\user\models\UserPicker;
 
 /**
  * MailController provides messaging actions.
@@ -26,6 +28,8 @@ use humhub\modules\user\widgets\UserPicker;
  */
 class MailController extends Controller
 {
+
+    public $pageSize = 5;
 
     public function getAccessRules()
     {
@@ -37,34 +41,119 @@ class MailController extends Controller
 
     /**
      * Overview of all messages
+     * @param null $id
+     * @return string
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
-        // Initially displayed message
-        $messageId = (int) Yii::$app->request->get('id');
-
-        $query = UserMessage::find();
-        $query->joinWith('message');
-        $query->where(['user_message.user_id' => Yii::$app->user->id]);
-        $query->orderBy('message.updated_at DESC');
+        $query = UserMessage::getByUser();
 
         $countQuery = clone $query;
         $messageCount = $countQuery->count();
-        $pagination = new \yii\data\Pagination(['totalCount' => $messageCount, 'pageSize' => 25]);
-        $query->offset($pagination->offset)->limit($pagination->limit);
+        $pagination = new Pagination(['totalCount' => $messageCount, 'pageSize' => $this->pageSize]);
 
+        $query->offset($pagination->offset)->limit($pagination->limit);
         $userMessages = $query->all();
 
         // If no messageId is given, use first if available
-        if (($messageId == "" || $this->getMessage($messageId) === null) && $messageCount != 0) {
-            $messageId = $userMessages[0]->message->id;
+        if ((!$id || !$this->getMessage($id)) && $messageCount) {
+            $id = $userMessages[0]->message->id;
         }
 
-        return $this->render('/mail/index', [
-                    'userMessages' => $userMessages,
-                    'messageId' => $messageId,
-                    'pagination' => $pagination
+        return $this->render('index', [
+            'messageId' => $id,
+            'userMessages' => $userMessages,
+            'pagination' => $pagination,
+            'canStartConversation' => Yii::$app->user->can(StartConversation::class)
         ]);
+    }
+
+    /**
+     * Shows a Message Thread
+     */
+    public function actionShow($id)
+    {
+        $message = ($id instanceof Message) ? $id : $this->getMessage($id);
+
+        $this->checkMessagePermissions($message);
+
+        // Marks message as seen
+        $message->seen(Yii::$app->user->id);
+
+        return $this->renderAjax('conversation', [
+            'message' => $message,
+            'replyForm' => new ReplyForm(['model' => $message]),
+        ]);
+    }
+
+    public function actionUpdate($id, $from = null)
+    {
+        $message = ($id instanceof Message) ? $id : $this->getMessage($id);
+
+        $this->checkMessagePermissions($message);
+
+        $entries = $message->getEntries($from)->all();
+
+        $result = '';
+        foreach ($entries as $entry) {
+            $result .= ConversationEntry::widget(['entry' => $entry]);
+        }
+
+        return $this->renderAjaxContent($result);
+    }
+
+    public function actionReply($id)
+    {
+        $message = $this->getMessage($id);
+
+        $this->checkMessagePermissions($message);
+
+        // Reply Form
+        $replyForm = new ReplyForm(['model' => $message]);
+        if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
+            return $this->asJson([
+                'success' => true,
+                'content' => ConversationEntry::widget(['entry' => $replyForm->reply])
+            ]);
+        }
+
+        return $this->asJson([
+            'success' => false,
+            'error' => [
+                'message' => $replyForm->getFirstError('message')
+            ]
+        ]);
+    }
+
+    /**
+     * Shows the invite user form
+     *
+     * This method invite new people to the conversation.
+     */
+    public function actionAddUser($id)
+    {
+        $message = $this->getMessage($id);
+
+        $this->checkMessagePermissions($message);
+
+        // Invite Form
+        $inviteForm = new InviteParticipantForm(['message' => $message]);
+
+        if ($inviteForm->load(Yii::$app->request->post())) {
+            if($inviteForm->save()) {
+                return $this->actionShow($message->id);
+            } else {
+                return $this->asJson([
+                    'success' => false,
+                    'error' => [
+                        'message' => $inviteForm->getFirstError('recipients')
+                    ]
+                ]);
+
+            }
+        }
+
+        return $this->renderAjax('adduser', ['inviteForm' => $inviteForm]);
     }
 
     /**
@@ -73,93 +162,8 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $query = UserMessage::find();
-        $query->joinWith('message');
-        $query->where(['user_message.user_id' => Yii::$app->user->id]);
-        $query->orderBy('message.updated_at DESC');
-        $query->limit(5);
-
-        return $this->renderAjax('notificationList', array('userMessages' => $query->all()));
-    }
-
-    /**
-     * Shows a Message Thread
-     */
-    public function actionShow()
-    {
-        // Load Message
-        $id = (int) Yii::$app->request->get('id');
-        $message = $this->getMessage($id);
-
-        $this->checkMessagePermissions($message);
-
-        // Reply Form
-        $replyForm = new ReplyMessage();
-        if ($replyForm->load(Yii::$app->request->post()) && $replyForm->validate()) {
-            // Attach Message Entry
-            $messageEntry = new MessageEntry();
-            $messageEntry->message_id = $message->id;
-            $messageEntry->user_id = Yii::$app->user->id;
-            $messageEntry->content = $replyForm->message;
-            $messageEntry->save();
-            $messageEntry->notify();
-            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
-
-            return $this->htmlRedirect(['index', 'id' => $message->id]);
-        }
-
-        // Marks message as seen
-        $message->seen(Yii::$app->user->id);
-
-        return $this->renderAjax('/mail/show', [
-                    'message' => $message,
-                    'replyForm' => $replyForm,
-        ]);
-    }
-    
-    private function checkMessagePermissions($message)
-    {
-        if ($message == null) {
-            throw new HttpException(404, 'Could not find message!');
-        }
-        
-        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
-            throw new HttpException(403, 'Access denied!');
-        }
-    }
-
-    /**
-     * Shows the invite user form
-     *
-     * This method invite new people to the conversation.
-     */
-    public function actionAddUser()
-    {
-        $id = Yii::$app->request->get('id');
-        $message = $this->getMessage($id);
-
-        $this->checkMessagePermissions($message);
-
-        // Invite Form
-        $inviteForm = new InviteRecipient();
-        $inviteForm->message = $message;
-
-        if ($inviteForm->load(Yii::$app->request->post()) && $inviteForm->validate()) {
-            foreach ($inviteForm->getRecipients() as $user) {
-                if (version_compare(Yii::$app->version, '1.1', 'lt') || $user->getPermissionManager()->can(new SendMail()) || (!Yii::$app->user->isGuest && Yii::$app->user->isAdmin())) {
-                    // Attach User Message
-                    $userMessage = new UserMessage();
-                    $userMessage->message_id = $message->id;
-                    $userMessage->user_id = $user->id;
-                    $userMessage->is_originator = 0;
-                    $userMessage->save();
-                    $message->notify($user);
-                }
-            }
-            return $this->htmlRedirect(['index', 'id' => $message->id]);
-        }
-
-        return $this->renderAjax('/mail/adduser', array('inviteForm' => $inviteForm));
+        $query = UserMessage::getByUser(null, 'message.updated_at DESC')->limit(5);
+        return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
     }
     
     /**
@@ -168,55 +172,45 @@ class MailController extends Controller
      * 
      * @return type
      */
-    public function actionSearchUser()
+    public function actionSearchUser($id, $keyword)
     {
-        Yii::$app->response->format = 'json';
-        return $this->getUserPickerResult(Yii::$app->request->get('keyword'));
-    }
-    
-    private function getUserPickerResult($keyword) {
-        if (version_compare(Yii::$app->version, '1.1', 'lt')) {
-            return $this->findUserByFilter($keyword, 10);
-        } else if(Yii::$app->getModule('friendship')->getIsEnabled()) {
-            return UserPicker::filter([
-                'keyword' => $keyword,
-                'permission' => new SendMail(),
-                'fillUser' => true
-            ]);
-        } else {
-            return UserPicker::filter([
-                'keyword' => $keyword,
-                'permission' => new SendMail()
-            ]);
+        /*$subQuery = UserMessage::find()->where('user_message.user_id = user.id')->andWhere(['user_message.message_id' => $id]);
+        $query = User::find()->where(['NOT EXISTS', $subQuery]);
+        $fillQuery = User::find()->where(['EXISTS', $subQuery]);*/
+
+        $message = $this->getMessage($id);
+
+        $this->checkMessagePermissions($message);
+
+        $result = UserPicker::filter([
+            'keyword' => $keyword,
+            'permission' => new SendMail(),
+            'fillUser' => true,
+            'disableFillUser' => true,
+            'disabledText' => Yii::t('MailModule.base','You are not allowed to start a conversation with this user.')
+        ]);
+
+        //Disable already participating users
+        foreach($result as $i=>$user) {
+            if($this->isParticipant($this->getMessage($id), $user)) {
+                $index = $i++;
+                $result[$index]['disabled'] = true;
+                $result[$index]['disabledText'] = Yii::t('MailModule.base','This user is already participating in this conversation.');
+            }
         }
+
+        return $this->asJson($result);
     }
 
-    /**
-     * User picker search for adding additional users to a conversaion, 
-     * searches user which are allwed messaging permissions for the current user (v1.1).
-     * Disables users already participating in a conversation.
-     * 
-     * @return type
-     */
-    public function actionSearchAddUser()
+    private function checkMessagePermissions($message)
     {
-        Yii::$app->response->format = 'json';
-        $message = $this->getMessage(Yii::$app->request->get('id'));
-
         if ($message == null) {
             throw new HttpException(404, 'Could not find message!');
         }
-             
-        $result = $this->getUserPickerResult(Yii::$app->request->get('keyword'));
-        
-        //Disable already participating users
-        foreach($result as $i=>$user) {
-            if($this->isParticipant($message, $user)) {
-                $result[$i++]['disabled'] = true;
-            }
+
+        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
+            throw new HttpException(403, 'Access denied!');
         }
-        
-        return $result;
     }
     
     /**
@@ -359,25 +353,27 @@ class MailController extends Controller
     /**
      * Edits Entry Id
      */
-    public function actionEditEntry()
+    public function actionEditEntry($id)
     {
-        $messageEntryId = (int) Yii::$app->request->get('messageEntryId');
-        $entry = MessageEntry::findOne(['id' => $messageEntryId]);
+        $entry = MessageEntry::findOne(['id' => $id]);
 
-        // Check if message entry exists and it´s by this user
-        if ($entry == null || $entry->user_id != Yii::$app->user->id) {
-            throw new HttpException(404, 'Could not find message entry!');
-        }
-        if ($entry->load(Yii::$app->request->post()) && $entry->validate()) {
-            // ?
-            //$entry->content = $_POST['MessageEntry']['content'];
-            $entry->save();
-            File::attachPrecreated($entry, Yii::$app->request->get('fileUploaderHiddenGuidField'));
-
-            return $this->htmlRedirect(['index', 'id' => $entry->message->id]);
+        if(!$entry) {
+            throw new HttpException(404);
         }
 
-        return $this->renderAjax('editEntry', array('entry' => $entry));
+        if (!$entry->canEdit()) {
+            throw new HttpException(403);
+        }
+
+        if ($entry->load(Yii::$app->request->post()) && $entry->save()) {
+            $entry->fileManager->attach( Yii::$app->request->post('fileList'));
+            return $this->asJson([
+                'success' => true,
+                'content' => ConversationEntry::widget(['entry' => $entry])
+            ]);
+        }
+
+        return $this->renderAjax('editEntry', ['entry' => $entry]);
     }
 
     /**
@@ -385,25 +381,25 @@ class MailController extends Controller
      *
      * Users can delete the own message entries.
      */
-    public function actionDeleteEntry()
+    public function actionDeleteEntry($id)
     {
         $this->forcePostRequest();
+        $entry = MessageEntry::findOne(['id' => $id]);
 
-        $messageEntryId = (int) Yii::$app->request->get('messageEntryId');
-        $entry = MessageEntry::findOne(['id' => $messageEntryId]);
+        if(!$entry) {
+            throw new HttpException(404);
+        }
 
         // Check if message entry exists and it´s by this user
-        if ($entry == null || $entry->user_id != Yii::$app->user->id) {
-            throw new HttpException(404, 'Could not find message entry!');
+        if (!$entry->canEdit()) {
+            throw new HttpException(403);
         }
 
         $entry->message->deleteEntry($entry);
 
-        if (Yii::$app->request->isAjax) {
-            return $this->htmlRedirect(['index', 'id' => $entry->message_id]);
-        } else {
-            return $this->redirect(['index', 'id' => $entry->message_id]);
-        }
+        return $this->asJson([
+            'success' => true
+        ]);
     }
 
     /**
@@ -411,12 +407,8 @@ class MailController extends Controller
      */
     public function actionGetNewMessageCountJson()
     {
-        Yii::$app->response->format = 'json';
-
-        $json = array();
-        $json['newMessages'] = UserMessage::getNewMessageCount();
-
-        return $json;
+        $json = ['newMessages' => UserMessage::getNewMessageCount()];
+        return $this->asJson($json);
     }
 
     /**
@@ -431,12 +423,8 @@ class MailController extends Controller
     {
         $message = Message::findOne(['id' => $id]);
 
-        if ($message != null) {
-
-            $userMessage = UserMessage::findOne([
-                        'user_id' => Yii::$app->user->id,
-                        'message_id' => $message->id
-            ]);
+        if ($message) {
+            $userMessage = $message->getUserMessage();
             if ($userMessage != null) {
                 return $message;
             }

@@ -1,58 +1,30 @@
 <?php
 
+use humhub\modules\mail\assets\MailAsset;
 use humhub\modules\mail\permissions\StartConversation;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use humhub\modules\mail\Assets;
 
-$this->registerjsVar('mail_loadMessageUrl', Url::to(['/mail/mail/show', 'id' => '-messageId-']));
-$this->registerjsVar('mail_viewMessageUrl', Url::to(['/mail/mail/index', 'id' => '-messageId-']));
 
-Assets::register($this);
+MailAsset::register($this);
 
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
 ?>
 <div class="btn-group">
     <a href="#" id="icon-messages" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i></a>
-    <span id="badge-messages" style="display:none;"
-          class="label label-danger label-notification">1</span>
+    <span id="badge-messages" style="display:none;" class="label label-danger label-notification"></span>
     <ul id="dropdown-messages" class="dropdown-menu">
     </ul>
 </div>
 
 <script type="text/javascript">
 
-    /**
-     * Refresh New Mail Message Count (Badge)
-     */
-    reloadMessageCountInterval = 60000;
-    setInterval(function () {
-        jQuery.getJSON("<?php echo Url::to(['/mail/mail/get-new-message-count-json']); ?>", function (json) {
-            setMailMessageCount(parseInt(json.newMessages));
-        });
-    }, reloadMessageCountInterval);
 
-    setMailMessageCount(<?php echo $newMailMessageCount; ?>);
-
-
-    /**
-     * Sets current message count
-     */
-    function setMailMessageCount(count) {
-        // show or hide the badge for new messages
-        if (count == 0) {
-            $('#badge-messages').css('display', 'none');
-        } else {
-            $('#badge-messages').empty();
-            $('#badge-messages').append(count);
-            $('#badge-messages').fadeIn('fast');
-        }
-    }
 
     // V1.2 force update when pjax load
     $(document).on('humhub:ready', function () {
         jQuery.getJSON("<?php echo Url::to(['/mail/mail/get-new-message-count-json']); ?>", function (json) {
-            setMailMessageCount(parseInt(json.newMessages));
+            humhub.modules.mail.wall.setMailMessageCount(parseInt(json.newMessages));
         });
     });
 

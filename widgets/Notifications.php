@@ -17,9 +17,9 @@ class Notifications extends Widget
      */
     public function run()
     {
-        return $this->render('notifications', array(
+        return $this->render('notifications', [
                     'newMailMessageCount' => UserMessage::getNewMessageCount()
-        ));
+        ]);
     }
 
 }
