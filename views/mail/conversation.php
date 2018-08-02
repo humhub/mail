@@ -42,7 +42,10 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
                 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 
                     <?= $form->field($replyForm, 'message')->widget(
-                            ProsemirrorRichTextEditor::class, ['menuClass' => 'plainMenu'])->label(false) ?>
+                            ProsemirrorRichTextEditor::class, [
+                                    'menuClass' => 'plainMenu',
+                                'placeholder' => Yii::t('MailModule.base', 'Write a message...')
+                            ])->label(false) ?>
 
                     <?= Button::primary(Yii::t('MailModule.views_mail_show', 'Send'))->submit()->action('reply', $replyForm->getUrl()) ?>
 

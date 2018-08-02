@@ -38,5 +38,5 @@
 }
 
 #conversation_view_root .ProseMirror {
-    min-height: 150px !important;
+    min-height: 100px !important;
 }
