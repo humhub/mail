@@ -4,7 +4,7 @@ use humhub\modules\mail\permissions\StartConversation;
 use yii\bootstrap\ActiveForm;
 use humhub\widgets\ModalButton;
 use yii\helpers\Url;
-use humhub\modules\ui\form\widgets\Markdown;
+use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 use humhub\modules\mail\widgets\wall\ConversationEntry;
 use humhub\widgets\Button;
 
@@ -41,9 +41,8 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
             <div class="row-fluid">
                 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 
-                    <?= $form->field($replyForm, 'message')->widget(Markdown::class, ['rows' => 5])->label(false) ?>
-
-                    <hr>
+                    <?= $form->field($replyForm, 'message')->widget(
+                            ProsemirrorRichTextEditor::class, ['menuClass' => 'plainMenu'])->label(false) ?>
 
                     <?= Button::primary(Yii::t('MailModule.views_mail_show', 'Send'))->submit()->action('reply', $replyForm->getUrl()) ?>
 

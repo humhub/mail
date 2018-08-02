@@ -2,7 +2,7 @@
 
 use humhub\modules\user\widgets\Image;
 use humhub\widgets\ModalButton;
-use humhub\widgets\MarkdownView;
+use humhub\modules\content\widgets\richtext\RichText;
 use humhub\widgets\TimeAgo;
 use humhub\libs\Html;
 
@@ -31,12 +31,13 @@ use humhub\libs\Html;
         </h4>
 
         <span class="content">
-            <?= MarkdownView::widget(['markdown' => $entry->content]); ?>
+            <?= RichText::output($entry->content); ?>
         </span>
     </div>
 </div>
 
 <hr>
+
 <?= Html::endTag('div') ?>
 
 

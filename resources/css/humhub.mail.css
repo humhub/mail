@@ -36,3 +36,7 @@
         margin-left: -101px !important;
     }
 }
+
+#conversation_view_root .ProseMirror {
+    min-height: 150px !important;
+}
