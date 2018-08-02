@@ -10,7 +10,7 @@
 }
 
 .conversation-entry-list {
-    max-height:500px;
+    max-height:600px;
     overflow:auto;
 }
 

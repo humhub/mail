@@ -1,41 +1,36 @@
 <?php
 
+use humhub\modules\user\widgets\UserPickerField;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+
+
+/* @var $model \humhub\modules\mail\models\forms\CreateMessage */
 ?>
+
+
 
 <div class="modal-dialog">
     <div class="modal-content">
-        <?php $form = ActiveForm::begin(['id' => 'create-message-form']); ?>
+        <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title"
-                id="myModalLabel"><?php echo Yii::t("MailModule.views_mail_create", "New message"); ?></h4>
+                id="myModalLabel"><?= Yii::t('MailModule.views_mail_create', 'New message'); ?></h4>
         </div>
+
         <div class="modal-body">
 
-            <?php echo $form->errorSummary($model); ?>
+            <?= $form->field($model, 'recipient')->widget(UserPickerField::class,
+                [
+                    'url' => Url::toRoute(['/mail/mail/search-user']),
+                    'placeholder' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
+                    'focus' => true
+                ]
+            );?>
 
-            <div class="form-group">
-                <?php echo $form->field($model, 'recipient', ['inputOptions' => ['id' => 'recipient']]); ?>
-            </div>
-
-            <?php
-            echo \humhub\modules\user\widgets\UserPicker::widget(array(
-                'inputId' => 'recipient',
-                'model' => $model,
-                'attribute' => 'recipient',
-                'userGuid' => Yii::$app->user->guid,
-                'userSearchUrl' => Url::toRoute(['/mail/mail/search-user', 'keyword' => '-keywordPlaceholder-']),
-                'placeholderText' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
-                'focus' => true,
-            ));
-            ?>
-
-            <div class="form-group">
-                <?php echo $form->field($model, 'title'); ?>
-            </div>
+            <?= $form->field($model, 'title'); ?>
 
             <div class="form-group">
                 <?php echo $form->field($model, 'message', ['inputOptions' => ['class' => 'form-control', 'id' => 'newMessageText']])->textarea(); ?>

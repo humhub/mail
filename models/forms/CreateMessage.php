@@ -14,6 +14,7 @@ class CreateMessage extends Model
 {
 
     public $recipient;
+    public $recipientUser;
     public $message;
     public $title;
 
@@ -22,17 +23,17 @@ class CreateMessage extends Model
      *
      * @var type
      */
-    public $recipients = array();
+    public $recipients = [];
 
     /**
      * Declares the validation rules.
      */
     public function rules()
     {
-        return array(
-            array(['message', 'recipient', 'title'], 'required'),
-            array('recipient', 'checkRecipient')
-        );
+        return [
+            [['message', 'recipient', 'title'], 'required'],
+            ['recipient', 'checkRecipient']
+        ];
     }
 
     /**
@@ -42,11 +43,11 @@ class CreateMessage extends Model
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'recipient' => Yii::t('MailModule.forms_CreateMessageForm', 'Recipient'),
             'title' => Yii::t('MailModule.forms_CreateMessageForm', 'Subject'),
             'message' => Yii::t('MailModule.forms_CreateMessageForm', 'Message'),
-        );
+        ];
     }
 
     /**
@@ -61,11 +62,7 @@ class CreateMessage extends Model
         // Check if email field is not empty
         if ($this->$attribute != "") {
 
-            $recipients = explode(",", $this->$attribute);
-
-            foreach ($recipients as $userGuid) {
-                $userGuid = preg_replace("/[^A-Za-z0-9\-]/", '', $userGuid);
-
+            foreach ($this->recipient as $userGuid) {
                 // Try load user
                 $user = User::findOne(['guid' => $userGuid]);
                 if ($user != null) {

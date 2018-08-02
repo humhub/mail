@@ -53,12 +53,8 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
                         <?= ModalButton::info(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('fa-plus')
                             ->load(['/mail/mail/add-user', 'id' => $message->id])->visible($canStartConversation) ?>
 
-                        <?php if (count($message->users) > 2): ?>
-                            <a class="btn btn-danger"
-                               href="<?php echo Url::to(['leave', 'id' => $message->id]); ?>"><i
-                                    class="fa fa-sign-out"></i> <?php echo Yii::t('MailModule.views_mail_show', "Leave discussion"); ?>
-                            </a>
-                        <?php endif; ?>
+                        <?= Button::danger(Yii::t('MailModule.views_mail_show', 'Leave discussion'))
+                            ->link(Url::to(['leave', 'id' => $message->id]))->icon('fa-sign-out')->visible(count($message->users) > 2)?>
                     </div>
 
                 <?php ActiveForm::end(); ?>

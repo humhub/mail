@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use humhub\widgets\TimeAgo;
 use humhub\libs\Helpers;
 use humhub\widgets\MarkdownView;
+use yii\helpers\Url;
 
 /* @var $userMessage \humhub\modules\mail\models\UserMessage */
 
@@ -17,7 +18,7 @@ $message = $userMessage->message;
 
 <?php if ($message->getLastEntry() != null) : ?>
     <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry">
-        <a href="#" data-action-click="loadMessage" data-action-target="#conversation_view_root" data-message-id="<?= $message->id ?>">
+        <a href="#" data-action-click="mail.wall.loadMessage" data-action-url="<?= Url::to(['/mail/mail', 'id' => $message->id])?>" data-message-id="<?= $message->id ?>">
             <div class="media">
                 <img class="media-object img-rounded pull-left" data-src="holder.js/32x32" alt="32x32" style="width: 32px; height: 32px;" src="<?= $message->getLastEntry()->user->getProfileImage()->getUrl(); ?>">
                 <div class="media-body text-break">

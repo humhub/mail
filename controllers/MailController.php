@@ -170,9 +170,9 @@ class MailController extends Controller
      * Used by user picker, searches user which are allwed messaging permissions
      * for the current user (v1.1).
      * 
-     * @return type
+     * @return string
      */
-    public function actionSearchUser($id, $keyword)
+    public function actionSearchUser($id = null, $keyword)
     {
         /*$subQuery = UserMessage::find()->where('user_message.user_id = user.id')->andWhere(['user_message.message_id' => $id]);
         $query = User::find()->where(['NOT EXISTS', $subQuery]);
@@ -180,7 +180,9 @@ class MailController extends Controller
 
         $message = $this->getMessage($id);
 
-        $this->checkMessagePermissions($message);
+        if($message) {
+            $this->checkMessagePermissions($message);
+        }
 
         $result = UserPicker::filter([
             'keyword' => $keyword,
@@ -191,11 +193,13 @@ class MailController extends Controller
         ]);
 
         //Disable already participating users
-        foreach($result as $i=>$user) {
-            if($this->isParticipant($this->getMessage($id), $user)) {
-                $index = $i++;
-                $result[$index]['disabled'] = true;
-                $result[$index]['disabledText'] = Yii::t('MailModule.base','This user is already participating in this conversation.');
+        if($message) {
+            foreach($result as $i=>$user) {
+                if($this->isParticipant($message, $user)) {
+                    $index = $i++;
+                    $result[$index]['disabled'] = true;
+                    $result[$index]['disabledText'] = Yii::t('MailModule.base','This user is already participating in this conversation.');
+                }
             }
         }
 

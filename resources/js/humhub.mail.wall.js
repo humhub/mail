@@ -237,10 +237,23 @@ humhub.module('mail.wall', function(module, require, $) {
         }
     }
 
+    var loadMessage = function(evt) {
+        debugger;
+        var root = getRootView();
+        if(root) {
+            root.loadMessage(evt);
+        } else {
+            client.pjax.redirect(evt.url);
+        }
+
+        evt.finish();
+    }
+
    module.export({
        init: init,
        ConversationView: ConversationView,
        ConversationEntry: ConversationEntry,
+       loadMessage: loadMessage,
        submitEditEntry: submitEditEntry,
        deleteEntry: deleteEntry,
        setMailMessageCount: setMailMessageCount
