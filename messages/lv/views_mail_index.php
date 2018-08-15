@@ -1,7 +1,7 @@
 <?php
-return array (
-  'Conversations' => 'Sarunas',
-  'New' => 'Jauns',
-  'New message' => 'Jauna ziņa',
-  'There are no messages yet.' => 'Šeit vēl nav nevienas ziņas.',
-);
+
+return [
+    'Conversations' => 'Sarunas',
+    'New' => 'Jauns',
+    'There are no messages yet.' => 'Šeit vēl nav nevienas ziņas.',
+];

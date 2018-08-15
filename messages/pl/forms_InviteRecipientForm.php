@@ -1,5 +1,8 @@
 <?php
-return array (
-  'Recipient' => 'Odbiorca ',
-  'You cannot send a email to yourself!' => 'Nie możesz wysłać wiadomości do samego siebie!',
-);
+
+return [
+    'User {name} is already participating!' => '',
+    'You are not allowed to send user {name} is already!' => '',
+    'Recipient' => 'Odbiorca ',
+    'You cannot send a email to yourself!' => 'Nie możesz wysłać wiadomości do samego siebie!',
+];

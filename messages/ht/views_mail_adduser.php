@@ -1,6 +1,5 @@
 <?php
-return array (
-  'Add more participants to your conversation...' => '',
-  'Close' => 'Fèmen',
-  'Send' => '',
-);
+
+return [
+    'Add more participants to your conversation...' => '',
+];

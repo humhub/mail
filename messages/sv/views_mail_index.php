@@ -1,7 +1,7 @@
 <?php
-return array (
-  'Conversations' => 'Konversationer',
-  'New' => 'Nytt',
-  'New message' => 'Nytt meddelande',
-  'There are no messages yet.' => 'Det finns inga meddelanden ännu.',
-);
+
+return [
+    'Conversations' => 'Konversationer',
+    'New' => 'Nytt',
+    'There are no messages yet.' => 'Det finns inga meddelanden ännu.',
+];
