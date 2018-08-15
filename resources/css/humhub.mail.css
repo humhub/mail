@@ -40,3 +40,7 @@
 #conversation_view_root .ProseMirror {
     min-height: 100px !important;
 }
+
+#conversation_view_root hr {
+    border-top: 1px dashed #eee;
+}
