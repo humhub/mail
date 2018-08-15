@@ -1,5 +1,5 @@
 <?php
-return array (
-  'Edit message entry' => 'Bericht bewerken',
-  'Save' => 'Opslaan',
-);
+
+return [
+    'Edit message entry' => 'Bericht bewerken',
+];

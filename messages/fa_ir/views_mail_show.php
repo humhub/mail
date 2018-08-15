@@ -1,19 +1,19 @@
 <?php
-return array (
-  '<strong>Confirm</strong> deleting conversation' => '<strong>تایید</strong> حذف مکالمه',
-  '<strong>Confirm</strong> leaving conversation' => '<strong>تایید</strong>  ترک مکالمه',
-  '<strong>Confirm</strong> message deletion' => '<strong>تایید</strong>  حذف پیغام',
-  'Add user' => 'اضافه کردن کاربر',
-  'Cancel' => 'انصراف',
-  'Delete' => 'حذف',
-  'Delete conversation' => 'حذف گفتگو',
-  'Do you really want to delete this conversation?' => 'آیا واقعا می‌خواهید این مکالمه را حذف کنید؟',
-  'Do you really want to delete this message?' => 'آیا واقعا می‌خواهید این پیغام را حذف کنید؟',
-  'Do you really want to leave this conversation?' => 'آیا واقعا می‌خواهید این مکالمه را ترک کنید؟',
-  'Leave' => 'ترک',
-  'Leave conversation' => 'ترك گفتگو',
-  'Leave discussion' => 'ترک گفت‌وگو',
-  'Send' => 'ارسال',
-  'There are no messages yet.' => 'هنوز هیچ پیغامی وجود ندارد.',
-  'Write an answer...' => 'نوشتن پاسخ . . .',
-);
+
+return [
+    '<strong>Confirm</strong> deleting conversation' => '<strong>تایید</strong> حذف مکالمه',
+    '<strong>Confirm</strong> leaving conversation' => '<strong>تایید</strong>  ترک مکالمه',
+    '<strong>Confirm</strong> message deletion' => '<strong>تایید</strong>  حذف پیغام',
+    'Add user' => 'اضافه کردن کاربر',
+    'Cancel' => 'انصراف',
+    'Delete' => 'حذف',
+    'Delete conversation' => 'حذف گفتگو',
+    'Do you really want to delete this conversation?' => 'آیا واقعا می‌خواهید این مکالمه را حذف کنید؟',
+    'Do you really want to delete this message?' => 'آیا واقعا می‌خواهید این پیغام را حذف کنید؟',
+    'Do you really want to leave this conversation?' => 'آیا واقعا می‌خواهید این مکالمه را ترک کنید؟',
+    'Leave' => 'ترک',
+    'Leave conversation' => 'ترك گفتگو',
+    'Leave discussion' => 'ترک گفت‌وگو',
+    'Send' => 'ارسال',
+    'There are no messages yet.' => 'هنوز هیچ پیغامی وجود ندارد.',
+];

@@ -1,5 +1,5 @@
 <?php
-return array (
-  'Edit message entry' => '',
-  'Save' => 'บันทึก',
-);
+
+return [
+    'Edit message entry' => '',
+];

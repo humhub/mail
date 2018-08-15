@@ -1,7 +1,7 @@
 <?php
-return array (
-  'Conversations' => 'Razgovori',
-  'New' => 'Novo',
-  'New message' => 'Nova poruka',
-  'There are no messages yet.' => 'Još nema poruka.',
-);
+
+return [
+    'Conversations' => 'Razgovori',
+    'New' => 'Novo',
+    'There are no messages yet.' => 'Još nema poruka.',
+];
