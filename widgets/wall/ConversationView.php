@@ -22,7 +22,7 @@ class ConversationView extends JsWidget
     /**
      * @inheritdoc
      */
-    public $id = 'conversation_view_root';
+    public $id = 'mail-conversation-root';
 
     /**
      * @inheritdoc

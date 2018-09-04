@@ -5,32 +5,45 @@
  * 
  * This can be the notification list or the message navigation
  */
+
 use yii\helpers\Html;
 use humhub\widgets\TimeAgo;
 use humhub\libs\Helpers;
-use humhub\widgets\MarkdownView;
 use yii\helpers\Url;
+use humhub\modules\user\widgets\Image;
+use humhub\widgets\Label;
+
 
 /* @var $userMessage \humhub\modules\mail\models\UserMessage */
+/* @var $active bool */
 
 $message = $userMessage->message;
 ?>
 
 <?php if ($message->getLastEntry() != null) : ?>
-    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry">
+    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry <?= $active ? 'selected' : ''?>">
         <a href="#" data-action-click="mail.wall.loadMessage" data-action-url="<?= Url::to(['/mail/mail', 'id' => $message->id])?>" data-message-id="<?= $message->id ?>">
             <div class="media">
-                <img class="media-object img-rounded pull-left" data-src="holder.js/32x32" alt="32x32" style="width: 32px; height: 32px;" src="<?= $message->getLastEntry()->user->getProfileImage()->getUrl(); ?>">
+                <div class="media-left pull-left">
+                    <?= Image::widget(['user' => $message->getLastEntry()->user, 'width' => '32', 'link' => false])?>
+                </div>
+
                 <div class="media-body text-break">
-                    <h4 class="media-heading"><?= Html::encode($message->getLastEntry()->user->displayName); ?> <small><?= TimeAgo::widget(['timestamp' => $message->updated_at]); ?></small></h4>
-                    <h5><?= Html::encode(Helpers::truncateText($message->title, 75)); ?></h5>
-                    <?= Helpers::truncateText(MarkdownView::widget(['markdown' => $message->getLastEntry()->content, 'parserClass' => '\humhub\libs\MarkdownPreview', 'returnPlain' => true]), 200); ?>
-                    <?php
-                    // show the new badge, if this message is still unread
-                    if ($message->updated_at > $userMessage->last_viewed && $message->getLastEntry()->user->id != Yii::$app->user->id) {
-                        echo '<span class="label label-danger">' . Yii::t('MailModule.views_mail_index', 'New') . '</span>';
-                    }
-                    ?>
+                    <h4 class="media-heading">
+                        <?= Html::encode($message->getLastEntry()->user->displayName); ?> <small><?= TimeAgo::widget(['timestamp' => $message->updated_at]); ?></small>
+                    </h4>
+                    <h5>
+                        <?= Html::encode(Helpers::truncateText($message->title, 75)); ?>
+                    </h5>
+                    <?=  $message->getPreview() ?>
+                    <?php if($userMessage->isUnread()) : ?>
+                        <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New')) ?>
+                    <?php endif; ?>
+                </div>
+                <div class="pull-right">
+                    <?php foreach ($message->users as $user) : ?>
+                        <?= Image::widget(['user' => $user, 'showTooltip' => true, 'width' => '12', 'link' => false])?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </a>

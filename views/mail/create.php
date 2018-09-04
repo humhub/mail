@@ -3,6 +3,8 @@
 use humhub\modules\user\widgets\UserPickerField;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use humhub\widgets\ModalButton;
+use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 
 
 /* @var $model \humhub\modules\mail\models\forms\CreateMessage */
@@ -32,15 +34,17 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'title'); ?>
 
-            <div class="form-group">
-                <?php echo $form->field($model, 'message', ['inputOptions' => ['class' => 'form-control', 'id' => 'newMessageText']])->textarea(); ?>
-                <?php echo \humhub\widgets\MarkdownEditor::widget(array('fieldId' => 'newMessageText')); ?>
-            </div>
+            <?= $form->field($model, 'message')->widget(
+                ProsemirrorRichTextEditor::class, [
+                'menuClass' => 'plainMenu',
+                'placeholder' => Yii::t('MailModule.base', 'Write a message...'),
+                'pluginOptions' => ['maxHeight' => '300px'],
+            ])->label(false) ?>
 
         </div>
         <div class="modal-footer">
             <?php
-            echo \humhub\widgets\AjaxButton::widget([
+            /*echo \humhub\widgets\AjaxButton::widget([
                 'label' => Yii::t('MailModule.views_mail_create', 'Send'),
                 'ajaxOptions' => [
                     'type' => 'POST',
@@ -51,10 +55,11 @@ use yii\widgets\ActiveForm;
                 'htmlOptions' => [
                     'class' => 'btn btn-primary'
                 ]
-            ]);
+            ]);*/
             ?>
 
-            <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo Yii::t('MailModule.views_mail_create', 'Close'); ?></button>
+            <?= ModalButton::submitModal(Url::to(['/mail/mail/create']), Yii::t('MailModule.views_mail_create', 'Send'))?>
+            <?= ModalButton::cancel()?>
 
         </div>
 

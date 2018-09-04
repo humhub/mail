@@ -21,7 +21,7 @@ use humhub\widgets\Button;
             </div>
         </div>
         <div class="modal-footer">
-            <?= ModalButton::save()->submit()->action('addUser', $inviteForm->getUrl(), '#conversation_view_root')->close() ?>
+            <?= ModalButton::save()->submit()->action('addUser', $inviteForm->getUrl(), '#mail-conversation-root')->close() ?>
             <?= ModalButton::cancel() ?>
         </div>
     <?php ActiveForm::end() ?>

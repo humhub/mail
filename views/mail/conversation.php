@@ -25,7 +25,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
     <?php  else :?>
 
-        <div class="panel-heading" style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
+        <div id="mail-conversation-header" class="panel-heading" style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
             <strong> <?= $this->render('_conversation_header', ['message' => $message]) ?></strong>
         </div>
 
@@ -38,14 +38,15 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
             </div>
 
 
-            <div class="row-fluid">
+            <div class="mail-message-form row-fluid">
                 <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 
                     <?= $form->field($replyForm, 'message')->widget(
-                            ProsemirrorRichTextEditor::class, [
-                                    'menuClass' => 'plainMenu',
-                                'placeholder' => Yii::t('MailModule.base', 'Write a message...')
-                            ])->label(false) ?>
+                        ProsemirrorRichTextEditor::class, [
+                        'menuClass' => 'plainMenu',
+                        'placeholder' => Yii::t('MailModule.base', 'Write a message...'),
+                        'pluginOptions' => ['maxHeight' => '300px'],
+                    ])->label(false); ?>
 
                     <?= Button::primary(Yii::t('MailModule.views_mail_show', 'Send'))->submit()->action('reply', $replyForm->getUrl()) ?>
 
@@ -54,9 +55,6 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
                         <!-- Button to trigger modal to add user to conversation -->
                         <?= ModalButton::info(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('fa-plus')
                             ->load(['/mail/mail/add-user', 'id' => $message->id])->visible($canStartConversation) ?>
-
-                        <?= Button::danger(Yii::t('MailModule.views_mail_show', 'Leave discussion'))
-                            ->link(Url::to(['leave', 'id' => $message->id]))->icon('fa-sign-out')->visible(count($message->users) > 2)?>
                     </div>
 
                 <?php ActiveForm::end(); ?>

@@ -2,6 +2,8 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\libs\Helpers;
+use humhub\libs\MarkdownPreview;
 use Yii;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
@@ -234,5 +236,10 @@ class Message extends ActiveRecord
         $mail->setTo($user->email);
         $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
         $mail->send();
+    }
+
+    public function getPreview()
+    {
+        return Helpers::truncateText((new MarkdownPreview())->parse($this->getLastEntry()->content), 200);
     }
 }

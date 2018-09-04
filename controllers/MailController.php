@@ -7,6 +7,7 @@ use Yii;
 use humhub\modules\mail\permissions\StartConversation;
 use yii\data\Pagination;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\HttpException;
 use humhub\components\Controller;
 use humhub\modules\file\models\File;
@@ -335,23 +336,24 @@ class MailController extends Controller
      *
      * Leave is only possible when at least two people are in the
      * conversation.
+     * @throws HttpException
      */
-    public function actionLeave()
+    public function actionLeave($id)
     {
-        $id = Yii::$app->request->get('id');
+        $this->forcePostRequest();
+        
         $message = $this->getMessage($id);
 
-        if ($message == null) {
+        if (!$message) {
             throw new HttpException(404, 'Could not find message!');
         }
 
         $message->leave(Yii::$app->user->id);
 
-        if (Yii::$app->request->isAjax) {
-            return $this->htmlRedirect(['index']);
-        } else {
-            return $this->redirect(['index']);
-        }
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::to(['index'], true)
+        ]);
     }
 
     /**

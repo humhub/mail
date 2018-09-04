@@ -29,11 +29,13 @@ use humhub\libs\Html;
         <h4 class="media-heading" style="font-size: 14px;"><?= Html::encode($entry->user->displayName); ?>
             <small><?= TimeAgo::widget(['timestamp' => $entry->created_at]); ?></small>
         </h4>
-
+    </div>
+    <div style="margin-left:50px">
         <span class="content">
             <?= RichText::output($entry->content); ?>
         </span>
     </div>
+
 </div>
 
 <hr>

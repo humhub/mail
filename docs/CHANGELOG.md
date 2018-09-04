@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.0
+-----------------------
+- Enh: Live updates
+- Enh: Ajaxify conversation chooser
+- Enh: Added conversation user list to mail overview
+- Chng: Major refactoring
 
 0.9.14  (July 2, 2018)
 -----------------------

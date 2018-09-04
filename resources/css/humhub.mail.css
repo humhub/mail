@@ -22,6 +22,10 @@
     margin-top: 0;
 }
 
+.mail-conversation-entry img {
+    max-width:100%;
+}
+
 .placeholder {
     color: #77777A;
 }
@@ -37,10 +41,14 @@
     }
 }
 
-#conversation_view_root .ProseMirror {
+#createmessage-message .ProseMirror, #mail-conversation-root .ProseMirror, .mail-edit-message .ProseMirror {
     min-height: 100px !important;
 }
 
-#conversation_view_root hr {
+#createmessage-message .ProseMirror-menubar, #mail-conversation-root .ProseMirror-menubar, .mail-edit-message .ProseMirror-menubar {
+    margin-top: 0 !important;
+}
+
+#mail-conversation-root hr {
     border-top: 1px dashed #eee;
 }

@@ -103,5 +103,12 @@ class UserMessage extends ActiveRecord
 
     }
 
+    public function isUnread($userId = null)
+    {
+        if ($userId === null) {
+            $userId = Yii::$app->user->id;
+        }
 
+        return $this->message->updated_at > $this->last_viewed && $this->message->getLastEntry()->user->id != $userId;
+    }
 }

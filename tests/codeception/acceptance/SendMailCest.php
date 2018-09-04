@@ -8,17 +8,16 @@ class SendMailCest
     
     private function sendMessage(AcceptanceTester $I, $recipient, $title, $message)
     {
-        $I->fillField('#recipient_tag_input_field', $recipient);
-        $I->wait(3);
-        $I->click($recipient);
-        $I->fillField('CreateMessage[title]', $title);
-        $I->fillField('CreateMessage[message]', $message);
-        $I->click('#globalModal .modal-footer button:first-child');
-        $I->wait(10);
+        $I->selectUserFromPicker('#createmessage-recipient', $recipient);
+        $I->wait(2);
+        $I->fillField('#createmessage-title', $title);
+        $I->fillField('#createmessage-message .humhub-ui-richtext', $message);
+        $I->click('Send','#globalModal');
     }
-    
+
     /**
      * @dependssss login
+     * @throws \Exception
      */
     public function testSendMail(AcceptanceTester $I)
     {
@@ -28,42 +27,54 @@ class SendMailCest
         $I->expectTo('see the mail icon in');
         $I->seeElementInDOM('#icon-messages');
         $I->click('#icon-messages');
-        $I->waitForElementVisible('#create-message-button', 10);
+        $I->waitForText('There are no messages yet.');
         $I->click('#create-message-button');
+
         $I->expectTo('see create new message form');
-        $I->waitForElementVisible('#create-message-form', 10);
+        $I->waitForText('New message', 10, '#globalModal');
+        $this->sendMessage($I, 'Sara', null, 'Just a test message.');
+        $I->waitForText('Subject cannot be blank.', null, '#globalModal');
+
         $this->sendMessage($I, 'Sara', 'Hello there!', 'Just a test message.');
         $I->expectTo('see my message overview with the new conversation');
-        $I->see('Conversations');
-        $I->see('Hello there!');
-        $I->see('Just a test message.');
+        $I->waitForText('Hello there!', null,'#mail-conversation-header');
         
         $I->wantTo('ensure I can add a participant');
         $I->click('Add user');
-        $I->waitForElementVisible('.addUserFrom_mail_user_picker_container', 10);
-        $I->fillField('#addUserFrom_mail_tag_input_field', 'Admin');
-        $I->wait(5);
-        $I->click('Admin');
-        $I->click('#add-user-form .btn-primary'); //Send
-        $I->wait(5);
+        $I->waitForText('Add more participants to your conversation', 10, '#globalModal');
+        $I->selectUserFromPicker('#inviteparticipantform-recipients', 'Admin');
+
+        $I->click('Save', '#globalModal'); //Send
+        $I->expectTo('see the new user within the conversation user list');
+        $I->waitForElement('[data-original-title="Admin Tester"]', null, '#mail-conversation-header');
+
+        $I->wantTo('create another conversation');
+        $I->click('New message', '#mail-conversation-overview');
+        $I->waitForText('New message', null, '#globalModal');
+        $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
+        $I->waitForText('Admin test message', null,'#mail-conversation-root');
+        $I->see('Hi Admin!', '#mail-conversation-root');
+
+        $I->wantToTest('the switch between conversations');
+        $I->click('[data-message-id="1"]', '#mail-conversation-overview');
+        $I->waitForText('Hello there!', null, '#mail-conversation-root');
+        $I->see('Just a test message.');
+
         $I->logout();
         
         $I->amAdmin();
         $I->wantTo('get sure I received the new message');
-        $I->seeElement('#badge-messages');
+        $I->waitForElement('#badge-messages');
         $I->click('#icon-messages');
         $I->waitForElementVisible('#create-message-button', 10);
         $I->click('Show all messages');
-        $I->wait(10);
         $I->expectTo('see my message overview with the new conversation');
-        $I->see('Conversations');
-        $I->see('Hello there!');
+        $I->waitForText('Hello there!', null,'#mail-conversation-root');
         $I->see('Just a test message.');
         
         $I->wantTo('leave the new conversation');
-        $I->click('Leave discussion');
-        $I->wait(10);
+        $I->click('[data-original-title="Leave conversation"]');
         $I->expectTo('see an empty conversation box');
-        $I->see('There are no messages yet.');
+        $I->waitForText('There are no messages yet.');
     }
 }

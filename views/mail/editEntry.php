@@ -5,6 +5,7 @@ use humhub\widgets\ModalDialog;
 use humhub\modules\ui\form\widgets\Markdown;
 use humhub\widgets\Button;
 use humhub\widgets\ModalButton;
+use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 
 /* @var $entry \humhub\modules\mail\models\MessageEntry */
 
@@ -13,8 +14,12 @@ use humhub\widgets\ModalButton;
 <?php ModalDialog::begin(['header' => Yii::t("MailModule.views_mail_edit", "Edit message entry"), 'size' => 'large']) ?>
 
     <?php $form = ActiveForm::begin() ?>
-        <div class="modal-body">
-            <?= $form->field($entry, 'content')->widget(Markdown::class, ['rows' => '12'])->label(false) ?>
+        <div class="modal-body mail-edit-message">
+            <?= $form->field($entry, 'content')->widget(
+                ProsemirrorRichTextEditor::class, [
+                'placeholder' => Yii::t('MailModule.base', 'Edit message...'),
+                'pluginOptions' => ['maxHeight' => '300px'],
+            ])->label(false) ?>
         </div>
         <div class="modal-footer">
 
