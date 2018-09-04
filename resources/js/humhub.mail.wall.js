@@ -7,6 +7,7 @@ humhub.module('mail.wall', function(module, require, $) {
    var additions = require('ui.additions');
    var object = require('util.object');
    var event = require('event');
+   var mail = require('mail');
 
    var ConversationView = Widget.extend();
 
@@ -231,7 +232,7 @@ humhub.module('mail.wall', function(module, require, $) {
                    messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
                    // TODO: add badge to preview
                }
-               setMailMessageCount(event.data.count);
+               mail.setMailMessageCount(event.data.count);
            });
 
            //TODO: update notification count
@@ -241,21 +242,12 @@ humhub.module('mail.wall', function(module, require, $) {
                if(entry) {
                    entry.remove();
                }
-               setMailMessageCount(event.data.count);
+               mail.setMailMessageCount(event.data.count);
            });
        });
     };
 
-    function setMailMessageCount(count) {
-        // show or hide the badge for new messages
-        if (!count || count == '0') {
-            $('#badge-messages').css('display', 'none');
-        } else {
-            $('#badge-messages').empty();
-            $('#badge-messages').append(count);
-            $('#badge-messages').fadeIn('fast');
-        }
-    }
+
 
     var loadMessage = function(evt) {
         var root = getRootView();
@@ -269,7 +261,6 @@ humhub.module('mail.wall', function(module, require, $) {
     };
 
     var leave = function(evt) {
-        debugger;
         client.post(evt).then(function(response) {
             debugger;
             if(response.redirect) {
@@ -288,6 +279,5 @@ humhub.module('mail.wall', function(module, require, $) {
        loadMessage: loadMessage,
        submitEditEntry: submitEditEntry,
        deleteEntry: deleteEntry,
-       setMailMessageCount: setMailMessageCount
    });
 });

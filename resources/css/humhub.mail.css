@@ -30,6 +30,10 @@
     color: #77777A;
 }
 
+#dropdown-messages .dropdown-header {
+    margin-bottom: 12px;
+}
+
 @media (max-width: 767px) {
 
     #dropdown-messages {

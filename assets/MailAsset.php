@@ -18,7 +18,10 @@ class MailAsset extends AssetBundle
 
     public $sourcePath = '@mail/resources';
 
-    public $js = ['js/humhub.mail.wall.js'];
+    public $js = [
+        'js/humhub.mail.wall.js',
+        'js/humhub.mail.js'
+    ];
 
     public $css = ['css/humhub.mail.css'];
 
