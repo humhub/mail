@@ -45,8 +45,8 @@ humhub.module('mail.wall', function(module, require, $) {
         var that = this;
         client.submit(evt).then(function(response) {
             if(response.success) {
-                $('#replyform-message').val('');
                 that.appendEntry(response.content);
+                $('#replyform-message').trigger('clear');
             } else {
                 module.log.error(response, true);
             }
@@ -130,11 +130,9 @@ humhub.module('mail.wall', function(module, require, $) {
     };
 
     ConversationView.prototype.scrollToBottom = function() {
-       /* $('html, body').animate({
-            scrollTop: $('.mail-message-form').offset().top
-        }, 'slow');*/
         var $list = this.getListNode();
-        $list.scrollTop($list[0].scrollHeight);
+        console.log($list[0].scrollHeight);
+        $list.animate({scrollTop : $list[0].scrollHeight});
         this.updateSize();
 
     };
@@ -250,9 +248,8 @@ humhub.module('mail.wall', function(module, require, $) {
 
 
     var loadMessage = function(evt) {
-        var root = getRootView();
-        if(root) {
-            root.loadMessage(evt);
+        if($('#mail-conversation-root').length) {
+            getRootView().loadMessage(evt);
         } else {
             client.pjax.redirect(evt.url);
         }
