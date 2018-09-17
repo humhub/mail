@@ -1,7 +1,7 @@
 <?php
-return array (
-  'Add recipients' => 'Thêm người nhận',
-  'Close' => 'Đóng',
-  'New message' => 'Tin nhắn mới',
-  'Send' => 'Gửi',
-);
+
+return [
+    'Add recipients' => 'Thêm người nhận',
+    'New message' => 'Tin nhắn mới',
+    'Send' => 'Gửi',
+];

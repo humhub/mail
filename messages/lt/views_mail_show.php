@@ -1,8 +1,7 @@
 <?php
 
 return [
-    'Delete conversation' => '',
-    'Leave conversation' => '',
+    'Delete discussion' => '',
     '<strong>Confirm</strong> deleting conversation' => '<strong>Patvirtinti</strong> pokalbio pašalinimą',
     '<strong>Confirm</strong> leaving conversation' => '<strong>Patvirtinti</strong> išėjimą iš pokalbio',
     '<strong>Confirm</strong> message deletion' => '<strong>Patvirtinti</strong> žinutės pašalinimą',

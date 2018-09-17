@@ -6,6 +6,7 @@ return [
     'Allow users to start new conversations' => '',
     'Conversation' => '',
     'Created At' => '',
+    'Edit message...' => '',
     'Is Originator' => '',
     'Last Viewed' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
