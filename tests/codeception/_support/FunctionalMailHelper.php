@@ -15,7 +15,7 @@ class FunctionalMailHelper extends Module
     public function sendMessage($recipient, $title, $message)
     {
         $result = $this->getModule('Yii2')->_loadPage('POST', 'index-test.php?r=mail/mail/create', 
-                ['CreateMessage[recipient]' => $recipient,
+                ['CreateMessage[recipient][]' => $recipient,
                  'CreateMessage[title]' => $title,
                  'CreateMessage[message]' => $message]);
     }

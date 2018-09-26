@@ -16,13 +16,13 @@ use humhub\widgets\Button;
                 ->action('mail.wall.leave', Url::to(["/mail/mail/leave", 'id' => $message->id]))->icon('fa-sign-out')->sm()
                 ->confirm( Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> leaving conversation'),
                     Yii::t('MailModule.views_mail_show', 'Do you really want to leave this conversation?'),
-                    Yii::t('MailModule.views_mail_show', 'Leave'))->tooltip(Yii::t('MailModule.views_mail_show', 'Leave discussion'))?>
+                    Yii::t('MailModule.views_mail_show', 'Leave'))->tooltip(Yii::t('MailModule.views_mail_show', 'Leave conversation'))?>
         <?php elseif (count($message->users) == 1) : ?>
             <?= Button::primary( )
                 ->action('mail.wall.leave', Url::to(["/mail/mail/leave", 'id' => $message->id]))->icon('fa-sign-out')->sm()
                 ->confirm( Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> deleting conversation'),
                     Yii::t('MailModule.views_mail_show', 'Do you really want to delete this conversation?'),
-                    Yii::t('MailModule.views_mail_show', 'Delete'))->tooltip(Yii::t('MailModule.views_mail_show', 'Delete discussion'))?>
+                    Yii::t('MailModule.views_mail_show', 'Delete'))->tooltip(Yii::t('MailModule.views_mail_show', 'Delete conversation'))?>
             ?>
         <?php endif; ?>
 

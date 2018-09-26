@@ -352,7 +352,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'success' => true,
-            'redirect' => Url::to(['index'], true)
+            'redirect' => Url::to(['/mail/mail/index'])
         ]);
     }
 

@@ -69,8 +69,10 @@ humhub.module('mail.wall', function(module, require, $) {
         setTimeout(function() {that.scrollToBottom()});
     };
 
-    ConversationView.prototype.reload = function(dom) {
-        this.loadMessage(this.options.messageId);
+    ConversationView.prototype.reload = function() {
+        if(this.options.messageId) {
+            this.loadMessage(this.options.messageId);
+        }
     };
 
     ConversationView.prototype.addUser = function(evt) {
@@ -259,7 +261,6 @@ humhub.module('mail.wall', function(module, require, $) {
 
     var leave = function(evt) {
         client.post(evt).then(function(response) {
-            debugger;
             if(response.redirect) {
                 client.pjax.redirect(response.redirect);
             }

@@ -62,7 +62,7 @@ class SendMailCest
 
         $I->logout();
         
-        $I->amAdmin();
+        $I->amUser2();
         $I->wantTo('get sure I received the new message');
         $I->waitForElement('#badge-messages');
         $I->click('#icon-messages');
@@ -74,6 +74,9 @@ class SendMailCest
         
         $I->wantTo('leave the new conversation');
         $I->click('[data-original-title="Leave conversation"]');
+        $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
+        $I->click('Leave', '#globalModalConfirm');
+
         $I->expectTo('see an empty conversation box');
         $I->waitForText('There are no messages yet.');
     }
