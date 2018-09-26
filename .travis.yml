@@ -22,7 +22,7 @@ env:
   matrix:
     - HUMHUB_VERSION=master
     - HUMHUB_VERSION=v1.3.0
-    
+
 cache:
   directories:
   - $HOME/.composer/cache
