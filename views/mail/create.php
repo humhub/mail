@@ -43,20 +43,6 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 
         </div>
         <div class="modal-footer">
-            <?php
-            /*echo \humhub\widgets\AjaxButton::widget([
-                'label' => Yii::t('MailModule.views_mail_create', 'Send'),
-                'ajaxOptions' => [
-                    'type' => 'POST',
-                    'beforeSend' => '$.proxy(function() { $(this).prop("disabled",true); },this)',
-                    'success' => 'function(html){ $("#globalModal").html(html); }',
-                    'url' => Url::to(['/mail/mail/create']),
-                ],
-                'htmlOptions' => [
-                    'class' => 'btn btn-primary'
-                ]
-            ]);*/
-            ?>
 
             <?= ModalButton::submitModal(Url::to(['/mail/mail/create']), Yii::t('MailModule.views_mail_create', 'Send'))?>
             <?= ModalButton::cancel()?>

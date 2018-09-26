@@ -1,10 +1,14 @@
 Changelog
 =========
 
+1.0.1
+-----------------------
+- Fix: Message preview encoding issue
+
 1.0.0
 -----------------------
 - Enh: Live updates
-- Enh: Ajaxify conversation chooser
+- Enh: Ajaxify conversation view
 - Enh: Added conversation user list to mail overview
 - Chng: Major refactoring
 

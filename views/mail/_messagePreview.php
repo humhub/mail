@@ -35,7 +35,8 @@ $message = $userMessage->message;
                     <h5>
                         <?= Html::encode(Helpers::truncateText($message->title, 75)); ?>
                     </h5>
-                    <?=  $message->getPreview() ?>
+
+                    <?= Html::encode($message->getPreview()) ?>
 
                     <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New'))
                         ->cssClass('new-message-badge')->style((!$userMessage->isUnread() ? 'display:none' : '')); ?>
