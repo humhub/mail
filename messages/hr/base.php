@@ -4,6 +4,7 @@ return [
     '<strong>Mail</strong> module configuration' => '',
     'Allow users to start new conversations' => '',
     'Conversation' => '',
+    'Edit message...' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
     'Show menu item in top Navigation' => '',

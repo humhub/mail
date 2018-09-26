@@ -3,6 +3,7 @@
 return [
     '<strong>Mail</strong> module configuration' => '',
     'Allow users to start new conversations' => '',
+    'Edit message...' => '',
     'Show menu item in top Navigation' => '',
     'Start new conversations' => '',
     'This user is already participating in this conversation.' => '',

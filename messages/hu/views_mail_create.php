@@ -1,7 +1,7 @@
 <?php
-return array (
-  'Add recipients' => 'Címzettek',
-  'Close' => 'Bezár',
-  'New message' => 'Új üzenet',
-  'Send' => 'Elküldés',
-);
+
+return [
+    'Add recipients' => 'Címzettek',
+    'New message' => 'Új üzenet',
+    'Send' => 'Elküldés',
+];

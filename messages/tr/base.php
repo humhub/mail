@@ -4,6 +4,7 @@ return [
     '<strong>Mail</strong> module configuration' => '',
     'Allow others to send you private messages' => '',
     'Allow users to start new conversations' => '',
+    'Edit message...' => '',
     'Is Originator' => '',
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',

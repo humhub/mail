@@ -2,6 +2,7 @@
 
 return [
     '<strong>Mail</strong> module configuration' => '',
+    'Edit message...' => '',
     'Show menu item in top Navigation' => '',
     'This user is already participating in this conversation.' => '',
     'Write a message...' => '',

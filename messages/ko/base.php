@@ -7,6 +7,7 @@ return [
     'Conversation' => '',
     'Created At' => '',
     'Created By' => '',
+    'Edit message...' => '',
     'Is Originator' => '',
     'Last Viewed' => '',
     'Message' => '',

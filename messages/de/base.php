@@ -1,11 +1,8 @@
 <?php
 
 return [
-    '<strong>Mail</strong> module configuration' => '',
-    'Show menu item in top Navigation' => '',
-    'This user is already participating in this conversation.' => '',
-    'Write a message...' => '',
-    'You are not allowed to start a conversation with this user.' => '',
+    'Edit message...' => '',
+    '<strong>Mail</strong> module configuration' => '<strong>Mail</strong> modul Konfiguration',
     'Allow others to send you private messages' => 'Erlaube anderen Nutzern, dir private Nachrichten zu senden',
     'Allow users to start new conversations' => 'Erlaube Nutzern, neue Konversationen zu beginnen',
     'Conversation' => 'Unterhaltung',
@@ -18,9 +15,13 @@ return [
     'Receive Notifications when someone opens a new conversation.' => 'Benachrichtigungen erhalten, wenn jemand eine neue Unterhaltung eröffnet.',
     'Receive Notifications when someone sends you a message.' => 'Benachrichtigungen erhalten, wenn dir jemand eine Nachricht schickt.',
     'Receive private messages' => 'Private Nachrichten erhalten',
+    'Show menu item in top Navigation' => 'Menüpunkt in der oberen Navigation anzeigen',
     'Start new conversations' => 'Neue Konversation beginnen',
+    'This user is already participating in this conversation.' => 'Dieser Benutzer nimmt bereits an diesem Gespräch teil.',
     'Title' => 'Betreff',
     'Updated At' => 'Aktualisiert am',
     'Updated By' => 'Aktualisiert durch',
     'User' => 'Benutzer',
+    'Write a message...' => 'Schreibe eine Nachricht.....',
+    'You are not allowed to start a conversation with this user.' => 'Es ist Dir nicht erlaubt, mit diesem Benutzer ein Gespräch zu beginnen.',
 ];

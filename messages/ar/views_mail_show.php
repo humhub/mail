@@ -1,8 +1,7 @@
 <?php
 
 return [
-    'Delete conversation' => '',
-    'Leave conversation' => '',
+    'Delete discussion' => '',
     '<strong>Confirm</strong> deleting conversation' => '<strong>تأكيد</strong> حذف المحادثة',
     '<strong>Confirm</strong> leaving conversation' => '<strong>تأكيد</strong> مغادرة المحادثة',
     '<strong>Confirm</strong> message deletion' => '<strong>تأكيد</strong> حذف الرسالة',
