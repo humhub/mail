@@ -1,11 +1,11 @@
 Changelog
 =========
 
-1.0.1
+1.0.1 (September 26, 2018)
 -----------------------
 - Fix: Message preview encoding issue
 
-1.0.0
+1.0.0 (September 26, 2018)
 -----------------------
 - Enh: Live updates
 - Enh: Ajaxify conversation view
