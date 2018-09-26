@@ -28,6 +28,16 @@ humhub.module('mail.wall', function(module, require, $) {
         }
     };
 
+    ConversationView.prototype.markSeen = function(id) {
+        client.post(module.config.url.seen, {data: {id: id}}).then(function(response) {
+            if(object.isDefined(response.messageCount)) {
+                mail.setMailMessageCount(response.messageCount);
+            }
+        }).catch(function(e) {
+            module.log.error(e);
+        });
+    };
+
     ConversationView.prototype.loadUpdate = function() {
         var  $lastEntry = this.$.find('.mail-conversation-entry:last');
         var lastEntryId = $lastEntry.data('entry-id');
@@ -121,9 +131,22 @@ humhub.module('mail.wall', function(module, require, $) {
         this.loader();
         client.get(this.options.loadMessageUrl, {data: {id:messageId}}).then(function(response) {
             that.options.messageId = messageId;
+
+            // Remove New badge from current selection
+            $('#mail-conversation-overview').find('.selected[data-message-preview]').find('.new-message-badge').hide();
+
+            // Set new selection
             $('#mail-conversation-overview').find('[data-message-preview]').removeClass('selected');
-            $('#mail-conversation-overview').find('[data-message-preview="'+messageId+'"]').addClass('selected');
+            $('#mail-conversation-overview').find('[data-message-preview="'+messageId+'"]').addClass('selected').find('.new-message-badge').hide();
+
+            // Replace history state only if triggered by message preview item
+            if(evt.$trigger && history && history.replaceState) {
+                var url = evt.$trigger.data('action-url');
+                if(url) { history.replaceState(null, null, url); }
+            }
+
             that.updateContent(response.html);
+
         }).catch(function(e) {
             module.log.error(e, true);
         }).finally(function() {
@@ -133,7 +156,6 @@ humhub.module('mail.wall', function(module, require, $) {
 
     ConversationView.prototype.scrollToBottom = function() {
         var $list = this.getListNode();
-        console.log($list[0].scrollHeight);
         $list.animate({scrollTop : $list[0].scrollHeight});
         this.updateSize();
 
@@ -224,13 +246,14 @@ humhub.module('mail.wall', function(module, require, $) {
     var init = function() {
        event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
            var root = getRootView();
-           var messageIds = [];
+
            events.forEach(function(event) {
                if(root && root.options.messageId == event.data.message_id) {
                    root.loadUpdate();
-               } else {
-                   messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
-                   // TODO: add badge to preview
+                   root.markSeen(event.data.message_id);
+               } else if(root) {
+                   getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
+                  // messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
                }
                mail.setMailMessageCount(event.data.count);
            });
@@ -245,6 +268,10 @@ humhub.module('mail.wall', function(module, require, $) {
                mail.setMailMessageCount(event.data.count);
            });
        });
+    };
+
+    var getOverViewEntry = function(id) {
+        return $('#mail-conversation-overview').find('[data-message-preview="'+id+'"]');
     };
 
 

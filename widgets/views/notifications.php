@@ -11,13 +11,6 @@ MailAsset::register($this);
 
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
-$this->registerJsConfig('mail', [
-    'url' => [
-        'count' => Url::to(['/mail/mail/get-new-message-count-json']),
-        'list' => Url::to(['/mail/mail/notification-list'])
-    ]
-]);
-
 ?>
 <div class="btn-group">
     <a href="#" id="icon-messages" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i></a>

@@ -62,4 +62,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
         </div>
     <?php endif; ?>
 
+    <script>
+        humhub.modules.mail.setMailMessageCount(<?= $messageCount ?>);
+    </script>
 </div>

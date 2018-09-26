@@ -64,8 +64,7 @@ class MailController extends Controller
         return $this->render('index', [
             'messageId' => $id,
             'userMessages' => $userMessages,
-            'pagination' => $pagination,
-            'canStartConversation' => Yii::$app->user->can(StartConversation::class)
+            'pagination' => $pagination
         ]);
     }
 
@@ -83,7 +82,23 @@ class MailController extends Controller
 
         return $this->renderAjax('conversation', [
             'message' => $message,
+            'messageCount' => UserMessage::getNewMessageCount(),
             'replyForm' => new ReplyForm(['model' => $message]),
+        ]);
+    }
+
+    public function actionSeen()
+    {
+        $id = Yii::$app->request->post('id');
+
+        if($id) {
+            $message = ($id instanceof Message) ? $id : $this->getMessage($id);
+            $this->checkMessagePermissions($message);
+            $message->seen(Yii::$app->user->id);
+        }
+
+        return $this->asJson([
+            'messageCount' => UserMessage::getNewMessageCount()
         ]);
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace humhub\modules\mail\assets;
 
+use yii\helpers\Url;
 use yii\web\AssetBundle;
 
 /**
@@ -24,6 +25,25 @@ class MailAsset extends AssetBundle
     ];
 
     public $css = ['css/humhub.mail.css'];
+
+    public static function register($view)
+    {
+        $view->registerJsConfig([
+            'mail' => [
+                'url' => [
+                    'count' => Url::to(['/mail/mail/get-new-message-count-json']),
+                    'list' => Url::to(['/mail/mail/notification-list']),
+                ]
+            ],
+            'mail.wall' => [
+                'url' => [
+                    'seen' => Url::to(['/mail/mail/seen'])
+                ]
+            ]
+        ]);
+
+        return parent::register($view);
+    }
 
 
 }

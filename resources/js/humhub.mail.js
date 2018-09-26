@@ -3,17 +3,22 @@ humhub.module('mail', function(module, require, $) {
     var wall = require('mail.wall');
     var loader = require('ui.loader');
 
-    var init = function() {
+    module.initOnPjaxLoad = true;
+
+    var init = function(isPjax) {
         // open the messages menu
-        $('#icon-messages').click(function () {
-            // remove all <li> entries from dropdown
-            $('#loader_messages').parent().find(':not(#loader_messages)').remove();
-            loader.set($('#loader_messages').show());
-            client.get(module.config.url.list).then(function (response) {
-                $('#loader_messages').parent().prepend($(response.html));
-                $('#loader_messages').hide();
+
+        if(!isPjax) {
+            $('#icon-messages').click(function () {
+                // remove all <li> entries from dropdown
+                $('#loader_messages').parent().find(':not(#loader_messages)').remove();
+                loader.set($('#loader_messages').show());
+                client.get(module.config.url.list).then(function (response) {
+                    $('#loader_messages').parent().prepend($(response.html));
+                    $('#loader_messages').hide();
+                });
             });
-        });
+        }
 
         updateCount();
     };

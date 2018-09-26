@@ -10,6 +10,7 @@ use humhub\modules\mail\widgets\wall\ConversationView;
 /* @var $pagination \yii\data\Pagination */
 
 ?>
+
 <div class="container">
     <div class="row">
         <div class="col-md-4">

@@ -22,7 +22,7 @@ $message = $userMessage->message;
 
 <?php if ($message->getLastEntry() != null) : ?>
     <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry <?= $active ? 'selected' : ''?>">
-        <a href="#" data-action-click="mail.wall.loadMessage" data-action-url="<?= Url::to(['/mail/mail', 'id' => $message->id])?>" data-message-id="<?= $message->id ?>">
+        <a href="#" class="mail-link" data-action-click="mail.wall.loadMessage" data-action-url="<?= Url::to(['/mail/mail', 'id' => $message->id])?>" data-message-id="<?= $message->id ?>">
             <div class="media">
                 <div class="media-left pull-left">
                     <?= Image::widget(['user' => $message->getLastEntry()->user, 'width' => '32', 'link' => false])?>
@@ -36,9 +36,9 @@ $message = $userMessage->message;
                         <?= Html::encode(Helpers::truncateText($message->title, 75)); ?>
                     </h5>
                     <?=  $message->getPreview() ?>
-                    <?php if($userMessage->isUnread()) : ?>
-                        <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New')) ?>
-                    <?php endif; ?>
+
+                    <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New'))
+                        ->cssClass('new-message-badge')->style((!$userMessage->isUnread() ? 'display:none' : '')); ?>
                 </div>
                 <div class="pull-right">
                     <?php foreach ($message->users as $user) : ?>
