@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.2 (September 27, 2018)
+-----------------------
+- Fix: Files are not attachment to MessageEntry
+
 1.0.1 (September 26, 2018)
 -----------------------
 - Fix: Message preview encoding issue

@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\widgets\wall\ConversationEntry;
 use Yii;
 use humhub\modules\mail\permissions\StartConversation;
@@ -313,7 +314,6 @@ class MailController extends Controller
             $messageEntry->user_id = Yii::$app->user->id;
             $messageEntry->content = $model->message;
             $messageEntry->save();
-            File::attachPrecreated($messageEntry, Yii::$app->request->post('fileUploaderHiddenGuidField'));
 
             // Attach also Recipients
             foreach ($model->getRecipients() as $recipient) {
