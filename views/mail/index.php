@@ -1,8 +1,5 @@
 <?php
 
-use humhub\modules\mail\permissions\StartConversation;
-use humhub\modules\mail\widgets\NewMessageButton;
-use humhub\widgets\LinkPager;
 use humhub\modules\mail\widgets\wall\ConversationView;
 
 /* @var $messageId int */

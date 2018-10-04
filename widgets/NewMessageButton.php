@@ -22,14 +22,41 @@ class NewMessageButton extends Widget
     /**
      * @var string
      */
-    public $size;
+    public $size = 'sm';
+
+    /**
+     * @var string 
+     */
+    public $icon = 'fa-plus';
 
     /**
      * Creates the Wall Widget
      */
     public function run()
     {
-        return ModalButton::info($this->getLabel())->icon('fa-plus')->load(['/mail/mail/create', 'ajax' => 1, 'userGuid' => $this->guid])->sm()->right();
+
+        $button = ModalButton::info($this->getLabel())->load(['/mail/mail/create', 'ajax' => 1, 'userGuid' => $this->guid])->right();
+
+        if($this->icon) {
+            $button->icon($this->icon);
+        }
+
+        switch ($this->size) {
+            case 'sm':
+            case 'small':
+                $button->sm();
+                break;
+            case 'lg':
+            case 'large':
+                $button->lg();
+                break;
+            case 'xs':
+            case 'extraSmall':
+                $button->xs();
+                break;
+        }
+
+        return $button;
     }
 
     public function getLabel()

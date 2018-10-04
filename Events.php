@@ -99,7 +99,7 @@ class Events
             return;
         }
 
-        $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid], ['sortOrder' => 90]);
+        $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
     }
 
 }

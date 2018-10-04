@@ -1,5 +1,8 @@
 Changelog
 =========
+1.0.3 (October 4, 2018)
+-----------------------
+- Fix #147: Message button size on profile
 
 1.0.2 (September 27, 2018)
 -----------------------
