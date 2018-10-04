@@ -25,7 +25,7 @@ class NewMessageButton extends Widget
     public $size = 'sm';
 
     /**
-     * @var string 
+     * @var string
      */
     public $icon = 'fa-plus';
 
