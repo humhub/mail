@@ -1,5 +1,10 @@
 Changelog
 =========
+
+1.0.4 (October 5, 2018)
+-----------------------
+- Fix: IE11 compatibility issue
+
 1.0.3 (October 4, 2018)
 -----------------------
 - Fix #147: Message button size on profile
