@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'Delete discussion' => '',
+    'Delete conversation' => '',
+    'Leave conversation' => '',
     '<strong>Confirm</strong> deleting conversation' => '确认<strong>删除讨论</strong>',
     '<strong>Confirm</strong> leaving conversation' => '确认<strong>退出讨论</strong>',
     '<strong>Confirm</strong> message deletion' => '确认<strong>删除消息</strong>',
@@ -12,7 +13,6 @@ return [
     'Do you really want to delete this message?' => '你真的要删除此消息？',
     'Do you really want to leave this conversation?' => '你真的要退出此讨论？',
     'Leave' => '退出',
-    'Leave discussion' => '退出讨论',
     'Send' => '发送',
     'There are no messages yet.' => '还没有消息.',
 ];

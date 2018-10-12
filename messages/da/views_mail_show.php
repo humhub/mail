@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'Delete discussion' => '',
+    'Delete conversation' => '',
+    'Leave conversation' => '',
     '<strong>Confirm</strong> deleting conversation' => '<strong>Bekræft</strong> sletning af samtale',
     '<strong>Confirm</strong> leaving conversation' => '<strong>Bekræft</strong> afslutning af samtale',
     '<strong>Confirm</strong> message deletion' => '<strong>Bekræft</strong> sletning af besked',
@@ -12,7 +13,6 @@ return [
     'Do you really want to delete this message?' => 'Vil du virkelig gerne slette denne besked?',
     'Do you really want to leave this conversation?' => 'Vil du virkelig gerne forlade denne samtale',
     'Leave' => 'Forlad',
-    'Leave discussion' => 'Forlad diskussion',
     'Send' => 'Send',
     'There are no messages yet.' => 'Der er ingen beskeder endnu.',
 ];

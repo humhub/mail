@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'Delete discussion' => '',
+    'Delete conversation' => '',
+    'Leave conversation' => '',
     '<strong>Confirm</strong> deleting conversation' => '<strong>Smazání</strong> konverzace',
     '<strong>Confirm</strong> leaving conversation' => '<strong>Opuštění</strong> konverzace',
     '<strong>Confirm</strong> message deletion' => '<strong>Smazání</strong> zprávy',
@@ -12,7 +13,6 @@ return [
     'Do you really want to delete this message?' => 'Opravdu chcete smazat tuto zprávu?',
     'Do you really want to leave this conversation?' => 'Opravdu chcete opustit tuto konverzaci?',
     'Leave' => 'Opustit',
-    'Leave discussion' => 'Opustit konverzaci',
     'Send' => 'Poslat',
     'There are no messages yet.' => 'Zatím zde nejsou žádné zprávy.',
 ];
