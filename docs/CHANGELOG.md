@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.5 (November 2, 2018)
+-----------------------
+- Enh: Updated translations
+- Enh: Added font less option in e-mail templates (@rekollekt)
+
 1.0.4 (October 5, 2018)
 -----------------------
 - Fix: IE11 compatibility issue
