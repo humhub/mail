@@ -221,6 +221,8 @@ class Message extends ActiveRecord
 
         Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
 
+        Yii::$app->i18n->setUserLocale($user);
+
         $mail = Yii::$app->mailer->compose([
             'html' => '@mailmodule/views/emails/NewMessage',
             'text' => '@mailmodule/views/emails/plaintext/NewMessage'
@@ -236,6 +238,8 @@ class Message extends ActiveRecord
         $mail->setTo($user->email);
         $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
         $mail->send();
+
+        Yii::$app->i18n->autosetLocale();
     }
 
     public function getPreview()
