@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'Delete discussion' => '',
+    'Delete conversation' => '',
+    'Leave conversation' => '',
     '<strong>Confirm</strong> deleting conversation' => '<strong>Patvirtinti</strong> pokalbio pašalinimą',
     '<strong>Confirm</strong> leaving conversation' => '<strong>Patvirtinti</strong> išėjimą iš pokalbio',
     '<strong>Confirm</strong> message deletion' => '<strong>Patvirtinti</strong> žinutės pašalinimą',
@@ -12,7 +13,6 @@ return [
     'Do you really want to delete this message?' => 'Ar tikrai norite ištrinti šią žinutę?',
     'Do you really want to leave this conversation?' => 'Ar tikrai norite palikti šį pokalbį?',
     'Leave' => 'Palikti',
-    'Leave discussion' => 'Išeiti iš pokalbio',
     'Send' => 'Siųsti',
     'There are no messages yet.' => 'Kol kas nėra žinučių.',
 ];

@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Add more participants to your conversation...' => 'Adj hozzá további címzetteket...',
-];
+return array (
+  'Add more participants to your conversation...' => 'További címzettek hozzáadása...',
+);

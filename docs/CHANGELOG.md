@@ -1,9 +1,18 @@
 Changelog
 =========
-1.0.4 (November 15, 2018)
+1.0.5 (November 15, 2018)
 -----------------------
 - Fix #131 wrong norwegain translation
 - Fix #79 Sender langauge used for e-mail notification instead of receiver language
+
+1.0.5 (November 2, 2018)
+-----------------------
+- Enh: Updated translations
+- Enh: Added font less option in e-mail templates (@rekollekt)
+
+1.0.4 (October 5, 2018)
+-----------------------
+- Fix: IE11 compatibility issue
 
 1.0.3 (October 4, 2018)
 -----------------------
