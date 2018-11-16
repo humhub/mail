@@ -4,6 +4,7 @@ Changelog
 -----------------------
 - Fix #131 wrong norwegain translation
 - Fix #79 Sender langauge used for e-mail notification instead of receiver language
+- Fix #147 Send message button in profile missing margin
 
 1.0.5 (November 2, 2018)
 -----------------------
