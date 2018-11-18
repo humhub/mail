@@ -34,8 +34,7 @@ class NewMessageButton extends Widget
      */
     public function run()
     {
-
-        $button = ModalButton::info($this->getLabel())->load(['/mail/mail/create', 'ajax' => 1, 'userGuid' => $this->guid])->right();
+        $button = ModalButton::info($this->getLabel())->load(['/mail/mail/create', 'ajax' => 1, 'userGuid' => $this->guid]);
 
         if($this->icon) {
             $button->icon($this->icon);

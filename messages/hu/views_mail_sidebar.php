@@ -3,5 +3,5 @@ return array (
   'Groups' => 'Csoportok',
   'Members' => 'Tagok',
   'Spaces' => 'Témakörök',
-  'User Posts' => 'Felhasználó postok',
+  'User Posts' => 'Felhasználó bejegyzések',
 );

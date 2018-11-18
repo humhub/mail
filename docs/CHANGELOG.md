@@ -1,5 +1,15 @@
 Changelog
 =========
+1.0.6 (November 16, 2018)
+-----------------------
+- Fix #131 wrong norwegain translation
+- Fix #79 Sender langauge used for e-mail notification instead of receiver language
+- Fix #147 Send message button in profile missing margin
+
+1.0.5 (November 2, 2018)
+-----------------------
+- Enh: Updated translations
+- Enh: Added font less option in e-mail templates (@rekollekt)
 
 1.0.4 (October 5, 2018)
 -----------------------
