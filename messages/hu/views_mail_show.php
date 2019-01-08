@@ -3,7 +3,7 @@ return array (
   '<strong>Confirm</strong> deleting conversation' => 'Beszélgetés <strong>törlésének</strong>  megerősítése',
   '<strong>Confirm</strong> leaving conversation' => 'Beszélgetés <strong>elhagyása</strong>',
   '<strong>Confirm</strong> message deletion' => 'Üzenet <strong>törlésének</strong> megerősítése',
-  'Add user' => 'További címzettek',
+  'Add user' => 'Felhasználó hozzáadása',
   'Cancel' => 'Mégsem',
   'Delete' => 'Törlés',
   'Delete conversation' => 'Beszélgetés törlése',
@@ -13,5 +13,5 @@ return array (
   'Leave' => 'Elhagyás',
   'Leave conversation' => 'Beszélgetés elhagyása',
   'Send' => 'Küldés',
-  'There are no messages yet.' => 'Még nincs üzenet.',
+  'There are no messages yet.' => 'Még nincsenek üzenetek.',
 );

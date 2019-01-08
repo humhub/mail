@@ -2,6 +2,6 @@
 return array (
   'Message' => 'Üzenet',
   'Recipient' => 'Címzett',
-  'Subject' => 'Téma',
+  'Subject' => 'Tárgy',
   'You cannot send a email to yourself!' => 'Magadnak nem küldhetsz üzenetet!',
 );

@@ -2,6 +2,6 @@
 return array (
   'Groups' => 'Csoportok',
   'Members' => 'Tagok',
-  'Spaces' => 'Témakörök',
+  'Spaces' => 'Közösségek',
   'User Posts' => 'Felhasználó bejegyzések',
 );
