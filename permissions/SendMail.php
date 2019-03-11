@@ -8,6 +8,7 @@
 
 namespace humhub\modules\mail\permissions;
 
+use humhub\modules\user\models\Group;
 use humhub\modules\user\models\User;
 use Yii;
 
@@ -51,6 +52,15 @@ class SendMail extends \humhub\libs\BasePermission
     public function getDescription()
     {
         return Yii::t('MailModule.base', 'Allow others to send you private messages');
+    }
+
+    public function getDefaultState($groupId)
+    {
+        if ($groupId == Group::getAdminGroupId()) {
+            return self::STATE_ALLOW;
+        }
+
+        return parent::getDefaultState($groupId);
     }
 
 }

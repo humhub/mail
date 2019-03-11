@@ -1,5 +1,9 @@
 Changelog
 =========
+1.0.7 (March 11, 2019)
+-----------------------
+- Enh: Added new conversation restrictions
+
 1.0.6 (November 16, 2018)
 -----------------------
 - Fix #131 wrong norwegain translation

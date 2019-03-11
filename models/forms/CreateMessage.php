@@ -2,6 +2,9 @@
 
 namespace humhub\modules\mail\models\forms;
 
+use humhub\modules\mail\models\Config;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\MessageEntry;
 use Yii;
 use yii\base\Model;
 use humhub\modules\user\models\User;
@@ -17,6 +20,11 @@ class CreateMessage extends Model
     public $recipientUser;
     public $message;
     public $title;
+
+    /**
+     * @var Message new message
+     */
+    public $messageInstance;
 
     /**
      * Parsed recipients in array of user objects
@@ -53,21 +61,18 @@ class CreateMessage extends Model
     /**
      * Form Validator which checks the recipient field
      *
-     * @param type $attribute
-     * @param type $params
+     * @param string $attribute
+     * @param array $params
      */
     public function checkRecipient($attribute, $params)
     {
-
         // Check if email field is not empty
-        if ($this->$attribute != "") {
-
+        if ($this->$attribute) {
             foreach ($this->recipient as $userGuid) {
                 // Try load user
                 $user = User::findOne(['guid' => $userGuid]);
                 if ($user != null) {
-
-                    if ($user->id == Yii::$app->user->id) {
+                    if ($user->isCurrentUser()) {
                         $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You cannot send a email to yourself!"));
                     } else {
                         $this->recipients[] = $user;
@@ -77,12 +82,102 @@ class CreateMessage extends Model
         }
     }
 
+    public function save()
+    {
+        $transaction = Message::getDb()->beginTransaction();
+
+        try {
+            if (!$this->validate()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            if (!$this->saveMessage()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            if (!$this->saveMessageEntry()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            if (!$this->saveRecipients()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            if(!$this->saveOriginatorUserMessage()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            (new Config())->incrementConversationCount(Yii::$app->user->getIdentity());
+
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return true;
+    }
+
+    private function saveRecipients()
+    {
+        $recepients = [];
+        // Attach also Recipients
+        foreach ($this->getRecipients() as $recipient) {
+            if ($this->messageInstance->addRecepient($recipient)) {
+                $recepients[] = $recipient;
+            }
+        }
+
+        // Inform recipients (We need to add all before)
+        foreach ($recepients as $recipient) {
+            try {
+                $this->messageInstance->notify($recipient);
+            } catch (\Exception $e) {
+                Yii::error('Could not send notification e-mail to: ' . $recipient->username . ". Error:" . $e->getMessage());
+            }
+        }
+
+        return true;
+    }
+
+    private function saveMessage()
+    {
+        $this->messageInstance = new Message([
+            'title' => $this->title
+        ]);
+
+        if(!(new Config())->canCreateConversation(Yii::$app->user->getIdentity())) {
+            $this->addError('message', Yii::t('MailModule.base', 'You\'ve exceeded your daily amount of new conversations.'));
+            return false;
+        }
+
+        return $this->messageInstance->save();
+    }
+
     /**
      * Returns an Array with selected recipients
      */
     public function getRecipients()
     {
         return $this->recipients;
+    }
+
+    private function saveMessageEntry()
+    {
+        return MessageEntry::createForMessage($this->messageInstance, Yii::$app->user->getIdentity(), $this->message)->save();
+    }
+
+    private function saveOriginatorUserMessage()
+    {
+        return $this->messageInstance->addRecepient(Yii::$app->user->getIdentity(), true);
     }
 
 }

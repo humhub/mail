@@ -12,13 +12,12 @@ use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\helpers\Url;
-use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\Notifications;
 use humhub\modules\mail\permissions\SendMail;
-use humhub\modules\mail\models\ConfigureForm;
+use humhub\modules\mail\models\Config;
 
 /**
  * Description of Events
@@ -61,11 +60,11 @@ class Events
         $showInTopNav = false;
 
         // Workaround for module update problem
-        if (method_exists(ConfigureForm::getModule(), 'showInTopNav')) {
-            $showInTopNav = ConfigureForm::getModule()->showInTopNav();
+        if (method_exists(Config::getModule(), 'showInTopNav')) {
+            $showInTopNav = Config::getModule()->showInTopNav();
         }
 
-        if(!ConfigureForm::getModule()->showInTopNav()){
+        if(!Config::getModule()->showInTopNav()){
             $event->sender->addItem([
                 'label' => Yii::t('MailModule.base', 'Messages'),
                 'url' => Url::to(['/mail/mail/index']),

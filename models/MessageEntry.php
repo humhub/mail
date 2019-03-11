@@ -47,6 +47,16 @@ class MessageEntry extends ActiveRecord
         return 'message_entry';
     }
 
+    public static function createForMessage(Message $message, User $user, $content)
+    {
+        // Attach Message Entry
+        return new static([
+            'message_id' => $message->id,
+            'user_id' => $user->id,
+            'content' => $content
+        ]);
+    }
+
     /**
      * @return array validation rules for model attributes.
      */

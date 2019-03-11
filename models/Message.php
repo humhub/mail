@@ -13,6 +13,7 @@ use humhub\modules\notification\targets\MailTarget;
 use humhub\components\ActiveRecord;
 use humhub\models\Setting;
 use humhub\modules\user\models\User;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "message".
@@ -24,6 +25,7 @@ use humhub\modules\user\models\User;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property-read  User $originator
  *
  * The followings are the available model relations:
  * @property MessageEntry[] $messageEntries
@@ -99,7 +101,7 @@ class Message extends ActiveRecord
 
     public function getOriginator()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
@@ -150,6 +152,8 @@ class Message extends ActiveRecord
      * If it's the last user, the whole message will be deleted.
      *
      * @param int $userId
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function leave($userId)
     {
@@ -178,7 +182,7 @@ class Message extends ActiveRecord
                     'message_id' => $this->id
         ));
         if ($userMessage !== null) {
-            $userMessage->last_viewed = new \yii\db\Expression('NOW()');
+            $userMessage->last_viewed = new Expression('NOW()');
             $userMessage->save();
         }
     }
@@ -245,5 +249,25 @@ class Message extends ActiveRecord
     public function getPreview()
     {
         return Helpers::truncateText((new MarkdownPreview())->parse($this->getLastEntry()->content), 200);
+    }
+
+    /**
+     * @param User $recipient
+     * @return bool
+     */
+    public function addRecepient(User $recipient, $originator = false)
+    {
+        $userMessage = new UserMessage([
+            'message_id' => $this->id,
+            'user_id' => $recipient->id
+        ]);
+
+        if($originator) {
+            $userMessage->is_originator = 1;
+            $userMessage->last_viewed = new Expression('NOW()');
+        }
+
+        return $userMessage->save();
+
     }
 }

@@ -9,7 +9,7 @@
 namespace humhub\modules\mail\controllers;
 
 use Yii;
-use humhub\modules\mail\models\ConfigureForm;
+use humhub\modules\mail\models\Config;
 use humhub\models\Setting;
 
 /**
@@ -26,7 +26,7 @@ class ConfigController extends \humhub\modules\admin\components\Controller
      */
     public function actionIndex()
     {
-        $form = new ConfigureForm();
+        $form = new Config();
 
         if ($form->load(Yii::$app->request->post()) && $form->save()) {
             $this->view->saved();

@@ -182,12 +182,16 @@ class MailController extends Controller
         $query = UserMessage::getByUser(null, 'message.updated_at DESC')->limit(5);
         return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
     }
-    
+
     /**
      * Used by user picker, searches user which are allwed messaging permissions
      * for the current user (v1.1).
-     * 
+     *
+     * @param null $id
+     * @param $keyword
      * @return string
+     * @throws HttpException
+     * @throws \Throwable
      */
     public function actionSearchUser($id = null, $keyword)
     {
@@ -202,8 +206,9 @@ class MailController extends Controller
         }
 
         $result = UserPicker::filter([
+            'query' => User::find(),
             'keyword' => $keyword,
-            'permission' => new SendMail(),
+            'permission' => (!Yii::$app->user->isAdmin()) ? new SendMail() : null,
             'fillUser' => true,
             'disableFillUser' => true,
             'disabledText' => Yii::t('MailModule.base','You are not allowed to start a conversation with this user.')
@@ -299,51 +304,12 @@ class MailController extends Controller
                 $model->recipient = $user->guid;
             }
         }
-
-       
         
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // Create new Message
-            $message = new Message();
-            $message->title = $model->title;
-            $message->save();
-
-            // Attach Message Entry
-            $messageEntry = new MessageEntry();
-            $messageEntry->message_id = $message->id;
-            $messageEntry->user_id = Yii::$app->user->id;
-            $messageEntry->content = $model->message;
-            $messageEntry->save();
-
-            // Attach also Recipients
-            foreach ($model->getRecipients() as $recipient) {
-                $userMessage = new UserMessage();
-                $userMessage->message_id = $message->id;
-                $userMessage->user_id = $recipient->id;
-                $userMessage->save();
-            }
-
-            // Inform recipients (We need to add all before)
-            foreach ($model->getRecipients() as $recipient) {
-                try {
-                    $message->notify($recipient);
-                } catch(\Exception $e) {
-                    Yii::error('Could not send notification e-mail to: '. $recipient->username.". Error:". $e->getMessage());
-                }
-            }
-
-            // Attach User Message
-            $userMessage = new UserMessage();
-            $userMessage->message_id = $message->id;
-            $userMessage->user_id = Yii::$app->user->id;
-            $userMessage->is_originator = 1;
-            $userMessage->last_viewed = new \yii\db\Expression('NOW()');
-            $userMessage->save();
-
-            return $this->htmlRedirect(['index', 'id' => $message->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->htmlRedirect(['index', 'id' => $model->messageInstance->id]);
         }
         
-        return $this->renderAjax('create', array('model' => $model));
+        return $this->renderAjax('create', ['model' => $model]);
     }
 
     /**
