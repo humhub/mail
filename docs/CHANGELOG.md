@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.8 (March 14, 2019)
+1.0.9 (March 14, 2019)
 -----------------------
 - Enh: Use of `Richtext::preview` instead of `MarkdownPreview`
 

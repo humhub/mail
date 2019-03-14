@@ -249,7 +249,7 @@ class Message extends ActiveRecord
 
     public function getPreview()
     {
-        return RichText::preview($this->getLastEntry()->content);
+        return RichText::preview($this->getLastEntry()->content, 300);
     }
 
     /**
