@@ -1,5 +1,10 @@
 Changelog
 =========
+
+1.0.8 (March 14, 2019)
+-----------------------
+- Enh: Use of `Richtext::preview` instead of `MarkdownPreview`
+
 1.0.7 (March 11, 2019)
 -----------------------
 - Enh: Added new conversation restrictions

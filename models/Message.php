@@ -4,6 +4,7 @@ namespace humhub\modules\mail\models;
 
 use humhub\libs\Helpers;
 use humhub\libs\MarkdownPreview;
+use humhub\modules\content\widgets\richtext\RichText;
 use Yii;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
@@ -248,7 +249,7 @@ class Message extends ActiveRecord
 
     public function getPreview()
     {
-        return Helpers::truncateText((new MarkdownPreview())->parse($this->getLastEntry()->content), 200);
+        return RichText::preview($this->getLastEntry()->content);
     }
 
     /**
