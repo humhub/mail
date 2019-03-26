@@ -1,7 +1,7 @@
 <?php
 return array (
   '<strong>Mail</strong> module configuration' => '<strong>Mail</strong> modul Konfiguration',
-  'Allow others to send you private messages' => 'Erlaube anderen Nutzern, dir private Nachrichten zu senden',
+  'Allow others to send you private messages' => 'Erlaube anderen Nutzern, Dir private Nachrichten zu senden',
   'Allow users to start new conversations' => 'Erlaube Nutzern, neue Konversationen zu beginnen',
   'Conversation' => 'Unterhaltung',
   'Created At' => 'Erstellt am',
