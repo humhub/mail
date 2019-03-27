@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.10 (March 27, 2019)
+-----------------------
+- Fix: #155 Mail duplication in Mail Dropdown after repeated clicks
+
 1.0.9 (March 14, 2019)
 -----------------------
 - Enh: Use of `Richtext::preview` instead of `MarkdownPreview`

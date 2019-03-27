@@ -1,7 +1,7 @@
 humhub.module('mail', function(module, require, $) {
     var client = require('client');
-    var wall = require('mail.wall');
     var loader = require('ui.loader');
+    var currentXhr;
 
     module.initOnPjaxLoad = true;
 
@@ -10,10 +10,19 @@ humhub.module('mail', function(module, require, $) {
 
         if(!isPjax) {
             $('#icon-messages').click(function () {
+
+                if(currentXhr) {
+                    currentXhr.abort();
+                }
+
                 // remove all <li> entries from dropdown
                 $('#loader_messages').parent().find(':not(#loader_messages)').remove();
                 loader.set($('#loader_messages').show());
-                client.get(module.config.url.list).then(function (response) {
+
+                client.get(module.config.url.list, {beforeSend: function(xhr) {
+                    currentXhr = xhr;
+                }}).then(function (response) {
+                    currentXhr = undefined;
                     $('#loader_messages').parent().prepend($(response.html));
                     $('#loader_messages').hide();
                 });
@@ -39,13 +48,13 @@ humhub.module('mail', function(module, require, $) {
             $badge.append(count);
             $badge.fadeIn('fast');
         }
-    }
+    };
 
     module.export({
         init: init,
         setMailMessageCount: setMailMessageCount,
         updateCount: updateCount
-    })
+    });
 });
 
 // Hotfix for IE11, this will be included in HumHub v1.3.5
