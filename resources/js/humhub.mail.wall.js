@@ -9,6 +9,32 @@ humhub.module('mail.wall', function(module, require, $) {
    var event = require('event');
    var mail = require('mail');
 
+    /* from https://github.com/Wizcorp/locks */
+    function Mutex() {
+        this._isLocked = false;
+        this._waiting = [];
+    }
+    Mutex.prototype.lock = function (cb) {
+        if (this._isLocked) {
+            this._waiting.push(cb);
+        } else {
+            this._isLocked = true;
+            cb.call(this);
+        }
+    };
+    Mutex.prototype.unlock = function () {
+        if (!this._isLocked) {
+            throw new Error('Mutex is not locked');
+        }
+        var waiter = this._waiting.shift();
+        if (waiter) {
+            waiter.call(this);
+        } else {
+           this._isLocked = false;
+        }
+    };
+    var mutex = new Mutex();
+
    var ConversationView = Widget.extend();
 
     ConversationView.prototype.init = function() {
@@ -53,6 +79,7 @@ humhub.module('mail.wall', function(module, require, $) {
 
     ConversationView.prototype.reply = function(evt) {
         var that = this;
+        mutex.lock(function () {
         client.submit(evt).then(function(response) {
             if(response.success) {
                 that.appendEntry(response.content);
@@ -60,8 +87,11 @@ humhub.module('mail.wall', function(module, require, $) {
             } else {
                 module.log.error(response, true);
             }
+            mutex.unlock();
         }).catch(function(e) {
             module.log.error(e, true);
+            mutex.unlock();
+        });
         });
     };
 
@@ -249,8 +279,11 @@ humhub.module('mail.wall', function(module, require, $) {
 
            events.forEach(function(event) {
                if(root && root.options.messageId == event.data.message_id) {
+                   mutex.lock(function () {
                    root.loadUpdate();
                    root.markSeen(event.data.message_id);
+                   mutex.unlock();
+                   });
                } else if(root) {
                    getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
                   // messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
