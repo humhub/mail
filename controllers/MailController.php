@@ -128,6 +128,8 @@ class MailController extends Controller
         // Reply Form
         $replyForm = new ReplyForm(['model' => $message]);
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
+            if (!date_create($replyForm->reply->created_at))
+                $replyForm->reply->created_at = time();
             return $this->asJson([
                 'success' => true,
                 'content' => ConversationEntry::widget(['entry' => $replyForm->reply])
