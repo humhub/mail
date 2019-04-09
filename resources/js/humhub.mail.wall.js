@@ -270,7 +270,7 @@ humhub.module('mail.wall', function(module, require, $) {
     };
 
     var getRootView = function() {
-        return Widget.instance('#mail-conversation-root');
+        return Widget.instance('mail-conversation-root');
     }
 
     var init = function() {
