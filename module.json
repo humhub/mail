@@ -10,7 +10,14 @@
     "homepage": "https://github.com/humhub/humhub-modules-mail",
     "authors": [
         {
-            "name": "Andreas Strobel, Lucas Bartholemy, Julian Harrer"
+            "name": "Andreas Strobel"
+        },
+
+        {
+            "name": "Lucas Bartholemy"
+        },
+
+        {   "name": "Julian Harrer"
         }
     ],
     "screenshots": [
