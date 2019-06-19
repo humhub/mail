@@ -1,11 +1,28 @@
 {
     "id": "mail",
     "name": "Mail",
-    "description": "Private messaging system to communicate with one or more users.",
+    "description": "A private messaging system for direct communication",
     "keywords": ["mail", "messaging", "communication"],
-    "version": "1.0.10",
+    "version": "1.0.11",
     "humhub": {
         "minVersion": "1.3.3"
     },
-    "screenshots": ["assets/screen1.jpg"]
+    "homepage": "https://github.com/humhub/humhub-modules-mail",
+    "authors": [
+        {
+            "name": "Andreas Strobel"
+        },
+
+        {
+            "name": "Lucas Bartholemy"
+        },
+
+        {   "name": "Julian Harrer"
+        }
+    ],
+    "screenshots": [
+        "resources/screen1.PNG",
+        "resources/screen2.PNG",
+        "resources/screen3.PNG"
+    ]
 }
