@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => '',
-    'Recipient' => '',
-    'Subject' => '',
-    'You cannot send a email to yourself!' => '',
-];
+return array (
+  'Message' => 'መልዕክት',
+  'Recipient' => '',
+  'Subject' => 'ርዕስ',
+  'You cannot send a email to yourself!' => '',
+);
