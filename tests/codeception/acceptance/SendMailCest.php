@@ -5,16 +5,6 @@ use AcceptanceTester;
 
 class SendMailCest
 {
-    
-    private function sendMessage(AcceptanceTester $I, $recipient, $title, $message)
-    {
-        $I->selectUserFromPicker('#createmessage-recipient', $recipient);
-        $I->wait(2);
-        $I->fillField('#createmessage-title', $title);
-        $I->fillField('#createmessage-message .humhub-ui-richtext', $message);
-        $I->click('Send','#globalModal');
-    }
-
     /**
      * @dependssss login
      * @throws \Exception
@@ -79,5 +69,14 @@ class SendMailCest
 
         $I->expectTo('see an empty conversation box');
         $I->waitForText('There are no messages yet.');
+    }
+
+    private function sendMessage(AcceptanceTester $I, $recipient, $title, $message)
+    {
+        $I->selectUserFromPicker('#createmessage-recipient', $recipient);
+        $I->wait(2);
+        $I->fillField('#createmessage-title', $title);
+        $I->fillField('#createmessage-message .humhub-ui-richtext', $message);
+        $I->click('Send','#globalModal');
     }
 }
