@@ -1,9 +1,8 @@
 <?php
 
-use humhub\modules\cfiles\Module;
+use humhub\libs\Html;
 use humhub\widgets\Button;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
 
 /* @var $model \humhub\modules\mail\models\Config */
 ?>
@@ -38,7 +37,7 @@ use yii\helpers\Html;
     </div>
 </div>
 
-<script>
+<?= Html::script(<<<JS
     function checkNewUserFields()
     {
         var disabled = !$('#newUserCheckbox').is(':checked');
@@ -54,4 +53,5 @@ use yii\helpers\Html;
     $('#newUserCheckbox').on('change', function() {
         checkNewUserFields();
     })
-</script>
+JS
+); ?>

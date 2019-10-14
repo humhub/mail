@@ -1,5 +1,6 @@
 <?php
 
+use humhub\libs\Html;
 use humhub\modules\user\widgets\UserPickerField;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -55,7 +56,4 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 </div>
 
 
-<script type="text/javascript">
-    // set focus to input for space name
-    $('#recipient').focus();
-</script>
+<?= Html::script(' $(\'#recipient\').focus();') ?>

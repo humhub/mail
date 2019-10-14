@@ -1,5 +1,6 @@
 <?php
 
+use humhub\libs\Html;
 use humhub\modules\mail\permissions\StartConversation;
 use yii\bootstrap\ActiveForm;
 use humhub\widgets\ModalButton;
@@ -12,6 +13,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
 /* @var $this \humhub\modules\ui\view\components\View */
 /* @var $replyForm \humhub\modules\mail\models\forms\ReplyForm */
+/* @var $messageCount integer */
 
 
 ?>
@@ -62,7 +64,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
         </div>
     <?php endif; ?>
 
-    <script>
+    <?= Html::beginTag('script')?>
         humhub.modules.mail.setMailMessageCount(<?= $messageCount ?>);
-    </script>
+    <?= Html::endTag('script')?>
 </div>

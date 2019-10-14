@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.12
+-----------------------
+- Enh: 1.4 nonce compatibility
+
+
 1.0.11 - June 15, 2019
 -----------------------
 - Enh: Updated translations
