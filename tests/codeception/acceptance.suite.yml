@@ -19,4 +19,5 @@ modules:
       url: 'http://localhost:8080/'
       browser: chrome
       window_size: maximize
+      restart: true
       port: 4444
