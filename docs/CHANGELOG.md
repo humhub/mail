@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.12
+1.0.12 - October 16, 2019
 -----------------------
 - Enh: 1.4 nonce compatibility
 
