@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Messages' => '',
+  'Messages' => 'Pesan',
   'New message' => '',
   'Show all messages' => '',
 );

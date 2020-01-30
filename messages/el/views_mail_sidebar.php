@@ -2,6 +2,6 @@
 return array (
   'Groups' => 'Ομάδες',
   'Members' => 'Μέλη',
-  'Spaces' => '',
+  'Spaces' => 'Χώροι',
   'User Posts' => '',
 );
