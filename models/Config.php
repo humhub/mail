@@ -112,12 +112,12 @@ class Config extends \yii\base\Model
             ? $this->newUserConversationRestriction
             : $this->userConversationRestriction;
 
-        return $maxConversations === null || $this->getConversationCount($originator) < $maxConversations;
+        return empty($maxConversations) || $this->getConversationCount($originator) < $maxConversations;
     }
 
     public function isNewUser(User $originator)
     {
-        if(!$this->newUserRestrictionEnabled) {
+        if(empty($this->newUserRestrictionEnabled)) {
             return false;
         }
 

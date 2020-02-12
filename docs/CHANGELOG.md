@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.13 - February 12, 2020
+-----------------------
+- Fix: Max. conversation check not disabled
+- Enh: Updated translations
+
+
 1.0.12 - October 16, 2019
 -----------------------
 - Enh: 1.4 nonce compatibility
