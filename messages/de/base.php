@@ -1,12 +1,12 @@
 <?php
 return array (
-  '<strong>Mail</strong> module configuration' => '<strong>Mail</strong> modul Konfiguration',
-  'Allow others to send you private messages' => 'Erlaube anderen Nutzern, Dir private Nachrichten zu senden',
+  '<strong>Mail</strong> module configuration' => '<strong>Mail</strong>modul-Konfiguration',
+  'Allow others to send you private messages' => 'Erlaube anderen Nutzern, dir private Nachrichten zu senden',
   'Allow users to start new conversations' => 'Erlaube Nutzern, neue Konversationen zu beginnen',
   'Conversation' => 'Unterhaltung',
   'Created At' => 'Erstellt am',
   'Created By' => 'Erstellt durch',
-  'Edit message...' => 'Nachricht bearbeiten...',
+  'Edit message...' => 'Nachricht bearbeiten ...',
   'Is Originator' => 'Ist Ersteller',
   'Last Viewed' => 'Zuletzt angesehen',
   'Leave fields blank in order to disable a restriction.' => 'Lassen Sie die Felder leer, um eine Einschränkung zu deaktivieren.',
@@ -28,7 +28,7 @@ return array (
   'Updated At' => 'Aktualisiert am',
   'Updated By' => 'Aktualisiert durch',
   'User' => 'Benutzer',
-  'Write a message...' => 'Schreibe eine Nachricht...',
+  'Write a message...' => 'Schreibe eine Nachricht ...',
   'You are not allowed to start a conversation with this user.' => 'Du darfst mit diesem Benutzer keine Unterhaltung beginnen.',
   'You\'ve exceeded your daily amount of new conversations.' => 'Du hast deine täglich max. Anzahl an neuen Gesprächen überschritten.',
 );
