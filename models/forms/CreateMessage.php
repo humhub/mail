@@ -97,12 +97,12 @@ class CreateMessage extends Model
                 return false;
             }
 
-            if (!$this->saveMessageEntry()) {
+            if (!$this->saveRecipients()) {
                 $transaction->rollBack();
                 return false;
             }
 
-            if (!$this->saveRecipients()) {
+            if (!$this->saveMessageEntry()) {
                 $transaction->rollBack();
                 return false;
             }
