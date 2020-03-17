@@ -2,11 +2,10 @@ Changelog
 =========
 
 
-1.0.14 - Unreleased
+1.0.14 - March 17, 2020
 -----------------------
 - Chg: Internal change in message creation order
 - Enh: Updated translations
-
 
 
 1.0.13 - February 12, 2020
