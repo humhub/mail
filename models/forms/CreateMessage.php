@@ -107,6 +107,11 @@ class CreateMessage extends Model
                 return false;
             }
 
+            if (!$this->informRecipients()) {
+                $transaction->rollBack();
+                return false;
+            }
+
             if(!$this->saveOriginatorUserMessage()) {
                 $transaction->rollBack();
                 return false;
@@ -128,16 +133,18 @@ class CreateMessage extends Model
 
     private function saveRecipients()
     {
-        $recepients = [];
         // Attach also Recipients
         foreach ($this->getRecipients() as $recipient) {
-            if ($this->messageInstance->addRecepient($recipient)) {
-                $recepients[] = $recipient;
-            }
+            $this->messageInstance->addRecepient($recipient);
         }
 
+        return true;
+    }
+
+    private function informRecipients() {
+
         // Inform recipients (We need to add all before)
-        foreach ($recepients as $recipient) {
+        foreach ($this->getRecipients() as $recipient) {
             try {
                 $this->messageInstance->notify($recipient);
             } catch (\Exception $e) {

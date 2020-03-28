@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.15 - March 28, 2020
+-----------------------
+- Fix #173: New message creation notification fails 
+
 
 1.0.14 - March 17, 2020
 -----------------------
