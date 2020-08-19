@@ -7,6 +7,8 @@ use humhub\modules\user\models\User;
 use humhub\components\ActiveRecord;
 
 /**
+ * This class represents the relation between users and conversations.
+ *
  * This is the model class for table "user_message".
  *
  * The followings are the available columns in table 'user_message':
@@ -86,12 +88,12 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
-        return static::getByUser($userId)
+        return static::findByUser($userId)
             ->andWhere("message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL")
             ->andWhere(["<>", 'message.updated_by', $userId])->count();
     }
 
-    public static function getByUser($userId = null, $orderBy = 'message.updated_at DESC')
+    public static function findByUser($userId = null, $orderBy = 'message.updated_at DESC')
     {
         if ($userId === null) {
             $userId = Yii::$app->user->id;

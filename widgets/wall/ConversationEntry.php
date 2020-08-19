@@ -19,7 +19,7 @@ class ConversationEntry extends JsWidget
     /**
      * @inheritdoc
      */
-    public $jsWidget = 'mail.wall.ConversationEntry';
+    public $jsWidget = 'mail.ConversationEntry';
 
     /**
      * @var MessageEntry

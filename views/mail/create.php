@@ -1,7 +1,9 @@
 <?php
 
 use humhub\libs\Html;
+use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\user\widgets\UserPickerField;
+use humhub\widgets\ModalDialog;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use humhub\widgets\ModalButton;
@@ -11,16 +13,15 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 /* @var $model \humhub\modules\mail\models\forms\CreateMessage */
 ?>
 
-
-
-<div class="modal-dialog">
+<?php ModalDialog::begin(['closable' => false]) ?>
     <div class="modal-content">
         <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title"
-                id="myModalLabel"><?= Yii::t('MailModule.views_mail_create', 'New message'); ?></h4>
+            <h4 id="myModalLabel" class="modal-title">
+                <?= Yii::t('MailModule.views_mail_create', '<strong>New</strong> message') ?>
+            </h4>
         </div>
 
         <div class="modal-body">
@@ -29,11 +30,10 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
                 [
                     'url' => Url::toRoute(['/mail/mail/search-user']),
                     'placeholder' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
-                    'focus' => true
                 ]
-            );?>
+            ) ?>
 
-            <?= $form->field($model, 'title'); ?>
+            <?= $form->field($model, 'title') ?>
 
             <?= $form->field($model, 'message')->widget(
                 ProsemirrorRichTextEditor::class, [
@@ -41,6 +41,8 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
                 'placeholder' => Yii::t('MailModule.base', 'Write a message...'),
                 'pluginOptions' => ['maxHeight' => '300px'],
             ])->label(false) ?>
+
+            <?= $form->field($model, 'tags')->widget(ConversationTagPicker::class, ['addOptions' => true])?>
 
         </div>
         <div class="modal-footer">
@@ -53,7 +55,7 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
         <?php ActiveForm::end(); ?>
     </div>
 
-</div>
+<?php ModalDialog::end() ?>
 
 
 <?= Html::script(' $(\'#recipient\').focus();') ?>

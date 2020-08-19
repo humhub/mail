@@ -11,7 +11,7 @@ use humhub\modules\mail\widgets\wall\ConversationView;
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <?= $this->render('_conversation_chooser', [
+            <?= $this->render('_conversation_sidebar', [
                 'userMessages' => $userMessages,
                 'pagination' => $pagination,
                 'activeMessageId' => $messageId

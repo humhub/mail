@@ -4,7 +4,7 @@
 
 #create-message-button {
     position: absolute;
-    top: 10px;
+    top: 0;
     right: 10px;
     padding: 5px 10px;
 }
@@ -19,11 +19,12 @@
 }
 
 .mail-conversation-entry {
-    margin-top: 0;
+    margin-top:5px;
 }
 
-.mail-conversation-entry img {
+.mail-conversation-entry .author-image img {
     max-width:100%;
+    margin-top:18px;
 }
 
 .placeholder {
@@ -54,5 +55,104 @@
 }
 
 #mail-conversation-root hr {
-    border-top: 1px dashed #eee;
+    border-top: 1px solid #eee;
+}
+
+#mail-filter-root {
+    margin-top:15px;
+}
+
+#mail-filter-root a {
+    padding-left:0;
+}
+
+#conversation-tags-root {
+    border-bottom: 1px solid #eee;
+}
+
+#conversation-tags-root .my-tags-label {
+    padding-right:10px;
+}
+
+#mail-conversation-overview .media {
+    margin-top:0;
+}
+
+.messagePreviewEntry {
+    cursor:pointer;
+}
+
+#conversation-head-info {
+    font-size: 13px;
+    font-weight: normal;
+    margin-top:10px;
+}
+
+.conversation-entry-content {
+    display: table;
+    margin-left:40px;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+    padding: 10px;
+    max-width:70%;
+}
+
+.conversation-entry-content.own {
+    margin-left:0;
+}
+
+.mail-message-form {
+    padding-top:10px;
+}
+
+.mail-conversation-entry {
+    position:relative;
+}
+
+#conversation-filter-link {
+    display:block;
+    padding-bottom:0;
+}
+
+#inbox {
+    max-height:500px;
+    overflow: auto;
+}
+
+#dropdown-messages.dropdown-menu li a {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+}
+
+#conversationSettingsButton {
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+.conversation-head-button {
+    padding-top: 6px;
+    padding-bottom: 2px;
+}
+
+.conversation-edit-button {
+    border-bottom-right-radius:0;
+    border-top-right-radius:0;
+}
+
+.conversation-entry-content.own  {
+    float:right
+}
+
+.conversation-entry-content.own.hover {
+    border-bottom-left-radius:0;
+    border-top-left-radius:0;
+}
+
+.conversation-menu {
+    display:none;
+}
+
+.conversation-time {
+    float:right;
+    margin-right:10px;
 }

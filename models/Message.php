@@ -17,7 +17,7 @@ use humhub\modules\user\models\User;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "message".
+ * This class represents a single conversation.
  *
  * The followings are the available columns in table 'message':
  * @property integer $id
@@ -78,6 +78,10 @@ class Message extends ActiveRecord
                         ->viaTable('user_message', ['message_id' => 'id']);
     }
 
+    /**
+     * @param null $userId
+     * @return UserMessage|null
+     */
     public function getUserMessage($userId = null)
     {
         if(!$userId) {
@@ -126,6 +130,21 @@ class Message extends ActiveRecord
     public function getLastEntry()
     {
         return MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1)->one();
+    }
+
+    public function getLastActiveParticipant($includeMe = false)
+    {
+        $query = MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1);
+
+        if(!$includeMe) {
+            $query->andWhere(['<>', 'user_id', Yii::$app->user->id]);
+        }
+
+        $entry = $query->one();
+
+        $user = $entry ? $entry->user : $this->getUsers()->andWhere(['<>', 'user.id', Yii::$app->user->id])->one();
+
+        return $user ?: Yii::$app->user->getIdentity();
     }
 
     /**
@@ -249,7 +268,7 @@ class Message extends ActiveRecord
 
     public function getPreview()
     {
-        return RichText::preview($this->getLastEntry()->content, 300);
+        return RichText::preview($this->getLastEntry()->content, 80);
     }
 
     /**

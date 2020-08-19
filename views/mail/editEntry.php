@@ -26,12 +26,12 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <?= Button::save(Yii::t('base', 'Save'))->submit()->action('mail.wall.submitEditEntry')->options(['data-entry-id' => $entry->id]) ?>
+                    <?= Button::save(Yii::t('base', 'Save'))->submit()->action('mail.conversation.submitEditEntry')->options(['data-entry-id' => $entry->id]) ?>
                     <?= ModalButton::cancel() ?>
                 </div>
                 <div class="col-md-3">
                     <?= Button::danger(Yii::t('base', 'Delete'))->right()->options(['data-entry-id' => $entry->id])
-                        ->action('mail.wall.deleteEntry')
+                        ->action('mail.conversation.deleteEntry')
                         ->confirm(Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deletion'),
                             Yii::t('MailModule.views_mail_show', 'Do you really want to delete this message?'),
                             Yii::t('MailModule.views_mail_show', 'Delete'),

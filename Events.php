@@ -15,7 +15,7 @@ use yii\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
-use humhub\modules\mail\widgets\Notifications;
+use humhub\modules\mail\widgets\NotificationInbox;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\models\Config;
 
@@ -81,7 +81,7 @@ class Events
             return;
         }
 
-        $event->sender->addWidget(Notifications::className(), [], ['sortOrder' => 90]);
+        $event->sender->addWidget(NotificationInbox::className(), [], ['sortOrder' => 90]);
     }
 
     public static function onProfileHeaderControlsInit($event)

@@ -27,7 +27,17 @@ class NewMessageButton extends Widget
     /**
      * @var string
      */
-    public $icon = 'fa-plus';
+    public $icon = null;
+
+    /**
+     * @var string
+     */
+    public $label;
+
+    /**
+     * @var boolean
+     */
+    public $right = false;
 
     /**
      * Creates the Wall Widget
@@ -38,6 +48,10 @@ class NewMessageButton extends Widget
 
         if($this->icon) {
             $button->icon($this->icon);
+        }
+
+        if($this->right) {
+            $button->right();
         }
 
         switch ($this->size) {
@@ -60,9 +74,13 @@ class NewMessageButton extends Widget
 
     public function getLabel()
     {
+        if($this->label) {
+            return $this->label;
+        }
+
         return ($this->guid)
             ? Yii::t('MailModule.widgets_views_newMessageButton', 'Send message')
-            : Yii::t('MailModule.widgets_views_newMessageButton', 'New message');
+            : Yii::t('MailModule.base', '+ Message');
     }
 }
 

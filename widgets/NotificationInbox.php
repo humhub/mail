@@ -6,10 +6,9 @@ use humhub\components\Widget;
 use humhub\modules\mail\models\UserMessage;
 
 /**
- * @package humhub.modules.mail
- * @since 0.5
+ * Mail notification dropdown inbox.
  */
-class Notifications extends Widget
+class NotificationInbox extends Widget
 {
 
     /**
@@ -17,11 +16,8 @@ class Notifications extends Widget
      */
     public function run()
     {
-        return $this->render('notifications', [
-                    'newMailMessageCount' => UserMessage::getNewMessageCount()
+        return $this->render('notificationInbox', [
+            'newMailMessageCount' => UserMessage::getNewMessageCount()
         ]);
     }
-
 }
-
-?>

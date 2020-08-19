@@ -2,6 +2,8 @@
 
 use humhub\modules\mail\assets\MailAsset;
 use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\mail\widgets\NewMessageButton;
+use humhub\widgets\Link;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -17,12 +19,14 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
     <span id="badge-messages" style="display:none;" class="label label-danger label-notification"></span>
     <ul id="dropdown-messages" class="dropdown-menu">
         <li class="dropdown-header">
-            <div class="arrow"></div><?= Yii::t('MailModule.widgets_views_mailNotification', 'Messages'); ?> <?= ($canStartConversation) ? Html::a(Yii::t('MailModule.widgets_views_mailNotification', 'New message'), Url::to(['/mail/mail/create', 'ajax' => 1]), ['class' => 'btn btn-info btn-xs', 'id' => 'create-message-button', 'data-target' => '#globalModal']) : '' ?>
+            <div class="arrow"></div>
+            <?= Yii::t('MailModule.base', 'Conversations') ?>
+            <?= ($canStartConversation)
+                ? NewMessageButton::widget([ 'id' => 'create-message-button', 'right' => true])
+                : '' ?>
         </li>
         <ul class="media-list">
-            <li id="loader_messages">
-
-            </li>
+            <li id="loader_messages"></li>
         </ul>
         <li>
             <div class="dropdown-footer">

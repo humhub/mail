@@ -17,7 +17,7 @@ class ConversationView extends JsWidget
     /**
      * @inheritdoc
      */
-    public $jsWidget = 'mail.wall.ConversationView';
+    public $jsWidget = 'mail.ConversationView';
 
     /**
      * @inheritdoc

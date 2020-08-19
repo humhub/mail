@@ -8,14 +8,17 @@
 
 namespace tests\codeception\fixtures;
 
+use humhub\modules\mail\models\Message;
 use yii\test\ActiveFixture;
 
 class MessageFixture extends ActiveFixture
 {
 
-    public $modelClass = 'humhub\modules\mail\models\Message';
+    public $modelClass = Message::class;
     public $depends = [
-        'tests\codeception\fixtures\MessageEntryFixture',
-        'tests\codeception\fixtures\UserMessageFixture',
+        MessageEntryFixture::class,
+        UserMessageFixture::class,
+        ConversationTagFixture::class,
+        UserMessageTagFixture::class,
     ];
 }

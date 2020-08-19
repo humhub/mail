@@ -15,7 +15,7 @@ use humhub\models\Setting;
 use humhub\modules\mail\models\Message;
 
 /**
- * This is the model class for table "message_entry".
+ * This class represents a message within a conversation.
  *
  * The followings are the available columns in table 'message_entry':
  * @property integer $id

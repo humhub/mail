@@ -5,6 +5,7 @@ namespace humhub\modules\mail\models\forms;
 use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\models\MessageTag;
 use Yii;
 use yii\base\Model;
 use humhub\modules\user\models\User;
@@ -21,6 +22,7 @@ class CreateMessage extends Model
     public $message;
     public $title;
 
+
     /**
      * @var Message new message
      */
@@ -34,12 +36,18 @@ class CreateMessage extends Model
     public $recipients = [];
 
     /**
+     * @var array
+     */
+    public $tags = [];
+
+    /**
      * Declares the validation rules.
      */
     public function rules()
     {
         return [
             [['message', 'recipient', 'title'], 'required'],
+            [['tags'], 'safe'],
             ['recipient', 'checkRecipient']
         ];
     }
@@ -53,6 +61,7 @@ class CreateMessage extends Model
     {
         return [
             'recipient' => Yii::t('MailModule.forms_CreateMessageForm', 'Recipient'),
+            'tags' => Yii::t('MailModule.forms_CreateMessageForm', 'Tags'),
             'title' => Yii::t('MailModule.forms_CreateMessageForm', 'Subject'),
             'message' => Yii::t('MailModule.forms_CreateMessageForm', 'Message'),
         ];
@@ -71,9 +80,9 @@ class CreateMessage extends Model
             foreach ($this->recipient as $userGuid) {
                 // Try load user
                 $user = User::findOne(['guid' => $userGuid]);
-                if ($user != null) {
+                if ($user) {
                     if ($user->isCurrentUser()) {
-                        $this->addError($attribute, Yii::t('MailModule.forms_CreateMessageForm', "You cannot send a email to yourself!"));
+                        $this->addError($attribute, Yii::t('MailModule.base', "You cannot send a message to yourself!"));
                     } else {
                         $this->recipients[] = $user;
                     }
@@ -117,6 +126,8 @@ class CreateMessage extends Model
                 return false;
             }
 
+            $this->saveTags();
+
             (new Config())->incrementConversationCount(Yii::$app->user->getIdentity());
 
             $transaction->commit();
@@ -129,6 +140,11 @@ class CreateMessage extends Model
         }
 
         return true;
+    }
+
+    private function saveTags()
+    {
+        return MessageTag::attach(Yii::$app->user->id, $this->messageInstance, $this->tags);
     }
 
     private function saveRecipients()

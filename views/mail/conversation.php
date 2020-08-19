@@ -1,15 +1,17 @@
 <?php
 
 use humhub\libs\Html;
+use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\mail\widgets\ConversationTagBadge;
+use humhub\modules\mail\widgets\ConversationTags;
+use humhub\widgets\Label;
 use yii\bootstrap\ActiveForm;
 use humhub\widgets\ModalButton;
 use yii\helpers\Url;
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 use humhub\modules\mail\widgets\wall\ConversationEntry;
 use humhub\widgets\Button;
-
-$canStartConversation = Yii::$app->user->can(StartConversation::class);
 
 /* @var $this \humhub\modules\ui\view\components\View */
 /* @var $replyForm \humhub\modules\mail\models\forms\ReplyForm */
@@ -31,6 +33,8 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
             <strong> <?= $this->render('_conversation_header', ['message' => $message]) ?></strong>
         </div>
 
+        <?= ConversationTags::widget(['message' => $message])?>
+
         <div class="panel-body">
 
             <div class="media-list conversation-entry-list">
@@ -48,23 +52,16 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
                         'menuClass' => 'plainMenu',
                         'placeholder' => Yii::t('MailModule.base', 'Write a message...'),
                         'pluginOptions' => ['maxHeight' => '300px'],
-                    ])->label(false); ?>
+                    ])->label(false) ?>
 
                     <?= Button::primary(Yii::t('MailModule.views_mail_show', 'Send'))->submit()->action('reply', $replyForm->getUrl()) ?>
-
-                    <div class="pull-right">
-
-                        <!-- Button to trigger modal to add user to conversation -->
-                        <?= ModalButton::info(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('fa-plus')
-                            ->load(['/mail/mail/add-user', 'id' => $message->id])->visible($canStartConversation) ?>
-                    </div>
 
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
     <?php endif; ?>
 
-    <?= Html::beginTag('script')?>
-        humhub.modules.mail.setMailMessageCount(<?= $messageCount ?>);
-    <?= Html::endTag('script')?>
+    <script <?= Html::nonce() ?>>
+        humhub.modules.mail.notification.setMailMessageCount(<?= $messageCount ?>);
+    </script>
 </div>
