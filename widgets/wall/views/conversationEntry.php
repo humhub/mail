@@ -44,12 +44,13 @@ $options['id'] = 'message_'.$entry->id;
     <?php if($isOwnMessage) : ?>
     <div class="conversation-menu">
 
-        <?= ModalButton::defaultType()->cssClass('conversation-edit-button')
-            ->load( ['/mail/mail/edit-entry', 'id' => $entry->id])
-            ->icon('pencil')->sm()->right() ?>
+        <div class="conversation-menu-item" style="display: inline-block">
+        <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))->cssClass('conversation-edit-button')
+            ->load( ['/mail/mail/edit-entry', 'id' => $entry->id])->link()->cssClass('time') ?>
+        </div>
 
-        <div class="conversation-time" style="display: inline-block">
-            <?=  TimeAgo::widget(['timestamp' => $entry->created_at])  ?>
+        <div class="conversation-menu-item" style="display: inline-block">
+            <?=  TimeAgo::widget(['timestamp' => $entry->created_at])  ?> &middot;
         </div>
     </div>
     <?php endif ?>

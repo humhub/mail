@@ -152,7 +152,11 @@
     display:none;
 }
 
-.conversation-time {
+.conversation-menu-item {
     float:right;
-    margin-right:10px;
+    margin-right: 5px;
+}
+
+.conversation-menu-item a {
+    cursor: pointer;
 }
