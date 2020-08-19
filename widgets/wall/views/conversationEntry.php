@@ -12,6 +12,7 @@ use humhub\libs\Html;
 $isOwnMessage = $entry->user->is(Yii::$app->user->getIdentity());
 $authorLabel = $isOwnMessage ? Yii::t('MailModule.base', 'You') : Html::encode($entry->user->displayName);
 $options['id'] = 'message_'.$entry->id;
+
 ?>
 
 <?= Html::beginTag('div', $options) ?>
@@ -41,19 +42,21 @@ $options['id'] = 'message_'.$entry->id;
         </span>
     </div>
 
-    <?php if($isOwnMessage) : ?>
+
     <div class="conversation-menu">
 
-        <div class="conversation-menu-item" style="display: inline-block">
-        <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))->cssClass('conversation-edit-button')
-            ->load( ['/mail/mail/edit-entry', 'id' => $entry->id])->link()->cssClass('time') ?>
-        </div>
+        <?php if($isOwnMessage) : ?>
+            <div class="conversation-menu-item" style="display: inline-block">
+                &middot; <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))->cssClass('conversation-edit-button')
+                    ->load( ['/mail/mail/edit-entry', 'id' => $entry->id])->link()->cssClass('time') ?>
+            </div>
+        <?php endif ?>
 
         <div class="conversation-menu-item" style="display: inline-block">
-            <?=  TimeAgo::widget(['timestamp' => $entry->created_at])  ?> &middot;
+            <?=  TimeAgo::widget(['timestamp' => $entry->created_at])  ?>
         </div>
     </div>
-    <?php endif ?>
+
 
 </div>
 

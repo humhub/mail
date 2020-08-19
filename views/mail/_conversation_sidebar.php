@@ -7,10 +7,6 @@ use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\InboxFilter;
 use yii\widgets\LinkPager;
 
-/* @var $userMessages \humhub\modules\mail\models\UserMessage[] */
-/* @var $pagination \yii\data\Pagination */
-/* @var $activeMessageId int */
-
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
 $filterModel = new InboxFilterForm();
@@ -32,8 +28,4 @@ $filterModel = new InboxFilterForm();
 
     <?= ConversationInbox::widget(['filter' => $filterModel]) ?>
 
-</div>
-
-<div class="pagination-container">
-    <?= LinkPager::widget(['pagination' => $pagination]); ?>
 </div>

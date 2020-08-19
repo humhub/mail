@@ -49,24 +49,8 @@ class MailController extends Controller
      */
     public function actionIndex($id = null)
     {
-        $query = UserMessage::findByUser();
-
-        $countQuery = clone $query;
-        $messageCount = $countQuery->count();
-        $pagination = new Pagination(['totalCount' => $messageCount, 'pageSize' => $this->pageSize]);
-
-        $query->offset($pagination->offset)->limit($pagination->limit);
-        $userMessages = $query->all();
-
-        // If no messageId is given, use first if available
-        if ((!$id || !$this->getMessage($id)) && $messageCount) {
-            $id = $userMessages[0]->message->id;
-        }
-
         return $this->render('index', [
             'messageId' => $id,
-            'userMessages' => $userMessages,
-            'pagination' => $pagination
         ]);
     }
 
@@ -122,7 +106,7 @@ class MailController extends Controller
 
     public function actionReply($id)
     {
-        $message = $this->getMessage($id);
+        $message = $this->getMessage($id, true);
 
         $this->checkMessagePermissions($message);
 
@@ -145,6 +129,7 @@ class MailController extends Controller
 
     /**
      * @param $id
+     * @return
      * @throws HttpException
      */
     public function actionUserList($id)
@@ -333,7 +318,11 @@ class MailController extends Controller
      *
      * Leave is only possible when at least two people are in the
      * conversation.
+     * @param $id
+     * @return \yii\web\Response
      * @throws HttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionLeave($id)
     {

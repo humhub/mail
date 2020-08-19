@@ -30,8 +30,14 @@ class ConversationEntry extends JsWidget
     {
         return $this->render('conversationEntry', [
             'entry' => $this->entry,
+            'isOwnMessage' => $this->isOwnMessage(),
             'options' => $this->getOptions()
         ]);
+    }
+
+    private function isOwnMessage()
+    {
+        return $this->entry->user->is(Yii::$app->user->getIdentity());
     }
 
     public function getData()
@@ -45,7 +51,7 @@ class ConversationEntry extends JsWidget
     public function getAttributes()
     {
         return [
-            'class' => 'media mail-conversation-entry'
+            'class' => 'media mail-conversation-entry'. ($this->isOwnMessage() ? ' own' : '')
         ];
     }
 }
