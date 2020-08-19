@@ -19,10 +19,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-entry-content').addClass('hover');
-            $(this).find('.conversation-menu').show();
+            $(this).find('.conversation-menu').fadeIn('fast');
         }).on('mouseleave', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-entry-content').removeClass('hover');
             $(this).find('.conversation-menu').hide();
         });
     };
@@ -63,6 +61,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         client.submit(evt).then(function (response) {
             if (response.success) {
                 that.appendEntry(response.content);
+                that.$.find(".time").timeago(); // somehow this is not triggered after reply
                 $('#replyform-message').trigger('clear');
             } else {
                 module.log.error(response, true);

@@ -70,6 +70,7 @@ class ReplyForm extends Model
         ]);
 
         if($this->reply->save()) {
+            $this->reply->refresh(); // Update created_by date, otherwise db expression is set...
             $this->reply->notify();
             $this->reply->fileManager->attach(Yii::$app->request->post('fileUploaderHiddenGuidField'));
             return true;
