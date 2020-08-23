@@ -35,7 +35,7 @@ class Config extends \yii\base\Model
     {
         parent::init();
         $module = $this->getModule();
-        $this->showInTopNav = !$module->showInTopNav();
+        $this->showInTopNav = !$module->hideInTopNav();
         $this->newUserRestrictionEnabled = (int) $module->settings->get('newUserRestrictionEnabled', $this->newUserRestrictionEnabled);
         $this->newUserSinceDays = (int) $module->settings->get('newUserSinceDays', $this->newUserSinceDays);
         $this->newUserConversationRestriction = (int) $module->settings->get('newUserConversationRestriction', $this->newUserConversationRestriction);

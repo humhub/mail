@@ -1,5 +1,6 @@
 <?php
 
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\user\widgets\Image;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\widgets\richtext\RichText;
@@ -8,10 +9,11 @@ use humhub\libs\Html;
 
 /* @var $entry \humhub\modules\mail\models\MessageEntry */
 /* @var $options array */
+/* @var $contentClass string */
+/* @var $showUserInfo boolean */
+/* @var $isOwnMessage boolean */
 
 $isOwnMessage = $entry->user->is(Yii::$app->user->getIdentity());
-$authorLabel = $isOwnMessage ? Yii::t('MailModule.base', 'You') : Html::encode($entry->user->displayName);
-$options['id'] = 'message_'.$entry->id;
 
 ?>
 
@@ -26,29 +28,27 @@ $options['id'] = 'message_'.$entry->id;
     <?php endif; ?>
 
     <?php if(!$isOwnMessage) : ?>
-        <div class="media-body">
-            <strong class="media-heading" style="font-size: 10px"><?= $authorLabel  ?></strong>
-            <?php /*<small class="message-time" style="float:right;margin-top:2px;visibility: hidden"><?= TimeAgo::widget(['timestamp' => $entry->created_at]) ?></small>*/ ?>
+        <div class="media-body author-label">
+            <strong class="media-heading" style="font-size: 10px">
+                <?= Html::encode($entry->user->displayName)  ?>
+            </strong>
         </div>
     <?php endif; ?>
 
-
-
-    <?php // <?= TimeAgo::widget(['timestamp' => $entry->created_at]) ?>
-    <div class="conversation-entry-content<?= $isOwnMessage ? ' own' : ''?>"
+    <div class="<?= $contentClass ?>"
          style="<?= $isOwnMessage ? 'float:right' : ''?>">
         <span class="content">
             <?= RichText::output($entry->content) ?>
         </span>
     </div>
 
-
     <div class="conversation-menu">
 
         <?php if($isOwnMessage) : ?>
             <div class="conversation-menu-item" style="display: inline-block">
-                &middot; <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))->cssClass('conversation-edit-button')
-                    ->load( ['/mail/mail/edit-entry', 'id' => $entry->id])->link()->cssClass('time') ?>
+                &middot; <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))
+                    ->cssClass('conversation-edit-button time')
+                    ->load(Url::toEditMessageEntry($entry))->link() ?>
             </div>
         <?php endif ?>
 
@@ -56,7 +56,6 @@ $options['id'] = 'message_'.$entry->id;
             <?=  TimeAgo::widget(['timestamp' => $entry->created_at])  ?>
         </div>
     </div>
-
 
 </div>
 

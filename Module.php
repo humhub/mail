@@ -7,7 +7,7 @@ use humhub\modules\mail\notifications\MailNotificationDummy2;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\user\models\User;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 
 /**
  * MailModule provides messaging functions inside the application.
@@ -28,7 +28,7 @@ class Module extends \humhub\components\Module
      */
     public function getConfigUrl()
     {
-        return Url::to(['/mail/config']);
+        return Url::toConfig();
     }
 
     /**
@@ -62,7 +62,7 @@ class Module extends \humhub\components\Module
      *
      * @return boolean is showInTopNav enabled
      */
-    public function showInTopNav()
+    public function hideInTopNav()
     {
         return !$this->settings->get('showInTopNav', false);
     }

@@ -1,27 +1,22 @@
 <?php
 
 use humhub\libs\Html;
-use humhub\modules\mail\models\MessageTag;
-use humhub\modules\mail\permissions\StartConversation;
-use humhub\modules\mail\widgets\ConversationTagBadge;
+use humhub\modules\mail\models\forms\ReplyForm;
 use humhub\modules\mail\widgets\ConversationTags;
-use humhub\widgets\Label;
+use humhub\modules\ui\view\components\View;
 use yii\bootstrap\ActiveForm;
-use humhub\widgets\ModalButton;
-use yii\helpers\Url;
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 use humhub\modules\mail\widgets\wall\ConversationEntry;
 use humhub\widgets\Button;
 
-/* @var $this \humhub\modules\ui\view\components\View */
-/* @var $replyForm \humhub\modules\mail\models\forms\ReplyForm */
+/* @var $this View */
+/* @var $replyForm ReplyForm */
 /* @var $messageCount integer */
-
 
 ?>
 <div class="panel panel-default">
 
-    <?php if ($message == null) : ?>
+    <?php if ($message === null) : ?>
 
         <div class="panel-body">
             <?= Yii::t('MailModule.views_mail_show', 'There are no messages yet.'); ?>
@@ -38,8 +33,11 @@ use humhub\widgets\Button;
         <div class="panel-body">
 
             <div class="media-list conversation-entry-list">
-                <?php foreach ($message->entries as $entry) : ?>
-                    <?= ConversationEntry::widget(['entry' => $entry])?>
+                <?php $prevEntry = null; ?>
+                <?php foreach ($message->entries as $index => $entry) : ?>
+                    <?php $nextEntry = $message->entries[$index + 1] ?? null ?>
+                    <?= ConversationEntry::widget(['entry' => $entry, 'prevEntry' => $prevEntry, 'nextEntry' => $nextEntry])?>
+                    <?php $prevEntry = $entry ?>
                 <?php endforeach; ?>
             </div>
 

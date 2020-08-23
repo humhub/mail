@@ -4,11 +4,10 @@ use humhub\libs\Html;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\ModalDialog;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 use yii\widgets\ActiveForm;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
-
 
 /* @var $model \humhub\modules\mail\models\forms\CreateMessage */
 ?>
@@ -28,7 +27,7 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 
             <?= $form->field($model, 'recipient')->widget(UserPickerField::class,
                 [
-                    'url' => Url::toRoute(['/mail/mail/search-user']),
+                    'url' => Url::toSearchNewParticipants(),
                     'placeholder' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
                 ]
             ) ?>
@@ -47,7 +46,7 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
         </div>
         <div class="modal-footer">
 
-            <?= ModalButton::submitModal(Url::to(['/mail/mail/create']), Yii::t('MailModule.views_mail_create', 'Send'))?>
+            <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.views_mail_create', 'Send'))?>
             <?= ModalButton::cancel()?>
 
         </div>

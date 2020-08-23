@@ -1,16 +1,19 @@
 <?php
 
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 use yii\helpers\Html;
 use humhub\widgets\MarkdownView;
+
+/* @var $sender \humhub\modules\user\models\User */
+/* @var $message \humhub\modules\mail\models\Message */
 ?>
-<?php echo strip_tags(Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message')); ?>
+<?= strip_tags(Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message')) ?>
 
 
-<?php echo Html::encode($sender->displayName); ?> <?php echo strip_tags(Yii::t('MailModule.views_emails_NewMessageEntry', 'sent you a new message in')); ?>: <?php echo Html::encode($message->title); ?>
+<?= Html::encode($sender->displayName) ?> <?= strip_tags(Yii::t('MailModule.views_emails_NewMessageEntry', 'sent you a new message in')) ?>: <?= Html::encode($message->title) ?>
 
 
-<?php echo strip_tags(MarkdownView::widget(array('markdown' => $entry->content, 'returnPlain' => true))); ?>
+<?= strip_tags(MarkdownView::widget(['markdown' => $entry->content, 'returnPlain' => true])) ?>
 
 
-<?php echo strip_tags(Yii::t('MailModule.views_emails_NewMessage', 'Reply now')); ?>: <?php echo urldecode(Url::to(['/mail/mail/index', 'id' => $message->id], true)); ?>
+<?= strip_tags(Yii::t('MailModule.views_emails_NewMessage', 'Reply now')) ?>: <?= urldecode(Url::toMessenger($message, true)) ?>

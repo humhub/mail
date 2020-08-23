@@ -9,7 +9,7 @@ use yii\base\Model;
 use humhub\modules\user\models\User;
 use humhub\modules\mail\permissions\SendMail;
 use yii\helpers\Html;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 
 /**
  * @package humhub.modules.mail.forms
@@ -84,12 +84,12 @@ class InviteParticipantForm extends Model
 
     public function getPickerUrl()
     {
-        return Url::to(['/mail/mail/search-user', 'id' => $this->message->id]);
+        return Url::toSearchNewParticipants($this->message);
     }
 
     public function getUrl()
     {
-        return Url::to(['/mail/mail/add-user', 'id' => $this->message->id]);
+        return Url::toAddParticipant($this->message);
     }
 
     public function save()

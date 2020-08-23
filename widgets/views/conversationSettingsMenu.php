@@ -37,7 +37,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="conversationSettingsButton">
         <li>
             <?= ModalButton::none(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('user-plus')
-                ->load(['/mail/mail/add-user', 'id' => $message->id])->visible($canStartConversation)->link() ?>
+                ->load(Url::toAddParticipant($message))->visible($canStartConversation)->link() ?>
         </li>
         <li>
             <?= Link::none($leaveLinkText)

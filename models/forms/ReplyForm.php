@@ -6,7 +6,7 @@ use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use Yii;
 use yii\base\Model;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 
 /**
  * @package humhub.modules.mail.forms
@@ -54,7 +54,7 @@ class ReplyForm extends Model
 
     public function getUrl()
     {
-        return Url::to(['/mail/mail/reply', 'id' => $this->model->id]);
+        return Url::toReply($this->model);
     }
 
     public function save()

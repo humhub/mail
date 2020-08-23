@@ -11,7 +11,7 @@ namespace humhub\modules\mail;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\user\models\User;
 use Yii;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\NewMessageButton;
@@ -31,6 +31,7 @@ class Events
      * On User delete, also delete all comments
      *
      * @param type $event
+     * @return bool
      */
     public static function onUserDelete($event)
     {
@@ -57,17 +58,10 @@ class Events
             return;
         }
 
-        $showInTopNav = false;
-
-        // Workaround for module update problem
-        if (method_exists(Config::getModule(), 'showInTopNav')) {
-            $showInTopNav = Config::getModule()->showInTopNav();
-        }
-
-        if(!Config::getModule()->showInTopNav()){
+        if(!Config::getModule()->hideInTopNav()){
             $event->sender->addItem([
                 'label' => Yii::t('MailModule.base', 'Messages'),
-                'url' => Url::to(['/mail/mail/index']),
+                'url' => Url::toMessenger(),
                 'icon' => '<i class="fa fa-envelope"></i>',
                 'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
                 'sortOrder' => 300,

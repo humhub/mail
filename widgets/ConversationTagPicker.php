@@ -4,6 +4,7 @@
 namespace humhub\modules\mail\widgets;
 
 
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\ui\form\widgets\BasePicker;
@@ -15,7 +16,7 @@ class ConversationTagPicker extends BasePicker
     /**
      * @inheritDoc
      */
-    public $defaultRoute = '/mail/tag/search';
+    public $defaultRoute = Url::ROUTE_SEARCH_TAG;
 
     /**
      * @inheritDoc

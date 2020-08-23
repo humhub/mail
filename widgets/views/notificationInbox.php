@@ -1,15 +1,14 @@
 <?php
 
-use humhub\modules\mail\assets\MailAsset;
+use humhub\modules\mail\assets\MailMessengerAsset;
+use humhub\modules\mail\assets\MailNotificationAsset;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\widgets\NewMessageButton;
-use humhub\widgets\Link;
-use yii\helpers\Html;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 
 /* @var $this \humhub\modules\ui\view\components\View */
 
-MailAsset::register($this);
+MailNotificationAsset::register($this);
 
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
@@ -30,8 +29,8 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
         </ul>
         <li>
             <div class="dropdown-footer">
-                <a class="btn btn-default col-md-12" href="<?= Url::to(['/mail/mail/index']); ?>">
-                    <?= Yii::t('MailModule.widgets_views_mailNotification', 'Show all messages'); ?>
+                <a class="btn btn-default col-md-12" href="<?= Url::toMessenger() ?>">
+                    <?= Yii::t('MailModule.widgets_views_mailNotification', 'Show all messages') ?>
                 </a>
             </div>
         </li>

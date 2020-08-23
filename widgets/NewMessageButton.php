@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\widgets;
 
+use humhub\modules\mail\helpers\Url;
 use humhub\widgets\ModalButton;
 use Yii;
 use humhub\components\Widget;
@@ -44,7 +45,7 @@ class NewMessageButton extends Widget
      */
     public function run()
     {
-        $button = ModalButton::info($this->getLabel())->load(['/mail/mail/create', 'ajax' => 1, 'userGuid' => $this->guid]);
+        $button = ModalButton::info($this->getLabel())->load(Url::toCreateConversation($this->guid));
 
         if($this->icon) {
             $button->icon($this->icon);

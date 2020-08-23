@@ -6,9 +6,8 @@ use humhub\modules\mail\widgets\wall\ConversationEntry;
 use humhub\modules\user\widgets\UserListBox;
 use Yii;
 use humhub\modules\mail\permissions\StartConversation;
-use yii\data\Pagination;
 use yii\helpers\Html;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use humhub\components\Controller;
@@ -331,12 +330,13 @@ class MailController extends Controller
 
         return $this->asJson([
             'success' => true,
-            'redirect' => Url::to(['/mail/mail/index'])
+            'redirect' => Url::toMessenger()
         ]);
     }
 
     /**
      * Edits Entry Id
+     * @throws HttpException
      */
     public function actionEditEntry($id)
     {

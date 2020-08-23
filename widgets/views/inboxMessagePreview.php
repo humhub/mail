@@ -9,7 +9,7 @@
 use yii\helpers\Html;
 use humhub\widgets\TimeAgo;
 use humhub\libs\Helpers;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\user\widgets\Image;
 use humhub\widgets\Label;
 
@@ -26,7 +26,7 @@ $users = $message->users;
 
 <?php if ($lastEntry) : ?>
     <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry">
-        <div class="mail-link" data-action-click="mail.conversation.loadMessage" data-action-url="<?= Url::to(['/mail/mail', 'id' => $message->id])?>" data-message-id="<?= $message->id ?>">
+        <div class="mail-link" data-action-click="mail.conversation.loadMessage" data-action-url="<?= Url::toMessenger($message)?>" data-message-id="<?= $message->id ?>">
             <div class="media">
                 <div class="media-left pull-left">
                     <?= Image::widget(['user' => $participant, 'width' => '32', 'link' => false])?>

@@ -8,9 +8,8 @@
 
 namespace humhub\modules\mail\widgets\wall;
 
-
 use humhub\widgets\JsWidget;
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 
 class ConversationView extends JsWidget
 {
@@ -38,8 +37,8 @@ class ConversationView extends JsWidget
     {
         return [
             'message-id' => $this->messageId,
-            'load-message-url' => Url::to(['/mail/mail/show']),
-            'load-update-url' => Url::to(['/mail/mail/update'])
+            'load-message-url' => Url::toLoadMessage(),
+            'load-update-url' => Url::toUpdateMessage()
         ];
     }
 }

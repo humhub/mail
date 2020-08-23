@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Url;
+use humhub\modules\mail\helpers\Url;
 use yii\helpers\Html;
 use humhub\widgets\MarkdownView;
 ?>
@@ -30,7 +30,7 @@ use humhub\widgets\MarkdownView;
                                                     <td width="auto"  align="center" valign="middle" height="28" style=" background-color:#ffffff; background-clip: padding-box; font-size:26px; font-family: <?= Yii::$app->view->theme->variable('mail-font-family', 'Open Sans, Arial, Tahoma, Helvetica, sans-serif') ?>; text-align:center;  color:#a3a2a2; font-weight: 300; padding-left:18px; padding-right:18px; ">
 
                                                         <span style="color: #555555; font-weight: 300;">
-                                                            <?php echo Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message'); ?>
+                                                            <?= Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message'); ?>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -96,9 +96,9 @@ use humhub\widgets\MarkdownView;
 
                                                     <td valign="top" align="left" style="padding-right:20px;">
                                                         <!-- START: USER IMAGE -->
-                                                        <a href="<?php echo $sender->createUrl(null, [], true); ?>">
+                                                        <a href="<?= $sender->createUrl(null, [], true); ?>">
                                                             <img
-                                                                src="<?php echo $sender->getProfileImage()->getUrl("", true); ?>"
+                                                                src="<?= $sender->getProfileImage()->getUrl("", true); ?>"
                                                                 width="50"
                                                                 alt=""
                                                                 style="max-width:50px; display:block !important; border-radius: 4px;"
@@ -116,10 +116,10 @@ use humhub\widgets\MarkdownView;
                                                             <tr>
                                                                 <td style="font-size: 13px; line-height: 22px; font-family: <?= Yii::$app->view->theme->variable('mail-font-family', 'Open Sans, Arial, Tahoma, Helvetica, sans-serif') ?>; color:#555555; font-weight:300; text-align:left; ">
 
-                                                                    <strong><?php echo Html::encode($sender->displayName); ?></strong> <?php echo Yii::t('MailModule.views_emails_NewMessageEntry', 'sent you a new message in'); ?> <strong><?php echo Html::encode($message->title); ?></strong>
+                                                                    <strong><?= Html::encode($sender->displayName); ?></strong> <?= Yii::t('MailModule.views_emails_NewMessageEntry', 'sent you a new message in'); ?> <strong><?= Html::encode($message->title); ?></strong>
                                                                     <br>
                                                                     <br>
-                                                                    <?php echo MarkdownView::widget(array('markdown' => $entry->content)); ?>
+                                                                    <?= MarkdownView::widget(array('markdown' => $entry->content)); ?>
 
                                                                 </td>
                                                             </tr>
@@ -148,8 +148,8 @@ use humhub\widgets\MarkdownView;
                                                     <td width="auto"  align="center" valign="middle" height="32" style=" background-color:<?= $this->theme->variable('primary'); ?>;  border-radius:5px; background-clip: padding-box;font-size:14px; font-family: <?= Yii::$app->view->theme->variable('mail-font-family', 'Open Sans, Arial, Tahoma, Helvetica, sans-serif') ?>; text-align:center;  color:#ffffff; font-weight: 600; padding-left:30px; padding-right:30px; padding-top: 5px; padding-bottom: 5px;">
 
                                                         <span style="color: #ffffff; font-weight: 300;">
-                                                            <a href="<?php echo Url::to(['/mail/mail/index', 'id' => $message->id], true); ?>" style="text-decoration: none; color: #ffffff; font-weight: 300;">
-                                                                <strong><?php echo Yii::t('MailModule.views_emails_NewMessage', 'Reply now'); ?></strong>
+                                                            <a href="<?= Url::toMessenger($message, true) ?>" style="text-decoration: none; color: #ffffff; font-weight: 300;">
+                                                                <strong><?= Yii::t('MailModule.views_emails_NewMessage', 'Reply now'); ?></strong>
                                                             </a>
                                                         </span>
                                                     </td>
