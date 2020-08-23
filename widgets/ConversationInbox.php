@@ -10,18 +10,34 @@ use humhub\widgets\JsWidget;
 
 class ConversationInbox extends JsWidget
 {
+    /**
+     * @inheritDoc
+     */
     public $id = 'inbox';
 
+    /**
+     * @inheritDoc
+     */
     public $jsWidget = 'mail.inbox.ConversationList';
+
     /**
      * @var InboxFilterForm
      */
     public $filter;
 
+    /**
+     * @inheritDoc
+     */
     public $init = true;
 
+    /**
+     * @inheritDoc
+     */
     public $pageSize = 30;
 
+    /**
+     * @inheritDoc
+     */
     public function run()
     {
         $this->filter->apply();

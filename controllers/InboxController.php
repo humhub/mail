@@ -15,9 +15,7 @@ use humhub\modules\mail\widgets\ConversationInbox;
 class InboxController extends Controller
 {
 
-    public $pageSize = 30;
-
-    public function getAccessRules()
+   public function getAccessRules()
     {
         return [
             ['login']

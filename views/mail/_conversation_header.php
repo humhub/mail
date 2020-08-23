@@ -44,27 +44,12 @@ $userList = '';
         <?php endif; ?>
 
         <?= ConversationSettingsMenu::widget(['message' => $message])?>
-
-    <?php /*
-        <?php if (count($message->users) != 1) : ?>
-            <?= Button::warning( )
-                ->action('mail.conversation.leave', Url::to(["/mail/mail/leave", 'id' => $message->id]))->icon('fa-sign-out')->sm()
-                ->confirm( Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> leaving conversation'),
-                    Yii::t('MailModule.views_mail_show', 'Do you really want to leave this conversation?'),
-                    Yii::t('MailModule.views_mail_show', 'Leave'))->tooltip(Yii::t('MailModule.views_mail_show', 'Leave conversation'))?>
-        <?php elseif (count($message->users) == 1) : ?>
-            <?= Button::warning( )
-                ->action('mail.conversation.leave', Url::to(["/mail/mail/leave", 'id' => $message->id]))->icon('fa-sign-out')->sm()
-                ->confirm( Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> deleting conversation'),
-                    Yii::t('MailModule.views_mail_show', 'Do you really want to delete this conversation?'),
-                    Yii::t('MailModule.views_mail_show', 'Delete'))->tooltip(Yii::t('MailModule.views_mail_show', 'Delete conversation'))?>
-        <?php endif; ?>
-    */ ?>
     <?php endif; ?>
 </div>
 
 <div id="conversation-head-info">
     <small>
-    <?= Yii::t('MailModule.base', 'crated by {name}', ['name' => '<strong>'.Html::encode($message->originator->displayName).'</strong>'])?>
+        <?php $link = Html::beginTag('strong').Html::containerLink($message->originator, ['style' => ['color' => $this->theme->variable('info')]]).Html::endTag('strong'); ?>
+    <?= Yii::t('MailModule.base', 'crated by {name}', ['name' => $link])?>
     </small>
 </div>

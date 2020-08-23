@@ -77,7 +77,8 @@ class InboxFilterForm extends QueryFilter
             foreach ($this->tags as $tag) {
                 $participantsExistsSubQuery = UserMessageTag::find()
                     ->where('user_message.message_id = user_message_tag.message_id')
-                    ->andWhere('user_message.user_id = user_message_tag.user_id');
+                    ->andWhere('user_message.user_id = user_message_tag.user_id')
+                    ->andWhere(['user_message_tag.tag_id' => $tag]);
                 $this->query->andWhere(new ExistsCondition('EXISTS', $participantsExistsSubQuery));
             }
         }

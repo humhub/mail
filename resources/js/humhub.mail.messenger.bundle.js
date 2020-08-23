@@ -16,6 +16,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         window.onresize = function (evt) {
             that.updateSize();
         };
+
+        if(!this.options.messageId) {
+            this.options.messageId = Widget.instance('#inbox').getFirstMessageId();
+        }
+
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
@@ -259,6 +264,10 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     ConversationList.prototype.getReloadOptions = function () {
         return {data: this.filter.getFilterMap()};
+    };
+
+    ConversationList.prototype.getFirstMessageId = function() {
+        return this.$.find('.messagePreviewEntry:first').data('messagePreview');
     };
 
     var setTagFilter = function (evt) {

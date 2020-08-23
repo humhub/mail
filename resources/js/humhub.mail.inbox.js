@@ -41,6 +41,10 @@ humhub.module('mail.inbox', function (module, require, $) {
         return {data: this.filter.getFilterMap()};
     };
 
+    ConversationList.prototype.getFirstMessageId = function() {
+        return this.$.find('.messagePreviewEntry:first').data('messagePreview');
+    };
+
     var setTagFilter = function (evt) {
         $('#mail-filter-menu').collapse('show');
         Widget.instance('#inbox-tag-picker').setSelection([{

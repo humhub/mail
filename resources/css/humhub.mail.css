@@ -47,7 +47,7 @@
 }
 
 #createmessage-message .ProseMirror, #mail-conversation-root .ProseMirror, .mail-edit-message .ProseMirror {
-    min-height: 100px !important;
+    min-height: 60px !important;
 }
 
 #createmessage-message .ProseMirror-menubar, #mail-conversation-root .ProseMirror-menubar, .mail-edit-message .ProseMirror-menubar {

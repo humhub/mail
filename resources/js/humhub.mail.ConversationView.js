@@ -16,6 +16,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         window.onresize = function (evt) {
             that.updateSize();
         };
+
+        if(!this.options.messageId) {
+            this.options.messageId = Widget.instance('#inbox').getFirstMessageId();
+        }
+
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
