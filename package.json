@@ -1,0 +1,26 @@
+{
+  "name": "humhub-modules-mail",
+  "version": "2.0.0",
+  "description": "HumHub mail module",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/humhub/humhub-modules-mail.git"
+  },
+  "dependencies": {},
+  "author": "Julian Harrer",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/humhub/humhub-modules-mail/issues"
+  },
+  "homepage": "https://github.com/humhub/humhub-modules-mail#readme",
+  "devDependencies": {
+    "grunt": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-cssmin": "^3.0.0"
+  }
+}

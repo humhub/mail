@@ -19,7 +19,7 @@
 }
 
 .mail-conversation-entry {
-    margin-top:5px;
+    margin-top:3px;
 }
 
 .mail-conversation-entry .author-image img {
@@ -130,13 +130,36 @@
     display: table;
     float:left;
     background-color: #f7f7f7;
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 10px;
     max-width:70%;
 }
 
-.mail-conversation-entry.own conversation-entry-content  {
-    float:right
+.conversation-entry-content.seq-top {
+    border-top-left-radius: 2px;
+}
+
+.conversation-entry-content.seq-bottom {
+    border-bottom-left-radius: 2px;
+}
+
+.conversation-entry-content.own.seq-top {
+    border-top-right-radius: 2px;
+    border-top-left-radius: 10px;
+}
+
+.conversation-entry-content.own.seq-bottom {
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 10px;
+}
+
+.mail-conversation-entry.hideUserInfo .author-label  {
+    display: none;
+}
+
+.mail-conversation-entry.hideUserInfo .author-image img  {
+    visibility: hidden;
+    margin-top:0;
 }
 
 .conversation-menu {
