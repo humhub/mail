@@ -19,9 +19,6 @@ class MailStyleAsset extends AssetBundle
 
     public $publishOptions = [
         'forceCopy' => true,
-        'only' => [
-            'humhub.mail.min.css'
-        ]
     ];
 
     public $css = [

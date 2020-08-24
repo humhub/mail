@@ -110,7 +110,7 @@ class InviteParticipantForm extends Model
             }
         }
 
-
+        unset($this->message->users);
         return true;
     }
 

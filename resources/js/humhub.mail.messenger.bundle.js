@@ -17,8 +17,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             that.updateSize();
         };
 
-        if(!this.options.messageId) {
-            this.options.messageId = Widget.instance('#inbox').getFirstMessageId();
+        if (!this.getActiveMessageId()) {
+            this.setActiveMessageId(Widget.instance('#inbox').getFirstMessageId());
         }
 
         this.reload();
@@ -31,6 +31,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loader = function (load) {
+    debugger;
         if (load !== false) {
             loader.set(this.$);
         } else {
@@ -39,7 +40,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.markSeen = function (id) {
-        client.post(module.config.url.seen, {data: {id: id}}).then(function (response) {
+        client.post(this.options.markSeenUrl, {data: {id: id}}).then(function (response) {
             if (object.isDefined(response.messageCount)) {
                 mail.setMailMessageCount(response.messageCount);
             }
@@ -51,12 +52,14 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.loadUpdate = function () {
         var $lastEntry = this.$.find('.mail-conversation-entry:last');
         var lastEntryId = $lastEntry.data('entry-id');
-        var data = {id: this.options.messageId, from: lastEntryId};
+        var data = {id: this.getActiveMessageId(), from: lastEntryId};
 
         var that = this;
         client.get(this.options.loadUpdateUrl, {data: data}).then(function (response) {
             if (response.html) {
-                that.appendEntry(response.html);
+                $(response.html).each(function () {
+                    that.appendEntry($(this));
+                });
             }
         })
     };
@@ -67,7 +70,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             if (response.success) {
                 that.appendEntry(response.content);
                 that.$.find(".time").timeago(); // somehow this is not triggered after reply
-                $('#replyform-message').trigger('clear');
+                Widget.instance($('#replyform-message').trigger('clear')).focus();
+                that.focus();
             } else {
                 module.log.error(response, true);
             }
@@ -76,49 +80,43 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         });
     };
 
-    ConversationView.prototype.updateContent = function (html) {
-        this.$.hide().html(html).fadeIn();
-        this.getListNode().niceScroll({
-            cursorwidth: "7",
-            cursorborder: "",
-            cursorcolor: "#555",
-            cursoropacitymax: "0.2",
-            nativeparentscrolling: false,
-            railpadding: {top: 0, right: 0, left: 0, bottom: 0}
-        });
-        var that = this;
-        setTimeout(function () {
-            that.scrollToBottom()
-        });
+    ConversationView.prototype.focus = function (evt) {
+        Widget.instance('#replyform-message').focus();
+    };
+
+    ConversationView.prototype.canLoadMore = function () {
+        return true;
+        return !this.options.isLast;
     };
 
     ConversationView.prototype.reload = function () {
-        if (this.options.messageId) {
-            this.loadMessage(this.options.messageId);
+    debugger;
+        if (this.getActiveMessageId()) {
+            this.loadMessage(this.getActiveMessageId());
         }
     };
 
     ConversationView.prototype.addUser = function (evt) {
         var that = this;
 
-        that.loader(true);
         client.submit(evt).then(function (response) {
-            if (response.error) {
+            if (response.result) {
+                that.$.find('#mail-conversation-header').html(response.result);
+            } else if (response.error) {
                 module.log.error(response, true);
-                that.reload();
-            } else {
-                that.updateContent(response.html);
             }
         }).catch(function (e) {
             module.log.error(e, true);
-        }).finally(function () {
-            that.loader(false);
         });
     };
 
     ConversationView.prototype.appendEntry = function (html) {
         var that = this;
         var $html = $(html);
+
+        if (that.$.find('[data-entry-id="' + $html.data('entryId') + '"]').length) {
+            return;
+        }
 
         // Filter out all script/links and text nodes
         var $elements = $html.not('script, link').filter(function () {
@@ -143,14 +141,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
         this.loader();
         client.get(this.options.loadMessageUrl, {data: {id: messageId}}).then(function (response) {
-            that.options.messageId = messageId;
+            that.setActiveMessageId(messageId);
+            that.options.isLast = false;
 
-            // Remove New badge from current selection
-            $('#mail-conversation-overview').find('.selected[data-message-preview]').find('.new-message-badge').hide();
-
-            // Set new selection
-            $('#mail-conversation-overview').find('[data-message-preview]').removeClass('selected');
-            $('#mail-conversation-overview').find('[data-message-preview="' + messageId + '"]').addClass('selected').find('.new-message-badge').hide();
+            Widget.instance('#inbox').updateActiveItem();
 
             // Replace history state only if triggered by message preview item
             if (evt.$trigger && history && history.replaceState) {
@@ -160,33 +154,151 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 }
             }
 
-            that.updateContent(response.html);
-
+            that.$.css('visibility', 'hidden');
+            return that.updateContent(response.html);
+        }).then(function () {
+            return that.initScroll();
         }).catch(function (e) {
             module.log.error(e, true);
         }).finally(function () {
             that.loader(false);
+            that.$.css('visibility', 'visible');
+            that.initReplyRichText();
         });
     };
 
-    ConversationView.prototype.scrollToBottom = function () {
-        var $list = this.getListNode();
-        $list.animate({scrollTop: $list[0].scrollHeight});
-        this.updateSize();
+    ConversationView.prototype.initReplyRichText = function () {
+        var that = this;
+        that.focus();
+        $('#replyform-message').on('keyup', function (evt) {
+            if (evt.which === 13) {
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        })
+    };
 
+    ConversationView.prototype.initScroll = function () {
+        if (window.IntersectionObserver) {
+            var $entryList = this.$.find('.conversation-entry-list');
+            var $streamEnd = $('<div class="stream-end"></div>');
+            $entryList.prepend($streamEnd);
+
+            var that = this;
+            var observer = new IntersectionObserver(function (entries) {
+                if (that.preventScrollLoading()) {
+                    return;
+                }
+
+                if (entries.length && entries[0].isIntersecting) {
+                    loader.prepend($entryList);
+                    that.loadMore().finally(function () {
+                        loader.reset($entryList);
+                    });
+                }
+
+            }, {root: $entryList[0], rootMargin: "50px"});
+
+            // Assure the conversation list is scrollable by loading more entries until overflow
+            return this.assureScroll().then(function () {
+                observer.observe($streamEnd[0]);
+                that.getListNode().niceScroll({
+                    cursorwidth: "7",
+                    cursorborder: "",
+                    cursorcolor: "#555",
+                    cursoropacitymax: "0.2",
+                    nativeparentscrolling: false,
+                    railpadding: {top: 0, right: 0, left: 0, bottom: 0}
+                });
+            });
+        }
+    };
+
+    ConversationView.prototype.loadMore = function () {
+        var that = this;
+
+        var data = {
+            id: this.getActiveMessageId(),
+            from: this.$.find('.mail-conversation-entry:first').data('entryId')
+        };
+
+        return client.get(this.options.loadMoreUrl, {data: data}).then(function (response) {
+            if (response.result) {
+                var $result = $(response.result).hide();
+                that.$.find('.conversation-entry-list').find('.stream-end').after($result);
+                $result.fadeIn();
+            }
+
+            that.options.isLast = !response.result || response.isLast;
+        }).catch(function (err) {
+            module.log.error(err, true);
+        });
+    };
+
+    ConversationView.prototype.preventScrollLoading = function () {
+        return this.scrollLock || !this.canLoadMore();
+    };
+
+    ConversationView.prototype.canLoadMore = function () {
+        return !this.options.isLast;
+    };
+
+    ConversationView.prototype.assureScroll = function () {
+        var that = this;
+        var $entryList = this.$.find('.conversation-entry-list');
+        if ($entryList[0].offsetHeight >= $entryList[0].scrollHeight && this.canLoadMore()) {
+            return this.loadMore().then(function () {
+                return that.assureScroll();
+            }).catch(function () {
+                return Promise.resolve();
+            })
+        }
+
+        return that.scrollToBottom();
+    };
+
+    ConversationView.prototype.updateContent = function (html) {
+        var that = this;
+        return new Promise(function (resolve) {
+            that.$.html(html);
+            resolve();
+        });
+    };
+
+
+    ConversationView.prototype.getActiveMessageId = function () {
+        return this.options.messageId;
+    };
+
+    ConversationView.prototype.setActiveMessageId = function (id) {
+        this.options.messageId = id;
+    };
+
+    ConversationView.prototype.scrollToBottom = function () {
+        var that = this;
+        return new Promise(function (resolve) {
+            var $list = that.getListNode();
+            that.updateSize().then(function () {
+                $list[0].scrollTop = $list[0].scrollHeight;
+                resolve()
+            });
+        });
     };
 
     ConversationView.prototype.updateSize = function () {
         var that = this;
-        setTimeout(function () {
-            if (!$('.conversation-entry-list').length) {
-                return;
-            }
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                if (!$('.conversation-entry-list').length) {
+                    return;
+                }
 
-            var formHeight = $('.mail-message-form').height();
-            var max_height = (window.innerHeight - that.$.position().top - formHeight - 160) + 'px';
-            that.$.find('.conversation-entry-list').css('max-height', max_height);
-        }, 100);
+                var formHeight = $('.mail-message-form').height();
+                var max_height = (window.innerHeight - that.$.position().top - formHeight - 160) + 'px';
+                that.$.find('.conversation-entry-list').css('max-height', max_height);
+                resolve();
+            }, 100);
+        })
+
     };
 
     ConversationView.prototype.getListNode = function () {
@@ -227,6 +339,9 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     var Widget = require('ui.widget').Widget;
     var Filter = require('ui.filter').Filter;
+    var view = require('ui.view');
+    var loader = require('ui.loader');
+    var client = require('client');
 
     var ConversationFilter = Filter.extend();
 
@@ -256,18 +371,131 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.init = function () {
         this.filter = Widget.instance('#mail-filter-root');
 
+        this.initScroll();
+
         var that = this;
         this.filter.off('afterChange.inbox').on('afterChange.inbox', function () {
-            that.reload();
+            that.reload().then(function() {
+                that.updateActiveItem();
+            });
         });
+
+        if(view.isLarge()) {
+            this.$.niceScroll({
+                cursorwidth: "7",
+                cursorborder: "",
+                cursorcolor: "#555",
+                cursoropacitymax: "0.2",
+                nativeparentscrolling: false,
+                railpadding: {top: 0, right: 3, left: 0, bottom: 0}
+            });
+        }
+    };
+
+    ConversationList.prototype.initScroll = function() {
+        if (window.IntersectionObserver) {
+
+            var $streamEnd = $('<div class="stream-end"></div>');
+            this.$.append($streamEnd);
+
+            var that = this;
+            var observer = new IntersectionObserver(function (entries) {
+                if (that.preventScrollLoading()) {
+                    return;
+                }
+
+                if (entries.length && entries[0].isIntersecting) {
+                    loader.append(that.$);
+                    that.loadMore().finally(function() {
+                        loader.reset(that.$);
+                    });
+                }
+
+            }, {root: this.$[0], rootMargin: "50px"});
+
+            // Assure the conversation list is scrollable by loading more entries until overflow
+            this.assureScroll().then(function() {
+                observer.observe($streamEnd[0]);
+            });
+        }
+    };
+
+    ConversationList.prototype.assureScroll = function () {
+        var that = this;
+
+        if(this.$[0].offsetHeight >= this.$[0].scrollHeight && this.canLoadMore()) {
+            return this.loadMore().then(function() {
+                return that.assureScroll();
+            }).catch(function () {
+                return Promise.resolve();
+            })
+        }
+
+        return Promise.resolve();
+    };
+
+    ConversationList.prototype.loadMore = function () {
+        var that = this;
+        return new Promise(function(resolve, reject) {
+            var data = that.filter.getFilterMap();
+            data.from = that.getLastMessageId();
+            client.get(that.options.loadMoreUrl, {data: data}).then(function(response) {
+                if(response.result) {
+                    $(response.result).insertBefore('.stream-end');
+                    that.$.find('.stream-end').append();
+                }
+
+                that.options.isLast = !response.result || response.isLast;
+                that.updateActiveItem();
+
+                resolve();
+            }).catch(function(err) {
+                module.log.error(err, true);
+                reject();
+            }).finally(function() {
+                that.scrollLock = false;
+            });
+        });
+
+    };
+
+    ConversationList.prototype.preventScrollLoading = function () {
+        return this.scrollLock || !this.canLoadMore();
+    };
+
+    ConversationList.prototype.canLoadMore = function () {
+        return !this.options.isLast;
     };
 
     ConversationList.prototype.getReloadOptions = function () {
         return {data: this.filter.getFilterMap()};
     };
 
+    ConversationList.prototype.updateActiveItem = function() {
+
+        var activeMessageId = Widget.instance('#mail-conversation-root').getActiveMessageId();
+
+        this.$.find('.entry').removeClass('selected');
+
+        // Remove New badge from current selection
+        this.$.find('.entry.selected').find('.new-message-badge').hide();
+
+        // Set new selection
+        this.$.find('.entry').removeClass('selected');
+        var $selected = this.$.find('[data-message-preview="' + activeMessageId + '"]');
+
+        if($selected.length) {
+            $selected.addClass('selected').find('.new-message-badge').hide();
+        }
+    };
+
+
     ConversationList.prototype.getFirstMessageId = function() {
-        return this.$.find('.messagePreviewEntry:first').data('messagePreview');
+        return this.$.find('.entry:first').data('messagePreview');
+    };
+
+    ConversationList.prototype.getLastMessageId = function() {
+        return this.$.find('.entry:last').data('messagePreview');
     };
 
     var setTagFilter = function (evt) {
@@ -344,10 +572,11 @@ humhub.module('mail.conversation', function (module, require, $) {
     var init = function () {
         event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
             var root = getRootView();
-
+            var updated = false;
             events.forEach(function (event) {
-                if (root && root.options.messageId == event.data.message_id) {
+                if (!updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
+                    updated = true;
                     root.markSeen(event.data.message_id);
                 } else if (root) {
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
@@ -372,17 +601,6 @@ humhub.module('mail.conversation', function (module, require, $) {
         return $('#mail-conversation-overview').find('[data-message-preview="' + id + '"]');
     };
 
-
-    var loadMessage = function (evt) {
-        if ($('#mail-conversation-root').length) {
-            getRootView().loadMessage(evt);
-        } else {
-            client.pjax.redirect(evt.url);
-        }
-
-        evt.finish();
-    };
-
     var leave = function (evt) {
         client.post(evt).then(function (response) {
             if (response.redirect) {
@@ -396,7 +614,6 @@ humhub.module('mail.conversation', function (module, require, $) {
     module.export({
         init: init,
         leave: leave,
-        loadMessage: loadMessage,
         submitEditEntry: submitEditEntry,
         deleteEntry: deleteEntry,
     });

@@ -5,6 +5,7 @@ namespace humhub\modules\mail\models;
 use humhub\libs\Helpers;
 use humhub\libs\MarkdownPreview;
 use humhub\modules\content\widgets\richtext\RichText;
+use humhub\modules\mail\Module;
 use Yii;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
@@ -60,7 +61,7 @@ class Message extends ActiveRecord
         ];
     }
 
-    public function getEntries($from = null)
+    public function getEntryUpdates($from = null)
     {
         $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
         $query->addOrderBy(['created_at' => SORT_ASC]);
@@ -70,6 +71,26 @@ class Message extends ActiveRecord
         }
 
         return $query;
+    }
+
+    /**
+     * @param int|null $from
+     * @return MessageEntry[]
+     */
+    public function getEntryPage($from = null)
+    {
+        $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
+        $query->addOrderBy(['created_at' => SORT_DESC]);
+
+        if($from) {
+            $query->andWhere(['<', 'message_entry.id', $from]);
+        }
+
+        $module = Module::getModuleInstance();
+        $limit = $from ?  $module->conversationUpdatePageSize : $module->conversationInitPageSize;
+        $query->limit($limit);
+
+        return array_reverse($query->all());
     }
 
     public function getUsers()

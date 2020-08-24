@@ -11,6 +11,7 @@
 
 .conversation-entry-list {
     max-height:600px;
+    min-height:100px;
     overflow:auto;
 }
 
@@ -104,6 +105,7 @@
 #inbox {
     max-height:500px;
     overflow: auto;
+    border-radius: 4px;
 }
 
 #dropdown-messages.dropdown-menu li a {

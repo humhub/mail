@@ -8,8 +8,10 @@ use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\models\UserMessageTag;
+use humhub\modules\mail\Module;
 use humhub\modules\ui\filter\models\QueryFilter;
 use Yii;
+use yii\base\InvalidCallException;
 use yii\db\conditions\ExistsCondition;
 use yii\db\conditions\LikeCondition;
 use yii\db\conditions\OrCondition;
@@ -33,25 +35,51 @@ class InboxFilterForm extends QueryFilter
      */
     public $tags;
 
+    /**
+     * @inheritDoc
+     */
     public $autoLoad = self::AUTO_LOAD_ALL;
 
+    /**
+     * @inheritDoc
+     */
     public $formName = '';
 
+    /**
+     * @var int
+     */
+    public $from;
+
+    /**
+     * @var
+     */
+    private $wasLastPage;
+
+    /**
+     * @inheritDoc
+     */
     public function rules()
     {
         return [
             [['term'], 'trim'],
             [['participants'], 'safe'],
             [['tags'], 'safe'],
+            [['from'], 'integer'],
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function init()
     {
         parent::init();
         $this->query = UserMessage::findByUser();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function apply()
     {
         if(!empty($this->term)) {
@@ -82,11 +110,37 @@ class InboxFilterForm extends QueryFilter
                 $this->query->andWhere(new ExistsCondition('EXISTS', $participantsExistsSubQuery));
             }
         }
+
+        if(!empty($this->from)) {
+            $this->query->andWhere(['<', 'user_message.message_id', $this->from]);
+        }
     }
 
     private function createTermLikeCondition($column)
     {
         return new LikeCondition($column, 'LIKE', $this->term);
+    }
+
+    /**
+     * @return UserMessage[]
+     */
+    public function getPage()
+    {
+        $this->apply();
+        $module = Module::getModuleInstance();
+        $pageSize = $this->from ? $module->inboxUpdatePageSize : $module->inboxInitPageSize;
+        $result = $this->query->limit($pageSize)->all();
+        $this->wasLastPage = count($result) < $pageSize;
+        return $result;
+    }
+
+    public function wasLastPage()
+    {
+        if($this->wasLastPage === null) {
+            throw new InvalidCallException();
+        }
+
+        return (int) $this->wasLastPage;
     }
 
     public function formName()

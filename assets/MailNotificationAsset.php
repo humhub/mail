@@ -19,9 +19,6 @@ class MailNotificationAsset extends AssetBundle
 
     public $publishOptions = [
         'forceCopy' => true,
-        'only' => [
-            'humhub.mail.notification.min.js'
-        ]
     ];
 
     public $js = [
@@ -38,7 +35,7 @@ class MailNotificationAsset extends AssetBundle
             'mail.notification' => [
                 'url' => [
                     'count' => Url::toMessageCountUpdate(),
-                    'list' => Url::toNotificationList()
+                    'list' => Url::toNotificationList(),
                 ]
             ]
         ]);

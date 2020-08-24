@@ -18,7 +18,7 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
             <?= $form->field($entry, 'content')->widget(
                 ProsemirrorRichTextEditor::class, [
                 'placeholder' => Yii::t('MailModule.base', 'Edit message...'),
-                'pluginOptions' => ['maxHeight' => '300px'],
+                'pluginOptions' => ['maxHeight' => '200px'],
             ])->label(false) ?>
         </div>
         <div class="modal-footer">

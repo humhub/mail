@@ -57,10 +57,11 @@ humhub.module('mail.conversation', function (module, require, $) {
     var init = function () {
         event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
             var root = getRootView();
-
+            var updated = false;
             events.forEach(function (event) {
-                if (root && root.options.messageId == event.data.message_id) {
+                if (!updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
+                    updated = true;
                     root.markSeen(event.data.message_id);
                 } else if (root) {
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
@@ -85,17 +86,6 @@ humhub.module('mail.conversation', function (module, require, $) {
         return $('#mail-conversation-overview').find('[data-message-preview="' + id + '"]');
     };
 
-
-    var loadMessage = function (evt) {
-        if ($('#mail-conversation-root').length) {
-            getRootView().loadMessage(evt);
-        } else {
-            client.pjax.redirect(evt.url);
-        }
-
-        evt.finish();
-    };
-
     var leave = function (evt) {
         client.post(evt).then(function (response) {
             if (response.redirect) {
@@ -109,7 +99,6 @@ humhub.module('mail.conversation', function (module, require, $) {
     module.export({
         init: init,
         leave: leave,
-        loadMessage: loadMessage,
         submitEditEntry: submitEditEntry,
         deleteEntry: deleteEntry,
     });

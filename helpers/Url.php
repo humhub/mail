@@ -81,9 +81,10 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/mail/seen']);
     }
 
-    public static function toSearchNewParticipants(Message $message)
+    public static function toSearchNewParticipants(Message $message = null)
     {
-        return static::to(['/mail/mail/search-user', 'id' => $message->id]);
+        $route = $message ? ['/mail/mail/search-user', 'id' => $message->id] : ['/mail/mail/search-user'];
+        return static::to($route);
     }
 
     public static function toAddParticipant(Message $message)
@@ -94,5 +95,15 @@ class Url extends \yii\helpers\Url
     public static function toReply(Message $message)
     {
         return static::to(['/mail/mail/reply', 'id' => $message->id]);
+    }
+
+    public static function toInboxLoadMore()
+    {
+        return static::to(['/mail/inbox/load-more']);
+    }
+
+    public static function toLoadMoreMessages()
+    {
+        return static::to(['/mail/mail/load-more']);
     }
 }

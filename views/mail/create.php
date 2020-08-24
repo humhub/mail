@@ -1,6 +1,7 @@
 <?php
 
 use humhub\libs\Html;
+use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\ModalDialog;
@@ -9,7 +10,7 @@ use yii\widgets\ActiveForm;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 
-/* @var $model \humhub\modules\mail\models\forms\CreateMessage */
+/* @var $model CreateMessage */
 ?>
 
 <?php ModalDialog::begin(['closable' => false]) ?>

@@ -2,6 +2,9 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\modules\mail\Module;
+use humhub\modules\mail\widgets\ConversationHeader;
+use humhub\modules\mail\widgets\Messages;
 use humhub\modules\mail\widgets\wall\ConversationEntry;
 use humhub\modules\user\widgets\UserListBox;
 use Yii;
@@ -93,14 +96,23 @@ class MailController extends Controller
 
         $this->checkMessagePermissions($message);
 
-        $entries = $message->getEntries($from)->all();
+        return $this->renderAjaxContent(Messages::widget(['message' => $message, 'entries' => $message->getEntryUpdates($from)->all()]));
+    }
 
-        $result = '';
-        foreach ($entries as $entry) {
-            $result .= ConversationEntry::widget(['entry' => $entry]);
-        }
+    public function actionLoadMore($id, $from)
+    {
+        $message = ($id instanceof Message) ? $id : $this->getMessage($id);
 
-        return $this->renderAjaxContent($result);
+        $this->checkMessagePermissions($message);
+
+        $entries = $message->getEntryPage($from);
+
+        $result = Messages::widget(['message' => $message, 'from' => $from]);
+
+        return $this->asJson([
+            'result' => $result,
+            'isLast' => (count($entries) < Module::getModuleInstance()->conversationUpdatePageSize)
+        ]);
     }
 
     public function actionReply($id)
@@ -155,16 +167,17 @@ class MailController extends Controller
 
         if ($inviteForm->load(Yii::$app->request->post())) {
             if($inviteForm->save()) {
-                return $this->actionShow($message->id);
-            } else {
                 return $this->asJson([
-                    'success' => false,
-                    'error' => [
-                        'message' => $inviteForm->getFirstError('recipients')
-                    ]
+                    'result' => ConversationHeader::widget(['message' => $message])
                 ]);
-
             }
+
+            return $this->asJson([
+                'success' => false,
+                'error' => [
+                    'message' => $inviteForm->getFirstError('recipients')
+                ]
+            ]);
         }
 
         return $this->renderAjax('adduser', ['inviteForm' => $inviteForm]);
@@ -190,12 +203,8 @@ class MailController extends Controller
      * @throws HttpException
      * @throws \Throwable
      */
-    public function actionSearchUser($id = null, $keyword)
+    public function actionSearchUser($keyword, $id = null)
     {
-        /*$subQuery = UserMessage::find()->where('user_message.user_id = user.id')->andWhere(['user_message.message_id' => $id]);
-        $query = User::find()->where(['NOT EXISTS', $subQuery]);
-        $fillQuery = User::find()->where(['EXISTS', $subQuery]);*/
-
         $message = $this->getMessage($id);
 
         if($message) {
@@ -336,6 +345,8 @@ class MailController extends Controller
 
     /**
      * Edits Entry Id
+     * @param $id
+     * @return string|\yii\web\Response
      * @throws HttpException
      */
     public function actionEditEntry($id)
@@ -351,7 +362,7 @@ class MailController extends Controller
         }
 
         if ($entry->load(Yii::$app->request->post()) && $entry->save()) {
-            $entry->fileManager->attach( Yii::$app->request->post('fileList'));
+            $entry->fileManager->attach(Yii::$app->request->post('fileList'));
             return $this->asJson([
                 'success' => true,
                 'content' => ConversationEntry::widget(['entry' => $entry])

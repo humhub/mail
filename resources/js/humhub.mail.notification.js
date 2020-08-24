@@ -1,6 +1,7 @@
 humhub.module('mail.notification', function(module, require, $) {
     var client = require('client');
     var loader = require('ui.loader');
+    var Widget = require('ui.widget').Widget;
     var currentXhr;
 
     module.initOnPjaxLoad = true;
@@ -50,8 +51,19 @@ humhub.module('mail.notification', function(module, require, $) {
         }
     };
 
+    var loadMessage = function (evt) {
+        if ($('#mail-conversation-root').length) {
+            Widget.instance('#mail-conversation-root').loadMessage(evt);
+        } else {
+            client.pjax.redirect(evt.url);
+        }
+
+        evt.finish();
+    };
+
     module.export({
         init: init,
+        loadMessage: loadMessage,
         setMailMessageCount: setMailMessageCount,
         updateCount: updateCount
     });

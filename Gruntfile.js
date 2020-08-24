@@ -27,13 +27,23 @@ module.exports = function (grunt) {
                 ],
                 dest: 'resources/js/humhub.mail.messenger.bundle.js'
             },
-        }
+        },
+        watch: {
+            scripts: {
+                files: ['resources/js/*.js', 'resources/css/*.css'],
+                tasks: ['build'],
+                options: {
+                    spawn: false,
+                },
+            },
+        },
     });
 
     //grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
 
     grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);

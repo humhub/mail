@@ -19,9 +19,6 @@ class MailMessengerAsset extends AssetBundle
 
     public $publishOptions = [
         'forceCopy' => true,
-        'only' => [
-            'humhub.mail.messenger.bundle.js'
-        ]
     ];
 
     public $js = [
@@ -31,17 +28,4 @@ class MailMessengerAsset extends AssetBundle
     public $depends = [
         MailNotificationAsset::class
     ];
-
-    public static function register($view)
-    {
-        $view->registerJsConfig([
-            'mail.conversation' => [
-                'url' => [
-                    'seen' => Url::toNotificationSeen()
-                ]
-            ]
-        ]);
-
-        return parent::register($view);
-    }
 }

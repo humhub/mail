@@ -5,6 +5,7 @@ namespace humhub\modules\mail\controllers;
 use humhub\components\Controller;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationInbox;
+use humhub\modules\mail\widgets\InboxMessagePreview;
 
 /**
  * MailController provides messaging actions.
@@ -33,6 +34,23 @@ class InboxController extends Controller
         return ConversationInbox::widget([
             'filter' => new InboxFilterForm()
         ]);
+    }
+
+    public function actionLoadMore()
+    {
+        $filter = new InboxFilterForm();
+        $userMessages = $filter->getPage();
+
+        $result = '';
+        foreach ($userMessages as $userMessage) {
+            $result .= InboxMessagePreview::widget(['userMessage' => $userMessage]);
+        }
+
+       return $this->asJson([
+           'result' => $result,
+           'isLast' => $filter->wasLastPage()
+       ]);
+
     }
 
 }

@@ -25,8 +25,8 @@ $users = $message->users;
 ?>
 
 <?php if ($lastEntry) : ?>
-    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry">
-        <div class="mail-link" data-action-click="mail.conversation.loadMessage" data-action-url="<?= Url::toMessenger($message)?>" data-message-id="<?= $message->id ?>">
+    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry" data-action-click="mail.notification.loadMessage" data-action-url="<?= Url::toMessenger($message)?>"  data-message-id="<?= $message->id ?>">
+        <div class="mail-link">
             <div class="media">
                 <div class="media-left pull-left">
                     <?= Image::widget(['user' => $participant, 'width' => '32', 'link' => false])?>

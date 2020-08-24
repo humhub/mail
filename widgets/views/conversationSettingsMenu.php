@@ -37,14 +37,14 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="conversationSettingsButton">
         <li>
             <?= ModalButton::none(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('user-plus')
-                ->load(Url::toAddParticipant($message))->visible($canStartConversation)->link() ?>
+                ->load(Url::toAddParticipant($message))->visible($canStartConversation)->link()->loader(false) ?>
         </li>
         <li>
             <?= Link::none($leaveLinkText)
                 ->action('mail.conversation.leave', Url::toLeaveConversation($message))
                 ->confirm($leaveConfirmTitle,
                     $leaveConfirmText,
-                    $leaveConfirmButtonText)->icon('sign-out')?>
+                    $leaveConfirmButtonText)->icon('sign-out')->loader(false) ?>
         </li>
     </ul>
 </div>

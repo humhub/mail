@@ -1,6 +1,17 @@
 Changelog
 =========
 
+2.0.0 - Unreleased
+-----------------------
+- Enh: Use of infinite scrolling for inbox and messages
+- Enh: Added message tags
+- Enh: Added inbox filter
+- Enh: Added max amount of displayed user images
+- Enh: Added message dropdown menu
+- Enh: Reworked inbox and message view
+- Enh: Merge message by user
+- Enh: Use of minified assets
+
 1.0.15 - March 28, 2020
 -----------------------
 - Fix #173: New message creation notification fails 
