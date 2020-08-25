@@ -4,6 +4,7 @@ namespace humhub\modules\mail\models;
 
 
 use humhub\modules\content\widgets\richtext\RichText;
+use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\Module;
 use Yii;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
@@ -12,6 +13,7 @@ use humhub\modules\notification\targets\MailTarget;
 use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
 use yii\db\Expression;
+use yii\helpers\Html;
 
 /**
  * This class represents a single conversation.
@@ -238,49 +240,6 @@ class Message extends ActiveRecord
         }
 
         parent::delete();
-    }
-
-    /**
-     * Notify given user, about this message
-     * An email will sent.
-     * @param $user User
-     */
-    public function notify($user)
-    {
-        /* @var $mailTarget BaseTarget */
-        $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
-
-        if(!$mailTarget || !$mailTarget->isCategoryEnabled(new ConversationNotificationCategory(), $user)) {
-            return;
-        }
-
-        $andAddon = "";
-        if (count($this->users) > 2) {
-            $counter = count($this->users) - 1;
-            $andAddon = Yii::t('MailModule.models_Message', "and {counter} other users", ["{counter}" => $counter]);
-        }
-
-        Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
-
-        Yii::$app->i18n->setUserLocale($user);
-
-        $mail = Yii::$app->mailer->compose([
-            'html' => '@mailmodule/views/emails/NewMessage',
-            'text' => '@mailmodule/views/emails/plaintext/NewMessage'
-        ], [
-            'message' => $this,
-            'originator' => $this->originator,
-            'andAddon' => $andAddon,
-            'entry' => $this->getLastEntry(),
-            'user' => $user,
-        ]);
-
-        $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
-        $mail->setTo($user->email);
-        $mail->setSubject(Yii::t('MailModule.models_Message', 'New message from {senderName}', array("{senderName}" => \yii\helpers\Html::encode($this->originator->displayName))));
-        $mail->send();
-
-        Yii::$app->i18n->autosetLocale();
     }
 
     public function getPreview()

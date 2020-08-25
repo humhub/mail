@@ -116,11 +116,6 @@ class CreateMessage extends Model
                 return false;
             }
 
-            if (!$this->informRecipients()) {
-                $transaction->rollBack();
-                return false;
-            }
-
             if(!$this->saveOriginatorUserMessage()) {
                 $transaction->rollBack();
                 return false;
@@ -157,20 +152,6 @@ class CreateMessage extends Model
         return true;
     }
 
-    private function informRecipients() {
-
-        // Inform recipients (We need to add all before)
-        foreach ($this->getRecipients() as $recipient) {
-            try {
-                $this->messageInstance->notify($recipient);
-            } catch (\Exception $e) {
-                Yii::error('Could not send notification e-mail to: ' . $recipient->username . ". Error:" . $e->getMessage());
-            }
-        }
-
-        return true;
-    }
-
     private function saveMessage()
     {
         $this->messageInstance = new Message([
@@ -195,7 +176,10 @@ class CreateMessage extends Model
 
     private function saveMessageEntry()
     {
-        return MessageEntry::createForMessage($this->messageInstance, Yii::$app->user->getIdentity(), $this->message)->save();
+        $entry = MessageEntry::createForMessage($this->messageInstance, Yii::$app->user->getIdentity(), $this->message);
+        $result = $entry->save();
+        $entry->notify();
+        return $result;
     }
 
     private function saveOriginatorUserMessage()

@@ -3,6 +3,7 @@
 namespace humhub\modules\mail\models\forms;
 
 use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\MessageNotification;
 use humhub\modules\mail\models\UserMessage;
 use Yii;
 use yii\base\Model;
@@ -106,7 +107,7 @@ class InviteParticipantForm extends Model
             ]);
 
             if($userMessage->save()) {
-                $this->message->notify($user);
+                (new MessageNotification($this->message))->notify($user);
             }
         }
 

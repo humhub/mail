@@ -47,6 +47,12 @@ class MessageEntry extends ActiveRecord
         return 'message_entry';
     }
 
+    /**
+     * @param \humhub\modules\mail\models\Message $message
+     * @param User $user
+     * @param $content
+     * @return static
+     */
     public static function createForMessage(Message $message, User $user, $content)
     {
         // Attach Message Entry
@@ -114,74 +120,11 @@ class MessageEntry extends ActiveRecord
     }
 
     /**
-     * Returns the first two lines of this entry.
-     * Used in Inbox Overview.
-     *
-     * @return string
-     */
-    public function getSnippet()
-    {
-
-        $snippet = "";
-        $lines = explode("\n", $this->content);
-
-        if (isset($lines[0]))
-            $snippet .= $lines[0] . "\n";
-        if (isset($lines[1]))
-            $snippet .= $lines[1] . "\n";
-
-        return $snippet;
-    }
-
-    /**
      * Notify User in this message entry
      */
     public function notify()
     {
-        $senderName = $this->user->displayName;
-        
-        foreach ($this->message->users as $user) {
-
-            Yii::$app->live->send(new NewUserMessage([
-                'contentContainerId' => $user->contentcontainer_id,
-                'message_id' => $this->message_id,
-                'user_guid' => $user->guid
-            ]));
-
-            /* @var $mailTarget BaseTarget */
-            $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
-
-            if(!$mailTarget || !$mailTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
-                return;
-            }
-
-            if ($user->id == $this->user_id) {
-                continue;
-            }
-
-            Yii::setAlias('@mailmodule', Yii::$app->getModule('mail')->getBasePath());
-
-            Yii::$app->i18n->setUserLocale($user);
-
-            $mail = Yii::$app->mailer->compose([
-                'html' => '@mailmodule/views/emails/NewMessageEntry',
-                'text' => '@mailmodule/views/emails/plaintext/NewMessageEntry'
-            ], [
-                'message' => $this->message,
-                'entry' => $this,
-                'user' => $user,
-                'sender' => $this->user,
-                'originator' => $this->message->originator,
-            ]);
-
-            $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
-            $mail->setTo($user->email);
-            $mail->setSubject(Yii::t('MailModule.models_MessageEntry', 'New message in discussion from %displayName%', array('%displayName%' => $senderName)));
-            $mail->send();
-
-            Yii::$app->i18n->autosetLocale();
-
-        }
+        (new MessageNotification($this->message, $this))->notifyAll();
     }
 
     public function canEdit()

@@ -1,8 +1,18 @@
 <?php
 
 use humhub\modules\mail\helpers\Url;
-use yii\helpers\Html;
-use humhub\widgets\MarkdownView;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\user\models\User;
+
+/* @var $user User */
+/* @var $sender User */
+/* @var $message Message */
+/* @var $entry MessageEntry */
+/* @var $headline string */
+/* @var $senderUrl string */
+/* @var $content string */
+/* @var $subHeadline string */
 ?>
 <!-- START LAYOUT-1/1 -->
 <tr>
@@ -31,7 +41,7 @@ use humhub\widgets\MarkdownView;
                                                     <td width="auto"  align="center" valign="middle" height="28" style=" background-color:#ffffff; background-clip: padding-box; font-size:26px; font-family: <?= Yii::$app->view->theme->variable('mail-font-family', 'Open Sans, Arial, Tahoma, Helvetica, sans-serif') ?>; text-align:center;  color:#a3a2a2; font-weight: 300; padding-left:18px; padding-right:18px; ">
 
                                                         <span style="color: #555555; font-weight: 300;">
-                                                            <?= Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message') ?>
+                                                            <?= $headline ?>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -97,9 +107,9 @@ use humhub\widgets\MarkdownView;
 
                                                     <td valign="top" align="left" style="padding-right:20px;">
                                                         <!-- START: USER IMAGE -->
-                                                        <a href="<?= $originator->createUrl(null, [], true); ?>">
+                                                        <a href="<?= $senderUrl ?>">
                                                             <img
-                                                                src="<?= $originator->getProfileImage()->getUrl("", true); ?>"
+                                                                src="<?= $sender->getProfileImage()->getUrl("", true); ?>"
                                                                 width="50"
                                                                 alt=""
                                                                 style="max-width:50px; display:block !important; border-radius: 4px;"
@@ -117,12 +127,11 @@ use humhub\widgets\MarkdownView;
                                                             <tr>
                                                                 <td style="font-size: 13px; line-height: 22px; font-family: <?= Yii::$app->view->theme->variable('mail-font-family', 'Open Sans, Arial, Tahoma, Helvetica, sans-serif') ?>; color:#555555; font-weight:300; text-align:left; ">
 
-                                                                    <strong><?= Html::encode($originator->displayName); ?></strong> <?= Yii::t('MailModule.views_emails_NewMessage', 'sent you a new message:'); ?>
-                                                                    <br/>
-                                                                    <strong><?= Html::encode($message->title); ?></strong>
-                                                                    <br>
-                                                                    <?= MarkdownView::widget(array('markdown' => $entry->content)); ?>
-
+                                                                    <strong><?= $subHeadline ?>
+                                                                    <br><br>
+                                                                    <div style="display:inline-block;background-color:<?= $this->theme->variable('background-color-secondary')?>;border-radius:4px;padding:15px;">
+                                                                        <?= $content ?>
+                                                                    </div>
 
                                                                 </td>
                                                             </tr>
