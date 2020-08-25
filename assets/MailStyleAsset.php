@@ -18,7 +18,7 @@ class MailStyleAsset extends AssetBundle
     public $sourcePath = '@mail/resources/css';
 
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
 
     public $css = [

@@ -18,7 +18,7 @@ class MailNotificationAsset extends AssetBundle
     public $sourcePath = '@mail/resources/js';
 
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
 
     public $js = [
