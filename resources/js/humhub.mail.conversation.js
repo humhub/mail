@@ -56,7 +56,11 @@ humhub.module('mail.conversation', function (module, require, $) {
     };
 
     var init = function () {
-        event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
+        event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events) {
+            if(!$('#inbox').length) {
+                return;
+            }
+
             var root = getRootView();
             var updated = false;
             var updatedMessages = [];
@@ -69,14 +73,15 @@ humhub.module('mail.conversation', function (module, require, $) {
                     root.markSeen(event.data.message_id);
                 } else if (!isOwn && root) {
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
-                    // messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
                 }
-                mail.setMailMessageCount(event.data.count);
             });
 
             Widget.instance('#inbox').updateEntries(updatedMessages);
-
         }).on('humhub:modules:mail:live:UserMessageDeleted', function (evt, events, update) {
+            if(!$('#inbox').length) {
+                return;
+            }
+
             events.forEach(function (event) {
                 var entry = getEntry(event.data.entry_id);
                 if (entry) {

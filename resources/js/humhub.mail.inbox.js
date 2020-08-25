@@ -57,13 +57,23 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     ConversationList.prototype.updateEntries = function(ids) {
         var that = this;
+
+        if(!ids.length) {
+            return;
+        }
+
         client.get(this.options.updateEntriesUrl, {data: {ids: ids}}).then(function(response) {
             if(!response.result)  {
                 return;
             }
 
             $.each(response.result, function(id, html) {
-                that.$.find('[data-message-preview="'+id+'"]').replaceWith(html);
+                var $entry = that.getEntry(id);
+                if(!$entry.length) {
+                    $(html).prependTo(that.$) ;
+                } else {
+                   $entry.replaceWith(html);
+                }
             });
 
             that.updateActiveItem();
@@ -72,10 +82,14 @@ humhub.module('mail.inbox', function (module, require, $) {
         });
     };
 
+    ConversationList.prototype.getEntry = function(id) {
+        return this.$.find('[data-message-preview="'+id+'"]');
+    };
+
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
-            var $streamEnd = $('<div class="stream-end"></div>');
+            var $streamEnd = $('<div class="inbox-stream-end"></div>');
             this.$.append($streamEnd);
 
             var that = this;
@@ -121,8 +135,8 @@ humhub.module('mail.inbox', function (module, require, $) {
             data.from = that.getLastMessageId();
             client.get(that.options.loadMoreUrl, {data: data}).then(function(response) {
                 if(response.result) {
-                    $(response.result).insertBefore('.stream-end');
-                    that.$.find('.stream-end').append();
+                    $(response.result).insertBefore('.inbox-stream-end');
+                    that.$.find('.inbox-stream-end').append();
                 }
 
                 that.options.isLast = !response.result || response.isLast;

@@ -31,7 +31,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loader = function (load) {
-    debugger;
         if (load !== false) {
             loader.set(this.$);
         } else {
@@ -85,7 +84,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.setLivePollInterval = function () {
-        debugger;
         require('live').setDelay(5);
     };
 
@@ -100,7 +98,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.reload = function () {
-    debugger;
         if (this.getActiveMessageId()) {
             this.loadMessage(this.getActiveMessageId());
         }
@@ -194,7 +191,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initScroll = function () {
         if (window.IntersectionObserver) {
             var $entryList = this.$.find('.conversation-entry-list');
-            var $streamEnd = $('<div class="stream-end"></div>');
+            var $streamEnd = $('<div class="conversation-stream-end"></div>');
             $entryList.prepend($streamEnd);
 
             var that = this;
@@ -238,7 +235,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         return client.get(this.options.loadMoreUrl, {data: data}).then(function (response) {
             if (response.result) {
                 var $result = $(response.result).hide();
-                that.$.find('.conversation-entry-list').find('.stream-end').after($result);
+                that.$.find('.conversation-entry-list').find('.conversation-stream-end').after($result);
                 $result.fadeIn();
             }
 

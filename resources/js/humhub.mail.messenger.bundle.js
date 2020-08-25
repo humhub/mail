@@ -31,7 +31,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loader = function (load) {
-    debugger;
         if (load !== false) {
             loader.set(this.$);
         } else {
@@ -85,7 +84,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.setLivePollInterval = function () {
-        debugger;
         require('live').setDelay(5);
     };
 
@@ -100,7 +98,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.reload = function () {
-    debugger;
         if (this.getActiveMessageId()) {
             this.loadMessage(this.getActiveMessageId());
         }
@@ -194,7 +191,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initScroll = function () {
         if (window.IntersectionObserver) {
             var $entryList = this.$.find('.conversation-entry-list');
-            var $streamEnd = $('<div class="stream-end"></div>');
+            var $streamEnd = $('<div class="conversation-stream-end"></div>');
             $entryList.prepend($streamEnd);
 
             var that = this;
@@ -238,7 +235,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         return client.get(this.options.loadMoreUrl, {data: data}).then(function (response) {
             if (response.result) {
                 var $result = $(response.result).hide();
-                that.$.find('.conversation-entry-list').find('.stream-end').after($result);
+                that.$.find('.conversation-entry-list').find('.conversation-stream-end').after($result);
                 $result.fadeIn();
             }
 
@@ -408,13 +405,23 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     ConversationList.prototype.updateEntries = function(ids) {
         var that = this;
+
+        if(!ids.length) {
+            return;
+        }
+
         client.get(this.options.updateEntriesUrl, {data: {ids: ids}}).then(function(response) {
             if(!response.result)  {
                 return;
             }
 
             $.each(response.result, function(id, html) {
-                that.$.find('[data-message-preview="'+id+'"]').replaceWith(html);
+                var $entry = that.getEntry(id);
+                if(!$entry.length) {
+                    $(html).prependTo(that.$) ;
+                } else {
+                   $entry.replaceWith(html);
+                }
             });
 
             that.updateActiveItem();
@@ -423,10 +430,14 @@ humhub.module('mail.inbox', function (module, require, $) {
         });
     };
 
+    ConversationList.prototype.getEntry = function(id) {
+        return this.$.find('[data-message-preview="'+id+'"]');
+    };
+
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
-            var $streamEnd = $('<div class="stream-end"></div>');
+            var $streamEnd = $('<div class="inbox-stream-end"></div>');
             this.$.append($streamEnd);
 
             var that = this;
@@ -472,8 +483,8 @@ humhub.module('mail.inbox', function (module, require, $) {
             data.from = that.getLastMessageId();
             client.get(that.options.loadMoreUrl, {data: data}).then(function(response) {
                 if(response.result) {
-                    $(response.result).insertBefore('.stream-end');
-                    that.$.find('.stream-end').append();
+                    $(response.result).insertBefore('.inbox-stream-end');
+                    that.$.find('.inbox-stream-end').append();
                 }
 
                 that.options.isLast = !response.result || response.isLast;
@@ -602,7 +613,11 @@ humhub.module('mail.conversation', function (module, require, $) {
     };
 
     var init = function () {
-        event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
+        event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events) {
+            if(!$('#inbox').length) {
+                return;
+            }
+
             var root = getRootView();
             var updated = false;
             var updatedMessages = [];
@@ -615,14 +630,15 @@ humhub.module('mail.conversation', function (module, require, $) {
                     root.markSeen(event.data.message_id);
                 } else if (!isOwn && root) {
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
-                    // messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
                 }
-                mail.setMailMessageCount(event.data.count);
             });
 
             Widget.instance('#inbox').updateEntries(updatedMessages);
-
         }).on('humhub:modules:mail:live:UserMessageDeleted', function (evt, events, update) {
+            if(!$('#inbox').length) {
+                return;
+            }
+
             events.forEach(function (event) {
                 var entry = getEntry(event.data.entry_id);
                 if (entry) {

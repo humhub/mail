@@ -1,6 +1,7 @@
 humhub.module('mail.notification', function(module, require, $) {
     var client = require('client');
     var loader = require('ui.loader');
+    var event = require('event');
     var Widget = require('ui.widget').Widget;
     var currentXhr;
 
@@ -10,6 +11,15 @@ humhub.module('mail.notification', function(module, require, $) {
         // open the messages menu
 
         if(!isPjax) {
+            event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events) {
+                event = events[events.length - 1];
+                setMailMessageCount(event.data.count);
+            }).on('humhub:modules:mail:live:UserMessageDeleted', function (evt, events) {
+                event = events[events.length - 1];
+                setMailMessageCount(event.data.count);
+            });
+
+
             $('#icon-messages').click(function () {
 
                 if(currentXhr) {
