@@ -8,6 +8,7 @@
 
 namespace humhub\modules\mail;
 
+use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\user\models\User;
 use Yii;
@@ -36,11 +37,16 @@ class Events
     public static function onUserDelete($event)
     {
 
-        foreach (MessageEntry::findAll(array('user_id' => $event->sender->id)) as $messageEntry) {
+        foreach (MessageEntry::findAll(['user_id' => $event->sender->id]) as $messageEntry) {
             $messageEntry->delete();
         }
-        foreach (UserMessage::findAll(array('user_id' => $event->sender->id)) as $userMessage) {
+
+        foreach (UserMessage::findAll(['user_id' => $event->sender->id]) as $userMessage) {
             $userMessage->message->leave($event->sender->id);
+        }
+
+        foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
+            $userMessageTag->message->leave($event->sender->id);
         }
 
         return true;
