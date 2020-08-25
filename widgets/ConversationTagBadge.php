@@ -16,7 +16,7 @@ class ConversationTagBadge extends Label
 {
     public static function get(MessageTag $tag)
     {
-        return static::defaultType(Html::encode($tag->name))->icon('star')
+        return static::defaultType($tag->name)->icon('star')
             ->withLink(Link::withAction(null, 'mail.inbox.setTagFilter')->options([
                 'data-tag-id' => $tag->id,
                 'data-tag-name' => $tag->name,
