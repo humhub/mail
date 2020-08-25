@@ -16,7 +16,7 @@ use humhub\modules\mail\widgets\InboxMessagePreview;
 class InboxController extends Controller
 {
 
-   public function getAccessRules()
+    public function getAccessRules()
     {
         return [
             ['login']
@@ -46,11 +46,26 @@ class InboxController extends Controller
             $result .= InboxMessagePreview::widget(['userMessage' => $userMessage]);
         }
 
-       return $this->asJson([
-           'result' => $result,
-           'isLast' => $filter->wasLastPage()
-       ]);
+        return $this->asJson([
+            'result' => $result,
+            'isLast' => $filter->wasLastPage()
+        ]);
 
+    }
+
+    public function actionUpdateEntries()
+    {
+        $filter = new InboxFilterForm();
+        $filter->apply();
+
+        $result = [];
+        foreach ($filter->query->all() as $userMessage) {
+            $result[$userMessage->message_id] = InboxMessagePreview::widget(['userMessage' => $userMessage]);
+        }
+
+        return $this->asJson([
+            'result' => $result,
+        ]);
     }
 
 }

@@ -68,10 +68,14 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
         client.submit(evt).then(function (response) {
             if (response.success) {
-                that.appendEntry(response.content);
-                that.$.find(".time").timeago(); // somehow this is not triggered after reply
-                Widget.instance($('#replyform-message').trigger('clear')).focus();
-                that.focus();
+                that.appendEntry(response.content).then(function() {
+                    that.$.find(".time").timeago(); // somehow this is not triggered after reply
+                    Widget.instance($('#replyform-message').trigger('clear')).focus();
+                    that.scrollToBottom();
+                    that.focus();
+                    Widget.instance('#inbox').updateEntries([that.getActiveMessageId()]);
+                    that.setLivePollInterval();
+                });
             } else {
                 module.log.error(response, true);
             }
@@ -79,6 +83,12 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             module.log.error(e, true);
         });
     };
+
+    ConversationView.prototype.setLivePollInterval = function () {
+        debugger;
+        require('live').setDelay(5);
+    };
+
 
     ConversationView.prototype.focus = function (evt) {
         Widget.instance('#replyform-message').focus();
@@ -115,7 +125,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var $html = $(html);
 
         if (that.$.find('[data-entry-id="' + $html.data('entryId') + '"]').length) {
-            return;
+            return Promise.resolve();
         }
 
         // Filter out all script/links and text nodes
@@ -129,11 +139,15 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         // call insert callback
         this.getListNode().append($html);
 
-        $elements.hide().css('opacity', 1).fadeIn('fast', function () {
-            that.scrollToBottom();
-            that.onUpdate();
-        });
-
+        return new Promise(function(resolve, reject) {
+            $elements.hide().imagesLoaded(function() {
+                $elements.css('opacity', 1).fadeIn('fast', function () {
+                    that.onUpdate();
+                    setTimeout(function() {that.scrollToBottom()}, 100);
+                    resolve();
+                });
+            })
+        })
     };
 
     ConversationView.prototype.loadMessage = function (evt) {
@@ -392,6 +406,23 @@ humhub.module('mail.inbox', function (module, require, $) {
         }
     };
 
+    ConversationList.prototype.updateEntries = function(ids) {
+        var that = this;
+        client.get(this.options.updateEntriesUrl, {data: {ids: ids}}).then(function(response) {
+            if(!response.result)  {
+                return;
+            }
+
+            $.each(response.result, function(id, html) {
+                that.$.find('[data-message-preview="'+id+'"]').replaceWith(html);
+            });
+
+            that.updateActiveItem();
+        }).catch(function(e) {
+            module.log.error(e);
+        });
+    };
+
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
@@ -520,6 +551,7 @@ humhub.module('mail.conversation', function (module, require, $) {
     var client = require('client');
     var event = require('event');
     var mail = require('mail.notification');
+    var user = require('user');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {
@@ -573,19 +605,23 @@ humhub.module('mail.conversation', function (module, require, $) {
         event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
             var root = getRootView();
             var updated = false;
+            var updatedMessages = [];
             events.forEach(function (event) {
-                if (!updated && root && root.options.messageId == event.data.message_id) {
+                var isOwn = event.data.guid == user.guid;
+                updatedMessages.push(event.data.message_id);
+                if (!isOwn && !updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
                     root.markSeen(event.data.message_id);
-                } else if (root) {
+                } else if (!isOwn && root) {
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
                     // messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
                 }
                 mail.setMailMessageCount(event.data.count);
             });
 
-            //TODO: update notification count
+            Widget.instance('#inbox').updateEntries(updatedMessages);
+
         }).on('humhub:modules:mail:live:UserMessageDeleted', function (evt, events, update) {
             events.forEach(function (event) {
                 var entry = getEntry(event.data.entry_id);

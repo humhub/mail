@@ -145,7 +145,7 @@ class MessageEntry extends ActiveRecord
             Yii::$app->live->send(new NewUserMessage([
                 'contentContainerId' => $user->contentcontainer_id,
                 'message_id' => $this->message_id,
-                'user_id' => $user->id
+                'user_guid' => $user->guid
             ]));
 
             /* @var $mailTarget BaseTarget */

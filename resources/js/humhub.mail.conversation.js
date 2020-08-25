@@ -5,6 +5,7 @@ humhub.module('mail.conversation', function (module, require, $) {
     var client = require('client');
     var event = require('event');
     var mail = require('mail.notification');
+    var user = require('user');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {
@@ -58,19 +59,23 @@ humhub.module('mail.conversation', function (module, require, $) {
         event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events, update) {
             var root = getRootView();
             var updated = false;
+            var updatedMessages = [];
             events.forEach(function (event) {
-                if (!updated && root && root.options.messageId == event.data.message_id) {
+                var isOwn = event.data.guid == user.guid;
+                updatedMessages.push(event.data.message_id);
+                if (!isOwn && !updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
                     root.markSeen(event.data.message_id);
-                } else if (root) {
+                } else if (!isOwn && root) {
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
                     // messageIds[event.data.message_id] = messageIds[event.data.message_id] ? messageIds[event.data.message_id] ++ : 1;
                 }
                 mail.setMailMessageCount(event.data.count);
             });
 
-            //TODO: update notification count
+            Widget.instance('#inbox').updateEntries(updatedMessages);
+
         }).on('humhub:modules:mail:live:UserMessageDeleted', function (evt, events, update) {
             events.forEach(function (event) {
                 var entry = getEntry(event.data.entry_id);

@@ -64,6 +64,7 @@ class ConversationInbox extends JsWidget
         return [
             'widget-reload-url' => Url::toUpdateInbox(),
             'load-more-url' => Url::toInboxLoadMore(),
+            'update-entries-url' => Url::toInboxUpdateEntries(),
             'is-last' => $this->filter->wasLastPage()
         ];
     }

@@ -102,6 +102,11 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/inbox/load-more']);
     }
 
+    public static function toInboxUpdateEntries()
+    {
+        return static::to(['/mail/inbox/update-entries']);
+    }
+
     public static function toLoadMoreMessages()
     {
         return static::to(['/mail/mail/load-more']);

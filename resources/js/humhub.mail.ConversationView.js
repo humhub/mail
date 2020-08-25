@@ -68,10 +68,14 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
         client.submit(evt).then(function (response) {
             if (response.success) {
-                that.appendEntry(response.content);
-                that.$.find(".time").timeago(); // somehow this is not triggered after reply
-                Widget.instance($('#replyform-message').trigger('clear')).focus();
-                that.focus();
+                that.appendEntry(response.content).then(function() {
+                    that.$.find(".time").timeago(); // somehow this is not triggered after reply
+                    Widget.instance($('#replyform-message').trigger('clear')).focus();
+                    that.scrollToBottom();
+                    that.focus();
+                    Widget.instance('#inbox').updateEntries([that.getActiveMessageId()]);
+                    that.setLivePollInterval();
+                });
             } else {
                 module.log.error(response, true);
             }
@@ -79,6 +83,12 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             module.log.error(e, true);
         });
     };
+
+    ConversationView.prototype.setLivePollInterval = function () {
+        debugger;
+        require('live').setDelay(5);
+    };
+
 
     ConversationView.prototype.focus = function (evt) {
         Widget.instance('#replyform-message').focus();
@@ -115,7 +125,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var $html = $(html);
 
         if (that.$.find('[data-entry-id="' + $html.data('entryId') + '"]').length) {
-            return;
+            return Promise.resolve();
         }
 
         // Filter out all script/links and text nodes
@@ -129,11 +139,15 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         // call insert callback
         this.getListNode().append($html);
 
-        $elements.hide().css('opacity', 1).fadeIn('fast', function () {
-            that.scrollToBottom();
-            that.onUpdate();
-        });
-
+        return new Promise(function(resolve, reject) {
+            $elements.hide().imagesLoaded(function() {
+                $elements.css('opacity', 1).fadeIn('fast', function () {
+                    that.onUpdate();
+                    setTimeout(function() {that.scrollToBottom()}, 100);
+                    resolve();
+                });
+            })
+        })
     };
 
     ConversationView.prototype.loadMessage = function (evt) {

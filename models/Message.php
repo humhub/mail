@@ -2,18 +2,14 @@
 
 namespace humhub\modules\mail\models;
 
-use humhub\libs\Helpers;
-use humhub\libs\MarkdownPreview;
+
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\Module;
 use Yii;
-use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
-
 use humhub\modules\notification\targets\BaseTarget;
 use humhub\modules\notification\targets\MailTarget;
 use humhub\components\ActiveRecord;
-use humhub\models\Setting;
 use humhub\modules\user\models\User;
 use yii\db\Expression;
 

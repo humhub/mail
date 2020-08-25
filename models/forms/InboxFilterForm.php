@@ -51,6 +51,11 @@ class InboxFilterForm extends QueryFilter
     public $from;
 
     /**
+     * @var int
+     */
+    public $ids;
+
+    /**
      * @var
      */
     private $wasLastPage;
@@ -65,6 +70,7 @@ class InboxFilterForm extends QueryFilter
             [['participants'], 'safe'],
             [['tags'], 'safe'],
             [['from'], 'integer'],
+            [['ids'], 'integer'],
         ];
     }
 
@@ -113,6 +119,10 @@ class InboxFilterForm extends QueryFilter
 
         if(!empty($this->from)) {
             $this->query->andWhere(['<', 'user_message.message_id', $this->from]);
+        }
+
+        if(!empty($this->ids)) {
+            $this->query->andWhere(['IN', 'user_message.message_id', $this->ids]);
         }
     }
 

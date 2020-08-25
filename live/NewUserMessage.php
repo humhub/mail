@@ -11,6 +11,7 @@ namespace humhub\modules\mail\live;
 use humhub\modules\live\components\LiveEvent;
 use humhub\modules\content\models\Content;
 use humhub\modules\mail\models\UserMessage;
+use humhub\modules\user\models\User;
 
 /**
  * Live event for new notifications
@@ -23,7 +24,7 @@ class NewUserMessage extends LiveEvent
     /**
      * @var int the id of the new notification
      */
-    public $user_id;
+    public $user_guid;
     
     /**
      * @var string text representation used for frotnend desktop notifications 
@@ -42,7 +43,7 @@ class NewUserMessage extends LiveEvent
     {
         parent::init();
         $this->visibility = Content::VISIBILITY_OWNER;
-        $this->count = UserMessage::getNewMessageCount($this->user_id);
+        $this->count = UserMessage::getNewMessageCount(User::findOne(['guid' => $this->user_guid]));
     }
 
 }

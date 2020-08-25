@@ -55,6 +55,23 @@ humhub.module('mail.inbox', function (module, require, $) {
         }
     };
 
+    ConversationList.prototype.updateEntries = function(ids) {
+        var that = this;
+        client.get(this.options.updateEntriesUrl, {data: {ids: ids}}).then(function(response) {
+            if(!response.result)  {
+                return;
+            }
+
+            $.each(response.result, function(id, html) {
+                that.$.find('[data-message-preview="'+id+'"]').replaceWith(html);
+            });
+
+            that.updateActiveItem();
+        }).catch(function(e) {
+            module.log.error(e);
+        });
+    };
+
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 

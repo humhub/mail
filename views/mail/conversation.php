@@ -6,9 +6,8 @@ use humhub\modules\mail\widgets\ConversationHeader;
 use humhub\modules\mail\widgets\ConversationTags;
 use humhub\modules\mail\widgets\Messages;
 use humhub\modules\ui\view\components\View;
-use yii\bootstrap\ActiveForm;
+use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
-use humhub\modules\mail\widgets\wall\ConversationEntry;
 use humhub\widgets\Button;
 
 /* @var $this View */

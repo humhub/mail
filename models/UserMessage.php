@@ -88,6 +88,10 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
+        if($userId instanceof User) {
+            $userId = $userId->id;
+        }
+
         return static::findByUser($userId)
             ->andWhere("message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL")
             ->andWhere(["<>", 'message.updated_by', $userId])->count();
@@ -97,6 +101,10 @@ class UserMessage extends ActiveRecord
     {
         if ($userId === null) {
             $userId = Yii::$app->user->id;
+        }
+
+        if($userId instanceof User) {
+            $userId = $userId->id;
         }
 
         return static::find()->joinWith('message')
