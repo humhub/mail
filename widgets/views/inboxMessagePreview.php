@@ -7,7 +7,7 @@
  */
 
 use yii\helpers\Html;
-use humhub\widgets\TimeAgo;
+use humhub\modules\mail\widgets\TimeAgo;
 use humhub\libs\Helpers;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\user\widgets\Image;

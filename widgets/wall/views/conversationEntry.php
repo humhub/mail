@@ -4,7 +4,7 @@ use humhub\modules\mail\helpers\Url;
 use humhub\modules\user\widgets\Image;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\widgets\richtext\RichText;
-use humhub\widgets\TimeAgo;
+use humhub\modules\mail\widgets\TimeAgo;
 use humhub\libs\Html;
 
 /* @var $entry \humhub\modules\mail\models\MessageEntry */
