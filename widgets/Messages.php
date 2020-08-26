@@ -34,8 +34,9 @@ class Messages extends Widget
         $prevEntry = null;
         $result = '';
 
-        foreach ($this->getEntries() as $index => $entry) {
-            $nextEntry = $message->entries[$index + 1] ?? null;
+        $entries = $this->getEntries();
+        foreach ($entries as $index => $entry) {
+            $nextEntry = $entries[$index + 1] ?? null;
             $result .= ConversationEntry::widget(['entry' => $entry, 'prevEntry' => $prevEntry, 'nextEntry' => $nextEntry]);
             $prevEntry = $entry;
         }

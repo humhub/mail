@@ -73,7 +73,6 @@ humhub.module('mail.conversation', function (module, require, $) {
                     updated = true;
                     root.markSeen(event.data.message_id);
                 } else if (!isOwn && root) {
-                    debugger;
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
                 }
             });
