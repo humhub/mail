@@ -38,15 +38,16 @@ use humhub\widgets\Link;
             'picker' => UserPickerField::class,
             'pickerOptions' => ['name' => 'participants', 'placeholder' => Yii::t('MailModule.base', 'Participants')]]) ?>
     </div>
-
+    <div class="message-tag-filter-group">
         <?= PickerFilterInput::widget([
             'id' => 'tags', 'category' => 'tags',
             'picker' => ConversationTagPicker::class,
             'pickerOptions' => ['id' => 'inbox-tag-picker', 'name' => 'tags', 'placeholder' => Yii::t('MailModule.base', 'Tags'), 'placeholderMore' => Yii::t('MailModule.base', 'Tags')]]) ?>
 
     <small>
-    <?= Link::to(Yii::t('MailModule.base', 'Manage Tags'), Url::toManageTags())->icon('gear')->right()->style('font-size:0.9em') ?>
+    <?= Link::to(Yii::t('MailModule.base', 'Manage Tags'), Url::toManageTags())->icon('gear')->right()->cssClass('manage-tags-link'); ?>
     </small>
+    </div>
     <?php ActiveForm::end() ?>
 </div>
 <?= Html::endTag('div') ?>
