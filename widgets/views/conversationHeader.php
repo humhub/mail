@@ -52,7 +52,7 @@ $userList = '';
 <div id="conversation-head-info">
     <small>
         <?php $link = Html::beginTag('strong').Html::containerLink($message->originator, ['style' => ['color' => $this->theme->variable('info')]]).Html::endTag('strong'); ?>
-    <?= Yii::t('MailModule.base', 'crated by {name}', ['name' => $link])?>
+    <?= Yii::t('MailModule.base', 'created by {name}', ['name' => $link])?>
 
         <?= ParticipantUserList::widget(['message' => $message, 'options' => ['class' => 'visible-xs-inline']])?>
     </small>
