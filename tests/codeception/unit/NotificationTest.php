@@ -2,6 +2,7 @@
 
 use humhub\modules\live\models\Live;
 use humhub\modules\mail\models\forms\CreateMessage;
+use humhub\modules\mail\models\forms\InviteParticipantForm;
 use tests\codeception\_support\HumHubDbTestCase;
 use humhub\modules\user\models\User;
 
@@ -42,7 +43,6 @@ class NotificationTest extends HumHubDbTestCase
    {
        $user2 = User::findOne(['id' => 3]);
 
-
        $this->createMessage('First', 'First', [$user2->guid]);
 
        // Check mail should only be sent to
@@ -71,6 +71,21 @@ class NotificationTest extends HumHubDbTestCase
         $test3 = unserialize($test[1]->serialized_data);
         $this->assertCount(1,  Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
         $this->assertCount(1,  Live::find()->where(['contentcontainer_id' => $user3->contentcontainer_id])->all());
+    }
+
+    public function testNotificationsAreSentAfterAddingParticipant()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $message = $this->createMessage('First', 'First', [$user2->guid]);
+
+
+        $user3 = User::findOne(['id' => 4]);
+        $inviteForm = new InviteParticipantForm(['message' => $message->messageInstance, 'recipients' => [$user3->guid]]);
+        $inviteForm->save();
+
+        $this->assertSentEmail(2);
+        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailTo($user3->email);
     }
 
     public function assertEqualsLastEmailTo($email)
