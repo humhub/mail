@@ -192,18 +192,45 @@ humhub.module('mail.inbox', function (module, require, $) {
         return this.$.find('.entry:last').data('messagePreview');
     };
 
+    ConversationList.prototype.hide = function() {
+        return new Promise(function (resolve) {
+            if(view.isSmall()) {
+                $('.inbox-wrapper').slideUp(resolve);
+            }
+            resolve();
+        });
+    };
+
+    ConversationList.prototype.show = function() {
+        return new Promise(function (resolve) {
+            if(view.isSmall()) {
+                $('.inbox-wrapper').slideDown(resolve);
+            }
+            resolve();
+        });
+    };
+
+    var toggleInbox = function() {
+        if(view.isSmall()) {
+            $('.inbox-wrapper').slideToggle();
+        }
+    };
+
     var setTagFilter = function (evt) {
-        $('#mail-filter-menu').collapse('show');
-        Widget.instance('#inbox-tag-picker').setSelection([{
-            id: evt.$trigger.data('tagId'),
-            text: evt.$trigger.data('tagName'),
-            image: evt.$trigger.data('tagImage'),
-        }]);
+        Widget.instance('#inbox').show().then(function() {
+            $('#mail-filter-menu').collapse('show');
+            Widget.instance('#inbox-tag-picker').setSelection([{
+                id: evt.$trigger.data('tagId'),
+                text: evt.$trigger.data('tagName'),
+                image: evt.$trigger.data('tagImage'),
+            }]);
+        });
     };
 
     module.export({
         ConversationList: ConversationList,
         Filter: ConversationFilter,
-        setTagFilter: setTagFilter
+        setTagFilter: setTagFilter,
+        toggleInbox: toggleInbox
     });
 });

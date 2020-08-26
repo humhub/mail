@@ -5,7 +5,7 @@ namespace humhub\modules\mail\controllers;
 use humhub\modules\mail\Module;
 use humhub\modules\mail\widgets\ConversationHeader;
 use humhub\modules\mail\widgets\Messages;
-use humhub\modules\mail\widgets\wall\ConversationEntry;
+use humhub\modules\mail\widgets\ConversationEntry;
 use humhub\modules\user\widgets\UserListBox;
 use Yii;
 use humhub\modules\mail\permissions\StartConversation;

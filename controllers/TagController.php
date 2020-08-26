@@ -7,7 +7,7 @@ use humhub\modules\mail\models\forms\ConversationTagsForm;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\mail\widgets\ConversationTags;
-use humhub\modules\mail\widgets\wall\ConversationEntry;
+use humhub\modules\mail\widgets\ConversationEntry;
 use humhub\widgets\ModalClose;
 use Yii;
 use humhub\modules\mail\permissions\StartConversation;

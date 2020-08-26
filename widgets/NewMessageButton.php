@@ -41,6 +41,11 @@ class NewMessageButton extends Widget
     public $right = false;
 
     /**
+     * @var string
+     */
+    public $cssClass;
+
+    /**
      * Creates the Wall Widget
      */
     public function run()
@@ -53,6 +58,10 @@ class NewMessageButton extends Widget
 
         if($this->right) {
             $button->right();
+        }
+
+        if($this->cssClass) {
+            $button->cssClass($this->cssClass);
         }
 
         switch ($this->size) {
@@ -75,7 +84,7 @@ class NewMessageButton extends Widget
 
     public function getLabel()
     {
-        if($this->label) {
+        if($this->label !== null) {
             return $this->label;
         }
 

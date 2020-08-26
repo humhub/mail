@@ -2,7 +2,7 @@
 
 use humhub\modules\mail\assets\MailMessengerAsset;
 use humhub\modules\mail\models\UserMessage;
-use humhub\modules\mail\widgets\wall\ConversationView;
+use humhub\modules\mail\widgets\ConversationView;
 
 /* @var $messageId int */
 /* @var $userMessages UserMessage[] */

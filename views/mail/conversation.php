@@ -48,7 +48,10 @@ use humhub\widgets\Button;
                         'pluginOptions' => ['maxHeight' => '200px'],
                     ])->label(false) ?>
 
-                    <?= Button::primary(Yii::t('MailModule.views_mail_show', 'Send'))->submit()->action('reply', $replyForm->getUrl()) ?>
+                <div class="clearfix">
+                    <?= Button::primary(Yii::t('MailModule.views_mail_show', 'Send'))->submit()->action('reply', $replyForm->getUrl())->right() ?>
+                </div>
+
 
                 <?php ActiveForm::end(); ?>
             </div>

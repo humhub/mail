@@ -6,6 +6,7 @@ humhub.module('mail.conversation', function (module, require, $) {
     var event = require('event');
     var mail = require('mail.notification');
     var user = require('user');
+    var view = require('ui.view');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {

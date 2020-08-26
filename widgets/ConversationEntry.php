@@ -6,7 +6,7 @@
  * Time: 09:29
  */
 
-namespace humhub\modules\mail\widgets\wall;
+namespace humhub\modules\mail\widgets;
 
 
 use humhub\libs\Html;

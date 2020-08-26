@@ -6,6 +6,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     var additions = require('ui.additions');
     var object = require('util.object');
     var mail = require('mail.notification');
+    var view = require('ui.view');
 
     var ConversationView = Widget.extend();
 
@@ -155,7 +156,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             that.setActiveMessageId(messageId);
             that.options.isLast = false;
 
-            Widget.instance('#inbox').updateActiveItem();
+            var inbox = Widget.instance('#inbox');
+            inbox.updateActiveItem();
+            inbox.hide();
 
             // Replace history state only if triggered by message preview item
             if (evt.$trigger && history && history.replaceState) {
@@ -304,7 +307,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 }
 
                 var formHeight = $('.mail-message-form').height();
-                var max_height = (window.innerHeight - that.$.position().top - formHeight - 160) + 'px';
+                var max_height = (window.innerHeight - that.$.position().top - formHeight - (view.isSmall() ? 145 : 160)) + 'px';
                 that.$.find('.conversation-entry-list').css('max-height', max_height);
                 resolve();
             }, 100);

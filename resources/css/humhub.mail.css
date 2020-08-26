@@ -181,3 +181,10 @@
 .conversation-menu-item a {
     cursor: pointer;
 }
+
+@media (max-width: 767px) {
+    .inbox-wrapper {
+        display: none;
+    }
+}
+
