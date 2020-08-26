@@ -26,6 +26,11 @@ class ParticipantUserList extends Widget
     /**
      * @var array
      */
+    public $options = [];
+
+    /**
+     * @var array
+     */
     public $linkOptions = [];
 
     public function run()
@@ -34,10 +39,12 @@ class ParticipantUserList extends Widget
             return '';
         }
 
-         $result = Yii::t('MailModule.base','with').'&nbsp;';
+         $result = Html::beginTag('span', $this->options);
+         $result .= Yii::t('MailModule.base','with').'&nbsp;';
          $result .= Html::beginTag('a', array_merge($this->getDefaultLinkOptions(), $this->linkOptions));
          $result .= $this->renderUserList();
          $result .= Html::endTag('a');
+         $result .= Html::endTag('span');
 
          return $result;
     }

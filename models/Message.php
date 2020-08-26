@@ -64,7 +64,7 @@ class Message extends ActiveRecord
         $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
         $query->addOrderBy(['created_at' => SORT_ASC]);
 
-        if($from) {
+        if ($from) {
             $query->andWhere(['>', 'message_entry.id', $from]);
         }
 
@@ -80,12 +80,12 @@ class Message extends ActiveRecord
         $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
         $query->addOrderBy(['created_at' => SORT_DESC]);
 
-        if($from) {
+        if ($from) {
             $query->andWhere(['<', 'message_entry.id', $from]);
         }
 
         $module = Module::getModuleInstance();
-        $limit = $from ?  $module->conversationUpdatePageSize : $module->conversationInitPageSize;
+        $limit = $from ? $module->conversationUpdatePageSize : $module->conversationInitPageSize;
         $query->limit($limit);
 
         return array_reverse($query->all());
@@ -94,7 +94,7 @@ class Message extends ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])
-                        ->viaTable('user_message', ['message_id' => 'id']);
+            ->viaTable('user_message', ['message_id' => 'id']);
     }
 
     /**
@@ -103,7 +103,7 @@ class Message extends ActiveRecord
      */
     public function getUserMessage($userId = null)
     {
-        if(!$userId) {
+        if (!$userId) {
             $userId = Yii::$app->user->id;
         }
 
@@ -155,7 +155,7 @@ class Message extends ActiveRecord
     {
         $query = MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1);
 
-        if(!$includeMe) {
+        if (!$includeMe) {
             $query->andWhere(['<>', 'user_id', Yii::$app->user->id]);
         }
 
@@ -196,12 +196,16 @@ class Message extends ActiveRecord
      */
     public function leave($userId)
     {
-        $userMessage = UserMessage::findOne(array(
-                    'message_id' => $this->id,
-                    'user_id' => $userId
-        ));
+        $userMessage = UserMessage::findOne([
+            'message_id' => $this->id,
+            'user_id' => $userId
+        ]);
 
-        if (count($this->users) > 2) {
+        if(!$userMessage) {
+            return;
+        }
+
+        if (count($this->users) > 1) {
             $userMessage->delete();
         } else {
             $this->delete();
@@ -217,8 +221,8 @@ class Message extends ActiveRecord
     {
         // Update User Message Entry
         $userMessage = UserMessage::findOne(array(
-                    'user_id' => $userId,
-                    'message_id' => $this->id
+            'user_id' => $userId,
+            'message_id' => $this->id
         ));
         if ($userMessage !== null) {
             $userMessage->last_viewed = new Expression('NOW()');
@@ -258,7 +262,7 @@ class Message extends ActiveRecord
             'user_id' => $recipient->id
         ]);
 
-        if($originator) {
+        if ($originator) {
             $userMessage->is_originator = 1;
             $userMessage->last_viewed = new Expression('NOW()');
         }

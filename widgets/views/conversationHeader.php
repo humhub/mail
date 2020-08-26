@@ -54,6 +54,6 @@ $userList = '';
         <?php $link = Html::beginTag('strong').Html::containerLink($message->originator, ['style' => ['color' => $this->theme->variable('info')]]).Html::endTag('strong'); ?>
     <?= Yii::t('MailModule.base', 'crated by {name}', ['name' => $link])?>
 
-        <?= ParticipantUserList::widget(['message' => $message, 'linkOptions' => ['class' => 'visible-xs-inline']])?>
+        <?= ParticipantUserList::widget(['message' => $message, 'options' => ['class' => 'visible-xs-inline']])?>
     </small>
 </div>
