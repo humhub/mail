@@ -546,7 +546,12 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.hide = function() {
         return new Promise(function (resolve) {
             if(view.isSmall()) {
-                $('.inbox-wrapper').slideUp(resolve);
+                $('.inbox-wrapper').slideUp(function() {
+                    if($('#mail-conversation-root').length) {
+                        Widget.instance('#mail-conversation-root').updateSize();
+                    }
+                    resolve();
+                });
             }
             resolve();
         });
@@ -555,7 +560,13 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.show = function() {
         return new Promise(function (resolve) {
             if(view.isSmall()) {
-                $('.inbox-wrapper').slideDown(resolve);
+                $('.inbox-wrapper').slideDown(function() {
+                    if($('#mail-conversation-root').length) {
+                        Widget.instance('#mail-conversation-root').updateSize();
+                    }
+
+                    resolve();
+                });
             }
             resolve();
         });
@@ -563,7 +574,9 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     var toggleInbox = function() {
         if(view.isSmall()) {
-            $('.inbox-wrapper').slideToggle();
+            $('.inbox-wrapper').slideToggle(function() {
+                Widget.instance('#mail-conversation-root').updateSize();
+            });
         }
     };
 

@@ -183,6 +183,9 @@
 }
 
 @media (max-width: 767px) {
+    #inbox {
+        max-height: 30vh;
+    }
     .inbox-wrapper {
         display: none;
     }
