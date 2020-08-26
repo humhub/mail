@@ -46,7 +46,7 @@ $isOwnMessage = $entry->user->is(Yii::$app->user->getIdentity());
 
         <?php if($isOwnMessage) : ?>
             <div class="conversation-menu-item" style="display: inline-block">
-                &middot; <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))
+                <span class="hidden-xs time">|</span> <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))
                     ->cssClass('conversation-edit-button time')
                     ->load(Url::toEditMessageEntry($entry))->link() ?>
             </div>

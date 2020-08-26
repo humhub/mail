@@ -1,6 +1,7 @@
 <?php
 use humhub\libs\Html;
 use humhub\modules\mail\widgets\ConversationSettingsMenu;
+use humhub\modules\mail\widgets\ParticipantUserList;
 use humhub\modules\user\widgets\Image;
 use humhub\widgets\ModalButton;
 use humhub\modules\mail\helpers\Url;
@@ -27,7 +28,7 @@ $userList = '';
 
         <?php foreach ($users as $index => $user) : ?>
             <?php if($index < $maxUserImages) : ?>
-                <?= Image::widget(['user' => $user, 'width' => '25', 'showTooltip' => true, 'link' => true])?>
+                <?= Image::widget(['user' => $user, 'width' => '25', 'showTooltip' => true, 'link' => true, 'linkOptions' => ['class' => 'hidden-xs']])?>
             <?php else: ?>
                 <?php $userList .= Html::encode($user->getDisplayName())?>
                 <?php $userList .= ($index < $userCount - 1) ? '<br>' : ''?>
@@ -39,6 +40,7 @@ $userList = '';
                 ->load(Url::toConversationUserList($message))
                 ->cssClass('conversation-head-button')
                 ->tooltip($userList)
+                ->cssClass('hidden-xs')
                 ->options(['data-html' => 'true', 'data-placement' => 'bottom'])
                 ->sm()->loader(false) ?>
         <?php endif; ?>
@@ -51,5 +53,7 @@ $userList = '';
     <small>
         <?php $link = Html::beginTag('strong').Html::containerLink($message->originator, ['style' => ['color' => $this->theme->variable('info')]]).Html::endTag('strong'); ?>
     <?= Yii::t('MailModule.base', 'crated by {name}', ['name' => $link])?>
+
+        <?= ParticipantUserList::widget(['message' => $message, 'linkOptions' => ['class' => 'visible-xs-inline']])?>
     </small>
 </div>
