@@ -66,13 +66,14 @@ humhub.module('mail.conversation', function (module, require, $) {
             var updated = false;
             var updatedMessages = [];
             events.forEach(function (event) {
-                var isOwn = event.data.guid == user.guid;
+                var isOwn = event.data['user_guid'] == user.guid();
                 updatedMessages.push(event.data.message_id);
                 if (!isOwn && !updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
                     root.markSeen(event.data.message_id);
                 } else if (!isOwn && root) {
+                    debugger;
                     getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
                 }
             });
