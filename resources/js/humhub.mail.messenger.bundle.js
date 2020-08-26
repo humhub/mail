@@ -25,7 +25,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').fadeIn('fast');
+            $(this).find('.conversation-menu').show();
         }).on('mouseleave', '.mail-conversation-entry', function () {
             $(this).find('.conversation-menu').hide();
         });
