@@ -40,6 +40,26 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/tag/edit-conversation', 'messageId' => $message->id]);
     }
 
+    public static function toManageTags()
+    {
+        return static::to(['/mail/tag/manage']);
+    }
+
+    public static function toAddTag()
+    {
+        return static::to(['/mail/tag/add']);
+    }
+
+    public static function toEditTag($id)
+    {
+        return static::to(['/mail/tag/edit', 'id' => $id]);
+    }
+
+    public static function toDeleteTag($id)
+    {
+        return static::to(['/mail/tag/delete', 'id' => $id]);
+    }
+
     public static function toUpdateInbox()
     {
         return static::to(['/mail/inbox/index']);

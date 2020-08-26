@@ -6,6 +6,7 @@ namespace humhub\modules\mail\models;
 
 use humhub\components\ActiveRecord;
 use humhub\modules\content\models\Content;
+use Yii;
 use yii\db\conditions\ExistsCondition;
 use yii\db\conditions\LikeCondition;
 use yii\web\ForbiddenHttpException;
@@ -31,10 +32,11 @@ class MessageTag extends ActiveRecord
     {
         return [
             ['name', 'trim'],
+            ['name', 'required'],
             ['sort_order', 'integer'],
             ['name', 'unique', 'targetAttribute' => ['user_id', 'name'], 'when' => function(MessageTag $model) {
                 return $model->isNewRecord || $model->isAttributeChanged('name');
-            }]
+            }, 'message' => Yii::t('MailModule.base', 'A tag with the same name already exists.')]
         ];
     }
 
@@ -107,6 +109,13 @@ class MessageTag extends ActiveRecord
         }
     }
 
+    public function afterDelete()
+    {
+        foreach(UserMessageTag::find()->where(['tag_id' => $this->id])->all() as $messageTag) {
+            $messageTag->delete();
+        }
+    }
+
     /**
      * @param Message $message
      * @param static[] $result
@@ -137,6 +146,6 @@ class MessageTag extends ActiveRecord
      */
     public static function findByUser(int $userId)
     {
-        return static::find()->where(['user_id' => $userId]);
+        return static::find()->where(['user_id' => $userId])->orderBy('name');
     }
 }

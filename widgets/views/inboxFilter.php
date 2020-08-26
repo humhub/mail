@@ -2,6 +2,7 @@
 
 
 use humhub\libs\Html;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\ui\filter\widgets\PickerFilterInput;
@@ -25,7 +26,7 @@ use humhub\widgets\Link;
     ->options(['data-toggle' => "collapse"])
     ->sm() ?>
 
-<div id="mail-filter-menu" class="collapse">
+<div id="mail-filter-menu" class="collapse clearfix">
     <hr>
     <?php $filterForm = ActiveForm::begin() ?>
 
@@ -38,24 +39,14 @@ use humhub\widgets\Link;
             'pickerOptions' => ['name' => 'participants', 'placeholder' => Yii::t('MailModule.base', 'Participants')]]) ?>
     </div>
 
-    <div class="form-group">
         <?= PickerFilterInput::widget([
             'id' => 'tags', 'category' => 'tags',
             'picker' => ConversationTagPicker::class,
             'pickerOptions' => ['id' => 'inbox-tag-picker', 'name' => 'tags', 'placeholder' => Yii::t('MailModule.base', 'Tags'), 'placeholderMore' => Yii::t('MailModule.base', 'Tags')]]) ?>
-    </div>
 
-    <?php /* $filterForm->field($model, 'term')->textInput([
-            'placeholder' => Yii::t('MailModule.base', 'Search')])->label(false) ?>
-
-        <?= $filterForm->field($model, 'participants')->widget(UserPickerField::class, [
-            'placeholder' => Yii::t('MailModule.base', 'Participants')])->label(false) ?>
-
-        <?= $filterForm->field($model, 'tags')->widget(ConversationTagPicker::class, [
-            'placeholderMore' => Yii::t('MailModule.base', 'Tags'),
-            'addOptions' => false])
-            ->label(false) ?>
-        */ ?>
+    <small>
+    <?= Link::to(Yii::t('MailModule.base', 'Manage Tags'), Url::toManageTags())->icon('gear')->right()->style('font-size:0.9em') ?>
+    </small>
     <?php ActiveForm::end() ?>
 </div>
 <?= Html::endTag('div') ?>

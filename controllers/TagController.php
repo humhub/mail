@@ -2,31 +2,17 @@
 
 namespace humhub\modules\mail\controllers;
 
-use humhub\modules\content\widgets\richtext\RichText;
+use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\forms\ConversationTagsForm;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\mail\widgets\ConversationTags;
-use humhub\modules\mail\widgets\ConversationEntry;
 use humhub\widgets\ModalClose;
 use Yii;
-use humhub\modules\mail\permissions\StartConversation;
-use yii\data\Pagination;
-use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
 use humhub\components\Controller;
-use humhub\modules\file\models\File;
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\models\MessageEntry;
-use humhub\modules\mail\models\UserMessage;
-use humhub\modules\User\models\User;
-use humhub\modules\mail\models\forms\InviteParticipantForm;
-use humhub\modules\mail\models\forms\ReplyForm;
-use humhub\modules\mail\models\forms\CreateMessage;
-use humhub\modules\mail\permissions\SendMail;
-use humhub\modules\user\models\UserPicker;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -47,11 +33,69 @@ class TagController extends Controller
         ];
     }
 
+    public function actionManage()
+    {
+        return $this->render('manage', ['model' => new AddTag()]);
+    }
+
+    public function actionAdd()
+    {
+        $model = new AddTag();
+        $model->load(Yii::$app->request->post());
+        if($model->save()) {
+            $model = new AddTag();
+        }
+        return $this->render('manage', ['model' => $model]);
+    }
+
+    public function actionEdit($id)
+    {
+        $tag = $this->findTag($id);
+
+        if($tag->load(Yii::$app->request->post()) && $tag->save()) {
+            return ModalClose::widget(['reload' => true]);
+        }
+
+        return $this->renderAjax('editModal', ['model' => $tag]);
+
+    }
+
+    /**
+     * @param $id
+     * @return MessageTag
+     * @throws NotFoundHttpException
+     */
+    private function findTag($id)
+    {
+        $tag = MessageTag::findByUser(Yii::$app->user->id)->andWhere(['id' => $id])->one();
+
+        if (!$tag) {
+            throw new NotFoundHttpException();
+        }
+
+        return $tag;
+    }
+
+    /**
+     * @param $id
+     * @return TagController|\yii\console\Response|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     * @throws \yii\web\HttpException
+     */
+    public function actionDelete($id)
+    {
+        $this->forcePostRequest();
+        $this->findTag($id)->delete();
+        return $this->redirect(Url::toManageTags());
+    }
+
     public function actionSearch($keyword)
     {
         $results = MessageTag::search(Yii::$app->user->id, $keyword);
 
-        return $this->asJson(array_map(function(MessageTag $tag) {
+        return $this->asJson(array_map(function (MessageTag $tag) {
             return ['id' => $tag->id, 'text' => $tag->name, 'image' => ConversationTagPicker::getIcon()];
         }, $results));
     }
@@ -60,19 +104,19 @@ class TagController extends Controller
     {
         $message = Message::findOne(['id' => $messageId]);
 
-        if(!$message) {
+        if (!$message) {
             throw new NotFoundHttpException();
         }
 
-        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
+        if (!$message->isParticipant(Yii::$app->user->getIdentity())) {
             throw new ForbiddenHttpException();
         }
 
         $model = new ConversationTagsForm(['message' => $message]);
 
-        if($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return ModalClose::widget([
-                'script' => '$("#'.ConversationTags::ID.'").replaceWith(\''.ConversationTags::widget(['message' => $message]).'\');'
+                'script' => '$("#' . ConversationTags::ID . '").replaceWith(\'' . ConversationTags::widget(['message' => $message]) . '\');'
             ]);
         }
 
