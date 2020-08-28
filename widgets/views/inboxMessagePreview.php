@@ -34,7 +34,7 @@ $users = $message->users;
 
                 <div class="media-body text-break">
                     <h4 class="media-heading">
-                        <a href="#" style="color:<?= $this->theme->variable('info') ?>"><strong><?= Html::encode(Helpers::truncateText($message->title, 75)) ?></strong></a>
+                        <a href="#" class="inbox-entry-title"><?= Html::encode(Helpers::truncateText($message->title, 75)) ?></a>
                     </h4>
                     <h5>
                         <small>

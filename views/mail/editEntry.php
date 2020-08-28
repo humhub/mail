@@ -1,8 +1,8 @@
 <?php
 
+use humhub\modules\mail\widgets\MailRichtextEditor;
 use yii\bootstrap\ActiveForm;
 use humhub\widgets\ModalDialog;
-use humhub\modules\ui\form\widgets\Markdown;
 use humhub\widgets\Button;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
@@ -16,10 +16,8 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
     <?php $form = ActiveForm::begin() ?>
         <div class="modal-body mail-edit-message">
             <?= $form->field($entry, 'content')->widget(
-                ProsemirrorRichTextEditor::class, [
-                'placeholder' => Yii::t('MailModule.base', 'Edit message...'),
-                'pluginOptions' => ['maxHeight' => '200px'],
-            ])->label(false) ?>
+                MailRichtextEditor::class, [
+                'placeholder' => Yii::t('MailModule.base', 'Edit message...')])->label(false) ?>
         </div>
         <div class="modal-footer">
 

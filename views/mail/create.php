@@ -3,6 +3,7 @@
 use humhub\libs\Html;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\widgets\ConversationTagPicker;
+use humhub\modules\mail\widgets\MailRichtextEditor;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\ModalDialog;
 use humhub\modules\mail\helpers\Url;
@@ -31,18 +32,14 @@ use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
                     'url' => Url::toSearchNewParticipants(),
                     'placeholder' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
                 ]
-            ) ?>
+            )->label(false) ?>
 
-            <?= $form->field($model, 'title') ?>
+            <?= $form->field($model, 'title')->textInput( ['placeholder' => Yii::t('MailModule.base', 'Subject')])->label(false) ?>
 
             <?= $form->field($model, 'message')->widget(
-                ProsemirrorRichTextEditor::class, [
-                'menuClass' => 'plainMenu',
-                'placeholder' => Yii::t('MailModule.base', 'Write a message...'),
-                'pluginOptions' => ['maxHeight' => '300px'],
-            ])->label(false) ?>
+                MailRichtextEditor::class)->label(false) ?>
 
-            <?= $form->field($model, 'tags')->widget(ConversationTagPicker::class, ['addOptions' => true])?>
+            <?php /* $form->field($model, 'tags')->widget(ConversationTagPicker::class, ['addOptions' => true]) */?>
 
         </div>
         <div class="modal-footer">

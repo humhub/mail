@@ -70,9 +70,12 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             if (response.success) {
                 that.appendEntry(response.content).then(function() {
                     that.$.find(".time").timeago(); // somehow this is not triggered after reply
-                    Widget.instance($('#replyform-message').trigger('clear')).focus();
+                    var richtext = that.getReplyRichtext();
+                    richtext.$.trigger('clear');
                     that.scrollToBottom();
-                    that.focus();
+                    if(!view.isSmall()) { // prevent autofocus on mobile
+                        that.focus();
+                    }
                     Widget.instance('#inbox').updateEntries([that.getActiveMessageId()]);
                     that.setLivePollInterval();
                 });
@@ -81,6 +84,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             }
         }).catch(function (e) {
             module.log.error(e, true);
+        }).finally(function (e) {
+            loader.reset($('.reply-button'));
+            evt.finish();
         });
     };
 
@@ -88,9 +94,13 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         require('live').setDelay(5);
     };
 
+    ConversationView.prototype.getReplyRichtext = function () {
+        return Widget.instance(this.$.find('.ProsemirrorEditor'));
+    }
+
 
     ConversationView.prototype.focus = function (evt) {
-        Widget.instance('#replyform-message').focus();
+        this.getReplyRichtext().focus();
     };
 
     ConversationView.prototype.canLoadMore = function () {
@@ -307,7 +317,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 }
 
                 var formHeight = $('.mail-message-form').height();
-                var max_height = (window.innerHeight - that.$.position().top - formHeight - (view.isSmall() ? 145 : 160)) + 'px';
+                var max_height = (window.innerHeight - that.$.position().top - formHeight - (view.isSmall() ? 105 : 115)) + 'px';
                 that.$.find('.conversation-entry-list').css('max-height', max_height);
                 resolve();
             }, 100);

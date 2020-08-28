@@ -23,6 +23,7 @@ if((count($message->users) != 1)) {
 }
 
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
+$isOwn = $message->createdBy->is(Yii::$app->user->getIdentity());
 ?>
 
 <div class="dropdown" style="display:inline-block">
@@ -35,10 +36,25 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
                 'aria-expanded' => "false"
         ])->loader(false)->sm() ?>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="conversationSettingsButton">
-        <li>
-            <?= ModalButton::none(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('user-plus')
-                ->load(Url::toAddParticipant($message))->visible($canStartConversation)->link()->loader(false) ?>
-        </li>
+
+        <?php if($isOwn) : ?>
+
+            <li>
+                <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))->icon('star')
+                    ->load(Url::toEditConversationTags($message))->link()->loader(false) ?>
+            </li>
+
+        <?php endif; ?>
+
+        <?php if($canStartConversation) : ?>
+
+            <li>
+                <?= ModalButton::none(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('user-plus')
+                    ->load(Url::toAddParticipant($message))->link()->loader(false) ?>
+            </li>
+
+        <?php endif; ?>
+
         <li>
             <?= Link::none($leaveLinkText)
                 ->action('mail.conversation.leave', Url::toLeaveConversation($message))
