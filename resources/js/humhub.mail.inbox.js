@@ -134,6 +134,7 @@ humhub.module('mail.inbox', function (module, require, $) {
             var data = that.filter.getFilterMap();
             data.from = that.getLastMessageId();
             client.get(that.options.loadMoreUrl, {data: data}).then(function(response) {
+                debugger;
                 if(response.result) {
                     $(response.result).insertBefore('.inbox-stream-end');
                     that.$.find('.inbox-stream-end').append();
@@ -179,7 +180,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         var $selected = this.$.find('[data-message-preview="' + activeMessageId + '"]');
 
         if($selected.length) {
-            $selected.addClass('selected').find('.new-message-badge').hide();
+            $selected.removeClass('unread').addClass('selected').find('.new-message-badge').hide();
         }
     };
 
