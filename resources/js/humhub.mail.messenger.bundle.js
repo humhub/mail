@@ -318,7 +318,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 var formHeight = $('.mail-message-form').outerHeight();
                 var test = that.$.find('.conversation-entry-list').offset().top;
                 var test2 = that.$.offset().top;
-                var max_height = (window.innerHeight - test - formHeight - 15) + 'px';
+                var max_height = (window.innerHeight - test - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
                 that.$.find('.conversation-entry-list').css('max-height', max_height);
                 resolve();
             }, 100);
@@ -496,6 +496,7 @@ humhub.module('mail.inbox', function (module, require, $) {
             var data = that.filter.getFilterMap();
             data.from = that.getLastMessageId();
             client.get(that.options.loadMoreUrl, {data: data}).then(function(response) {
+                debugger;
                 if(response.result) {
                     $(response.result).insertBefore('.inbox-stream-end');
                     that.$.find('.inbox-stream-end').append();
@@ -541,7 +542,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         var $selected = this.$.find('[data-message-preview="' + activeMessageId + '"]');
 
         if($selected.length) {
-            $selected.addClass('selected').find('.new-message-badge').hide();
+            $selected.removeClass('unread').addClass('selected').find('.new-message-badge').hide();
         }
     };
 

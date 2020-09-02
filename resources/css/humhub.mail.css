@@ -64,6 +64,10 @@
     border-top: 1px solid #eee;
 }
 
+#mail-conversation-root .panel-body {
+    margin-bottom: 0;
+}
+
 #mail-filter-root {
     margin-top:15px;
 }

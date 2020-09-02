@@ -318,7 +318,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 var formHeight = $('.mail-message-form').outerHeight();
                 var test = that.$.find('.conversation-entry-list').offset().top;
                 var test2 = that.$.offset().top;
-                var max_height = (window.innerHeight - test - formHeight - 15) + 'px';
+                var max_height = (window.innerHeight - test - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
                 that.$.find('.conversation-entry-list').css('max-height', max_height);
                 resolve();
             }, 100);
