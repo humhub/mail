@@ -68,12 +68,15 @@ humhub.module('mail.conversation', function (module, require, $) {
             events.forEach(function (event) {
                 var isOwn = event.data['user_guid'] == user.guid();
                 updatedMessages.push(event.data.message_id);
-                if (!isOwn && !updated && root && root.options.messageId == event.data.message_id) {
+                if (!updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
                     root.markSeen(event.data.message_id);
                 } else if (!isOwn && root) {
-                    getOverViewEntry(event.data.message_id).find('.new-message-badge').show();
+                    var $entry = getOverViewEntry(event.data.message_id);
+                    if(!$entry.is('.selected')) {
+                        $entry.find('.new-message-badge').show();
+                    }
                 }
             });
 

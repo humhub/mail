@@ -50,7 +50,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loadUpdate = function () {
-        var $lastEntry = this.$.find('.mail-conversation-entry:last');
+        var $lastEntry = this.$.find('.mail-conversation-entry:not(.own):last');
         var lastEntryId = $lastEntry.data('entry-id');
         var data = {id: this.getActiveMessageId(), from: lastEntryId};
 
@@ -148,13 +148,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.getListNode().append($html);
 
         return new Promise(function(resolve, reject) {
-            $elements.hide().imagesLoaded(function() {
-                $elements.css('opacity', 1).fadeIn('fast', function () {
-                    that.onUpdate();
-                    setTimeout(function() {that.scrollToBottom()}, 100);
-                    resolve();
-                });
-            })
+            $elements.css('opacity', 1).fadeIn('fast', function () {
+                that.onUpdate();
+                setTimeout(function() {that.scrollToBottom()}, 100);
+                resolve();
+            });
         })
     };
 

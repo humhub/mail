@@ -88,6 +88,11 @@
     cursor:pointer;
 }
 
+.messagePreviewEntry.unread {
+    background-color: #EEF8F9;
+    border-color: #EEF8F9;
+}
+
 .inbox-entry-title {
     font-weight:600;
 }

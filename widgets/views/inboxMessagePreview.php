@@ -22,10 +22,11 @@ $userCount = $message->getUsers()->count();
 $participant = $message->getLastActiveParticipant();
 $lastEntry = $message->lastEntry;
 $users = $message->users;
+$isNew = $userMessage->isUnread();
 ?>
 
 <?php if ($lastEntry) : ?>
-    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry" data-action-click="mail.notification.loadMessage" data-action-url="<?= Url::toMessenger($message)?>"  data-message-id="<?= $message->id ?>">
+    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry<?= $isNew ? ' unread' : ''?>" data-action-click="mail.notification.loadMessage" data-action-url="<?= Url::toMessenger($message)?>"  data-message-id="<?= $message->id ?>">
         <div class="mail-link">
             <div class="media">
                 <div class="media-left pull-left">
@@ -51,7 +52,7 @@ $users = $message->users;
                         <?= Html::encode($message->getPreview()) ?>
 
                     <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New'))
-                        ->cssClass('new-message-badge')->style((!$userMessage->isUnread() ? 'display:none' : '')); ?>
+                        ->cssClass('new-message-badge')->style((!$isNew ? 'display:none' : '')) ?>
                 </div>
             </div>
         </div>

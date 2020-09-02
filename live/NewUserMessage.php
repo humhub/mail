@@ -20,6 +20,11 @@ use humhub\modules\user\models\User;
  */
 class NewUserMessage extends LiveEvent
 {
+    /**
+     * @var int the id of the new notification
+     * @deprecated since v2.0 only in use for compatibility, can be removed in v2.0.1
+     */
+    public $user_id;
 
     /**
      * @var int the id of the new notification
