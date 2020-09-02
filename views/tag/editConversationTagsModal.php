@@ -16,6 +16,11 @@ use yii\bootstrap\ActiveForm;
 <?php ModalDialog::begin(['header' => Yii::t('MailModule.base', '<strong>Edit</strong> conversation tags')]) ?>
     <?php $form = ActiveForm::begin() ?>
         <div class="modal-body">
+
+        <div class="help-block">
+                <?= Yii::t('MailModule.base', 'Conversation tags can be used to filter conversations and are only visible to you.') ?>
+        </div>
+
             <?= $form->field($model, 'tags')->widget(ConversationTagPicker::class)->label(false) ?>
         </div>
     <div class="modal-footer">

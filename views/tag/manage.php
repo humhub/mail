@@ -27,7 +27,7 @@ $dataProvider = new ActiveDataProvider([
             <div class="panel panel-default">
                 <div id="mail-conversation-header" class="panel-heading"
                      style="background-color:<?= $this->theme->variable('background-color-secondary') ?>">
-                    <?= Yii::t('MailModule.base', '<strong>Manage</strong> message tags') ?>
+                    <?= Yii::t('MailModule.base', '<strong>Manage</strong> conversation tags') ?>
 
                     <?= Button::back(Url::toMessenger())->right()->sm() ?>
                 </div>
@@ -35,7 +35,8 @@ $dataProvider = new ActiveDataProvider([
                 <div class="panel-body">
 
                     <div class="help-block">
-                        <?= Yii::t('MailModule.base', 'Here you can manage private message tags. Message tags can be used to categorize and filter conversations and can only be seen by yourself.'); ?>
+                        <?= Yii::t('MailModule.base', 'Here you can manage your private conversation tags.') ?><br>
+                        <?= Yii::t('MailModule.base', 'Conversation tags can be used to filter conversations and are only visible to you.') ?>
                     </div>
 
                     <?php $form = ActiveForm::begin(['action' => Url::toAddTag()]); ?>
