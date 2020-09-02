@@ -53,6 +53,12 @@ humhub.module('mail.inbox', function (module, require, $) {
                 railpadding: {top: 0, right: 3, left: 0, bottom: 0}
             });
         }
+
+        this.$.on('click', '.entry', function() {
+            that.$.find('.entry').removeClass('selected');
+            $(this).addClass('selected');
+        })
+
     };
 
     ConversationList.prototype.updateEntries = function(ids) {
