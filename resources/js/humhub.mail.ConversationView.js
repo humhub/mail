@@ -313,8 +313,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                     return;
                 }
 
-                debugger;
-
                 var formHeight = $('.mail-message-form').outerHeight();
                 var test = that.$.find('.conversation-entry-list').offset().top;
                 var test2 = that.$.offset().top;
