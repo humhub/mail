@@ -96,7 +96,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.getReplyRichtext = function () {
         return Widget.instance(this.$.find('.ProsemirrorEditor'));
-    }
+    };
 
 
     ConversationView.prototype.focus = function (evt) {
@@ -104,7 +104,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.canLoadMore = function () {
-        return true;
         return !this.options.isLast;
     };
 
@@ -192,7 +191,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
         that.focus();
-        $('#replyform-message').on('keyup', function (evt) {
+        that.getReplyRichtext().$.on('keyup', function (evt) {
             if (evt.which === 13) {
                 window.scrollTo(0, document.body.scrollHeight);
             }
@@ -314,8 +313,12 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                     return;
                 }
 
-                var formHeight = $('.mail-message-form').height();
-                var max_height = (window.innerHeight - that.$.position().top - formHeight - (view.isSmall() ? 105 : 115)) + 'px';
+                debugger;
+
+                var formHeight = $('.mail-message-form').outerHeight();
+                var test = that.$.find('.conversation-entry-list').offset().top;
+                var test2 = that.$.offset().top;
+                var max_height = (window.innerHeight - test - formHeight - 15) + 'px';
                 that.$.find('.conversation-entry-list').css('max-height', max_height);
                 resolve();
             }, 100);

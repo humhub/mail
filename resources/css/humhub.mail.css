@@ -11,7 +11,7 @@
 
 .conversation-entry-list {
     max-height:600px;
-    min-height:100px;
+    min-height:150px;
     overflow:auto;
 }
 
@@ -104,7 +104,7 @@
 }
 
 .mail-message-form {
-    padding-top:30px;
+    padding-top:35px;
 }
 
 .mail-message-form .reply-button {
@@ -209,6 +209,10 @@
     padding-left:35px;
 }
 
+.visible-xs .conversation-menu .conversation-menu-item {
+    margin-bottom:10px;
+}
+
 .conversation-menu .conversation-edit-button {
     background-color: #f7f7f7;
     border-radius: 50%;
@@ -265,6 +269,9 @@
     }
     .inbox-wrapper {
         display: none;
+    }
+    .mail-message-form .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
+        margin-top: -32px;
     }
 }
 
