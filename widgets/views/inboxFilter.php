@@ -5,6 +5,7 @@ use humhub\libs\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
+use humhub\modules\mail\widgets\ManageTagsLink;
 use humhub\modules\ui\filter\widgets\PickerFilterInput;
 use humhub\modules\ui\filter\widgets\TextFilterInput;
 use humhub\modules\ui\form\widgets\ActiveForm;
@@ -45,7 +46,7 @@ use humhub\widgets\Link;
             'pickerOptions' => ['id' => 'inbox-tag-picker', 'name' => 'tags', 'placeholder' => Yii::t('MailModule.base', 'Tags'), 'placeholderMore' => Yii::t('MailModule.base', 'Tags')]]) ?>
 
     <small>
-    <?= Link::to(Yii::t('MailModule.base', 'Manage Tags'), Url::toManageTags())->icon('gear')->right()->cssClass('manage-tags-link'); ?>
+        <?= ManageTagsLink::widget() ?>
     </small>
     </div>
     <?php ActiveForm::end() ?>
