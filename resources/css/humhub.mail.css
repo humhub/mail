@@ -51,6 +51,15 @@
     min-height: 100px !important;
 }
 
+.modal-body #createmessage-message .ProseMirror {
+    min-height: 100px !important;
+}
+
+.mail-message-form .humhub-ui-richtext {
+    padding-right:45px;
+    border-radius:10px;
+}
+
 #mail-conversation-root hr {
     border-top: 1px solid #eee;
 }
@@ -90,14 +99,14 @@
 }
 
 .mail-message-form {
-    padding-top:10px;
+    padding-top:30px;
 }
 
 .mail-message-form .reply-button {
     position:absolute;
     right:15px;
     bottom:15px;
-    z-index: 200;
+    z-index: 500;
     border-radius:4px;
 }
 
@@ -180,6 +189,32 @@
     display:none;
 }
 
+.conversation-menu .time {
+    color:inherit;
+    text-transform: none;
+}
+
+.conversation-menu .badge {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    color:inherit;
+}
+
+.visible-xs .conversation-menu {
+    padding-left:35px;
+}
+
+.conversation-menu .conversation-edit-button {
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    color:inherit;
+}
+
+.conversation-menu .conversation-edit-button:hover {
+    background-color: #f7f7f7;
+    color:inherit;
+}
+
 .conversation-menu-item {
     margin-left: 5px;
 }
@@ -205,6 +240,18 @@
 
 .conversation-menu-item a {
     cursor: pointer;
+}
+
+.new-message-badge {
+    position:absolute;
+    right:0;
+    top:0;
+    padding: 3px 5px 4px !important;
+}
+
+#inbox .new-message-badge {
+    top:10px;
+    right: 10px;
 }
 
 @media (max-width: 767px) {

@@ -8,6 +8,8 @@ use Yii;
 
 class TimeAgo extends \humhub\widgets\TimeAgo
 {
+    public $badge = false;
+
     public function renderDateTime($elapsed)
     {
         // Assure time is always set
@@ -22,5 +24,16 @@ class TimeAgo extends \humhub\widgets\TimeAgo
         }
 
         return parent::renderDateTime($elapsed);
+    }
+
+    public function renderTimeAgo()
+    {
+        $result = parent::renderTimeAgo();
+
+        if($this->badge) {
+            $result = '<span class="badge">' . $result . '</span>';
+        }
+
+        return $result;
     }
 }

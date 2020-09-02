@@ -7,6 +7,7 @@ use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\widgets\TimeAgo;
 use humhub\libs\Html;
 
+/* @var $this \humhub\modules\ui\view\components\View */
 /* @var $entry \humhub\modules\mail\models\MessageEntry */
 /* @var $options array */
 /* @var $contentClass string */
@@ -42,21 +43,14 @@ $isOwnMessage = $entry->user->is(Yii::$app->user->getIdentity());
         </span>
     </div>
 
-    <div class="conversation-menu">
-
-        <?php if($isOwnMessage) : ?>
-            <div class="conversation-menu-item" style="display: inline-block">
-                <span class="hidden-xs time">|</span> <?= ModalButton::none(Yii::t('MailModule.base', 'edit'))
-                    ->cssClass('conversation-edit-button time')
-                    ->load(Url::toEditMessageEntry($entry))->link() ?>
-            </div>
-        <?php endif ?>
-
-        <div class="conversation-menu-item" style="display: inline-block">
-            <?=  TimeAgo::widget(['timestamp' => $entry->created_at])  ?>
-        </div>
+    <div class="hidden-xs">
+        <?= $this->render('_conversationEntryMenu', ['entry' => $entry, 'badge' => true]) ?>
     </div>
 
+</div>
+
+<div class="visible-xs">
+    <?= $this->render('_conversationEntryMenu', ['entry' => $entry, 'badge' => false]) ?>
 </div>
 
 <?= Html::endTag('div') ?>

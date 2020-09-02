@@ -20,7 +20,7 @@ use humhub\widgets\Label;
 $message = $userMessage->message;
 $userCount = $message->getUsers()->count();
 $participant = $message->getLastActiveParticipant();
-$lastEntry = $message->getLastEntry();
+$lastEntry = $message->lastEntry;
 $users = $message->users;
 ?>
 

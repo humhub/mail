@@ -35,7 +35,7 @@ $dataProvider = new ActiveDataProvider([
                 <div class="panel-body">
 
                     <?php $form = ActiveForm::begin(['action' => Url::toAddTag()]); ?>
-                    <div class="form-group<?= $model->tag->hasErrors() ? ' has-error' : ''?>">
+                    <div class="form-group<?= $model->tag->hasErrors() ? ' has-error' : ''?>" style="margin-bottom:0">
                         <div class="input-group">
                             <?= Html::activeTextInput($model->tag, 'name', ['style' => 'height:36px', 'class' => 'form-control', 'placeholder' => Yii::t('MailModule.base', 'Add Tag')]) ?>
                             <span class="input-group-btn">
@@ -47,16 +47,20 @@ $dataProvider = new ActiveDataProvider([
                             </span>
                     </div>
                     <?php ActiveForm::end(); ?>
-
+                    <?php $firstRow = true; ?>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
+                        'options' => ['class' => 'grid-view', 'style' => 'padding-top:0'],
                         'tableOptions' => ['class' => 'table table-hover'],
+                        'showHeader' => false,
+                        'summary' => false,
                         'columns' => [
                             'name',
                             [
                                 'header' => Yii::t('base', 'Actions'),
                                 'class' => ActionColumn::class,
                                 'options' => ['width' => '80px'],
+                                'contentOptions' => ['style' => 'text-align:right'],
                                 'buttons' => [
                                     'update' => function ($url, $model) {
                                         /* @var $model \humhub\modules\topic\models\Topic */

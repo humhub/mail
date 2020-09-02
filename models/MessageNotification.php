@@ -28,7 +28,7 @@ class MessageNotification extends Model
     public function __construct(Message $message, MessageEntry $entry = null)
     {
         $this->message = $message;
-        $this->entry = $entry ?: $this->message->getLastEntry();
+        $this->entry = $entry ?: $this->message->lastEntry;
         parent::__construct([]);
     }
 

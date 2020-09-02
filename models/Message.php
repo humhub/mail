@@ -4,16 +4,11 @@ namespace humhub\modules\mail\models;
 
 
 use humhub\modules\content\widgets\richtext\RichText;
-use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\Module;
 use Yii;
-use humhub\modules\mail\notifications\ConversationNotificationCategory;
-use humhub\modules\notification\targets\BaseTarget;
-use humhub\modules\notification\targets\MailTarget;
 use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
 use yii\db\Expression;
-use yii\helpers\Html;
 
 /**
  * This class represents a single conversation.
@@ -26,6 +21,7 @@ use yii\helpers\Html;
  * @property string $updated_at
  * @property integer $updated_by
  * @property-read  User $originator
+ * @property-read MessageEntry $lastEntry
  *
  * The followings are the available model relations:
  * @property MessageEntry[] $messageEntries
@@ -145,6 +141,7 @@ class Message extends ActiveRecord
 
     /**
      * Returns the last message of this conversation
+     * @return MessageEntry
      */
     public function getLastEntry()
     {
@@ -248,7 +245,7 @@ class Message extends ActiveRecord
 
     public function getPreview()
     {
-        return RichText::preview($this->getLastEntry()->content, 80);
+        return RichText::preview($this->lastEntry->content, 80);
     }
 
     /**

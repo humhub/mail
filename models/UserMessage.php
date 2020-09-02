@@ -119,6 +119,10 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
-        return $this->message->updated_at > $this->last_viewed && $this->message->getLastEntry()->user->id != $userId;
+        if($this->message->lastEntry->user_id === $userId) {
+            return false;
+        }
+
+        return $this->message->updated_at > $this->last_viewed;
     }
 }
