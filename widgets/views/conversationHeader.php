@@ -22,7 +22,9 @@ $maxUserImages = ($userCount === $maxUserImageEntries) ? $maxUserImageEntries : 
 $userList = '';
 ?>
 
+<strong>
 <?= Html::encode($message->title) ?>
+</strong>
 <br>
 <div class="pull-right">
     <?php if (!empty($users)) : ?>

@@ -27,7 +27,7 @@ use humhub\widgets\Button;
     <?php  else :?>
 
         <div id="mail-conversation-header" class="panel-heading" style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
-            <strong> <?= ConversationHeader::widget(['message' => $message]) ?></strong>
+             <?= ConversationHeader::widget(['message' => $message]) ?>
         </div>
 
         <?= ConversationTags::widget(['message' => $message])?>
