@@ -34,6 +34,10 @@ $dataProvider = new ActiveDataProvider([
 
                 <div class="panel-body">
 
+                    <div class="help-block">
+                        <?= Yii::t('MailModule.base', 'Here you can manage private message tags. Message tags can be used to categorize and filter conversations and can only be seen by yourself.'); ?>
+                    </div>
+
                     <?php $form = ActiveForm::begin(['action' => Url::toAddTag()]); ?>
                     <div class="form-group<?= $model->tag->hasErrors() ? ' has-error' : ''?>" style="margin-bottom:0">
                         <div class="input-group">

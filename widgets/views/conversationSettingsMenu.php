@@ -37,14 +37,10 @@ $isOwn = $message->createdBy->is(Yii::$app->user->getIdentity());
         ])->loader(false)->sm() ?>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="conversationSettingsButton">
 
-        <?php if($isOwn) : ?>
-
-            <li>
-                <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))->icon('star')
-                    ->load(Url::toEditConversationTags($message))->link()->loader(false) ?>
-            </li>
-
-        <?php endif; ?>
+        <li>
+            <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))->icon('star')
+                ->load(Url::toEditConversationTags($message))->link()->loader(false) ?>
+        </li>
 
         <?php if($canStartConversation) : ?>
 
