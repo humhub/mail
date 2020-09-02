@@ -4,6 +4,7 @@
 namespace humhub\modules\mail\models\forms;
 
 
+use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\models\MessageTag;
@@ -118,7 +119,12 @@ class InboxFilterForm extends QueryFilter
         }
 
         if(!empty($this->from)) {
-            $this->query->andWhere(['<', 'user_message.message_id', $this->from]);
+            $message = Message::findOne(['id' => $this->from]);
+            if(!$message) {
+                throw new InvalidCallException();
+            }
+            $this->query->andWhere(['<=', 'message.updated_at', $message->updated_at]);
+            $this->query->andWhere(['<>', 'message.id', $message->id]);
         }
 
         if(!empty($this->ids)) {
