@@ -12,6 +12,7 @@ Changelog
 - Enh: Merge message sequence of a user (currently only on reload)
 - Enh: Use of splitted and minified assets
 - Enh: Enhanced mobile view
+- Chng: Update min HumHub version to v1.5.0
 - Chng: Major refactoring
 
 1.0.15 - March 28, 2020
