@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.0 - Unreleased
+2.0.0 - September 03, 2020
 -----------------------
 - Enh: Use of infinite scrolling for inbox and conversation view
 - Enh: Added user message tags
