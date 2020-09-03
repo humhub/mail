@@ -1,5 +1,12 @@
 actor: Tester
 namespace: mail
+coverage:
+    c3_url: 'http://localhost:8080/index-test.php'
+    enabled: true
+    include:
+        - ../models/*
+        - ../notifications/*
+        - ../permissions/*
 settings:
     bootstrap: _bootstrap.php
     suite_class: \PHPUnit_Framework_TestSuite

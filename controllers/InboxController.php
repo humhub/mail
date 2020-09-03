@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\components\access\ControllerAccess;
 use humhub\components\Controller;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationInbox;
@@ -19,7 +20,7 @@ class InboxController extends Controller
     public function getAccessRules()
     {
         return [
-            ['login']
+            [ControllerAccess::RULE_LOGGED_IN_ONLY]
         ];
     }
 

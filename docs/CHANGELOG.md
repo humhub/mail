@@ -3,14 +3,16 @@ Changelog
 
 2.0.0 - Unreleased
 -----------------------
-- Enh: Use of infinite scrolling for inbox and messages
-- Enh: Added message tags
+- Enh: Use of infinite scrolling for inbox and conversation view
+- Enh: Added user message tags
 - Enh: Added inbox filter
 - Enh: Added max amount of displayed user images
 - Enh: Added message dropdown menu
-- Enh: Reworked inbox and message view
-- Enh: Merge message by user
-- Enh: Use of minified assets
+- Enh: Reworked inbox and conversation view
+- Enh: Merge message sequence of a user (currently only on reload)
+- Enh: Use of splitted and minified assets
+- Enh: Enhanced mobile view
+- Chng: Major refactoring
 
 1.0.15 - March 28, 2020
 -----------------------

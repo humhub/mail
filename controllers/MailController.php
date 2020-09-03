@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\components\access\ControllerAccess;
 use humhub\modules\mail\Module;
 use humhub\modules\mail\widgets\ConversationHeader;
 use humhub\modules\mail\widgets\Messages;
@@ -39,8 +40,8 @@ class MailController extends Controller
     public function getAccessRules()
     {
         return [
-            ['login'],
-            ['permission' => StartConversation::class, 'actions' => ['create', 'add-user']]
+            [ControllerAccess::RULE_LOGGED_IN_ONLY],
+            [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']]
         ];
     }
 
@@ -282,7 +283,7 @@ class MailController extends Controller
         $results = [];
         foreach ($query->all() as $user) {
             if ($user != null) {
-                $userInfo = array();
+                $userInfo = [];
                 $userInfo['guid'] = $user->guid;
                 $userInfo['displayName'] = Html::encode($user->displayName);
                 $userInfo['image'] = $user->getProfileImage()->getUrl();

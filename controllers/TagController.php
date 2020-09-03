@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\controllers;
 
+use humhub\components\access\ControllerAccess;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\forms\ConversationTagsForm;
@@ -29,7 +30,7 @@ class TagController extends Controller
     public function getAccessRules()
     {
         return [
-            ['login']
+            [ControllerAccess::RULE_LOGGED_IN_ONLY]
         ];
     }
 
