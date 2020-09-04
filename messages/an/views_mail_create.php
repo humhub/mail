@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Add recipients' => '',
-    'New message' => 'Nuevo mensache',
     'Send' => 'Ninviar',
+    '<strong>New</strong> message' => '',
+    'Add recipients' => '',
 ];

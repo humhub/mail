@@ -1,6 +1,7 @@
 <?php
-return array (
-  'Add recipients' => 'Címzettek',
-  'New message' => 'Új üzenet',
-  'Send' => 'Küldés',
-);
+
+return [
+    'Add recipients' => 'Címzettek',
+    'Send' => 'Küldés',
+    '<strong>New</strong> message' => '',
+];

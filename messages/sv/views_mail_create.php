@@ -2,6 +2,6 @@
 
 return [
     'Add recipients' => 'Lägg till mottagare',
-    'New message' => 'Nytt meddelande',
     'Send' => 'Sänd',
+    '<strong>New</strong> message' => '',
 ];

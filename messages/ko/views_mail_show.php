@@ -13,6 +13,5 @@ return [
     'Do you really want to leave this conversation?' => '',
     'Leave' => '',
     'Leave conversation' => '',
-    'Send' => '',
     'There are no messages yet.' => '',
 ];

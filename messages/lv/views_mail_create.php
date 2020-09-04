@@ -2,6 +2,6 @@
 
 return [
     'Add recipients' => 'Pievieno saņēmējus',
-    'New message' => 'Jauna ziņa',
     'Send' => 'Sūtīt',
+    '<strong>New</strong> message' => '',
 ];

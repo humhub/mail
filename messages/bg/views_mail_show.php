@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'Cancel' => 'Отказ',
+    'Delete' => 'Изтрий',
     '<strong>Confirm</strong> deleting conversation' => '',
     '<strong>Confirm</strong> leaving conversation' => '',
     '<strong>Confirm</strong> message deletion' => '',
@@ -11,8 +13,5 @@ return [
     'Do you really want to leave this conversation?' => '',
     'Leave' => '',
     'Leave conversation' => '',
-    'Send' => '',
     'There are no messages yet.' => '',
-    'Cancel' => 'Отказ',
-    'Delete' => 'Изтрий',
 ];

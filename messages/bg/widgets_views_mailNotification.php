@@ -1,6 +1,5 @@
 <?php
-return array (
-  'Messages' => 'Съобщения',
-  'New message' => '',
-  'Show all messages' => '',
-);
+
+return [
+    'Show all messages' => '',
+];

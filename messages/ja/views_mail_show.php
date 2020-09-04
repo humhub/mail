@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'Add user' => 'ユーザーを追加',
+    'Cancel' => 'キャンセル',
+    'Delete' => '削除',
+    'There are no messages yet.' => 'まだ何もメッセージはありません。',
     '<strong>Confirm</strong> deleting conversation' => '',
     '<strong>Confirm</strong> leaving conversation' => '',
     '<strong>Confirm</strong> message deletion' => '',
@@ -10,9 +14,4 @@ return [
     'Do you really want to leave this conversation?' => '',
     'Leave' => '',
     'Leave conversation' => '',
-    'Add user' => 'ユーザーを追加',
-    'Cancel' => 'キャンセル',
-    'Delete' => '削除',
-    'Send' => '送信',
-    'There are no messages yet.' => 'まだ何もメッセージはありません。',
 ];
