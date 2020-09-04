@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => 'Žinutė',
-    'Recipient' => 'Gavėjas',
-    'Subject' => 'Tema',
-    'Tags' => '',
-];
+return array (
+  'Message' => 'Žinutė',
+  'Recipient' => 'Gavėjas',
+  'Subject' => 'Tema',
+  'Tags' => 'Žymos',
+);

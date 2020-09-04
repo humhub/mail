@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => 'Zpráva',
-    'Recipient' => 'Příjemce',
-    'Subject' => 'Předmět',
-    'Tags' => '',
-];
+return array (
+  'Message' => 'Zpráva',
+  'Recipient' => 'Příjemce',
+  'Subject' => 'Předmět',
+  'Tags' => 'Štítky',
+);

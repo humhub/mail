@@ -1,7 +1,6 @@
 <?php
-
-return [
-    'Send' => 'Išsiųsti',
-    '<strong>New</strong> message' => '',
-    'Add recipients' => '',
-];
+return array (
+  '<strong>New</strong> message' => '<strong>Nauja</strong> žinutė',
+  'Add recipients' => '',
+  'Send' => 'Išsiųsti',
+);

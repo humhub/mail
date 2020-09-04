@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => 'پیغام',
-    'Recipient' => 'گیرنده',
-    'Subject' => 'موضوع',
-    'Tags' => '',
-];
+return array (
+  'Message' => 'پیغام',
+  'Recipient' => 'گیرنده',
+  'Subject' => 'موضوع',
+  'Tags' => 'تگ‌ها',
+);

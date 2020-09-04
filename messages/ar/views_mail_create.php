@@ -1,7 +1,6 @@
 <?php
-
-return [
-    'Send' => 'ارسال',
-    '<strong>New</strong> message' => '',
-    'Add recipients' => '',
-];
+return array (
+  '<strong>New</strong> message' => 'رسالة <strong>جديدة</strong>',
+  'Add recipients' => '',
+  'Send' => 'ارسال',
+);

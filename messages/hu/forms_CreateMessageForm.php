@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => 'Üzenet',
-    'Recipient' => 'Címzett',
-    'Subject' => 'Tárgy',
-    'Tags' => '',
-];
+return array (
+  'Message' => 'Üzenet',
+  'Recipient' => 'Címzett',
+  'Subject' => 'Tárgy',
+  'Tags' => 'Címkék',
+);
