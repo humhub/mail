@@ -36,17 +36,20 @@ class Events
      */
     public static function onUserDelete($event)
     {
+        try {
+            foreach (MessageEntry::findAll(['user_id' => $event->sender->id]) as $messageEntry) {
+                $messageEntry->delete();
+            }
 
-        foreach (MessageEntry::findAll(['user_id' => $event->sender->id]) as $messageEntry) {
-            $messageEntry->delete();
-        }
+            foreach (UserMessage::findAll(['user_id' => $event->sender->id]) as $userMessage) {
+                $userMessage->message->leave($event->sender->id);
+            }
 
-        foreach (UserMessage::findAll(['user_id' => $event->sender->id]) as $userMessage) {
-            $userMessage->message->leave($event->sender->id);
-        }
-
-        foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
-            $userMessageTag->message->leave($event->sender->id);
+            foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
+                $userMessageTag->message->leave($event->sender->id);
+            }
+        } catch(\Exception $e) {
+            Yii::error($e);
         }
 
         return true;
@@ -60,45 +63,57 @@ class Events
      */
     public static function onTopMenuInit($event)
     {
-        if (Yii::$app->user->isGuest) {
-            return;
-        }
+        try {
+            if (Yii::$app->user->isGuest) {
+                return;
+            }
 
-        if(!Config::getModule()->hideInTopNav()){
-            $event->sender->addItem([
-                'label' => Yii::t('MailModule.base', 'Messages'),
-                'url' => Url::toMessenger(),
-                'icon' => '<i class="fa fa-envelope"></i>',
-                'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
-                'sortOrder' => 300,
-            ]);
+            if (!Config::getModule()->hideInTopNav()) {
+                $event->sender->addItem([
+                    'label' => Yii::t('MailModule.base', 'Messages'),
+                    'url' => Url::toMessenger(),
+                    'icon' => '<i class="fa fa-envelope"></i>',
+                    'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
+                    'sortOrder' => 300,
+                ]);
+            }
+        } catch(\Exception $e) {
+            Yii::error($e);
         }
     }
 
     public static function onNotificationAddonInit($event)
     {
-        if (Yii::$app->user->isGuest) {
-            return;
-        }
+        try {
+            if (Yii::$app->user->isGuest) {
+                return;
+            }
 
-        $event->sender->addWidget(NotificationInbox::className(), [], ['sortOrder' => 90]);
+            $event->sender->addWidget(NotificationInbox::className(), [], ['sortOrder' => 90]);
+        } catch (\Exception $e) {
+            Yii::error($e);
+        }
     }
 
     public static function onProfileHeaderControlsInit($event)
     {
-        /** @var User $profileContainer */
-        $profileContainer = $event->sender->user;
+        try {
+            /** @var User $profileContainer */
+            $profileContainer = $event->sender->user;
 
-        if($profileContainer->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
-            return;
+            if ($profileContainer->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
+                return;
+            }
+
+            // Is the current logged user allowed to send mails to profile user?
+            if (!Yii::$app->user->isAdmin() && !$profileContainer->can(SendMail::class)) {
+                return;
+            }
+
+            $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
+        } catch (\Exception $e) {
+            Yii::error($e);
         }
-
-        // Is the current logged user allowed to send mails to profile user?
-        if(!Yii::$app->user->isAdmin() && !$profileContainer->can(SendMail::class)) {
-            return;
-        }
-
-        $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
     }
 
 }
