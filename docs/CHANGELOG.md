@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.0 - September 03, 2020
+2.0.0-beta.1 - September 11, 2020
 -----------------------
 - Enh: Use of infinite scrolling for inbox and conversation view
 - Enh: Added user message tags
@@ -12,7 +12,7 @@ Changelog
 - Enh: Merge message sequence of a user (currently only on reload)
 - Enh: Use of splitted and minified assets
 - Enh: Enhanced mobile view
-- Chng: Update min HumHub version to v1.5.0
+- Chng: Update min HumHub version to v1.6.3
 - Chng: Major refactoring
 
 1.0.15 - March 28, 2020

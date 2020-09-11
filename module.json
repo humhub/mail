@@ -3,9 +3,9 @@
     "name": "Mail",
     "description": "A private messaging system for direct communication",
     "keywords": ["mail", "messaging", "communication"],
-    "version": "2.0.0",
+    "version": "2.0.0-beta.1",
     "humhub": {
-        "minVersion": "1.5.0"
+        "minVersion": "1.6.3"
     },
     "homepage": "https://github.com/humhub/humhub-modules-mail",
     "authors": [
