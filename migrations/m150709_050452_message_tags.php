@@ -17,7 +17,7 @@ class m150709_050452_message_tags extends Migration
             'color' => $this->string(7)->null()
         ]);
 
-        $this->addForeignKey('fk-message-tag-user-id', 'message_tag', 'user_id', 'user', 'id');
+        $this->addForeignKey('fk-message-tag-user-id', 'message_tag', 'user_id', 'user', 'id', 'cascade');
     }
 
     public function safeDown()
