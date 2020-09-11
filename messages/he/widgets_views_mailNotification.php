@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Show all messages' => '',
-];
+return array (
+  'Show all messages' => 'הצג את כל ההודעות',
+);
