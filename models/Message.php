@@ -8,7 +8,6 @@ use humhub\modules\mail\Module;
 use Yii;
 use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
-use yii\db\Expression;
 
 /**
  * This class represents a single conversation.
@@ -222,7 +221,7 @@ class Message extends ActiveRecord
             'message_id' => $this->id
         ));
         if ($userMessage !== null) {
-            $userMessage->last_viewed = new Expression('NOW()');
+            $userMessage->last_viewed = date('Y-m-d G:i:s');
             $userMessage->save();
         }
     }
@@ -261,7 +260,7 @@ class Message extends ActiveRecord
 
         if ($originator) {
             $userMessage->is_originator = 1;
-            $userMessage->last_viewed = new Expression('NOW()');
+            $userMessage->last_viewed = date('Y-m-d G:i:s');
         }
 
         return $userMessage->save();
