@@ -225,14 +225,16 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             // Assure the conversation list is scrollable by loading more entries until overflow
             return this.assureScroll().then(function () {
                 observer.observe($streamEnd[0]);
-                that.getListNode().niceScroll({
-                    cursorwidth: "7",
-                    cursorborder: "",
-                    cursorcolor: "#555",
-                    cursoropacitymax: "0.2",
-                    nativeparentscrolling: false,
-                    railpadding: {top: 0, right: 0, left: 0, bottom: 0}
-                });
+                if(view.isLarge()) {
+                    that.getListNode().niceScroll({
+                        cursorwidth: "7",
+                        cursorborder: "",
+                        cursorcolor: "#555",
+                        cursoropacitymax: "0.2",
+                        nativeparentscrolling: false,
+                        railpadding: {top: 0, right: 0, left: 0, bottom: 0}
+                    });
+                }
             });
         }
     };
@@ -330,14 +332,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
                 $entryContainer.css('max-height', max_height);
                 resolve();
-                return;
-
-/*
-                var formHeight = $('.mail-message-form').outerHeight();
-                var offsetTop = that.$.find('.conversation-entry-list').offset().top;
-                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 15 : 60)) + 'px';
-                that.$.find('.conversation-entry-list').css('max-height', max_height);*/
-                resolve();
             }, 100);
         })
 
@@ -348,7 +342,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.onUpdate = function () {
-        this.getListNode().getNiceScroll().resize();
+        if(view.isLarge()) {
+            this.getListNode().getNiceScroll().resize();
+        }
     };
 
     module.export = ConversationView;

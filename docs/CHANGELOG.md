@@ -7,6 +7,7 @@ Changelog
 - Fix #198 Conversation view not scrolling down completely
 - Fix: Use of ResizeObserver for detecting richtext size changes
 - Fix: Richtext resize delay
+- Fix #200: Mobile scrolling broken
 
 2.0.0-beta.2 - September 11, 2020
 -----------------------
