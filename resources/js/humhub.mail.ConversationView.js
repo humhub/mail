@@ -194,7 +194,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
         if(window.ResizeObserver) {
             var resizeObserver = new ResizeObserver(function(entries) {
-                that.updateSize();
+               that.updateSize();
             });
 
             resizeObserver.observe(that.getReplyRichtext().$[0]);
@@ -317,14 +317,18 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
         return new Promise(function (resolve) {
             setTimeout(function () {
-                if (!$('.conversation-entry-list').length) {
+                var $entryContainer = that.$.find('.conversation-entry-list');
+
+                if (!$entryContainer.length) {
                     return;
                 }
 
-                var formHeight = $('.mail-message-form').outerHeight();
+                var formHeight = that.getReplyRichtext().$.innerHeight();
+                $entryContainer.css('margin-bottom' , formHeight + 5 + 'px');
+
                 var offsetTop = that.$.find('.conversation-entry-list').offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
-                that.$.find('.conversation-entry-list').css('max-height', max_height);
+                $entryContainer.css('max-height', max_height);
                 resolve();
             }, 100);
         })

@@ -272,15 +272,19 @@
     right: 10px;
 }
 
+.mail-message-form {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:10px;
+}
+
 @media (max-width: 767px) {
     #inbox {
         max-height: 30vh;
     }
     .inbox-wrapper {
         display: none;
-    }
-    .mail-message-form .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
-        margin-top: -32px;
     }
 
     .conversation-entry-content pre {
