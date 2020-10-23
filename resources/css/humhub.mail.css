@@ -283,6 +283,7 @@
     #inbox {
         max-height: 30vh;
     }
+
     .inbox-wrapper {
         display: none;
     }
@@ -290,6 +291,10 @@
     .conversation-entry-content pre {
         max-width: 245px;
         padding:0;
+    }
+
+    .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
+        margin-top: -25px;
     }
 }
 

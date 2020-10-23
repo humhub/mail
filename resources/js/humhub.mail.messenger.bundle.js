@@ -329,7 +329,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 $entryContainer.css('margin-bottom' , formHeight + 5 + 'px');
 
                 var offsetTop = that.$.find('.conversation-entry-list').offset().top;
-                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
+                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
                 $entryContainer.css('max-height', max_height);
                 resolve();
             }, 100);
