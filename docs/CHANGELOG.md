@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.0 - Unreleased
+-----------------------
+- Fix #199 Block code overflows message entry
+
 2.0.0-beta.2 - September 11, 2020
 -----------------------
 - Enh: Added fail safe drop table

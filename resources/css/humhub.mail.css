@@ -167,6 +167,10 @@
     max-width:70%;
 }
 
+.conversation-entry-content pre {
+    max-width: 485px;
+}
+
 .conversation-entry-content.seq-top {
     border-top-left-radius: 2px;
 }
@@ -277,6 +281,11 @@
     }
     .mail-message-form .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
         margin-top: -32px;
+    }
+
+    .conversation-entry-content pre {
+        max-width: 245px;
+        padding:0;
     }
 }
 
