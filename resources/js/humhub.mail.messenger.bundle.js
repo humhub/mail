@@ -296,11 +296,16 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.scrollToBottom = function () {
         var that = this;
+
         return new Promise(function (resolve) {
-            var $list = that.getListNode();
-            that.updateSize().then(function () {
-                $list[0].scrollTop = $list[0].scrollHeight;
-                resolve()
+            setTimeout(function() {
+                that.$.imagesLoaded(function() {
+                    var $list = that.getListNode();
+                    that.updateSize().then(function () {
+                        $list[0].scrollTop = $list[0].scrollHeight;
+                        resolve()
+                    });
+                })
             });
         });
     };
