@@ -191,11 +191,18 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
         that.focus();
-        that.getReplyRichtext().$.on('keyup', function (evt) {
+
+        var resizeObserver = new ResizeObserver(function(entries) {
+            that.updateSize();
+        });
+
+        resizeObserver.observe(that.getReplyRichtext().$[0]);
+
+        /*that.getReplyRichtext().$.on('keyup', function (evt) {
             if (evt.which === 13) {
                 window.scrollTo(0, document.body.scrollHeight);
             }
-        })
+        })*/
     };
 
     ConversationView.prototype.initScroll = function () {
@@ -319,9 +326,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 }
 
                 var formHeight = $('.mail-message-form').outerHeight();
-                var test = that.$.find('.conversation-entry-list').offset().top;
-                var test2 = that.$.offset().top;
-                var max_height = (window.innerHeight - test - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
+                var offsetTop = that.$.find('.conversation-entry-list').offset().top;
+                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
                 that.$.find('.conversation-entry-list').css('max-height', max_height);
                 resolve();
             }, 100);
