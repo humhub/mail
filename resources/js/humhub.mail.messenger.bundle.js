@@ -330,6 +330,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
                 var offsetTop = that.$.find('.conversation-entry-list').offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
+                $entryContainer.css('height', max_height);
                 $entryContainer.css('max-height', max_height);
 
                 if(scrollToButtom !== false) {
