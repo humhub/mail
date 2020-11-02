@@ -73,7 +73,7 @@ class Message extends ActiveRecord
      */
     public function getEntryPage($from = null)
     {
-        $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
+        $query = $this->getEntries();
         $query->addOrderBy(['created_at' => SORT_DESC]);
 
         if ($from) {
@@ -87,6 +87,18 @@ class Message extends ActiveRecord
         return array_reverse($query->all());
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEntries()
+    {
+        return $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getUsers()
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])
@@ -109,6 +121,10 @@ class Message extends ActiveRecord
         ]);
     }
 
+    /**
+     * @param $user
+     * @return bool
+     */
     public function isParticipant($user)
     {
         foreach ($this->users as $participant) {
@@ -119,6 +135,9 @@ class Message extends ActiveRecord
         return false;
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOriginator()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
@@ -148,6 +167,12 @@ class Message extends ActiveRecord
         return MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1)->one();
     }
 
+    /**
+     * @param bool $includeMe
+     * @return \yii\web\IdentityInterface|null
+     * @throws \Throwable
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getLastActiveParticipant($includeMe = false)
     {
         $query = MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1);
@@ -174,7 +199,7 @@ class Message extends ActiveRecord
     public function deleteEntry($entry)
     {
         if ($entry->message->id == $this->id) {
-            if (count($this->entries) > 1) {
+            if($this->getEntries()->count() > 1) {
                 $entry->delete();
             } else {
                 $this->delete();
