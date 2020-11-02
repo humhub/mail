@@ -22,7 +22,7 @@ env:
   matrix:
     - HUMHUB_VERSION=master
     - HUMHUB_VERSION=develop
-    - HUMHUB_VERSION=v1.5.0
+    - HUMHUB_VERSION=v1.6.3
 
 matrix:
   allow_failures:
