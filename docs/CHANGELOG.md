@@ -1,7 +1,11 @@
 Changelog
 =========
 
-2.0.0 - Unreleased
+2.0.1 - November 02, 2020
+-----------------------
+- Fix #201: Error thrown after update due to update process race condition
+
+2.0.0 - October 27, 2020
 -----------------------
 - Fix #199 Block code overflows message entry
 - Fix #198 Conversation view not scrolling down completely

@@ -68,7 +68,9 @@ class Events
                 return;
             }
 
-            if (!Config::getModule()->hideInTopNav()) {
+            $module = Config::getModule();
+            // See https://github.com/humhub/humhub-modules-mail/issues/201
+            if (method_exists($module, 'hideInTopNav') && !$module->hideInTopNav()) {
                 $event->sender->addItem([
                     'label' => Yii::t('MailModule.base', 'Messages'),
                     'url' => Url::toMessenger(),
