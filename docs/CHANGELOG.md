@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.2 - November 02, 2020
+-----------------------
+- Fix: Removed asset forceCopy
+
 2.0.1 - November 02, 2020
 -----------------------
 - Fix #201: Error thrown after update due to update process race condition
