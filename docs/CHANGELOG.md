@@ -4,6 +4,8 @@ Changelog
 2.0.1 - November 02, 2020
 -----------------------
 - Fix #201: Error thrown after update due to update process race condition
+- Fix #202: Editor overlaps messages
+- Enh: Updated translations
 
 2.0.0 - October 27, 2020
 -----------------------
