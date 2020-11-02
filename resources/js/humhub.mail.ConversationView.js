@@ -190,15 +190,23 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
-        that.focus();
 
         if(window.ResizeObserver) {
             var resizeObserver = new ResizeObserver(function(entries) {
-               that.updateSize(false);
+                that.updateSize(that.isScrolledToBottom(100));
             });
 
             resizeObserver.observe(that.getReplyRichtext().$[0]);
         }
+
+        that.focus();
+
+    };
+
+    ConversationView.prototype.isScrolledToBottom = function (tolerance) {
+        tolerance = tolerance || 0;
+        var list = this.getListNode()[0];
+        return list.scrollHeight - list.offsetHeight - list.scrollTop <= tolerance;
     };
 
     ConversationView.prototype.initScroll = function () {

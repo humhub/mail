@@ -190,15 +190,30 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
-        that.focus();
+
+       /* that.getReplyRichtext().$.find('.humhub-ui-richtext').on('focus', function() {
+            that.scrollToBottom();
+        });*/
+
+
 
         if(window.ResizeObserver) {
             var resizeObserver = new ResizeObserver(function(entries) {
-               that.updateSize(false);
+                that.updateSize(that.isScrolledToBottom(100));
             });
 
             resizeObserver.observe(that.getReplyRichtext().$[0]);
         }
+
+
+        that.focus();
+
+    };
+
+    ConversationView.prototype.isScrolledToBottom = function (tolerance) {
+        tolerance = tolerance || 0;
+        var list = this.getListNode()[0];
+        return list.scrollHeight - list.offsetHeight - list.scrollTop <= tolerance;
     };
 
     ConversationView.prototype.initScroll = function () {
@@ -641,7 +656,6 @@ humhub.module('mail.conversation', function (module, require, $) {
     var event = require('event');
     var mail = require('mail.notification');
     var user = require('user');
-    var view = require('ui.view');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {

@@ -64,6 +64,10 @@
     border-top: 1px solid #eee;
 }
 
+#mail-conversation-root .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
+    margin-top: -0;
+}
+
 #mail-conversation-root .panel-body {
     margin-bottom: 0;
 }
@@ -291,10 +295,6 @@
     .conversation-entry-content pre {
         max-width: 245px;
         padding:0;
-    }
-
-    .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
-        margin-top: -25px;
     }
 }
 
