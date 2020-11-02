@@ -191,12 +191,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
 
-       /* that.getReplyRichtext().$.find('.humhub-ui-richtext').on('focus', function() {
-            that.scrollToBottom();
-        });*/
-
-
-
         if(window.ResizeObserver) {
             var resizeObserver = new ResizeObserver(function(entries) {
                 that.updateSize(that.isScrolledToBottom(100));
@@ -204,7 +198,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
             resizeObserver.observe(that.getReplyRichtext().$[0]);
         }
-
 
         that.focus();
 

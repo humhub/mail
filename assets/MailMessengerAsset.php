@@ -18,7 +18,7 @@ class MailMessengerAsset extends AssetBundle
     public $sourcePath = '@mail/resources/js';
 
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
 
     public $js = [

@@ -7,6 +7,7 @@ Changelog
 - Fix #202: Editor overlaps messages
 - Enh: Updated translations
 - Fix #194: Message entry can not be deleted
+- Fix #163: Mail notification link not working if pjax is disabled
 
 2.0.0 - October 27, 2020
 -----------------------
