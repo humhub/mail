@@ -5,6 +5,7 @@ namespace humhub\modules\mail\models;
 
 
 use humhub\components\ActiveRecord;
+use humhub\modules\user\models\User;
 use yii\db\ActiveQuery;
 
 /**
@@ -40,6 +41,14 @@ class UserMessageTag extends ActiveRecord
     public static function create(UserMessage $message, MessageTag $userTag)
     {
         (new static(['message_id' => $message->message_id, 'user_id' => $message->user_id, 'tag_id' => $userTag->id]))->save();
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class,['id' => 'user_id']);
     }
 
     /**

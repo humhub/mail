@@ -29,6 +29,44 @@ class Events
 {
 
     /**
+     * @param $event
+     */
+    public static function onIntegrityCheck($event)
+    {
+        $integrityController = $event->sender;
+
+        $integrityController->showTestHeadline("Mail Module (" . MessageEntry::find()->count() . " message entries)");
+
+        foreach (MessageEntry::find()->each() as $messageEntry) {
+            if(!$messageEntry->getUser()->count()) {
+                if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing user!")) {
+                    $messageEntry->delete();
+                }
+            }
+        }
+
+        $integrityController->showTestHeadline("Mail Module (" . UserMessage::find()->count() . " user message entries)");
+
+        foreach (UserMessage::find()->each() as $userMessage) {
+            if(!$userMessage->getUser()->count()) {
+                if ($integrityController->showFix("Deleting user message id " . $userMessage->message_id . " without existing user!")) {
+                    $userMessage->delete();
+                }
+            }
+        }
+
+        $integrityController->showTestHeadline("Mail Module (" . UserMessageTag::find()->count() . " user message tag entries)");
+
+        foreach (UserMessageTag::find()->each() as $messageTag) {
+            if(!$messageTag->getUser()->count()) {
+                if ($integrityController->showFix("Deleting user tag id " . $messageTag->id . " without existing user!")) {
+                    $messageTag->delete();
+                }
+            }
+        }
+    }
+
+    /**
      * On User delete, also delete all comments
      *
      * @param type $event
@@ -42,11 +80,15 @@ class Events
             }
 
             foreach (UserMessage::findAll(['user_id' => $event->sender->id]) as $userMessage) {
-                $userMessage->message->leave($event->sender->id);
-            }
+                if($userMessage->message) {
+                    $userMessage->message->leave($event->sender->id);
+                }
 
+                $userMessage->delete();
+            }
+            
             foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
-                $userMessageTag->message->leave($event->sender->id);
+                $userMessageTag->delete();
             }
         } catch(\Exception $e) {
             Yii::error($e);
