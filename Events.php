@@ -31,8 +31,6 @@ class Events
 
     /**
      * @param $event
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
      */
     public static function onIntegrityCheck($event)
     {
@@ -40,46 +38,50 @@ class Events
 
         $integrityController->showTestHeadline("Mail Module (" . Message::find()->count() . " conversations)");
 
-        foreach (Message::find()->each() as $message) {
-            /* @var $message Message */
-            if(!$message->getAuthor()->count()) {
-                if ($integrityController->showFix("Deleting conversation id " . $message->id . " without existing author!")) {
-                    $message->delete();
+        try {
+            foreach (Message::find()->each() as $message) {
+                /* @var $message Message */
+                if(!$message->getAuthor()->count()) {
+                    if ($integrityController->showFix("Deleting conversation id " . $message->id . " without existing author!")) {
+                        $message->delete();
+                    }
                 }
             }
-        }
 
-        $integrityController->showTestHeadline("Mail Module (" . MessageEntry::find()->count() . " message entries)");
+            $integrityController->showTestHeadline("Mail Module (" . MessageEntry::find()->count() . " message entries)");
 
-        foreach (MessageEntry::find()->each() as $messageEntry) {
-            /* @var $messageEntry MessageEntry */
-            if(!$messageEntry->getUser()->count()) {
-                if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing user!")) {
-                    $messageEntry->delete();
+            foreach (MessageEntry::find()->each() as $messageEntry) {
+                /* @var $messageEntry MessageEntry */
+                if(!$messageEntry->getUser()->count()) {
+                    if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing user!")) {
+                        $messageEntry->delete();
+                    }
                 }
             }
-        }
 
-        $integrityController->showTestHeadline("Mail Module (" . UserMessage::find()->count() . " user message entries)");
+            $integrityController->showTestHeadline("Mail Module (" . UserMessage::find()->count() . " user message entries)");
 
-        foreach (UserMessage::find()->each() as $userMessage) {
-            /* @var $userMessage UserMessage */
-            if(!$userMessage->getUser()->count()) {
-                if ($integrityController->showFix("Deleting user message id " . $userMessage->message_id . " without existing user!")) {
-                    $userMessage->delete();
+            foreach (UserMessage::find()->each() as $userMessage) {
+                /* @var $userMessage UserMessage */
+                if(!$userMessage->getUser()->count()) {
+                    if ($integrityController->showFix("Deleting user message id " . $userMessage->message_id . " without existing user!")) {
+                        $userMessage->delete();
+                    }
                 }
             }
-        }
 
-        $integrityController->showTestHeadline("Mail Module (" . UserMessageTag::find()->count() . " user message tag entries)");
+            $integrityController->showTestHeadline("Mail Module (" . UserMessageTag::find()->count() . " user message tag entries)");
 
-        foreach (UserMessageTag::find()->each() as $messageTag) {
-            /* @var $messageTag UserMessageTag */
-            if(!$messageTag->getUser()->count()) {
-                if ($integrityController->showFix("Deleting user tag id " . $messageTag->id . " without existing user!")) {
-                    $messageTag->delete();
+            foreach (UserMessageTag::find()->each() as $messageTag) {
+                /* @var $messageTag UserMessageTag */
+                if(!$messageTag->getUser()->count()) {
+                    if ($integrityController->showFix("Deleting user tag id " . $messageTag->id . " without existing user!")) {
+                        $messageTag->delete();
+                    }
                 }
             }
+        } catch(\Throwable $e) {
+            Yii::error($e);
         }
     }
 
@@ -111,7 +113,7 @@ class Events
             foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
                 $userMessageTag->delete();
             }
-        } catch(\Exception $e) {
+        } catch(\Throwable $e) {
             Yii::error($e);
         }
 
@@ -142,7 +144,7 @@ class Events
                     'sortOrder' => 300,
                 ]);
             }
-        } catch(\Exception $e) {
+        } catch(\Throwable $e) {
             Yii::error($e);
         }
     }
@@ -155,7 +157,7 @@ class Events
             }
 
             $event->sender->addWidget(NotificationInbox::className(), [], ['sortOrder' => 90]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
     }
@@ -176,7 +178,7 @@ class Events
             }
 
             $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
     }
