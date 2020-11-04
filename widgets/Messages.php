@@ -8,6 +8,7 @@ use humhub\components\Widget;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\ConversationEntry;
+use Yii;
 
 class Messages extends Widget
 {
@@ -36,9 +37,13 @@ class Messages extends Widget
 
         $entries = $this->getEntries();
         foreach ($entries as $index => $entry) {
-            $nextEntry = $entries[$index + 1] ?? null;
-            $result .= ConversationEntry::widget(['entry' => $entry, 'prevEntry' => $prevEntry, 'nextEntry' => $nextEntry]);
-            $prevEntry = $entry;
+            try {
+                $nextEntry = $entries[$index + 1] ?? null;
+                $result .= ConversationEntry::widget(['entry' => $entry, 'prevEntry' => $prevEntry, 'nextEntry' => $nextEntry]);
+                $prevEntry = $entry;
+            } catch (\Throwable $e) {
+                Yii::error($e);
+            }
         }
 
         return $result;

@@ -8,6 +8,7 @@
 
 namespace humhub\modules\mail;
 
+use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\user\models\User;
@@ -30,14 +31,28 @@ class Events
 
     /**
      * @param $event
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public static function onIntegrityCheck($event)
     {
         $integrityController = $event->sender;
 
+        $integrityController->showTestHeadline("Mail Module (" . Message::find()->count() . " conversations)");
+
+        foreach (Message::find()->each() as $message) {
+            /* @var $message Message */
+            if(!$message->getAuthor()->count()) {
+                if ($integrityController->showFix("Deleting conversation id " . $message->id . " without existing author!")) {
+                    $message->delete();
+                }
+            }
+        }
+
         $integrityController->showTestHeadline("Mail Module (" . MessageEntry::find()->count() . " message entries)");
 
         foreach (MessageEntry::find()->each() as $messageEntry) {
+            /* @var $messageEntry MessageEntry */
             if(!$messageEntry->getUser()->count()) {
                 if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing user!")) {
                     $messageEntry->delete();
@@ -48,6 +63,7 @@ class Events
         $integrityController->showTestHeadline("Mail Module (" . UserMessage::find()->count() . " user message entries)");
 
         foreach (UserMessage::find()->each() as $userMessage) {
+            /* @var $userMessage UserMessage */
             if(!$userMessage->getUser()->count()) {
                 if ($integrityController->showFix("Deleting user message id " . $userMessage->message_id . " without existing user!")) {
                     $userMessage->delete();
@@ -58,6 +74,7 @@ class Events
         $integrityController->showTestHeadline("Mail Module (" . UserMessageTag::find()->count() . " user message tag entries)");
 
         foreach (UserMessageTag::find()->each() as $messageTag) {
+            /* @var $messageTag UserMessageTag */
             if(!$messageTag->getUser()->count()) {
                 if ($integrityController->showFix("Deleting user tag id " . $messageTag->id . " without existing user!")) {
                     $messageTag->delete();
@@ -75,6 +92,10 @@ class Events
     public static function onUserDelete($event)
     {
         try {
+            foreach (Message::findAll(['created_by' => $event->sender->id]) as $message) {
+                $message->delete();
+            }
+
             foreach (MessageEntry::findAll(['user_id' => $event->sender->id]) as $messageEntry) {
                 $messageEntry->delete();
             }
@@ -86,7 +107,7 @@ class Events
 
                 $userMessage->delete();
             }
-            
+
             foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
                 $userMessageTag->delete();
             }

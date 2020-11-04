@@ -97,6 +97,14 @@ class Message extends ActiveRecord
 
     /**
      * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
      * @throws \yii\base\InvalidConfigException
      */
     public function getUsers()
