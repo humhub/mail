@@ -204,6 +204,12 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.isScrolledToBottom = function (tolerance) {
+        var $list = this.getListNode();
+
+        if(!$list.length) {
+            return false;
+        }
+
         tolerance = tolerance || 0;
         var list = this.getListNode()[0];
         return list.scrollHeight - list.offsetHeight - list.scrollTop <= tolerance;
@@ -314,6 +320,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             setTimeout(function() {
                 that.$.imagesLoaded(function() {
                     var $list = that.getListNode();
+                    if(!$list.length) {
+                        return;
+                    }
+
                     that.updateSize(false).then(function () {
                         $list[0].scrollTop = $list[0].scrollHeight;
                         resolve()

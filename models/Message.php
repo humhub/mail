@@ -278,6 +278,10 @@ class Message extends ActiveRecord
 
     public function getPreview()
     {
+        if(!$this->lastEntry) {
+            return 'No message found';
+        }
+
         return RichText::preview($this->lastEntry->content, 80);
     }
 
