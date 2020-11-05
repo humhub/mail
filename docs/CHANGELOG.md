@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.1 - November 05, 2020
+-----------------------
+- Fix #203: User deletion does not delete conversations created by this user
+- Enh: Added integrity check for invalid user ids
+
 2.0.2 - November 02, 2020
 -----------------------
 - Fix: Removed asset forceCopy
