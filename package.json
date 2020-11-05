@@ -1,6 +1,6 @@
 {
   "name": "humhub-modules-mail",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.4",
   "description": "HumHub mail module",
   "directories": {
     "doc": "docs",

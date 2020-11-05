@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.4 - November 05, 2020
+-----------------------
+- Fix: Error thorwn if no lastEntry of conversation could be found
+- Fix: Script error logged in case conversation message list not found
+
 2.0.3 - November 05, 2020
 -----------------------
 - Fix #203: User deletion does not delete conversations created by this user
