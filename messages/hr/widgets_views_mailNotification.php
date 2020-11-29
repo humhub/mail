@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Show all messages' => 'Prikaži sve poruke',
-];
+return array (
+  'Show all messages' => 'Prikaži sve poruke',
+);
