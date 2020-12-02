@@ -13,6 +13,7 @@ Changelog
 - Enh: Use of splitted and minified assets
 - Enh: Enhanced mobile view
 - Chng: Major refactoring
+- Enh: Enable default permissions
 
 1.0.15 - March 28, 2020
 -----------------------
