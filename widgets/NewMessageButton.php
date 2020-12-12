@@ -89,9 +89,7 @@ class NewMessageButton extends Widget
             return $this->label;
         }
 
-        return ($this->guid)
-            ? Icon::get('envelope')
-            : Icon::get('envelope');
+        return ($this->guid) ? Icon::get('envelope')->tooltip('Send Message') : Icon::get('envelope')->right()->tooltip('+ Message');
     }
 }
 
