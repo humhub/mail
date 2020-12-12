@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\widgets;
 
+use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\mail\helpers\Url;
 use humhub\widgets\ModalButton;
 use Yii;
@@ -89,8 +90,8 @@ class NewMessageButton extends Widget
         }
 
         return ($this->guid)
-            ? Yii::t('MailModule.widgets_views_newMessageButton', 'Send message')
-            : Yii::t('MailModule.base', '+ Message');
+            ? Icon::get('envelope')
+            : Icon::get('envelope');
     }
 }
 
