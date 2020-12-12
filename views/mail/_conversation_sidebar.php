@@ -21,7 +21,7 @@ $filterModel = new InboxFilterForm();
             <strong><span class="visible-xs-inline"><?=Icon::get('bars')?></span> <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?></strong>
         </a>
         <?php if($canStartConversation) : ?>
-            <?= NewMessageButton::widget(['label' => Yii::t('MailModule.base', '+ Message'), 'right' => true, 'icon' => false, 'cssClass' => 'hidden-xs'])?>
+            <?= NewMessageButton::widget(['label' => Icon::get('envelope'), 'right' => true, 'icon' => false, 'cssClass' => 'hidden-xs'])?>
 
             <?= NewMessageButton::widget(['right' => true, 'label' => '+', 'cssClass' => 'visible-xs'])?>
         <?php endif; ?>
