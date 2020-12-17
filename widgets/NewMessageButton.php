@@ -91,7 +91,7 @@ class NewMessageButton extends Widget
 
         return ($this->guid)
             ? Icon::get('envelope')->tooltip(Yii::t('MailModule.widgets_views_newMessageButton', 'Send message'))	
-            : Yii::t('MailModule.base', '+ Message');
+            : Icon::get('plus')->right()->tooltip(Yii::t('MailModule.base', '+ Message'));
     }
 }
 
