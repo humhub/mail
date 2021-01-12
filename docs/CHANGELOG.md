@@ -3,7 +3,7 @@ Changelog
 
 2.0.5 - Unreleased
 -----------------------
-- Fix: Check SendMail permission on action
+- Fix: Check SendMail permission on action (@jrckmcsb is security auditor)
 
 2.0.4 - November 05, 2020
 -----------------------
