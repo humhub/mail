@@ -67,11 +67,11 @@ class Module extends \humhub\components\Module
     {
         if (!$contentContainer) {
             return [
-                new StartConversation(['contentContainer' => $contentContainer])
+                new StartConversation()
             ];
         } else if ($contentContainer instanceof User) {
             return [
-                new SendMail(['contentContainer' => $contentContainer])
+                new SendMail()
             ];
         }
 
