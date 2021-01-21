@@ -6,9 +6,11 @@ use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\MessageTag;
+use humhub\modules\mail\permissions\SendMail;
 use Yii;
 use yii\base\Model;
 use humhub\modules\user\models\User;
+use yii\helpers\Html;
 
 /**
  * @package humhub.modules.mail.forms
@@ -82,7 +84,9 @@ class CreateMessage extends Model
                 $user = User::findOne(['guid' => $userGuid]);
                 if ($user) {
                     if ($user->isCurrentUser()) {
-                        $this->addError($attribute, Yii::t('MailModule.base', "You cannot send a message to yourself!"));
+                        $this->addError($attribute, Yii::t('MailModule.base', 'You cannot send a message to yourself!'));
+                    } else if(!Yii::$app->user->isAdmin() && !$user->getPermissionManager()->can(SendMail::class)) {
+                        $this->addError($attribute, Yii::t('MailModule.base', 'You are not allowed to start a conversation with {userName}!', ['userName' => Html::encode($user->getDisplayName())]));
                     } else {
                         $this->recipients[] = $user;
                     }

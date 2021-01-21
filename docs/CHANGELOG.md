@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.5 - Unreleased
+-----------------------
+- Fix: Check SendMail permission on action (Special thanks to @jrckmcsb for the security audit)
+
 2.0.4 - November 05, 2020
 -----------------------
 - Fix: Error thorwn if no lastEntry of conversation could be found
