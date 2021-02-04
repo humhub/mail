@@ -51,6 +51,7 @@ return [
     'Write a message...' => '',
     'You' => '',
     'You are not allowed to start a conversation with this user.' => '',
+    'You are not allowed to start a conversation with {userName}!' => '',
     'You cannot send a message to yourself!' => '',
     'You\'ve exceeded your daily amount of new conversations.' => '',
     'created by {name}' => '',
