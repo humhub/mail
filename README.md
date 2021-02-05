@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/humhub/humhub-modules-mail.svg?branch=master)](https://travis-ci.org/humhub/humhub-modules-mail)
+[![Test Status](https://github.com/humhub/humhub-modules-mail/workflows/PHP%20Codeception%20Tests/badge.svg)](https://github.com/humhub/humhub-modules-mail/actions)
 
 # Mail
 
