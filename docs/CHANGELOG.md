@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.5 - January 21, 2020
+2.0.5 - January 21, 2021
 ------------------------
 - Fix: Check SendMail permission on action (Special thanks to @jrckmcsb for the security audit)
 
