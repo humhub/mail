@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => 'Mensagem',
-    'Subject' => 'Assunto',
-    'Recipient' => '',
-    'Tags' => '',
-];
+return array (
+  'Message' => 'Mensagem',
+  'Recipient' => '',
+  'Subject' => 'Assunto',
+  'Tags' => 'Etiquetas',
+);
