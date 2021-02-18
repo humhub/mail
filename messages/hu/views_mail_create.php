@@ -1,6 +1,6 @@
 <?php
 return array (
   '<strong>New</strong> message' => '<strong>Új</strong> üzenet',
-  'Add recipients' => 'Címzettek',
+  'Add recipients' => 'Címzett(ek)',
   'Send' => 'Küldés',
 );

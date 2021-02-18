@@ -1,6 +1,5 @@
 <?php
-
-return [
-    '<strong>New</strong> message' => '<strong>Új</strong> üzenet',
-    'Reply now' => 'Válasz',
-];
+return array (
+  '<strong>New</strong> message' => '<strong>Új</strong> üzenet',
+  'Reply now' => 'Válasz most',
+);
