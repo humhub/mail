@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'New message from {senderName}' => '',
-];
+return array (
+  'New message from {senderName}' => 'Nova mensagem de {senderName}',
+);

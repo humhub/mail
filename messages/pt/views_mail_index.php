@@ -1,6 +1,6 @@
 <?php
 return array (
-  'Conversations' => '',
-  'New' => 'Novo',
-  'There are no messages yet.' => '',
+  'Conversations' => 'Conversas',
+  'New' => 'Nova',
+  'There are no messages yet.' => 'Ainda não há mensagens.',
 );

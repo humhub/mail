@@ -1,7 +1,7 @@
 <?php
 return array (
   'Message' => 'Mensagem',
-  'Recipient' => '',
+  'Recipient' => 'Pessoas destinatárias',
   'Subject' => 'Assunto',
-  'Tags' => 'Etiquetas',
+  'Tags' => 'Signas',
 );
