@@ -103,30 +103,30 @@ class Events
 
     public static function onRestApiAddRules()
     {
-        Yii::$app->urlManager->addRules([
+        Yii::$app->getModule('rest')->addRules([
 
             // Conversations
-            ['pattern' => 'api/v1/mail', 'route' => 'mail/rest/message/index', 'verb' => 'GET'],
-            ['pattern' => 'api/v1/mail/<id:\d+>', 'route' => 'mail/rest/message/view', 'verb' => 'GET'],
-            ['pattern' => 'api/v1/mail', 'route' => 'mail/rest/message/create', 'verb' => 'POST'],
+            ['pattern' => 'mail', 'route' => 'mail/rest/message/index', 'verb' => 'GET'],
+            ['pattern' => 'mail/<id:\d+>', 'route' => 'mail/rest/message/view', 'verb' => 'GET'],
+            ['pattern' => 'mail', 'route' => 'mail/rest/message/create', 'verb' => 'POST'],
 
             // Participants
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/users', 'route' => 'mail/rest/user/index', 'verb' => 'GET'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/user/<userId:\d+>', 'route' => 'mail/rest/user/add', 'verb' => 'POST'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/user/<userId:\d+>', 'route' => 'mail/rest/user/leave', 'verb' => 'DELETE'],
+            ['pattern' => 'mail/<messageId:\d+>/users', 'route' => 'mail/rest/user/index', 'verb' => 'GET'],
+            ['pattern' => 'mail/<messageId:\d+>/user/<userId:\d+>', 'route' => 'mail/rest/user/add', 'verb' => 'POST'],
+            ['pattern' => 'mail/<messageId:\d+>/user/<userId:\d+>', 'route' => 'mail/rest/user/leave', 'verb' => 'DELETE'],
 
             // Entries
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/entries', 'route' => 'mail/rest/entry/index', 'verb' => 'GET'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/entry', 'route' => 'mail/rest/entry/add', 'verb' => 'POST'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/view', 'verb' => 'GET'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/update', 'verb' => 'PUT'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/delete', 'verb' => 'DELETE'],
+            ['pattern' => 'mail/<messageId:\d+>/entries', 'route' => 'mail/rest/entry/index', 'verb' => 'GET'],
+            ['pattern' => 'mail/<messageId:\d+>/entry', 'route' => 'mail/rest/entry/add', 'verb' => 'POST'],
+            ['pattern' => 'mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/view', 'verb' => 'GET'],
+            ['pattern' => 'mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/update', 'verb' => 'PUT'],
+            ['pattern' => 'mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/delete', 'verb' => 'DELETE'],
 
             // Tags
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/index', 'verb' => 'GET'],
-            ['pattern' => 'api/v1/mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/update', 'verb' => 'PUT'],
+            ['pattern' => 'mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/index', 'verb' => 'GET'],
+            ['pattern' => 'mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/update', 'verb' => 'PUT'],
 
-        ], true);
+        ]);
     }
 
 }
