@@ -1,5 +1,6 @@
 <?php
 
+use humhub\components\Application;
 use humhub\modules\user\models\User;
 use humhub\widgets\TopMenu;
 use humhub\widgets\NotificationArea;
@@ -14,6 +15,7 @@ return [
         ['class' => TopMenu::className(), 'event' => TopMenu::EVENT_INIT, 'callback' => ['humhub\modules\mail\Events', 'onTopMenuInit']],
         ['class' => NotificationArea::className(), 'event' => NotificationArea::EVENT_INIT, 'callback' => ['humhub\modules\mail\Events', 'onNotificationAddonInit']],
         ['class' => ProfileHeaderControls::className(), 'event' => ProfileHeaderControls::EVENT_INIT, 'callback' => ['humhub\modules\mail\Events', 'onProfileHeaderControlsInit']],
+        ['class' => Application::class, 'event' => Application::EVENT_BEFORE_REQUEST, 'callback' => ['humhub\modules\mail\Events', 'onBeforeRequest']],
     ],
 ];
 ?>

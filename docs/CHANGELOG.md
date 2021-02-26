@@ -14,6 +14,7 @@ Changelog
 - Enh: Enhanced mobile view
 - Chng: Major refactoring
 - Enh: Enable default permissions
+- Enh: Support RESTful API module
 
 1.0.15 - March 28, 2020
 -----------------------

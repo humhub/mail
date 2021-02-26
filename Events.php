@@ -101,4 +101,34 @@ class Events
         $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
     }
 
+    public static function onBeforeRequest($event)
+    {
+        if (Yii::$app->getModule('rest')) {
+            Yii::$app->urlManager->addRules([
+
+                // Conversations
+                ['pattern' => 'api/v1/mail', 'route' => 'mail/rest/message/index', 'verb' => 'GET'],
+                ['pattern' => 'api/v1/mail/<id:\d+>', 'route' => 'mail/rest/message/view', 'verb' => 'GET'],
+                ['pattern' => 'api/v1/mail', 'route' => 'mail/rest/message/create', 'verb' => 'POST'],
+
+                // Participants
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/users', 'route' => 'mail/rest/user/index', 'verb' => 'GET'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/user/<userId:\d+>', 'route' => 'mail/rest/user/add', 'verb' => 'POST'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/user/<userId:\d+>', 'route' => 'mail/rest/user/leave', 'verb' => 'DELETE'],
+
+                // Entries
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/entries', 'route' => 'mail/rest/entry/index', 'verb' => 'GET'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/entry', 'route' => 'mail/rest/entry/add', 'verb' => 'POST'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/view', 'verb' => 'GET'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/update', 'verb' => 'PUT'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/entry/<entryId:\d+>', 'route' => 'mail/rest/entry/delete', 'verb' => 'DELETE'],
+
+                // Tags
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/index', 'verb' => 'GET'],
+                ['pattern' => 'api/v1/mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/update', 'verb' => 'PUT'],
+
+            ], true);
+        }
+    }
+
 }
