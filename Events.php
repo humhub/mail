@@ -129,7 +129,7 @@ class Events
             ['pattern' => 'mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/index', 'verb' => 'GET'],
             ['pattern' => 'mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/update', 'verb' => 'PUT'],
 
-        ]);
+        ], 'mail');
     }
 
 }
