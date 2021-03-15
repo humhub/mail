@@ -35,7 +35,7 @@ class TagCest extends HumHubApiTestCest
             return;
         }
 
-        $I->wantTo('see tags of the conversation by id');
+        $I->wantTo('update tags');
         $I->amUser1();
         $I->sendPut('mail/2/tags', ['tags' => ['User1 tag 1', 'User1 tag 2', 'User1 tag 3']]);
         $I->seeSuccessResponseContainsJson([
@@ -57,7 +57,7 @@ class TagCest extends HumHubApiTestCest
             return;
         }
 
-        $I->wantTo('see tags of the conversation by id');
+        $I->wantTo('cannot update tags');
         $I->amUser3();
         $I->sendPut('mail/2/tags', ['tags' => ['User1 tag 1', 'User1 tag 2', 'User1 tag 3']]);
         $I->seeForbiddenResponseContainsJson([
