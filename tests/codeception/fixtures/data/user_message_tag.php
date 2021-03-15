@@ -17,5 +17,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  */
-return [];
+return [
+    ['message_id' => 1, 'user_id' => 1, 'tag_id' => 1],
+    ['message_id' => 1, 'user_id' => 1, 'tag_id' => 2],
+    ['message_id' => 1, 'user_id' => 1, 'tag_id' => 3],
+    ['message_id' => 2, 'user_id' => 2, 'tag_id' => 4],
+    ['message_id' => 2, 'user_id' => 2, 'tag_id' => 5],
+    ['message_id' => 3, 'user_id' => 1, 'tag_id' => 6],
+];
 
