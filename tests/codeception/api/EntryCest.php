@@ -15,21 +15,10 @@ class EntryCest extends HumHubApiTestCest
 
         $I->wantTo('see entries of the conversation by id');
         $I->amAdmin();
-        $I->sendGet('mail/3/entries');
-        $I->seeSuccessResponseContainsJson([
-            'total' => 3,
-            'page' => 1,
-            'pages' => 1,
-            'links' => [
-                'self' => '/api/v1/mail/3/entries?page=1&per-page=100',
-                'first' => '/api/v1/mail/3/entries?page=1&per-page=100',
-                'last' => '/api/v1/mail/3/entries?page=1&per-page=100',
-            ],
-            'results' => [
-                ['id' => 4, 'content' => 'Third Message entry text 1.', 'user_id' => 1],
-                ['id' => 5, 'content' => 'Third Message entry text 2.', 'user_id' => 2],
-                ['id' => 6, 'content' => 'Third Message entry text 3.', 'user_id' => 3],
-            ],
+        $I->seePaginationGetResponse('mail/3/entries', [
+            ['id' => 4, 'content' => 'Third Message entry text 1.', 'user_id' => 1],
+            ['id' => 5, 'content' => 'Third Message entry text 2.', 'user_id' => 2],
+            ['id' => 6, 'content' => 'Third Message entry text 3.', 'user_id' => 3],
         ]);
     }
 

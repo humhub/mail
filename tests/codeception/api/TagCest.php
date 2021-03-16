@@ -15,17 +15,10 @@ class TagCest extends HumHubApiTestCest
 
         $I->wantTo('see tags of the conversation by id');
         $I->amAdmin();
-        $I->sendGet('mail/1/tags');
-        $I->seeSuccessResponseContainsJson([
-            'total' => 3,
-            'page' => 1,
-            'pages' => 1,
-            'links' => ['self' => '/api/v1/mail/1/tags?page=1&per-page=100'],
-            'results' => [
-                ['id' => 1, 'name' => 'Tag admin 1', 'sort_order' => 10],
-                ['id' => 2, 'name' => 'Tag admin 2', 'sort_order' => 20],
-                ['id' => 3, 'name' => 'Tag admin 3', 'sort_order' => 30],
-            ],
+        $I->seePaginationGetResponse('mail/1/tags', [
+            ['id' => 1, 'name' => 'Tag admin 1', 'sort_order' => 10],
+            ['id' => 2, 'name' => 'Tag admin 2', 'sort_order' => 20],
+            ['id' => 3, 'name' => 'Tag admin 3', 'sort_order' => 30],
         ]);
     }
 
@@ -37,18 +30,14 @@ class TagCest extends HumHubApiTestCest
 
         $I->wantTo('update tags');
         $I->amUser1();
-        $I->sendPut('mail/2/tags', ['tags' => ['User1 tag 1', 'User1 tag 2', 'User1 tag 3']]);
-        $I->seeSuccessResponseContainsJson([
-            'total' => '3',
-            'page' => 1,
-            'pages' => 1,
-            'links' => ['self' => '/api/v1/mail/2/tags?page=1&per-page=100'],
-            'results' => [
+        $I->seePaginationPutResponse('mail/2/tags',
+            ['tags' => ['User1 tag 1', 'User1 tag 2', 'User1 tag 3']],
+            [
                 ['id' => 7, 'name' => 'User1 tag 1'],
                 ['id' => 8, 'name' => 'User1 tag 2'],
                 ['id' => 9, 'name' => 'User1 tag 3'],
-            ],
-        ]);
+            ]
+        );
     }
 
     public function testCannotUpdateTags(ApiTester $I)

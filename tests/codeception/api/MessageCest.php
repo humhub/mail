@@ -15,17 +15,10 @@ class MessageCest extends HumHubApiTestCest
 
         $I->wantTo('see conversations of the Admin');
         $I->amAdmin();
-        $I->sendGet('mail');
-        $I->seeSuccessResponseContainsJson([
-            'total' => 3,
-            'page' => 1,
-            'pages' => 1,
-            'links' => ['self' => '/api/v1/mail?page=1&per-page=100'],
-            'results' => [
-                ['id' => 1, 'title' => 'First message title'],
-                ['id' => 2, 'title' => 'Second message title'],
-                ['id' => 3, 'title' => 'Third message title'],
-            ],
+        $I->seePaginationGetResponse('mail', [
+            ['id' => 1, 'title' => 'First message title'],
+            ['id' => 2, 'title' => 'Second message title'],
+            ['id' => 3, 'title' => 'Third message title'],
         ]);
     }
 
@@ -37,16 +30,9 @@ class MessageCest extends HumHubApiTestCest
 
         $I->wantTo('see conversations of the User 1');
         $I->amUser1();
-        $I->sendGet('mail');
-        $I->seeSuccessResponseContainsJson([
-            'total' => 2,
-            'page' => 1,
-            'pages' => 1,
-            'links' => ['self' => '/api/v1/mail?page=1&per-page=100'],
-            'results' => [
-                ['id' => 2, 'title' => 'Second message title'],
-                ['id' => 3, 'title' => 'Third message title'],
-            ],
+        $I->seePaginationGetResponse('mail', [
+            ['id' => 2, 'title' => 'Second message title'],
+            ['id' => 3, 'title' => 'Third message title'],
         ]);
     }
 
