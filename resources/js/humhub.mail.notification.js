@@ -65,9 +65,8 @@ humhub.module('mail.notification', function(module, require, $) {
         if ($('#mail-conversation-root').length) {
             Widget.instance('#mail-conversation-root').loadMessage(evt);
         } else {
-            client.pjax.redirect(evt.url);
+            client.redirect(evt.url);
         }
-
         evt.finish();
     };
 

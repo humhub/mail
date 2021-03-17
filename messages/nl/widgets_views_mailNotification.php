@@ -1,6 +1,5 @@
 <?php
-return array (
-  'Messages' => 'Berichten',
-  'New message' => 'Nieuw bericht',
-  'Show all messages' => 'Toon alle berichten',
-);
+
+return [
+    'Show all messages' => 'Toon alle berichten',
+];

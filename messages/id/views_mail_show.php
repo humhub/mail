@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'Cancel' => 'Batal',
+    'Delete' => 'Hapus',
     '<strong>Confirm</strong> deleting conversation' => '',
     '<strong>Confirm</strong> leaving conversation' => '',
     '<strong>Confirm</strong> message deletion' => '',
@@ -12,7 +14,4 @@ return [
     'Leave' => '',
     'Leave conversation' => '',
     'There are no messages yet.' => '',
-    'Cancel' => 'Batal',
-    'Delete' => 'Hapus',
-    'Send' => 'Kirim',
 ];
