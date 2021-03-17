@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'Add user' => 'Afegeix membres',
+    'Cancel' => 'Cancel·la',
+    'Delete' => 'Suprimeix',
+    'There are no messages yet.' => 'No tens cap missatge.',
     '<strong>Confirm</strong> deleting conversation' => '',
     '<strong>Confirm</strong> leaving conversation' => '',
     '<strong>Confirm</strong> message deletion' => '',
@@ -10,9 +14,4 @@ return [
     'Do you really want to leave this conversation?' => '',
     'Leave' => '',
     'Leave conversation' => '',
-    'Add user' => 'Afegeix membres',
-    'Cancel' => 'Cancel·la',
-    'Delete' => 'Suprimeix',
-    'Send' => 'Envia',
-    'There are no messages yet.' => 'No tens cap missatge.',
 ];

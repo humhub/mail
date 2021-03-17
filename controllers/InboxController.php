@@ -7,6 +7,7 @@ use humhub\components\Controller;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationInbox;
 use humhub\modules\mail\widgets\InboxMessagePreview;
+use Yii;
 
 /**
  * MailController provides messaging actions.
@@ -44,7 +45,11 @@ class InboxController extends Controller
 
         $result = '';
         foreach ($userMessages as $userMessage) {
-            $result .= InboxMessagePreview::widget(['userMessage' => $userMessage]);
+            try {
+                $result .= InboxMessagePreview::widget(['userMessage' => $userMessage]);
+            } catch(\Throwable $e) {
+                Yii::error($e);
+            }
         }
 
         return $this->asJson([
@@ -61,7 +66,11 @@ class InboxController extends Controller
 
         $result = [];
         foreach ($filter->query->all() as $userMessage) {
-            $result[$userMessage->message_id] = InboxMessagePreview::widget(['userMessage' => $userMessage]);
+            try {
+                $result[$userMessage->message_id] = InboxMessagePreview::widget(['userMessage' => $userMessage]);
+            } catch (\Throwable $e) {
+                Yii::error($e);
+            }
         }
 
         return $this->asJson([

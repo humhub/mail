@@ -38,19 +38,19 @@ use humhub\widgets\Button;
                 <?= Messages::widget(['message' => $message])?>
             </div>
 
+        </div>
 
-            <div class="mail-message-form row-fluid">
-                <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
+        <div class="mail-message-form">
+            <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
 
-                    <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, ['id' => 'reply-'.time()])->label(false) ?>
+            <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, ['id' => 'reply-'.time()])->label(false) ?>
 
-                <div class="clearfix">
-                    <?= Button::defaultType()->cssClass('reply-button')->submit()->action('reply', $replyForm->getUrl())->right()->icon('paper-plane-o')->sm() ?>
-                </div>
-
-
-                <?php ActiveForm::end(); ?>
+            <div class="clearfix">
+                <?= Button::defaultType()->cssClass('reply-button')->submit()->action('reply', $replyForm->getUrl())->right()->icon('paper-plane-o')->sm() ?>
             </div>
+
+
+            <?php ActiveForm::end(); ?>
         </div>
     <?php endif; ?>
 

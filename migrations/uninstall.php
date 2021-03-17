@@ -1,17 +1,17 @@
 <?php
 
-use yii\db\Migration;
+use humhub\components\Migration;
 
 class uninstall extends Migration
 {
 
     public function up()
     {
-        $this->dropTable('user_message_tag');
-        $this->dropTable('message_tag');
-        $this->dropTable('user_message');
-        $this->dropTable('message');
-        $this->dropTable('message_entry');
+        $this->safeDropTable('user_message_tag');
+        $this->safeDropTable('message_tag');
+        $this->safeDropTable('user_message');
+        $this->safeDropTable('message');
+        $this->safeDropTable('message_entry');
     }
 
     public function down()

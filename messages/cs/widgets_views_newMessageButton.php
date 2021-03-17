@@ -1,5 +1,5 @@
 <?php
-return array (
-  'New message' => 'Nová zpráva',
-  'Send message' => 'Poslat zprávu',
-);
+
+return [
+    'Send message' => 'Poslat zprávu',
+];

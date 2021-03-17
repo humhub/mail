@@ -12,6 +12,7 @@ class TimeAgo extends \humhub\widgets\TimeAgo
 
     public function renderDateTime($elapsed)
     {
+        // TODO: From HumHub 1.7 the timeAgoHideTimeAfter can be configured within the widget
         // Assure time is always set
         if(isset(Yii::$app->params['formatter']['timeAgoHideTimeAfter'])) {
             $timeAgoHideTimeAfter = Yii::$app->params['formatter']['timeAgoHideTimeAfter'];

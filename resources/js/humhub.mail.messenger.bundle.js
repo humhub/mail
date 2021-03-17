@@ -15,7 +15,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
         var that = this;
         window.onresize = function (evt) {
-            that.updateSize();
+            that.updateSize(true);
         };
 
         if (!this.getActiveMessageId()) {
@@ -190,12 +190,29 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
+
+        if(window.ResizeObserver) {
+            var resizeObserver = new ResizeObserver(function(entries) {
+                that.updateSize(that.isScrolledToBottom(100));
+            });
+
+            resizeObserver.observe(that.getReplyRichtext().$[0]);
+        }
+
         that.focus();
-        that.getReplyRichtext().$.on('keyup', function (evt) {
-            if (evt.which === 13) {
-                window.scrollTo(0, document.body.scrollHeight);
-            }
-        })
+
+    };
+
+    ConversationView.prototype.isScrolledToBottom = function (tolerance) {
+        var $list = this.getListNode();
+
+        if(!$list.length) {
+            return false;
+        }
+
+        tolerance = tolerance || 0;
+        var list = this.getListNode()[0];
+        return list.scrollHeight - list.offsetHeight - list.scrollTop <= tolerance;
     };
 
     ConversationView.prototype.initScroll = function () {
@@ -222,14 +239,16 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             // Assure the conversation list is scrollable by loading more entries until overflow
             return this.assureScroll().then(function () {
                 observer.observe($streamEnd[0]);
-                that.getListNode().niceScroll({
-                    cursorwidth: "7",
-                    cursorborder: "",
-                    cursorcolor: "#555",
-                    cursoropacitymax: "0.2",
-                    nativeparentscrolling: false,
-                    railpadding: {top: 0, right: 0, left: 0, bottom: 0}
-                });
+                if(view.isLarge()) {
+                    that.getListNode().niceScroll({
+                        cursorwidth: "7",
+                        cursorborder: "",
+                        cursorcolor: "#555",
+                        cursoropacitymax: "0.2",
+                        nativeparentscrolling: false,
+                        railpadding: {top: 0, right: 0, left: 0, bottom: 0}
+                    });
+                }
             });
         }
     };
@@ -296,28 +315,45 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.scrollToBottom = function () {
         var that = this;
+
         return new Promise(function (resolve) {
-            var $list = that.getListNode();
-            that.updateSize().then(function () {
-                $list[0].scrollTop = $list[0].scrollHeight;
-                resolve()
+            setTimeout(function() {
+                that.$.imagesLoaded(function() {
+                    var $list = that.getListNode();
+                    if(!$list.length) {
+                        return;
+                    }
+
+                    that.updateSize(false).then(function () {
+                        $list[0].scrollTop = $list[0].scrollHeight;
+                        resolve()
+                    });
+                })
             });
         });
     };
 
-    ConversationView.prototype.updateSize = function () {
+    ConversationView.prototype.updateSize = function (scrollToButtom) {
         var that = this;
         return new Promise(function (resolve) {
             setTimeout(function () {
-                if (!$('.conversation-entry-list').length) {
+                var $entryContainer = that.$.find('.conversation-entry-list');
+
+                if (!$entryContainer.length) {
                     return;
                 }
 
-                var formHeight = $('.mail-message-form').outerHeight();
-                var test = that.$.find('.conversation-entry-list').offset().top;
-                var test2 = that.$.offset().top;
-                var max_height = (window.innerHeight - test - formHeight - (view.isSmall() ? 15 : 30)) + 'px';
-                that.$.find('.conversation-entry-list').css('max-height', max_height);
+                var formHeight = that.getReplyRichtext().$.innerHeight();
+                $entryContainer.css('margin-bottom' , formHeight + 5 + 'px');
+
+                var offsetTop = that.$.find('.conversation-entry-list').offset().top;
+                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
+                $entryContainer.css('height', max_height);
+                $entryContainer.css('max-height', max_height);
+
+                if(scrollToButtom !== false) {
+                    that.scrollToBottom();
+                }
                 resolve();
             }, 100);
         })
@@ -329,7 +365,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.onUpdate = function () {
-        this.getListNode().getNiceScroll().resize();
+        if(view.isLarge()) {
+            this.getListNode().getNiceScroll().resize();
+        }
     };
 
     module.export = ConversationView;
@@ -621,7 +659,6 @@ humhub.module('mail.conversation', function (module, require, $) {
     var event = require('event');
     var mail = require('mail.notification');
     var user = require('user');
-    var view = require('ui.view');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {

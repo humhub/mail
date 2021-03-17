@@ -1,7 +1,45 @@
 Changelog
 =========
 
-2.0.0 - Unreleased
+2.0.5 - January 21, 2021
+------------------------
+- Fix: Check SendMail permission on action (Special thanks to @jrckmcsb for the security audit)
+
+2.0.4 - November 05, 2020
+-----------------------
+- Fix: Error thorwn if no lastEntry of conversation could be found
+- Fix: Script error logged in case conversation message list not found
+
+2.0.3 - November 05, 2020
+-----------------------
+- Fix #203: User deletion does not delete conversations created by this user
+- Enh: Added integrity check for invalid user ids
+
+2.0.2 - November 02, 2020
+-----------------------
+- Fix: Removed asset forceCopy
+
+2.0.1 - November 02, 2020
+-----------------------
+- Fix #201: Error thrown after update due to update process race condition
+- Fix #202: Editor overlaps messages
+- Enh: Updated translations
+- Fix #194: Message entry can not be deleted
+- Fix #163: Mail notification link not working if pjax is disabled
+
+2.0.0 - October 27, 2020
+-----------------------
+- Fix #199 Block code overflows message entry
+- Fix #198 Conversation view not scrolling down completely
+- Fix: Use of ResizeObserver for detecting richtext size changes
+- Fix: Richtext resize delay
+- Fix #200: Mobile scrolling broken
+
+2.0.0-beta.2 - September 11, 2020
+-----------------------
+- Enh: Added fail safe drop table
+
+2.0.0-beta.1 - September 11, 2020
 -----------------------
 - Enh: Use of infinite scrolling for inbox and conversation view
 - Enh: Added user message tags
@@ -12,6 +50,7 @@ Changelog
 - Enh: Merge message sequence of a user (currently only on reload)
 - Enh: Use of splitted and minified assets
 - Enh: Enhanced mobile view
+- Chng: Update min HumHub version to v1.6.3
 - Chng: Major refactoring
 - Enh: Enable default permissions
 

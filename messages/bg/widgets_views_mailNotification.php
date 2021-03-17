@@ -1,6 +1,4 @@
 <?php
 return array (
-  'Messages' => 'Съобщения',
-  'New message' => '',
-  'Show all messages' => '',
+  'Show all messages' => 'Покажи всички съобщения',
 );

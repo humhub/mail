@@ -119,7 +119,7 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
-        if($this->message->lastEntry->user_id === $userId) {
+        if($this->message->lastEntry && ($this->message->lastEntry->user_id === $userId)) {
             return false;
         }
 

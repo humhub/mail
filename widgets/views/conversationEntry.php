@@ -36,11 +36,10 @@ $isOwnMessage = $entry->user->is(Yii::$app->user->getIdentity());
         </div>
     <?php endif; ?>
 
-    <div class="<?= $contentClass ?>"
-         style="<?= $isOwnMessage ? 'float:right' : ''?>">
-        <span class="content">
+    <div class="<?= $contentClass ?>" style="<?= $isOwnMessage ? 'float:right' : ''?>">
+        <div style="display: table-cell">
             <?= RichText::output($entry->content) ?>
-        </span>
+        </div>
     </div>
 
     <div class="hidden-xs">

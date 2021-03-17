@@ -1,7 +1,7 @@
 <?php
 return array (
   'Groups' => 'Grupuri',
-  'Members' => '',
+  'Members' => 'Membri',
   'Spaces' => 'Spatii',
   'User Posts' => '',
 );
