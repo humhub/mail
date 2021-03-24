@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Message' => 'Medelande',
+  'Message' => 'Meddelande',
 );

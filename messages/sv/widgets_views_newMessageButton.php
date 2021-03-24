@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Send message' => 'Sänd meddelande',
-];
+return array (
+  'Send message' => 'Skicka meddelande',
+);

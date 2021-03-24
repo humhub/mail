@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Add more participants to your conversation...' => 'lägg till fler deltagare i din diskussion...',
-];
+return array (
+  'Add more participants to your conversation...' => 'Lägg till fler deltagare i din diskussion...',
+);
