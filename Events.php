@@ -20,7 +20,6 @@ use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\NotificationInbox;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\models\Config;
-use humhub\modules\rest\Module as RestModule;
 
 /**
  * Description of Events
@@ -186,7 +185,7 @@ class Events
 
     public static function onRestApiAddRules()
     {
-        /* @var RestModule $restModule */
+        /* @var \humhub\modules\rest\Module $restModule */
         $restModule = Yii::$app->getModule('rest');
         $restModule->addRules([
 
