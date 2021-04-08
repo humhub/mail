@@ -30,8 +30,8 @@ class UserMessageTagTest extends HumHubDbTestCase
    {
        $message = $this->createMessage( ['_add:TestTag']);
 
-       $this->assertCount(1, MessageTag::find()->all());
-       $this->assertCount(1, UserMessageTag::find()->all());
+       $this->assertCount(7, MessageTag::find()->all());
+       $this->assertCount(7, UserMessageTag::find()->all());
 
        /** @var MessageTag[] $tag */
        $tags = MessageTag::findByMessage(Yii::$app->user->id, $message->messageInstance)->all();
@@ -45,8 +45,8 @@ class UserMessageTagTest extends HumHubDbTestCase
     {
         $message = $this->createMessage(['_add:TestTag', '_add:TestTag2']);
 
-        $this->assertCount(2, MessageTag::find()->all());
-        $this->assertCount(2, UserMessageTag::find()->all());
+        $this->assertCount(8, MessageTag::find()->all());
+        $this->assertCount(8, UserMessageTag::find()->all());
 
         /** @var MessageTag[] $tag */
         $tags = MessageTag::findByMessage(Yii::$app->user->id, $message->messageInstance)->all();
@@ -62,8 +62,8 @@ class UserMessageTagTest extends HumHubDbTestCase
     {
         $message = $this->createMessage(['_add:TestTag', '_add:TestTag']);
 
-        $this->assertCount(1, MessageTag::find()->all());
-        $this->assertCount(1, UserMessageTag::find()->all());
+        $this->assertCount(7, MessageTag::find()->all());
+        $this->assertCount(7, UserMessageTag::find()->all());
 
         /** @var MessageTag[] $tag */
         $tags = MessageTag::findByMessage(Yii::$app->user->id, $message->messageInstance)->all();

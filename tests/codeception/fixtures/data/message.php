@@ -17,5 +17,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  */
-return [];
+return [
+    ['id' => 1, 'title' => 'First message title', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 2, 'title' => 'Second message title', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 3, 'title' => 'Third message title', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+];
 

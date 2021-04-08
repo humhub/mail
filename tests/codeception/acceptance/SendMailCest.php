@@ -40,7 +40,7 @@ class SendMailCest
         $I->expectTo('see the mail icon in');
         $I->seeElementInDOM('#icon-messages');
         $I->click('#icon-messages');
-        $I->waitForText('There are no messages yet.');
+        $I->waitForText('Show all messages');
         $I->click('#create-message-button');
     }
 
@@ -95,7 +95,7 @@ class SendMailCest
     private function switchClickOnInboxMessage(AcceptanceTester $I)
     {
         $I->wantToTest('the switch between conversations');
-        $I->click('[data-message-id="1"]', '#mail-conversation-overview');
+        $I->click('[data-message-id="4"]', '#mail-conversation-overview');
         $I->waitForText('Hello there!', null, '#mail-conversation-root');
         $I->see('Just a test message.');
     }
@@ -136,6 +136,14 @@ class SendMailCest
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
         $I->click('Leave', '#globalModalConfirm');
+
+        $I->waitForText('Third message title', 10, '#mail-conversation-header');
+        $I->click('#conversationSettingsButton');
+        $I->wait(1);
+        $I->click('Leave conversation', '#mail-conversation-header');
+        $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
+        $I->click('Leave', '#globalModalConfirm');
+
         $I->expectTo('see an empty conversation box');
         $I->waitForText('There are no messages yet.');
     }
