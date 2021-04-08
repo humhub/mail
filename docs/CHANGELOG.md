@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.6  (Unreleased)
+--------------------------
+- Enh: Use controller config for not intercepted actions
+
 2.0.5 - January 21, 2021
 ------------------------
 - Fix: Check SendMail permission on action (Special thanks to @jrckmcsb for the security audit)
@@ -53,6 +57,7 @@ Changelog
 - Chng: Update min HumHub version to v1.6.3
 - Chng: Major refactoring
 - Enh: Enable default permissions
+- Enh: Support RESTful API module
 
 1.0.15 - March 28, 2020
 -----------------------

@@ -8,7 +8,6 @@ use humhub\modules\user\models\fieldtype\DateTime;
 use humhub\modules\user\models\User;
 use tests\codeception\_support\HumHubDbTestCase;
 use Yii;
-use yii\db\Expression;
 
 class UserRestrictionTest extends HumHubDbTestCase
 {
@@ -85,7 +84,7 @@ class UserRestrictionTest extends HumHubDbTestCase
     public function testNewUserRestriction()
     {
         $user = User::findOne(['id' => 2]);
-        $user->created_at = new Expression('NOW()');
+        $user->created_at = date('Y-m-d G:i:s');
         $user->save();
         $user->refresh();
 

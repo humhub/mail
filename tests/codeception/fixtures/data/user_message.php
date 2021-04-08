@@ -17,5 +17,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  */
-return [];
+return [
+    ['message_id' => 1, 'user_id' => 1, 'is_originator' => 1, 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['message_id' => 2, 'user_id' => 1, 'is_originator' => 1, 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['message_id' => 2, 'user_id' => 2, 'is_originator' => 0, 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
+    ['message_id' => 3, 'user_id' => 1, 'is_originator' => 1, 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['message_id' => 3, 'user_id' => 2, 'is_originator' => 0, 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
+    ['message_id' => 3, 'user_id' => 3, 'is_originator' => 0, 'created_by' => 3, 'created_at' => '2021-03-15 14:38:49'],
+];
 

@@ -35,6 +35,11 @@ use yii\web\NotFoundHttpException;
 class MailController extends Controller
 {
 
+    /**
+     * @inheritdoc
+     */
+    protected $doNotInterceptActionIds = ['get-new-message-count-json'];
+
     public $pageSize = 30;
 
     public function getAccessRules()

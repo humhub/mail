@@ -1,0 +1,537 @@
+swagger: '2.0'
+info:
+  description: |
+    Welcome to the HumHub user module API reference.
+
+  version: 1.0.0
+  title: HumHub - Mail API
+  contact:
+    email: info@humhub.com
+  license:
+    name: AGPLv2
+    url: 'https://www.humhub.org/en/licences'
+basePath: /api/v1
+schemes:
+  - http
+  - https
+tags:
+  - name: Mail
+    description: API to access and manage mail conversations.
+paths:
+  '/mail':
+    get:
+      tags:
+        - Conversation
+      summary: Find all conversations
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+              page:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+              pages:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+              links:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Message'
+    post:
+      tags:
+        - Conversation
+      summary: Create conversation
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Data for new conversation
+          required: true
+          schema:
+            type: object
+            required:
+              - title
+              - message
+              - recipient
+            properties:
+              title:
+                type: string
+                description: Conversation title
+                example: Conversation from API
+              message:
+                type: string
+                description: First entry content
+                example: First message from API
+              recipient:
+                type: array
+                description: Guid of users
+                example: ["8eddbecb-8207-4848-bba6-5910115d3e4a", "b6b66077-916d-4718-af28-5ffc20895d30"]
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Message"
+        '400':
+          description: Validation failed
+        '403':
+          description: You cannot create conversations!
+        '500':
+          description: Internal error while save conversation!
+
+  '/mail/{messageId}':
+    get:
+      tags:
+        - Conversation
+      summary: Get conversation by id
+      produces:
+        - application/json
+      parameters:
+        - name: messageId
+          in: path
+          description: The id of conversation
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Message"
+        '403':
+          description: You must be a participant of the conversation.
+        '404':
+          description: Message not found
+
+  '/mail/{messageId}/entries':
+    get:
+      tags:
+        - Entry
+      summary: Find entries of the conversation
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: messageId
+          description: The id of conversation
+          required: true
+          type: integer
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+              page:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+              pages:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+              links:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/MessageEntry'
+
+  '/mail/{messageId}/entry':
+    post:
+      tags:
+        - Entry
+      summary: Create entry
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: messageId
+          description: The id of conversation
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Data for new conversation entry
+          required: true
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                description: Conversation entry content
+                example: Sample entry content from API
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: "#/definitions/MessageEntry"
+        '400':
+          description: Validation failed
+        '403':
+          description: You must be a participant of the conversation.
+        '404':
+          description: Message not found!
+        '500':
+          description: Internal error while save entry for the conversation!
+
+  '/mail/{messageId}/entry/{entryId}':
+    get:
+      tags:
+        - Entry
+      summary: Get entry
+      produces:
+        - application/json
+      parameters:
+          - name: messageId
+            in: path
+            description: The id of conversation
+            required: true
+            type: integer
+          - name: entryId
+            in: path
+            description: The id of entry
+            required: true
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: "#/definitions/MessageEntry"
+        '403':
+          description: ["You must be a participant of the conversation.", "You cannot edit the conversation entry!"]
+        '404':
+          description: ["Message not found!", "Conversation entry not found!"]
+    put:
+      tags:
+        - Entry
+      summary: Update entry
+      produces:
+        - application/json
+      parameters:
+        - name: messageId
+          in: path
+          description: The id of conversation
+          required: true
+          type: integer
+        - name: entryId
+          in: path
+          description: The id of entry
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Data to update conversation entry
+          required: true
+          schema:
+            type: object
+            required:
+              - content
+            properties:
+              content:
+                type: string
+                description: Conversation entry content
+                example: Updated sample entry content from API
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: "#/definitions/MessageEntry"
+        '400':
+          description: Validation failed
+        '403':
+          description: [ "You must be a participant of the conversation.", "You cannot edit the conversation entry!" ]
+        '404':
+          description: [ "Message not found!", "Conversation entry not found!" ]
+        '500':
+          description: Internal error while save entry for the conversation!
+    delete:
+      tags:
+        - Entry
+      summary: Delete entry
+      produces:
+        - application/json
+      parameters:
+        - name: messageId
+          in: path
+          description: The id of conversation
+          required: true
+          type: integer
+        - name: entryId
+          in: path
+          description: The id of entry
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Conversation entry successfully deleted!
+        '400':
+          description: Validation failed
+        '403':
+          description: [ "You must be a participant of the conversation.", "You cannot edit the conversation entry!" ]
+        '404':
+          description: [ "Message not found!", "Conversation entry not found!" ]
+        '500':
+          description: Internal error while delete entry from the conversation!
+
+  '/mail/{messageId}/users':
+    get:
+      tags:
+        - Recipient
+      summary: Find recipients of the conversation
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: messageId
+          description: The id of conversation
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/user.yaml#/definitions/User'
+
+  '/mail/{messageId}/user/{userId}':
+    post:
+      tags:
+        - Recipient
+      summary: Add recipient to conversation
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: messageId
+          description: The id of conversation
+          required: true
+          type: integer
+        - in: path
+          name: userId
+          description: The id of user
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation, list of all recipients of the conversation
+          schema:
+            type: array
+            items:
+              $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/user.yaml#/definitions/User'
+        '400':
+          description: User is already a participant of the conversation.
+        '403':
+          description: You must be a participant of the conversation.
+        '404':
+          description: Message not found!
+        '500':
+          description: Internal error while add a participant into conversation!
+    delete:
+      tags:
+        - Recipient
+      summary: Remove recipient from conversation
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: messageId
+          description: The id of conversation
+          required: true
+          type: integer
+        - in: path
+          name: userId
+          description: The id of user
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation, list of all recipients of the conversation
+          schema:
+            type: array
+            items:
+              $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/user.yaml#/definitions/User'
+        '400':
+          description: User is not a participant of the conversation.
+        '403':
+          description: You must be a participant of the conversation.
+        '404':
+          description: Message not found!
+
+  '/mail/{messageId}/tags':
+    get:
+      tags:
+        - Tag
+      summary: Find tags of the conversation
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: messageId
+          description: The id of conversation
+          required: true
+          type: integer
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+              page:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+              pages:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+              links:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/MessageTag'
+    put:
+      tags:
+        - Tag
+      summary: Update tags
+      produces:
+        - application/json
+      parameters:
+        - name: messageId
+          in: path
+          description: The id of conversation
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Data to update conversation tags
+          required: true
+          schema:
+            type: object
+            required:
+              - tags
+            properties:
+              tags:
+                type: array
+                description: Conversation tags
+                example: ["Meeting", "Holidays", "Work"]
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+              page:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+              pages:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+              links:
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/MessageTag'
+        '400':
+          description: Validation failed
+        '403':
+          description: You must be a participant of the conversation.
+        '404':
+          description: Message not found!
+        '500':
+          description: Internal error while update tags of the conversation!
+
+definitions:
+  Message:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 23
+      title:
+        type: string
+        example: Hi guys!
+      created_at:
+        type: string
+        format: datetime
+        example: 2020-10-28 10:16:34
+      created_by:
+        type: integer
+        example: 1
+      updated_at:
+        type: string
+        format: datetime
+        example: 2020-10-28 10:17:22
+      updated_by:
+        type: integer
+        example: 2
+  MessageEntry:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 23
+      user_id:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 1
+      file_id:
+        type: integer
+        format: int64
+        readOnly: true
+        example: null
+      content:
+        type: string
+        example: Sample message
+      created_at:
+        type: string
+        format: datetime
+        example: 2020-10-28 10:16:34
+      created_by:
+        type: integer
+        example: 1
+      updated_at:
+        type: string
+        format: datetime
+        example: 2020-10-28 10:17:22
+      updated_by:
+        type: integer
+        example: 2
+  MessageTag:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 12
+      name:
+        type: string
+        example: Meeting
+      sort_order:
+        type: integer
+        example: 4
+      color:
+        type: string
+        example: null
