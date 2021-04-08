@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.7  (April 8, 2021)
+----------------------
+- Fix #221: Fix call of console commands when REST API module doesn't exist
+
 2.0.6  (April 8, 2021)
 ----------------------
 - Enh: Use controller config for not intercepted actions
