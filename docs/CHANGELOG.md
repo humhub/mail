@@ -1,9 +1,10 @@
 Changelog
 =========
 
-2.0.6  (Unreleased)
---------------------------
+2.0.6  (April 8, 2021)
+----------------------
 - Enh: Use controller config for not intercepted actions
+- Enh #217: RESTFul API Module Support 
 
 2.0.5 - January 21, 2021
 ------------------------
