@@ -27,8 +27,8 @@ paths:
         - application/json
         - application/xml
       parameters:
-        - $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
-        - $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
       responses:
         '200':
           description: Successful operation
@@ -36,13 +36,13 @@ paths:
             type: object
             properties:
               total:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
               page:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
               pages:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
               links:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
               results:
                 type: array
                 items:
@@ -126,8 +126,8 @@ paths:
           description: The id of conversation
           required: true
           type: integer
-        - $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
-        - $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
       responses:
         '200':
           description: Successful operation
@@ -135,13 +135,13 @@ paths:
             type: object
             properties:
               total:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
               page:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
               pages:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
               links:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
               results:
                 type: array
                 items:
@@ -306,7 +306,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/user.yaml#/definitions/User'
+              $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/user.yaml#/definitions/User'
 
   '/mail/{messageId}/user/{userId}':
     post:
@@ -332,7 +332,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/user.yaml#/definitions/User'
+              $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/user.yaml#/definitions/User'
         '400':
           description: User is already a participant of the conversation.
         '403':
@@ -364,7 +364,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/user.yaml#/definitions/User'
+              $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/user.yaml#/definitions/User'
         '400':
           description: User is not a participant of the conversation.
         '403':
@@ -385,8 +385,8 @@ paths:
           description: The id of conversation
           required: true
           type: integer
-        - $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
-        - $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/pageParam'
+        - $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/parameters/limitParam'
       responses:
         '200':
           description: Successful operation
@@ -394,13 +394,13 @@ paths:
             type: object
             properties:
               total:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
               page:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
               pages:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
               links:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
               results:
                 type: array
                 items:
@@ -437,13 +437,13 @@ paths:
             type: object
             properties:
               total:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/totalProperty'
               page:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pageProperty'
               pages:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/pagesProperty'
               links:
-                $ref: 'https://raw.githubusercontent.com/humhub/humhub-modules-rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
+                $ref: 'https://raw.githubusercontent.com/humhub/rest/master/docs/swagger/common.yaml#/components/properties/linksProperty'
               results:
                 type: array
                 items:
