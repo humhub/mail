@@ -40,7 +40,7 @@ return array (
   'Show menu item in top Navigation' => 'Montrer l\'élément de menu dans la navigation supérieure',
   'Start new conversations' => 'Lancer des nouvelles conversations',
   'Subject' => 'Objet',
-  'Tags' => 'Mots-clés',
+  'Tags' => 'Tags',
   'This user is already participating in this conversation.' => 'L\'utilisateur participe déjà à cette conversation.',
   'Title' => 'Titre',
   'Until a user is member since (days)' => 'Tant que l\'utilisateur a une ancienneté inférieure à (jours)',
