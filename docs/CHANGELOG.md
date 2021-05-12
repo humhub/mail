@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.8  (Unreleased)
+----------------------
+- Fix #224: Fix preview message in sidebar
+
 2.0.7  (April 8, 2021)
 ----------------------
 - Fix #221: Fix call of console commands when REST API module doesn't exist
