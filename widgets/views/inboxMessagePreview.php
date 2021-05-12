@@ -49,7 +49,7 @@ $isNew = $userMessage->isUnread();
 
                     <?= $lastEntry->user->is(Yii::$app->user->getIdentity()) ? Yii::t('MailModule.base', 'You') : Html::encode($lastEntry->user->profile->firstname) ?>:
 
-                        <?= Html::encode($message->getPreview()) ?>
+                        <?= $message->getPreview() ?>
 
                     <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New'))
                         ->cssClass('new-message-badge')->style((!$isNew ? 'display:none' : '')) ?>
