@@ -54,7 +54,7 @@ class Module extends \humhub\components\Module
 
         if (Yii::$app instanceof ConsoleApplication) {
             // Prevents the Yii HelpCommand from crawling all web controllers and possibly throwing errors at REST endpoints if the REST module is not available.
-            $this->controllerNamespace = 'calendar/commands';
+            $this->controllerNamespace = 'mail/commands';
         }
     }
 
