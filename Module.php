@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail;
 
+use humhub\components\console\Application as ConsoleApplication;
 use humhub\modules\mail\notifications\MailNotificationDummy;
 use humhub\modules\mail\notifications\MailNotificationDummy2;
 use humhub\modules\mail\permissions\StartConversation;
@@ -43,6 +44,19 @@ class Module extends \humhub\components\Module
      * @var int Defines the amount of messages loaded when loading more messages
      */
     public $conversationUpdatePageSize = 50;
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        if (Yii::$app instanceof ConsoleApplication) {
+            // Prevents the Yii HelpCommand from crawling all web controllers and possibly throwing errors at REST endpoints if the REST module is not available.
+            $this->controllerNamespace = 'calendar/commands';
+        }
+    }
 
     /**
      * @return static
