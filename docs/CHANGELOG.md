@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.0  (Unreleased)
+----------------------
+- Enh #232: Render images in email notifications
+
 2.0.8  (Unreleased)
 ----------------------
 - Fix #224: Fix preview message in sidebar

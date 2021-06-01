@@ -4,7 +4,8 @@
 namespace humhub\modules\mail\models;
 
 
-use humhub\modules\content\widgets\richtext\RichText;
+use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
+use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
 use humhub\modules\notification\targets\BaseTarget;
@@ -85,7 +86,7 @@ class MessageNotification extends Model
             'headline' => $this->getHeadline(),
             'senderUrl' => $this->getEntrySender()->createUrl(null, [], true),
             'subHeadline' => $this->getSubHeadline(),
-            'content' => $this->getContent(),
+            'content' => $this->getContent($user),
             'message' => $this->message,
             'originator' => $this->getMessageOriginator(),
             'entry' => $this->entry,
@@ -100,9 +101,13 @@ class MessageNotification extends Model
         Yii::$app->i18n->autosetLocale();
     }
 
-    protected function getContent()
+    protected function getContent(User $user)
     {
-        return RichText::preview($this->entry->content);
+        return RichTextToEmailHtmlConverter::process($this->entry->content, [
+            RichTextToEmailHtmlConverter::OPTION_RECEIVER_USER => $user,
+            RichTextToHtmlConverter::OPTION_LINK_AS_TEXT => true,
+            RichTextToHtmlConverter::OPTION_CACHE_KEY => 'mail_entry_message_' . $this->entry->id,
+        ]);
     }
 
     protected function getHeadline()
