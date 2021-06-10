@@ -1,6 +1,5 @@
 <?php
-
-return [
-    '<strong>New</strong> message' => '',
-    'Reply now' => '',
-];
+return array (
+  '<strong>New</strong> message' => '<strong>ใหม่</strong> ข้อความ',
+  'Reply now' => 'ตอบกลับตอนนี้',
+);
