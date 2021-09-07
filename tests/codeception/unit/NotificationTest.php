@@ -47,7 +47,7 @@ class NotificationTest extends HumHubDbTestCase
 
        // Check mail should only be sent to
        $this->assertMailSent(1);
-       $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+       $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
        $this->assertEqualsLastEmailTo($user2->email);
        $test = Live::find()->all();
        $this->assertCount(1,  Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
@@ -63,7 +63,7 @@ class NotificationTest extends HumHubDbTestCase
 
         // Check mail should only be sent to
         $this->assertMailSent(2);
-        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
         $this->assertEqualsLastEmailTo($user3->email);
 
         $test =  Live::find(['contentcontainer_id' => $user2->contentcontainer_id])->all();
