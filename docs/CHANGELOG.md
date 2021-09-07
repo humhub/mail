@@ -4,7 +4,8 @@ Changelog
 2.0.8  (Unreleased)
 ----------------------
 - Fix #224: Fix preview message in sidebar
-- Fix #231: CLI error when no REST module is installed 
+- Fix #231: CLI error when no REST module is installed
+- Fix #230: Fix notifications of new Conversation vs Message entry
 
 2.0.7  (April 8, 2021)
 ----------------------

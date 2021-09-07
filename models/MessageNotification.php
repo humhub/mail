@@ -7,7 +7,8 @@ namespace humhub\modules\mail\models;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
-use humhub\modules\notification\targets\BaseTarget;
+use humhub\modules\mail\notifications\MailNotificationCategory;
+use humhub\modules\notification\components\NotificationCategory;
 use humhub\modules\notification\targets\MailTarget;
 use humhub\modules\user\models\User;
 use Yii;
@@ -24,6 +25,11 @@ class MessageNotification extends Model
      * @var MessageEntry
      */
     public $entry;
+
+    /**
+     * @var bool $isNewConversation Flag for notification type: Conversation vs Message
+     */
+    public $isNewConversation = false;
 
     public function __construct(Message $message, MessageEntry $entry = null)
     {
@@ -44,9 +50,15 @@ class MessageNotification extends Model
         try {
             $this->sendLiveEvent($user);
 
+            // Backup the flag because it may be forced per user in order to select a proper notification type
+            $isNewConversation = $this->isNewConversation;
+
             if ($this->isSendMail($user)) {
                 $this->sendMail($user);
             }
+
+            // Restore the flag
+            $this->isNewConversation = $isNewConversation;
         } catch (\Exception $e) {
             Yii::error('Could not send notification e-mail to: ' . $user->username . ". Error:" . $e->getMessage());
         }
@@ -61,16 +73,34 @@ class MessageNotification extends Model
         ]));
     }
 
-    private function isSendMail(User $user)
+    private function isSendMail(User $user): bool
     {
-        if($user->is($this->getEntrySender())) {
+        if ($user->is($this->getEntrySender())) {
             return false;
         }
 
-        /* @var $mailTarget BaseTarget */
-        $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
+        if (!($mailTarget = Yii::$app->notification->getTarget(MailTarget::class))) {
+            return false;
+        }
 
-        return $mailTarget && $mailTarget->isCategoryEnabled(new ConversationNotificationCategory(), $user);
+        if ($mailTarget->isCategoryEnabled($this->getNotificationCategory(), $user)) {
+            return true;
+        }
+
+        // Try to send notification as "New message" when notification "New conversation" is disabled for the user
+        if ($this->isNewConversation && $mailTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
+            $this->isNewConversation = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    private function getNotificationCategory(): NotificationCategory
+    {
+        return $this->isNewConversation
+            ? new ConversationNotificationCategory()
+            : new MailNotificationCategory();
     }
 
     private function sendMail(User $user)
@@ -94,7 +124,7 @@ class MessageNotification extends Model
 
         $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
         $mail->setTo($user->email);
-        $mail->setSubject($this->getSubject($user));
+        $mail->setSubject($this->getSubject());
         $mail->send();
 
         Yii::$app->i18n->autosetLocale();
@@ -105,17 +135,23 @@ class MessageNotification extends Model
         return RichText::preview($this->entry->content);
     }
 
-    protected function getHeadline()
+    protected function getHeadline(): string
     {
-        return Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message');
+        return $this->isNewConversation
+            ? Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> conversation')
+            : Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message');
     }
 
-    protected function getSubHeadline()
+    protected function getSubHeadline(): string
     {
-        $result = '<strong>'.Html::encode($this->getEntrySender()->displayName).'</strong> ';
-        $result .= Yii::t('MailModule.views_emails_NewMessageEntry', 'sent you a new message in');
-        $result .= ' <strong>'.Html::encode($this->message->title).'</strong>';
-        return $result;
+        $params = [
+            'senderName' => Html::encode($this->getEntrySender()->displayName),
+            'conversationTitle' => '"' . Html::encode($this->message->title) . '"',
+        ];
+
+        return $this->isNewConversation
+            ? Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} created a new conversation {conversationTitle}', $params)
+            : Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} sent you a new message in {conversationTitle}',  $params);
     }
 
     /**
@@ -134,9 +170,13 @@ class MessageNotification extends Model
         return $this->entry->user;
     }
 
-    protected function getSubject(User $user)
+    protected function getSubject(): string
     {
-        return Yii::t('MailModule.models_Message', 'New message from {senderName}', ["{senderName}" => Html::encode($this->getEntrySender()->displayName)]);
+        $params = ['{senderName}' => Html::encode($this->getEntrySender()->displayName)];
+
+        return $this->isNewConversation
+            ? Yii::t('MailModule.models_Message', 'New conversation from {senderName}', $params)
+            : Yii::t('MailModule.models_Message', 'New message from {senderName}', $params);
     }
 
 }
