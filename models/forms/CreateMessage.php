@@ -7,9 +7,9 @@ use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\user\models\User;
 use Yii;
 use yii\base\Model;
-use humhub\modules\user\models\User;
 use yii\helpers\Html;
 
 /**
@@ -182,7 +182,7 @@ class CreateMessage extends Model
     {
         $entry = MessageEntry::createForMessage($this->messageInstance, Yii::$app->user->getIdentity(), $this->message);
         $result = $entry->save();
-        $entry->notify();
+        $entry->notify(true);
         return $result;
     }
 

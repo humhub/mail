@@ -11,11 +11,11 @@ namespace humhub\modules\mail\notifications;
 
 use humhub\modules\notification\components\BaseNotification;
 
-class MailNotificationDummy2 extends BaseNotification
+class MailNotification extends BaseNotification
 {
     public function category()
     {
-        return new ConversationNotificationCategory();
+        return new MailNotificationCategory();
     }
 
 }
