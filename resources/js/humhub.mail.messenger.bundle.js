@@ -71,7 +71,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 that.appendEntry(response.content).then(function() {
                     that.$.find(".time").timeago(); // somehow this is not triggered after reply
                     var richtext = that.getReplyRichtext();
-                    richtext.$.trigger('clear');
+                    if (richtext) {
+                        richtext.$.trigger('clear');
+                    }
                     that.scrollToBottom();
                     if(!view.isSmall()) { // prevent autofocus on mobile
                         that.focus();
@@ -100,7 +102,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
 
     ConversationView.prototype.focus = function (evt) {
-        this.getReplyRichtext().focus();
+        var replyRichtext = this.getReplyRichtext();
+        if (replyRichtext) {
+            replyRichtext.focus();
+        }
     };
 
     ConversationView.prototype.canLoadMore = function () {
@@ -196,7 +201,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 that.updateSize(that.isScrolledToBottom(100));
             });
 
-            resizeObserver.observe(that.getReplyRichtext().$[0]);
+            var replyRichtext = that.getReplyRichtext();
+            if (replyRichtext) {
+                resizeObserver.observe(replyRichtext.$[0]);
+            }
         }
 
         that.focus();
@@ -343,7 +351,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                     return;
                 }
 
-                var formHeight = that.getReplyRichtext().$.innerHeight();
+                var replyRichtext = that.getReplyRichtext();
+                var formHeight = replyRichtext ? replyRichtext.$.innerHeight() : 0;
                 $entryContainer.css('margin-bottom' , formHeight + 5 + 'px');
 
                 var offsetTop = that.$.find('.conversation-entry-list').offset().top;

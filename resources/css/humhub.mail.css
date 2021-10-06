@@ -127,6 +127,10 @@
     margin:0;
 }
 
+.mail-message-form .alert {
+    margin-bottom: 0;
+}
+
 .mail-conversation-entry {
     position:relative;
 }

@@ -3,11 +3,12 @@
 namespace humhub\modules\mail\models;
 
 
+use humhub\components\ActiveRecord;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\Module;
-use Yii;
-use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
+use Yii;
+use yii\helpers\Html;
 
 /**
  * This class represents a single conversation.
@@ -302,5 +303,60 @@ class Message extends ActiveRecord
 
         return $userMessage->save();
 
+    }
+
+    /**
+     * Get users which don't want to receive messages from the current User
+     *
+     * @return User[]
+     */
+    public function getBlockers(): array
+    {
+        $blockerUsers = [];
+
+        foreach ($this->users as $user) {
+            if (!$user->isCurrentUser() && $user->isBlockedForUser()) {
+                $blockerUsers[] = $user;
+            }
+        }
+
+        return $blockerUsers;
+    }
+
+    /**
+     * Get names of the users which don't want to receive messages from the current User
+     *
+     * @param bool Encode names
+     * @return string[]
+     */
+    public function getBlockerNames(bool $encode = true): array
+    {
+        $blockerNames = [];
+
+        foreach ($this->getBlockers() as $user) {
+            $blockerName = $user->getDisplayName();
+            if ($encode) {
+                $blockerName = Html::encode($blockerName);
+            }
+            $blockerNames[] = $blockerName;
+        }
+
+        return $blockerNames;
+    }
+
+    /**
+     * Check if current user cannot reply to at least one recipient of this conversation
+     *
+     * @return bool
+     */
+    public function isBlocked(): bool
+    {
+        foreach ($this->users as $user) {
+            if (!$user->isCurrentUser() && $user->isBlockedForUser()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
