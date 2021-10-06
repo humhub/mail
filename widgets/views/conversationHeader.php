@@ -31,7 +31,13 @@ $userList = '';
 
         <?php foreach ($users as $index => $user) : ?>
             <?php if ($index < $maxUserImages) : ?>
-                <?= Image::widget(['user' => $user, 'width' => '25', 'showTooltip' => true, 'link' => true, 'linkOptions' => ['class' => 'hidden-xs']]) ?>
+                <?= Image::widget([
+                    'user' => $user,
+                    'width' => '25',
+                    'showTooltip' => true,
+                    'link' => true,
+                    'linkOptions' => ['class' => 'hidden-xs' . ($user->isBlockedForUser() ? ' conversation-blocked-recipient' : '')]
+                ]) ?>
             <?php else: ?>
                 <?php $userList .= Html::encode($user->getDisplayName()) ?>
                 <?php $userList .= ($index < $userCount - 1) ? '<br>' : '' ?>

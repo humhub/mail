@@ -30,7 +30,12 @@ $isNew = $userMessage->isUnread();
         <div class="mail-link">
             <div class="media">
                 <div class="media-left pull-left">
-                    <?= Image::widget(['user' => $participant, 'width' => '32', 'link' => false])?>
+                    <?= Image::widget([
+                        'user' => $participant,
+                        'width' => '32',
+                        'link' => false,
+                        'htmlOptions' => $participant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
+                    ])?>
                 </div>
 
                 <div class="media-body text-break">

@@ -264,6 +264,11 @@
     cursor: pointer;
 }
 
+.conversation-blocked-recipient {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
 .new-message-badge {
     position:absolute;
     right:0;

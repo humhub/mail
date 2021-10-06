@@ -77,22 +77,39 @@ class CreateMessage extends Model
      */
     public function checkRecipient($attribute, $params)
     {
-        // Check if email field is not empty
-        if ($this->$attribute) {
-            foreach ($this->recipient as $userGuid) {
-                // Try load user
-                $user = User::findOne(['guid' => $userGuid]);
-                if ($user) {
-                    if ($user->isCurrentUser()) {
-                        $this->addError($attribute, Yii::t('MailModule.base', 'You cannot send a message to yourself!'));
-                    } else if(!Yii::$app->user->isAdmin() && !$user->getPermissionManager()->can(SendMail::class)) {
-                        $this->addError($attribute, Yii::t('MailModule.base', 'You are not allowed to start a conversation with {userName}!', ['userName' => Html::encode($user->getDisplayName())]));
-                    } else {
-                        $this->recipients[] = $user;
-                    }
-                }
+        if (empty($this->$attribute)) {
+            return;
+        }
+
+        foreach ($this->recipient as $userGuid) {
+            $user = User::findOne(['guid' => $userGuid]);
+            if (!$user) {
+                continue;
+            }
+
+            if ($user->isCurrentUser()) {
+                $this->addError($attribute, Yii::t('MailModule.base', 'You cannot send a message to yourself!'));
+            } else if(!$this->canSendToUser($user)) {
+                $this->addError($attribute, Yii::t('MailModule.base', 'You are not allowed to start a conversation with {userName}!', [
+                    'userName' => Html::encode($user->getDisplayName())
+                ]));
+            } else {
+                $this->recipients[] = $user;
             }
         }
+    }
+
+    private function canSendToUser(User $user): bool
+    {
+        if ($user->isBlockedForUser()) {
+            return false;
+        }
+
+        if (Yii::$app->user->isAdmin()) {
+            return true;
+        }
+
+        return $user->getPermissionManager()->can(SendMail::class);
     }
 
     public function save()
