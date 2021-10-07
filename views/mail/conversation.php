@@ -44,7 +44,7 @@ use humhub\widgets\Button;
         <div class="mail-message-form">
             <?php if ($message->isBlocked()) : ?>
                 <div class="alert alert-danger">
-                    <?= Yii::t('MailModule.views_mail_show', 'This conversation is closed for you because you are blocked for the users {userNames}.', [
+                    <?= Yii::t('MailModule.views_mail_show', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
                         'userNames' => implode(', ', $message->getBlockerNames())
                     ]); ?>
                 </div>
