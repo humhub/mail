@@ -172,7 +172,7 @@ class MessageNotification extends Model
 
     protected function getSubject(): string
     {
-        $params = ['{senderName}' => Html::encode($this->getEntrySender()->displayName)];
+        $params = ['{senderName}' => $this->getEntrySender()->displayName];
 
         return $this->isNewConversation
             ? Yii::t('MailModule.models_Message', 'New conversation from {senderName}', $params)
