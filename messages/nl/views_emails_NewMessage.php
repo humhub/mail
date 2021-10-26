@@ -1,7 +1,6 @@
 <?php
-
-return [
-    '<strong>New</strong> message' => '<strong>Nieuw</strong> bericht',
-    'Reply now' => 'Antwoord nu',
-    '<strong>New</strong> conversation' => '',
-];
+return array (
+  '<strong>New</strong> conversation' => '<strong>Nieuw</strong> gesprek',
+  '<strong>New</strong> message' => '<strong>Nieuw</strong> bericht',
+  'Reply now' => 'Antwoord nu',
+);
