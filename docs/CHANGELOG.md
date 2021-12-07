@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.1.0  (Unreleased)
-----------------------
+2.1.0  (December 7, 2021)
+-------------------------
 - Enh #564: Restrict messaging for blocked users
 - Enh #232: Render images in email notifications
 - Fix #224: Fix preview message in sidebar
