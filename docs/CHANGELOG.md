@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0.8  (Unreleased)
-----------------------
+2.0.8  (December 7, 2021)
+--------------------------
 - Fix #224: Fix preview message in sidebar
 - Fix #231: CLI error when no REST module is installed
 - Fix #230: Fix notifications of new Conversation vs Message entry
