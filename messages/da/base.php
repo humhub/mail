@@ -50,6 +50,7 @@ return [
     'This user is already participating in this conversation.' => '',
     'Until a user is member since (days)' => '',
     'Updated By' => '',
+    'You are not allowed to reply to users {userNames}!' => '',
     'You are not allowed to start a conversation with this user.' => '',
     'You are not allowed to start a conversation with {userName}!' => '',
     'You cannot send a message to yourself!' => '',

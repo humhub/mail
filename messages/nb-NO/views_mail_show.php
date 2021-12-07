@@ -14,4 +14,5 @@ return [
     'Leave' => 'Forlat',
     'Leave conversation' => 'Forlat samtale',
     'There are no messages yet.' => 'Det er ingen meldinger her enda.',
+    'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.' => '',
 ];

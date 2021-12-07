@@ -14,4 +14,5 @@ return [
     'Leave' => 'Elhagyás',
     'Leave conversation' => 'Beszélgetés elhagyása',
     'There are no messages yet.' => 'Még nincsenek üzenetek.',
+    'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.' => '',
 ];

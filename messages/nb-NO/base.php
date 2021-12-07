@@ -52,6 +52,7 @@ return [
     'Here you can manage your private conversation tags.' => '',
     'Manage Tags' => '',
     'My Tags' => '',
+    'You are not allowed to reply to users {userNames}!' => '',
     'You are not allowed to start a conversation with {userName}!' => '',
     'You cannot send a message to yourself!' => '',
     'created by {name}' => '',

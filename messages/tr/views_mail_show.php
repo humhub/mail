@@ -14,4 +14,5 @@ return [
     'Leave' => 'Ayrıl',
     'Leave conversation' => 'Konuşmadan ayrıl',
     'There are no messages yet.' => 'Henüz mesaj bulunmuyor.',
+    'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.' => '',
 ];

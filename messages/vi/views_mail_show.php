@@ -14,4 +14,5 @@ return [
     'Leave' => 'Rời',
     'Leave conversation' => 'Rời cuộc hội thoại',
     'There are no messages yet.' => 'Chưa có tin nhắn nào',
+    'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.' => '',
 ];

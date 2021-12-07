@@ -56,5 +56,6 @@ return [
     'created by {name}' => 'kreirano od {name}',
     'with' => 'sa',
     '{n,plural,=1{# other} other{# others}}' => '{n,plural,=1{# other} other{# others}}',
+    'You are not allowed to reply to users {userNames}!' => '',
     'You are not allowed to start a conversation with {userName}!' => '',
 ];

@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'New message from {senderName}' => 'Nytt meddelande från {senderName}',
-    'New conversation from {senderName}' => '',
-];
+return array (
+  'New conversation from {senderName}' => 'Ny konversation från {senderName}',
+  'New message from {senderName}' => 'Nytt meddelande från {senderName}',
+);

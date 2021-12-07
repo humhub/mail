@@ -2,6 +2,6 @@
 return array (
   'Groups' => 'Grupper',
   'Members' => 'Medlemmar',
-  'Spaces' => 'Nätverk ',
+  'Spaces' => 'Forum',
   'User Posts' => 'Användarinlägg',
 );
