@@ -5,7 +5,7 @@
     "keywords": ["mail", "messaging", "communication"],
     "version": "2.1.0",
     "humhub": {
-        "minVersion": "1.9"
+        "minVersion": "1.10"
     },
     "homepage": "https://github.com/humhub/humhub-modules-mail",
     "authors": [

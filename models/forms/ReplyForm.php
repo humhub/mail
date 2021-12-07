@@ -4,9 +4,9 @@ namespace humhub\modules\mail\models\forms;
 
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\helpers\Url;
 use Yii;
 use yii\base\Model;
-use humhub\modules\mail\helpers\Url;
 
 /**
  * @package humhub.modules.mail.forms
@@ -37,7 +37,17 @@ class ReplyForm extends Model
     {
         return [
             ['message', 'required'],
+            ['message', 'validateRecipients'],
         ];
+    }
+
+    public function validateRecipients($attribute)
+    {
+        if ($this->model->isBlocked()) {
+            $this->addError($attribute, Yii::t('MailModule.base', 'You are not allowed to reply to users {userNames}!', [
+                'userNames' => implode(', ', $this->model->getBlockerNames())
+            ]));
+        }
     }
 
     /**
