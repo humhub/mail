@@ -2,17 +2,11 @@
 
 namespace humhub\modules\mail\models;
 
-use humhub\modules\content\widgets\richtext\RichText;
-use humhub\modules\mail\live\NewUserMessage;
-use humhub\modules\mail\live\UserMessageDeleted;
-use humhub\modules\mail\notifications\MailNotificationCategory;
-use humhub\modules\notification\targets\BaseTarget;
-use humhub\modules\notification\targets\MailTarget;
-use Yii;
 use humhub\components\ActiveRecord;
+use humhub\modules\content\widgets\richtext\RichText;
+use humhub\modules\mail\live\UserMessageDeleted;
 use humhub\modules\user\models\User;
-use humhub\models\Setting;
-use humhub\modules\mail\models\Message;
+use Yii;
 
 /**
  * This class represents a message within a conversation.
@@ -122,9 +116,11 @@ class MessageEntry extends ActiveRecord
     /**
      * Notify User in this message entry
      */
-    public function notify()
+    public function notify(bool $isNewConversation = false)
     {
-        (new MessageNotification($this->message, $this))->notifyAll();
+        $messageNotification = new MessageNotification($this->message, $this);
+        $messageNotification->isNewConversation = $isNewConversation;
+        $messageNotification->notifyAll();
     }
 
     public function canEdit()

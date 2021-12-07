@@ -3,6 +3,12 @@
 use humhub\modules\live\models\Live;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\models\forms\InviteParticipantForm;
+use humhub\modules\mail\models\forms\ReplyForm;
+use humhub\modules\mail\notifications\ConversationNotification;
+use humhub\modules\mail\notifications\MailNotification;
+use humhub\modules\notification\components\BaseNotification;
+use humhub\modules\notification\models\forms\NotificationSettings;
+use humhub\modules\notification\targets\MailTarget;
 use tests\codeception\_support\HumHubDbTestCase;
 use humhub\modules\user\models\User;
 
@@ -23,7 +29,7 @@ class NotificationTest extends HumHubDbTestCase
      * @return CreateMessage
      * @throws Throwable
      */
-    private function createMessage($title, $message, $users = null, $tags = [])
+    private function createMessage($title, $message, $users = null, $tags = []): CreateMessage
     {
         $this->becomeUser('User1');
 
@@ -39,19 +45,36 @@ class NotificationTest extends HumHubDbTestCase
         return $message;
     }
 
-   public function testNotificationsAreSentWhenCreatingAMessage()
-   {
-       $user2 = User::findOne(['id' => 3]);
+    /**
+     * @param CreateMessage $message
+     * @param string $content
+     * @return ReplyForm
+     */
+    private function createReply(CreateMessage $message, string $content): ReplyForm
+    {
+        $replyForm = new ReplyForm([
+            'model' => $message->messageInstance,
+            'message' => $content,
+        ]);
 
-       $this->createMessage('First', 'First', [$user2->guid]);
+        $this->assertTrue($replyForm->save());
 
-       // Check mail should only be sent to
-       $this->assertMailSent(1);
-       $this->assertEqualsLastEmailSubject('New message from Peter Tester');
-       $this->assertEqualsLastEmailTo($user2->email);
-       $test = Live::find()->all();
-       $this->assertCount(1,  Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
-   }
+        return $replyForm;
+    }
+
+    public function testNotificationsAreSentWhenCreatingAMessage()
+    {
+        $user2 = User::findOne(['id' => 3]);
+
+        $this->createMessage('First', 'First', [$user2->guid]);
+
+        // Check mail should only be sent to
+        $this->assertMailSent(1);
+        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
+        $test = Live::find()->all();
+        $this->assertCount(1,  Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
+    }
 
     public function testNotificationsAreSentAllRecepients()
     {
@@ -63,7 +86,7 @@ class NotificationTest extends HumHubDbTestCase
 
         // Check mail should only be sent to
         $this->assertMailSent(2);
-        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
         $this->assertEqualsLastEmailTo($user3->email);
 
         $test =  Live::find(['contentcontainer_id' => $user2->contentcontainer_id])->all();
@@ -88,8 +111,110 @@ class NotificationTest extends HumHubDbTestCase
         $this->assertEqualsLastEmailTo($user3->email);
     }
 
-    public function assertEqualsLastEmailTo($email)
+    public function testAllNotificationsAreDisabled()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $this->setNotifications($user2, [
+            ConversationNotification::class => false,
+            MailNotification::class => false,
+        ]);
+
+        $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
+
+        // No notifications because all disabled
+        $this->assertMailSent();
+    }
+
+    public function testOnlyNewConversationNotificationIsEnabled()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $this->setNotifications($user2, [
+            ConversationNotification::class => true,
+            MailNotification::class => false,
+        ]);
+
+        $message = $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
+
+        // Notification about new conversation is received
+        $this->assertMailSent(1);
+        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
+
+        $this->createReply($message, 'Reply message');
+
+        // No new notification about new message
+        $this->assertMailSent(1);
+    }
+
+    public function testOnlyNewMessageNotificationIsEnabled()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $this->setNotifications($user2, [
+            ConversationNotification::class => false,
+            MailNotification::class => true,
+        ]);
+
+        $message = $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
+
+        // Instead of notification about new Conversation the user received a notification of new Message
+        $this->assertMailSent(1);
+        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
+
+        $this->createReply($message, 'Reply message');
+
+        // New notification about new message is received
+        $this->assertMailSent(2);
+        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
+    }
+
+    public function testAllNotificationsAreEnabled()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $this->setNotifications($user2, [
+            ConversationNotification::class => true,
+            MailNotification::class => true,
+        ]);
+
+        $message = $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
+
+        // Notification about new conversation is received
+        $this->assertMailSent(1);
+        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
+
+        $this->createReply($message, 'Reply message');
+
+        // New notification about new message is received
+        $this->assertMailSent(2);
+        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
+    }
+
+    public function assertEqualsLastEmailTo($email, $strict = true)
     {
         $this->assertArrayHasKey($email, $this->getYiiModule()->grabLastSentEmail()->to);
+    }
+
+    private function setNotifications(User $user, array $config)
+    {
+        $this->becomeUser($user->username);
+
+        $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
+
+        $settings = [];
+        foreach ($config as $notificationClass => $state) {
+            /* @var BaseNotification $notification */
+            $notification = new $notificationClass();
+            $settings[$mailTarget->getSettingKey($notification->getCategory())] = $state;
+        }
+
+        $settingForm = new NotificationSettings([
+            'user' => $user,
+            'settings' => $settings,
+        ]);
+
+        $settingForm->save();
     }
 }

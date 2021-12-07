@@ -42,7 +42,7 @@ return array (
   'Subject' => '',
   'Tags' => '',
   'This user is already participating in this conversation.' => '',
-  'Title' => '',
+  'Title' => 'Titulli',
   'Until a user is member since (days)' => '',
   'Updated At' => '',
   'Updated By' => '',

@@ -1,4 +1,6 @@
 <?php
-return array (
-  'sent you a new message in' => 'đã gửi bạn một tin nhắn mới trong',
-);
+
+return [
+    '{senderName} created a new conversation {conversationTitle}' => '',
+    '{senderName} sent you a new message in {conversationTitle}' => '',
+];
