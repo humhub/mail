@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'sent you a new message in' => '',
+    '{senderName} created a new conversation {conversationTitle}' => '',
+    '{senderName} sent you a new message in {conversationTitle}' => '',
 ];

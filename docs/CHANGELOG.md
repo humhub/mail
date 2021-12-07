@@ -4,12 +4,11 @@ Changelog
 2.1.0  (Unreleased)
 ----------------------
 - Enh #564: Restrict messaging for blocked users
-
-2.0.8  (Unreleased)
-----------------------
+- Enh #232: Render images in email notifications
 - Fix #224: Fix preview message in sidebar
 - Fix #231: CLI error when no REST module is installed
 - Fix #230: Fix notifications of new Conversation vs Message entry
+- Fix #240: Fix apostrophe encode in mail
 
 2.0.7  (April 8, 2021)
 ----------------------
