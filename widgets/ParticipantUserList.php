@@ -39,24 +39,21 @@ class ParticipantUserList extends Widget
             return '';
         }
 
-         $result = Html::beginTag('span', $this->options);
-         $result .= Yii::t('MailModule.base','with').'&nbsp;';
-         $result .= Html::beginTag('a', array_merge($this->getDefaultLinkOptions(), $this->linkOptions));
-         $result .= $this->renderUserList();
-         $result .= Html::endTag('a');
-         $result .= Html::endTag('span');
+        $result = Html::beginTag('div', $this->options);
+        $result .= Html::beginTag('a', array_merge($this->getDefaultLinkOptions(), $this->linkOptions));
+        $result .= $this->renderUserList();
+        $result .= Html::endTag('a');
+        $result .= Html::endTag('div');
 
-         return $result;
+        return $result;
     }
 
-    private function renderUserList()
-    {
+    private function renderUserList() {
         $userCount = count($this->message->users);
         $result = '';
 
         if($userCount === 2) {
-            $result .= Html::encode($this->message->users[0]->displayName);
-            $result .= ', '. Html::encode($this->message->users[1]->displayName);
+            $result .= ''. Html::encode($this->message->users[1]->displayName);
         } else {
             $result .= Html::encode($this->getFirstUser()->displayName);
             $result .= ($userCount > 1)
@@ -69,10 +66,9 @@ class ParticipantUserList extends Widget
     private function getDefaultLinkOptions()
     {
         return  [
-            'href'=> '#',
+            'href'=> '',
             'data-action-click' => 'ui.modal.load',
-            'data-action-url' => Url::toConversationUserList($this->message),
-            'style' => ['color' =>  $this->view->theme->variable('info')]
+            'data-action-url' => Url::toConversationUserList($this->message)
         ];
     }
 
