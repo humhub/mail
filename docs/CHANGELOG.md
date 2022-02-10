@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.1  (Unreleased)
+-------------------------
+- Fix #252: Fix wrong user guid in Live Notification
+
 2.1.0  (December 7, 2021)
 -------------------------
 - Enh #564: Restrict messaging for blocked users

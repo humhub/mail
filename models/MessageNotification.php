@@ -70,7 +70,7 @@ class MessageNotification extends Model
         Yii::$app->live->send(new NewUserMessage([
             'contentContainerId' => $user->contentcontainer_id,
             'message_id' => $this->message->id,
-            'user_guid' => $this->entry->user->guid
+            'user_guid' => $user->guid
         ]));
     }
 
