@@ -4,6 +4,7 @@ Changelog
 2.1.1  (Unreleased)
 -------------------------
 - Fix #252: Fix wrong user guid in Live Notification
+- Fix #251: Fix edit message
 
 2.1.0  (December 7, 2021)
 -------------------------
