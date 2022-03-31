@@ -3,12 +3,12 @@
 namespace humhub\modules\mail;
 
 use humhub\components\console\Application as ConsoleApplication;
-use humhub\modules\mail\notifications\MailNotification;
-use humhub\modules\mail\notifications\ConversationNotification;
-use humhub\modules\mail\permissions\StartConversation;
-use humhub\modules\mail\permissions\SendMail;
-use humhub\modules\user\models\User;
 use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\notifications\ConversationNotification;
+use humhub\modules\mail\notifications\MailNotification;
+use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\user\models\User;
 use Yii;
 
 /**
@@ -46,6 +46,19 @@ class Module extends \humhub\components\Module
     public $conversationUpdatePageSize = 50;
 
     /**
+     * @var bool Show the "Send message" button in the users' cards of the people directory
+     */
+    public $showSendMessageButtonInPeopleCards = true;
+
+    /**
+     * @return static
+     */
+    public static function getModuleInstance()
+    {
+        return Yii::$app->getModule('mail');
+    }
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -56,14 +69,6 @@ class Module extends \humhub\components\Module
             // Prevents the Yii HelpCommand from crawling all web controllers and possibly throwing errors at REST endpoints if the REST module is not available.
             $this->controllerNamespace = 'mail/commands';
         }
-    }
-
-    /**
-     * @return static
-     */
-    public static function getModuleInstance()
-    {
-        return Yii::$app->getModule('mail');
     }
 
     /**
