@@ -2,10 +2,9 @@
 
 namespace humhub\modules\mail\widgets;
 
-use humhub\modules\friendship\widgets\FriendshipButton;
 use humhub\modules\mail\Module;
+use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\widgets\PeopleActionButtons;
-use humhub\modules\user\widgets\UserFollowButton;
 use humhub\widgets\BootstrapComponent;
 use Yii;
 
@@ -13,27 +12,15 @@ class PeopleActionButtonsMail extends PeopleActionButtons
 {
     public function run()
     {
-        $html = UserFollowButton::widget([
-            'user' => $this->user,
-            'followOptions' => ['class' => 'btn btn-primary btn-sm'],
-            'unfollowOptions' => ['class' => 'btn btn-primary btn-sm active'],
-        ]);
-
-        $html .= FriendshipButton::widget([
-            'user' => $this->user,
-            'options' => [
-                'friends' => ['attrs' => ['class' => 'btn btn-info btn-sm active']],
-                'addFriend' => ['attrs' => ['class' => 'btn btn-info btn-sm']],
-                'acceptFriendRequest' => ['attrs' => ['class' => 'btn btn-info btn-sm active'], 'togglerClass' => 'btn btn-info btn-sm active'],
-                'cancelFriendRequest' => ['attrs' => ['class' => 'btn btn-info btn-sm active']],
-            ],
-        ]);
+        $html = $this->addFollowButton();
+        $html .= $this->addFriendshipButton();
 
         /** @var Module $module */
         $module = Yii::$app->getModule('mail');
 
         if ($module->showSendMessageButtonInPeopleCards) {
             $html .= NewMessageButton::widget([
+                'label' => Icon::get('send') . ' ' . Yii::t('MailModule.base', 'Message'),
                 'guid' => $this->user->guid,
                 'type' => BootstrapComponent::TYPE_DEFAULT,
             ]);
