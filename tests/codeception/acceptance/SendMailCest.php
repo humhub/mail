@@ -113,7 +113,7 @@ class SendMailCest
         $I->dontSeeElement('#mail-filter-menu');
         $I->click('TestTag', '#conversation-tags-root');
         $I->waitForText('TestTag', null, '#mail-filter-menu');
-        $I->see('Hello there!', '#inbox');
+        $I->waitForText('Hello there!', null, '#inbox');
         $I->dontSee('Hi Admin!', '#inbox');
     }
 
