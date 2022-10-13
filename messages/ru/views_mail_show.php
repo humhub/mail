@@ -12,7 +12,7 @@ return [
     'Do you really want to delete this message?' => 'Вы действительно хотите удалить это сообщение?',
     'Do you really want to leave this conversation?' => 'Вы действительно хотите покинуть эту переписку?',
     'Leave' => 'Покинуть',
-    'Leave conversation' => 'Создать диалог',
+    'Leave conversation' => 'Покинуть диалог',
     'There are no messages yet.' => 'Здесь пока нет сообщений.',
     'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.' => '',
 ];
