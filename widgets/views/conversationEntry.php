@@ -38,7 +38,9 @@ $isOwnMessage = $entry->user->is(Yii::$app->user->getIdentity());
 
     <div class="<?= $contentClass ?>" style="<?= $isOwnMessage ? 'float:right' : ''?>">
         <div style="display: table-cell">
-            <?= RichText::output($entry->content) ?>
+            <div class="markdown-render">
+                <?= RichText::output($entry->content) ?>
+            </div>
         </div>
     </div>
 
