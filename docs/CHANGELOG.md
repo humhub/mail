@@ -7,6 +7,7 @@ Changelog
 - Fix #251: Fix edit message
 - Enh #257: Add "Send message" to People cards
 - Chg: Update min HumHub version to v1.11
+- Fix: Add markdown-render class to Markdown text for Translator module to work
 
 2.1.0  (December 7, 2021)
 -------------------------
