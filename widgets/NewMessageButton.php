@@ -2,10 +2,11 @@
 
 namespace humhub\modules\mail\widgets;
 
+use humhub\components\Widget;
 use humhub\modules\mail\helpers\Url;
+use humhub\widgets\BootstrapComponent;
 use humhub\widgets\ModalButton;
 use Yii;
-use humhub\components\Widget;
 
 class NewMessageButton extends Widget
 {
@@ -46,21 +47,28 @@ class NewMessageButton extends Widget
     public $cssClass;
 
     /**
+     * @var string button type for the color
+     */
+    public $type = BootstrapComponent::TYPE_INFO;
+
+
+    /**
      * Creates the Wall Widget
      */
     public function run()
     {
-        $button = ModalButton::info($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
+        $button = new ModalButton(['type' => $this->type, 'text' => $this->getLabel()]);
+        $button->load(Url::toCreateConversation($this->guid))->id($this->id);
 
-        if($this->icon) {
+        if ($this->icon) {
             $button->icon($this->icon);
         }
 
-        if($this->right) {
+        if ($this->right) {
             $button->right();
         }
 
-        if($this->cssClass) {
+        if ($this->cssClass) {
             $button->cssClass($this->cssClass);
         }
 
@@ -84,7 +92,7 @@ class NewMessageButton extends Widget
 
     public function getLabel()
     {
-        if($this->label !== null) {
+        if ($this->label !== null) {
             return $this->label;
         }
 

@@ -5,6 +5,8 @@ Changelog
 -------------------------
 - Fix #252: Fix wrong user guid in Live Notification
 - Fix #251: Fix edit message
+- Enh #257: Add "Send message" to People cards
+- Chg: Update min HumHub version to v1.11
 
 2.1.0  (December 7, 2021)
 -------------------------
