@@ -81,9 +81,11 @@ class CreateMessage extends Model
             return;
         }
 
-        foreach ($this->recipient as $userGuid) {
-            $user = User::findOne(['guid' => $userGuid]);
+        foreach ($this->recipient as $u => $userGuid) {
+            /* @var User $user */
+            $user = User::find()->where(['guid' => $userGuid])->active()->visible()->filterBlockedUsers()->one();
             if (!$user) {
+                unset($this->recipient[$u]);
                 continue;
             }
 
@@ -96,6 +98,10 @@ class CreateMessage extends Model
             } else {
                 $this->recipients[] = $user;
             }
+        }
+
+        if (empty($this->recipients)) {
+            $this->addError($attribute, Yii::t('MailModule.base', 'You cannot send a message without recipients!'));
         }
     }
 

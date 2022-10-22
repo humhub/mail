@@ -6,6 +6,7 @@ Changelog
 - Fix #252: Fix wrong user guid in Live Notification
 - Fix #251: Fix edit message
 - Fix: Add markdown-render class to Markdown text for Translator module to work
+- Fix #272: Exclude invisible users from recipients
 
 2.1.0  (December 7, 2021)
 -------------------------
