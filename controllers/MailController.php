@@ -219,7 +219,7 @@ class MailController extends Controller
         }
 
         $result = UserPicker::filter([
-            'query' => UserFilter::find()->active()->visible()->filterBlockedUsers(),
+            'query' => UserFilter::find()->available(),
             'keyword' => $keyword,
             'permission' => (!Yii::$app->user->isAdmin()) ? new SendMail() : null,
             'disableFillUser' => true,
@@ -310,7 +310,7 @@ class MailController extends Controller
         // Preselect user if userGuid is given
         if ($userGuid) {
             /* @var User $user */
-            $user = User::find()->where(['guid' => $userGuid])->active()->visible()->filterBlockedUsers()->one();
+            $user = User::find()->where(['guid' => $userGuid])->available()->one();
 
             if(!$user) {
                 throw new NotFoundHttpException();

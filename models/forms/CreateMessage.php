@@ -83,7 +83,7 @@ class CreateMessage extends Model
 
         foreach ($this->recipient as $u => $userGuid) {
             /* @var User $user */
-            $user = User::find()->where(['guid' => $userGuid])->active()->visible()->filterBlockedUsers()->one();
+            $user = User::find()->where(['guid' => $userGuid])->available()->one();
             if (!$user) {
                 unset($this->recipient[$u]);
                 continue;
