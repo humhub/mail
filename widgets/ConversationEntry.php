@@ -8,12 +8,12 @@
 
 namespace humhub\modules\mail\widgets;
 
-
 use humhub\libs\Html;
-use Yii;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
-use humhub\modules\mail\helpers\Url;
+use Imagine\Image\Palette\RGB;
+use Yii;
 
 class ConversationEntry extends JsWidget
 {
@@ -42,32 +42,36 @@ class ConversationEntry extends JsWidget
         return $this->render('conversationEntry', [
             'entry' => $this->entry,
             'contentClass' => $this->getContentClass(),
-            'showUserInfo' => $this->isShowUserInfo(),
+            'contentColor' => $this->getContentColor(),
             'isOwnMessage' => $this->isOwnMessage(),
             'options' => $this->getOptions()
         ]);
     }
 
-    private function getContentClass()
+    private function getContentClass(): string
     {
         $result = 'conversation-entry-content';
 
-        if($this->isPrevEntryFromSameUser()) {
-            $result .= ' seq-top';
-        }
-
-        if($this->isNextEntryFromSameUser()) {
-            $result .= ' seq-bottom';
-        }
-
-        if($this->isOwnMessage()) {
+        if ($this->isOwnMessage()) {
             $result .= ' own';
         }
 
         return $result;
     }
 
-    private function isOwnMessage()
+    private function getContentColor(): ?string
+    {
+        if (!$this->isOwnMessage()) {
+            return null;
+        }
+
+        $rgb = new RGB();
+        $color = $rgb->color($this->view->theme->variable('info'), 12);
+
+        return sprintf('rgba(%s, %s, %s, %s)', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()/100);
+    }
+
+    private function isOwnMessage(): bool
     {
         return $this->entry->user->is(Yii::$app->user->getIdentity());
     }
@@ -97,23 +101,9 @@ class ConversationEntry extends JsWidget
         return $result;
     }
 
-    private function isPrevEntryFromSameUser()
+    private function isPrevEntryFromSameUser(): bool
     {
         return $this->prevEntry && $this->prevEntry->created_by === $this->entry->created_by;
     }
-
-    private function isNextEntryFromSameUser()
-    {
-        return $this->nextEntry && $this->nextEntry->created_by === $this->entry->created_by;
-    }
-
-
-
-    private function isShowUserInfo()
-    {
-        return !$this->prevEntry || $this->prevEntry->created_by !== $this->entry->created_by;
-    }
-
-
 
 }

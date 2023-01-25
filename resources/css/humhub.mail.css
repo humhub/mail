@@ -174,29 +174,16 @@
     padding: 10px;
     max-width:70%;
 }
-
+.conversation-entry-content.own {
+    float: right;
+}
 .conversation-entry-content pre {
     max-width: 485px;
 }
 
-.conversation-entry-content.seq-top {
-    border-top-left-radius: 2px;
+.mail-conversation-entry .author-label  {
+    font-size: 10px;
 }
-
-.conversation-entry-content.seq-bottom {
-    border-bottom-left-radius: 2px;
-}
-
-.conversation-entry-content.own.seq-top {
-    border-top-right-radius: 2px;
-    border-top-left-radius: 10px;
-}
-
-.conversation-entry-content.own.seq-bottom {
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 10px;
-}
-
 .mail-conversation-entry.hideUserInfo .author-label  {
     display: none;
 }
