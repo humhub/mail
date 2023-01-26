@@ -11,14 +11,14 @@ use humhub\modules\content\widgets\richtext\RichText;
 /* @var $options array */
 /* @var $contentClass string */
 /* @var $contentColor string */
-/* @var $isOwnMessage boolean */
+/* @var $showUser bool */
 ?>
 
 <?= Html::beginTag('div', $options) ?>
 
 <div class="media">
 
-    <?php if (!$isOwnMessage) : ?>
+    <?php if ($showUser) : ?>
         <span class="author-image pull-left">
             <?= Image::widget(['user' => $entry->user, 'width' => 30]) ?>
         </span>
@@ -26,7 +26,7 @@ use humhub\modules\content\widgets\richtext\RichText;
 
     <div class="<?= $contentClass ?>"<?= $contentColor ? 'style="background:' . $contentColor . '"' : '' ?>>
         <div class="markdown-render">
-            <?php if (!$isOwnMessage) : ?>
+            <?php if ($showUser) : ?>
                 <div class="author-label"><?= Html::encode($entry->user->displayName) ?></div>
             <?php endif; ?>
             <?= RichText::output($entry->content) ?>

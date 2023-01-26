@@ -43,7 +43,7 @@ class ConversationEntry extends JsWidget
             'entry' => $this->entry,
             'contentClass' => $this->getContentClass(),
             'contentColor' => $this->getContentColor(),
-            'isOwnMessage' => $this->isOwnMessage(),
+            'showUser' => $this->showUser(),
             'options' => $this->getOptions()
         ]);
     }
@@ -104,6 +104,11 @@ class ConversationEntry extends JsWidget
     private function isPrevEntryFromSameUser(): bool
     {
         return $this->prevEntry && $this->prevEntry->created_by === $this->entry->created_by;
+    }
+
+    private function showUser(): bool
+    {
+        return !$this->isOwnMessage() && $this->entry->message->getUsers()->count() > 2;
     }
 
 }
