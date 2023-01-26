@@ -225,7 +225,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.initScroll = function () {
         if (window.IntersectionObserver) {
-            var $entryList = this.$.find('.conversation-entry-list');
+            var $entryList = this.getListNode();
             var $streamEnd = $('<div class="conversation-stream-end"></div>');
             $entryList.prepend($streamEnd);
 
@@ -256,10 +256,27 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         nativeparentscrolling: false,
                         railpadding: {top: 0, right: 0, left: 0, bottom: 0}
                     });
+
+                    that.getListNode().on('scroll', () => that.getScrollDownButton().toggle(!that.isScrolledToBottom()));
                 }
             });
         }
     };
+
+    ConversationView.prototype.getScrollDownButton = function () {
+        if (typeof this.scrollDownButton === 'object') {
+            return this.scrollDownButton;
+        }
+
+        this.scrollDownButton = $('<div>')
+            .addClass('conversation-scroll-down-button')
+            .html('<i class="fa fa-caret-down"></i>')
+            .on('click', () => this.scrollToBottom());
+
+        this.getListNode().append(this.scrollDownButton);
+
+        return this.scrollDownButton;
+    }
 
     ConversationView.prototype.loadMore = function () {
         var that = this;
@@ -272,7 +289,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         return client.get(this.options.loadMoreUrl, {data: data}).then(function (response) {
             if (response.result) {
                 var $result = $(response.result).hide();
-                that.$.find('.conversation-entry-list').find('.conversation-stream-end').after($result);
+                that.getListNode().find('.conversation-stream-end').after($result);
                 $result.fadeIn();
             }
 
@@ -292,7 +309,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.assureScroll = function () {
         var that = this;
-        var $entryList = this.$.find('.conversation-entry-list');
+        var $entryList = this.getListNode();
         if ($entryList[0].offsetHeight >= $entryList[0].scrollHeight && this.canLoadMore()) {
             return this.loadMore().then(function () {
                 return that.assureScroll();
@@ -345,7 +362,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
         return new Promise(function (resolve) {
             setTimeout(function () {
-                var $entryContainer = that.$.find('.conversation-entry-list');
+                var $entryContainer = that.getListNode();
 
                 if (!$entryContainer.length) {
                     return;
@@ -355,7 +372,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 var formHeight = replyRichtext ? replyRichtext.$.innerHeight() : 0;
                 $entryContainer.css('margin-bottom' , formHeight + 5 + 'px');
 
-                var offsetTop = that.$.find('.conversation-entry-list').offset().top;
+                var offsetTop = that.getListNode().offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
                 $entryContainer.css('height', max_height);
                 $entryContainer.css('max-height', max_height);
