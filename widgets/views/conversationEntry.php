@@ -22,15 +22,13 @@ use humhub\modules\content\widgets\richtext\RichText;
         <span class="author-image pull-left">
             <?= Image::widget(['user' => $entry->user, 'width' => 30]) ?>
         </span>
-        <div class="media-body author-label">
-            <strong class="media-heading">
-                <?= Html::encode($entry->user->displayName) ?>
-            </strong>
-        </div>
     <?php endif; ?>
 
     <div class="<?= $contentClass ?>"<?= $contentColor ? 'style="background:' . $contentColor . '"' : '' ?>>
         <div class="markdown-render">
+            <?php if (!$isOwnMessage) : ?>
+                <div class="author-label"><?= Html::encode($entry->user->displayName) ?></div>
+            <?php endif; ?>
             <?= RichText::output($entry->content) ?>
         </div>
     </div>

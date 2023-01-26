@@ -1,5 +1,3 @@
-@bold: 600;
-
 @bgColorDefault: #f7f7f7;
 @bgColorNew: #e9f9ff;
 @bgColorUnread: #EEF8F9;
@@ -11,6 +9,8 @@
 @radiusNone: 0;
 
 @smallScreen: 767px;
+
+.semiBold() {font-weight: 600}
 
 .placeholder {
   color: #77777A;
@@ -205,11 +205,11 @@
   .author-image {
     img {
       max-width: 100%;
-      margin-top: 18px;
     }
   }
   .author-label {
     font-size: 10px;
+    .semiBold;
   }
   &.hideUserInfo {
     .author-label {
@@ -254,12 +254,12 @@
     border-bottom-right-radius: @radiusNone;
   }
   .manage-tags-link {
+    .semiBold;
     font-size: 0.8em;
     border: 1px solid #ededed;
     border-top: 0;
     border-bottom-left-radius: @radiusSmall;
     border-bottom-right-radius: @radiusSmall;
-    font-weight: @bold;
     padding: 2px 5px;
   }
 }
@@ -272,7 +272,7 @@
 }
 
 .inbox-entry-title {
-  font-weight: @bold;
+  .semiBold;
 }
 
 .field-replyform-message {
