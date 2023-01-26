@@ -10,6 +10,13 @@ module.exports = function (grunt) {
                 }
             }
         },
+        less: {
+            dev: {
+                files: {
+                    'resources/css/humhub.mail.css': 'resources/css/humhub.mail.less'
+                }
+            }
+        },
         cssmin: {
             target: {
                 files: {
@@ -30,7 +37,7 @@ module.exports = function (grunt) {
         },
         watch: {
             scripts: {
-                files: ['resources/js/*.js', 'resources/css/*.css'],
+                files: ['resources/js/*.js', 'resources/css/*.less'],
                 tasks: ['build'],
                 options: {
                     spawn: false,
@@ -39,12 +46,11 @@ module.exports = function (grunt) {
         },
     });
 
-    //grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-
-    grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
+    grunt.registerTask('build', ['concat', 'uglify', 'less', 'cssmin']);
 };

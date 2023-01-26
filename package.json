@@ -10,7 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/humhub/humhub-modules-mail.git"
   },
-  "dependencies": {},
   "author": "Julian Harrer",
   "license": "AGPL-3.0",
   "bugs": {
@@ -20,8 +19,9 @@
   "devDependencies": {
     "grunt": "^1.5.3",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-less": "^3.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0"
   }
 }

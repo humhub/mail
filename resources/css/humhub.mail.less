@@ -1,0 +1,287 @@
+@bold: 600;
+
+@bgColorDefault: #f7f7f7;
+@bgColorNew: #e9f9ff;
+@bgColorUnread: #EEF8F9;
+@borderColorUnread: #EEF8F9;
+
+@radius: 10px;
+@radiusSmall: 4px;
+@radiusRound: 50%;
+@radiusNone: 0;
+
+@smallScreen: 767px;
+
+.placeholder {
+  color: #77777A;
+}
+
+#dropdown-messages {
+  .dropdown-header {
+    margin-bottom: 12px;
+  }
+  &.dropdown-menu {
+    li {
+      a {
+        font-size: inherit !important;
+        font-weight: inherit !important;
+      }
+    }
+  }
+}
+
+.modal-body {
+  #createmessage-message {
+    .ProseMirror {
+      min-height: 100px !important;
+    }
+  }
+}
+
+.media-list {
+  li.new {
+    background-color: @bgColorNew;
+  }
+}
+
+#create-message-button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  padding: 5px 10px;
+}
+#conversationSettingsButton {
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+#conversation-head-info {
+  font-size: 13px;
+  font-weight: normal;
+  margin-top: 10px;
+}
+#conversation-filter-link {
+  padding-left: 0;
+  display: block;
+  padding-bottom: 0;
+}
+#conversation-tags-root {
+  border-bottom: 1px solid #eee;
+  .my-tags-label {
+    padding-right: 10px;
+  }
+}
+.conversation-menu {
+  display: none;
+  .time {
+    color: inherit;
+    text-transform: none;
+  }
+  .badge {
+    background-color: @bgColorDefault;
+    border-radius: @radius;
+    color: inherit;
+  }
+  .conversation-edit-button {
+    background-color: @bgColorDefault;
+    border-radius: @radiusRound;
+    color: inherit;
+    &:hover {
+      background-color: @bgColorDefault;
+      color: inherit;
+    }
+  }
+}
+.visible-xs {
+  .conversation-menu {
+    padding-left: 35px;
+    .conversation-menu-item {
+      margin-bottom: 10px;
+    }
+  }
+}
+.conversation-menu-item {
+  margin-left: 5px;
+  a {
+    cursor: pointer;
+  }
+}
+.conversation-head-button {
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+.conversation-edit-button {
+  border-bottom-right-radius: @radiusNone;
+  border-top-right-radius: @radiusNone;
+}
+.conversation-entry-list {
+  max-height: 600px;
+  min-height: 150px;
+  overflow: auto;
+  .media {
+    padding-right: 5px;
+  }
+}
+.conversation-entry-content {
+  display: table;
+  float: left;
+  background-color: @bgColorDefault;
+  border-radius: @radius;
+  padding: 10px;
+  max-width: 70%;
+  pre {
+    max-width: 485px;
+  }
+  &.own {
+    float: right;
+  }
+}
+.conversation-blocked-recipient {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+#mail-conversation-root {
+  hr {
+    border-top: 1px solid #eee;
+  }
+  .ProsemirrorEditor.focusMenu {
+    .ProseMirror-menubar {
+      margin-top: -0;
+    }
+  }
+  .panel-body {
+    margin-bottom: 0;
+  }
+}
+#mail-filter-root {
+  margin-top: 15px;
+}
+#mail-conversation-overview {
+  .media {
+    margin-top: 0;
+  }
+}
+.mail-message-form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  .humhub-ui-richtext {
+    padding-right: 45px;
+    border-radius: @radius;
+  }
+  .reply-button {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    z-index: 500;
+    border-radius: @radiusSmall;
+  }
+  .help-block {
+    margin: 0;
+  }
+  .alert {
+    margin-bottom: 0;
+  }
+}
+.mail-conversation-entry {
+  margin-top: 3px;
+  position: relative;
+  .author-image {
+    img {
+      max-width: 100%;
+      margin-top: 18px;
+    }
+  }
+  .author-label {
+    font-size: 10px;
+  }
+  &.hideUserInfo {
+    .author-label {
+      display: none;
+    }
+    .author-image {
+      img {
+        visibility: hidden;
+        margin-top: 0;
+      }
+    }
+  }
+  &.own {
+    .conversation-menu-item {
+      float: right;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+  }
+}
+
+#inbox {
+  max-height: 500px;
+  overflow: auto;
+  border-radius: @radiusSmall;
+  .new-message-badge {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.messagePreviewEntry {
+  cursor: pointer;
+  &.unread {
+    background-color: @bgColorUnread;
+    border-color: @borderColorUnread;
+  }
+}
+
+.message-tag-filter-group {
+  .select2-selection {
+    border-bottom-right-radius: @radiusNone;
+  }
+  .manage-tags-link {
+    font-size: 0.8em;
+    border: 1px solid #ededed;
+    border-top: 0;
+    border-bottom-left-radius: @radiusSmall;
+    border-bottom-right-radius: @radiusSmall;
+    font-weight: @bold;
+    padding: 2px 5px;
+  }
+}
+
+.new-message-badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 3px 5px 4px !important;
+}
+
+.inbox-entry-title {
+  font-weight: @bold;
+}
+
+.field-replyform-message {
+  margin: 0;
+}
+
+@media (max-width: @smallScreen) {
+  #dropdown-messages {
+    width: 300px !important;
+  }
+  .arrow {
+    margin-left: -101px !important;
+  }
+  #inbox {
+    max-height: 30vh;
+  }
+  .inbox-wrapper {
+    display: none;
+  }
+  .conversation-entry-content {
+    pre {
+      max-width: 245px;
+      padding: 0;
+    }
+  }
+}
