@@ -104,16 +104,6 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::class, ['id' => 'user_id'])
-            ->viaTable('user_message', ['message_id' => 'id']);
-    }
-
-    /**
      * @param null $userId
      * @return UserMessage|null
      */
@@ -141,6 +131,16 @@ class Message extends ActiveRecord
             }
         }
         return false;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('user_message', ['message_id' => 'id']);
     }
 
     /**

@@ -71,7 +71,7 @@ class SendMailCest
     private function addParticipant(AcceptanceTester $I)
     {
         $I->wantTo('ensure I can add a participant');
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Add user', '#mail-conversation-header');
         $I->waitForText('Add more participants to your conversation', 10, '#globalModal');
@@ -103,7 +103,7 @@ class SendMailCest
     private function addAndFilterTag(AcceptanceTester $I)
     {
         $I->dontSee('#conversation-tags-root');
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Tags', '#mail-conversation-header');
         $I->waitForText('Edit conversation tags', null, '#globalModal');
@@ -131,14 +131,14 @@ class SendMailCest
 
     private function leaveConversation(AcceptanceTester $I)
     {
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
         $I->click('Leave', '#globalModalConfirm');
 
         $I->waitForText('Third message title', 10, '#mail-conversation-header');
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');

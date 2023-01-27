@@ -20,9 +20,9 @@
   right: 10px;
   padding: 5px 10px;
 }
-#conversationSettingsButton {
-  padding-right: 12px;
-  padding-left: 12px;
+#conversation-settings-button {
+  padding: 6px;
+  font-size: 10px;
 }
 #conversation-head-info {
   font-size: 13px;
@@ -72,10 +72,6 @@
 }
 .conversation-menu-item a {
   cursor: pointer;
-}
-.conversation-head-button {
-  padding-top: 6px;
-  padding-bottom: 2px;
 }
 .conversation-edit-button {
   border-bottom-right-radius: 0;
@@ -129,6 +125,14 @@
 }
 #mail-conversation-root .panel-body {
   margin-bottom: 0;
+}
+#mail-conversation-header {
+  border-bottom: 1px solid #d7d7d7;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#mail-conversation-header small a {
+  color: #555;
 }
 #mail-filter-root {
   margin-top: 15px;
