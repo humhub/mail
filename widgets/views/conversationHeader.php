@@ -7,12 +7,10 @@ use humhub\modules\mail\widgets\ParticipantUserList;
 
 /* @var $message Message */
 ?>
-<strong><?= Html::encode($message->title) ?></strong>
+<h1><?= Html::encode($message->title) ?></h1>
 
 <div class="pull-right">
     <?= ConversationSettingsMenu::widget(['message' => $message]) ?>
 </div>
 
-<div id="conversation-head-info">
-    <small><?= ParticipantUserList::widget(['message' => $message]) ?></small>
-</div>
+<small><?= ParticipantUserList::widget(['message' => $message]) ?></small>
