@@ -6,6 +6,7 @@
 @borderColorUnread: #EEF8F9;
 
 @radius: 10px;
+@radiusMiddle: 7px;
 @radiusSmall: 4px;
 @radiusRound: 50%;
 @radiusNone: 0;
@@ -248,6 +249,17 @@
     > span {
       font-style: italic;
     }
+  }
+}
+.conversation-date-badge {
+  padding: 10px 0 15px;
+  text-align: center;
+  span {
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: @radiusMiddle;
+    text-transform: uppercase;
+    padding: 5px 20px;
   }
 }
 

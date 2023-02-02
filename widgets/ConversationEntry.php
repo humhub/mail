@@ -44,6 +44,7 @@ class ConversationEntry extends JsWidget
             'contentClass' => $this->getContentClass(),
             'contentColor' => $this->getContentColor(),
             'showUser' => $this->showUser(),
+            'showDateBadge' => $this->showDateBadge(),
             'options' => $this->getOptions()
         ]);
     }
@@ -109,6 +110,11 @@ class ConversationEntry extends JsWidget
     private function showUser(): bool
     {
         return !$this->isOwnMessage() && $this->entry->message->getUsers()->count() > 2;
+    }
+
+    private function showDateBadge(): bool
+    {
+        return !$this->prevEntry || substr($this->prevEntry->created_at, 0, 10) !== substr($this->entry->created_at, 0, 10);
     }
 
 }

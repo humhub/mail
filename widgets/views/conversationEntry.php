@@ -2,6 +2,7 @@
 
 use humhub\libs\Html;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\widgets\ConversationDateBadge;
 use humhub\modules\mail\widgets\MessageEntryTime;
 use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\Image;
@@ -13,7 +14,11 @@ use humhub\modules\content\widgets\richtext\RichText;
 /* @var $contentClass string */
 /* @var $contentColor string */
 /* @var $showUser bool */
+/* @var $showDateBadge bool */
 ?>
+<?php if ($showDateBadge) : ?>
+    <?= ConversationDateBadge::widget(['entry' => $entry]) ?>
+<?php endif; ?>
 
 <?= Html::beginTag('div', $options) ?>
 
