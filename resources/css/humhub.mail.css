@@ -192,6 +192,14 @@
   margin-left: 0;
   margin-right: 5px;
 }
+.mail-conversation-entry .conversation-entry-time {
+  float: right;
+  font-size: 10px;
+  color: #555;
+}
+.mail-conversation-entry .conversation-entry-time > span {
+  font-style: italic;
+}
 #inbox {
   max-height: 500px;
   overflow: auto;

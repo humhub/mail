@@ -2,6 +2,7 @@
 
 use humhub\libs\Html;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\widgets\MessageEntryTime;
 use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\Image;
 use humhub\modules\content\widgets\richtext\RichText;
@@ -31,6 +32,7 @@ use humhub\modules\content\widgets\richtext\RichText;
             <?php endif; ?>
             <?= RichText::output($entry->content) ?>
         </div>
+        <?= MessageEntryTime::widget(['entry' => $entry]) ?>
     </div>
 
     <div class="hidden-xs">

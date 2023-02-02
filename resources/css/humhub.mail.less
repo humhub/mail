@@ -1,3 +1,5 @@
+@text-color-main: #555;
+
 @bgColorDefault: #f7f7f7;
 @bgColorNew: #e9f9ff;
 @bgColorUnread: #EEF8F9;
@@ -170,7 +172,7 @@
     font-size: 11px;
     font-weight: normal;
     a {
-      color: #555;
+      color: @text-color-main;
     }
   }
 }
@@ -237,6 +239,14 @@
       float: right;
       margin-left: 0;
       margin-right: 5px;
+    }
+  }
+  .conversation-entry-time {
+    float: right;
+    font-size: 10px;
+    color: @text-color-main;
+    > span {
+      font-style: italic;
     }
   }
 }
