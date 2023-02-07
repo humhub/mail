@@ -48,7 +48,7 @@ $isNew = $userMessage->isUnread();
                                 <?= Html::encode($participant->displayName) . (($userCount > 2)
                                     ? ', '. Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', ['n' => $userCount - 2])
                                     : '') ?>
-                            </a> &middot; <?= TimeAgo::widget(['timestamp' => $message->updated_at]) ?>
+                            </a> &middot; <?= TimeAgo::widget(['timestamp' => $message->updated_at ?? '']) ?>
                         </small>
                     </h5>
 

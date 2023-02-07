@@ -23,13 +23,8 @@ class SendMailCest
 
         $this->addAndFilterTag($I);
 
-
-        $I->logout();
-        
-        $I->amUser2();
-
+        $I->amUser2(true);
         $this->seeNewMessagesAndEnterOverview($I);
-
         $this->leaveConversation($I);
     }
 
@@ -79,7 +74,7 @@ class SendMailCest
 
         $I->click('Save', '#globalModal'); //Send
         $I->expectTo('see the new user within the conversation user list');
-        $I->waitForElement('[data-original-title="Admin Tester"]', null, '#mail-conversation-header');
+        $I->waitForText('Admin Tester', null, '#mail-conversation-header');
     }
 
     private function createConversationByInbox(AcceptanceTester $I)
