@@ -37,13 +37,20 @@ class ConversationEntry extends JsWidget
      */
     public $nextEntry;
 
+    public array $userColors = ['#34568B', '#FF6F61', '#6B5B95', '#88B04B', '#92A8D1', '#955251', '#B565A7', '#009B77',
+        '#DD4124', '#D65076', '#45B8AC', '#EFC050', '#5B5EA6', '#9B2335', '#55B4B0', '#E15D44', '#BC243C', '#C3447A'
+    ];
+
     public function run()
     {
+        $showUser = $this->showUser();
+
         return $this->render('conversationEntry', [
             'entry' => $this->entry,
             'contentClass' => $this->getContentClass(),
             'contentColor' => $this->getContentColor(),
-            'showUser' => $this->showUser(),
+            'showUser' => $showUser,
+            'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
             'options' => $this->getOptions()
         ]);
@@ -91,11 +98,11 @@ class ConversationEntry extends JsWidget
             'class' => 'media mail-conversation-entry'
         ];
 
-        if($this->isOwnMessage()) {
+        if ($this->isOwnMessage()) {
             Html::addCssClass($result, 'own');
         }
 
-        if($this->isPrevEntryFromSameUser()) {
+        if ($this->isPrevEntryFromSameUser()) {
             Html::addCssClass($result, 'hideUserInfo');
         }
 
@@ -110,6 +117,11 @@ class ConversationEntry extends JsWidget
     private function showUser(): bool
     {
         return !$this->isOwnMessage() && $this->entry->message->getUsers()->count() > 2;
+    }
+
+    private function getUserColor(): string
+    {
+        return $this->userColors[$this->entry->created_by % count($this->userColors)];
     }
 
     private function showDateBadge(): bool

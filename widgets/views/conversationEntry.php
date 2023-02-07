@@ -14,6 +14,7 @@ use humhub\modules\content\widgets\richtext\RichText;
 /* @var $contentClass string */
 /* @var $contentColor string */
 /* @var $showUser bool */
+/* @var $userColor string */
 /* @var $showDateBadge bool */
 ?>
 <?php if ($showDateBadge) : ?>
@@ -33,7 +34,7 @@ use humhub\modules\content\widgets\richtext\RichText;
     <div class="<?= $contentClass ?>"<?= $contentColor ? 'style="background:' . $contentColor . '"' : '' ?>>
         <div class="markdown-render">
             <?php if ($showUser) : ?>
-                <div class="author-label"><?= Html::encode($entry->user->displayName) ?></div>
+                <div class="author-label" style="color:<?= $userColor ?>"><?= Html::encode($entry->user->displayName) ?></div>
             <?php endif; ?>
             <?= RichText::output($entry->content) ?>
         </div>
