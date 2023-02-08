@@ -263,9 +263,12 @@
     margin-left: -101px !important;
   }
   #inbox {
+    max-height: none;
+  }
+  .mail-conversation-single-message #inbox {
     max-height: 30vh;
   }
-  .inbox-wrapper {
+  .mail-conversation-single-message .inbox-wrapper {
     display: none;
   }
   .conversation-entry-content pre {

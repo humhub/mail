@@ -624,7 +624,7 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     ConversationList.prototype.hide = function() {
         return new Promise(function (resolve) {
-            if(view.isSmall()) {
+            if(view.isSmall() && $('.mail-conversation-single-message').length) {
                 $('.inbox-wrapper').slideUp(function() {
                     if($('#mail-conversation-root').length) {
                         Widget.instance('#mail-conversation-root').updateSize();
