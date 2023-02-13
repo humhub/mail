@@ -255,15 +255,17 @@
     }
   }
 }
-.conversation-date-badge {
+.conversation-entry-badge {
   padding: 10px 0 15px;
   text-align: center;
   span {
     display: inline-block;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     border-radius: @radiusMiddle;
-    text-transform: uppercase;
     padding: 5px 20px;
+  }
+  &.conversation-date-badge span {
+    text-transform: uppercase;
   }
 }
 

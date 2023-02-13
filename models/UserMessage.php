@@ -2,9 +2,11 @@
 
 namespace humhub\modules\mail\models;
 
-use Yii;
-use humhub\modules\user\models\User;
 use humhub\components\ActiveRecord;
+use humhub\modules\mail\models\states\MessageUserJoined;
+use humhub\modules\mail\models\states\MessageUserLeft;
+use humhub\modules\user\models\User;
+use Yii;
 
 /**
  * This class represents the relation between users and conversations.
@@ -21,7 +23,8 @@ use humhub\components\ActiveRecord;
  * @property string $updated_at
  * @property integer $updated_by
  *
- * @property-read  Message $message
+ * @property-read Message $message
+ * @property-read User $user
  *
  * @package humhub.modules.mail.models
  * @since 0.5
@@ -124,5 +127,23 @@ class UserMessage extends ActiveRecord
         }
 
         return $this->message->updated_at > $this->last_viewed;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert) {
+            MessageUserJoined::inform($this->message, $this->user);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        MessageUserLeft::inform($this->message, $this->user);
     }
 }

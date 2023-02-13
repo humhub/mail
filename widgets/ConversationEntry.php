@@ -10,6 +10,7 @@ namespace humhub\modules\mail\widgets;
 
 use humhub\libs\Html;
 use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
 use Imagine\Image\Palette\RGB;
@@ -41,7 +42,19 @@ class ConversationEntry extends JsWidget
         '#DD4124', '#D65076', '#45B8AC', '#EFC050', '#5B5EA6', '#9B2335', '#55B4B0', '#E15D44', '#BC243C', '#C3447A'
     ];
 
+    /**
+     * @inheritdoc
+     */
     public function run()
+    {
+        if ($this->entry->type === MessageEntry::type()) {
+            return $this->runMessage();
+        }
+
+        return $this->runState();
+    }
+
+    public function runMessage(): string
     {
         $showUser = $this->showUser();
 
@@ -53,6 +66,14 @@ class ConversationEntry extends JsWidget
             'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
             'options' => $this->getOptions()
+        ]);
+    }
+
+    public function runState(): string
+    {
+        return $this->render('conversationState', [
+            'entry' => $this->entry,
+            'showDateBadge' => $this->showDateBadge()
         ]);
     }
 
