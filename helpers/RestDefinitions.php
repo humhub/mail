@@ -36,7 +36,6 @@ class RestDefinitions
         return [
             'id' => $entry->id,
             'user_id' => $entry->user_id,
-            'file_id' => $entry->file_id,
             'content' => $entry->content,
             'created_at' => $entry->created_at,
             'created_by' => $entry->created_by,

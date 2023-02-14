@@ -21,7 +21,6 @@ use yii\db\ActiveQuery;
  * @property integer $id
  * @property integer $message_id
  * @property integer $user_id
- * @property integer $file_id
  * @property string $content
  * @property integer $type
  * @property string $created_at
@@ -32,7 +31,6 @@ use yii\db\ActiveQuery;
  * The followings are the available model relations:
  * @property Message $message
  * @property User $user
- * @property File $file
  *
  * @package humhub.modules.mail.models
  * @since 2.1
@@ -88,7 +86,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
 
         return [
             [$requiredColumns, 'required'],
-            [['message_id', 'user_id', 'file_id', 'created_by', 'updated_by'], 'integer'],
+            [['message_id', 'user_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
