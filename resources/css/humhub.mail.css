@@ -106,6 +106,7 @@
 }
 .conversation-entry-content .markdown-render {
   float: left;
+  width: 100%;
 }
 .conversation-blocked-recipient {
   -webkit-filter: grayscale(100%);
@@ -197,7 +198,6 @@
 }
 .mail-conversation-entry .conversation-entry-time {
   float: right;
-  margin-top: 14px;
   font-size: 10px;
   color: #555;
 }
