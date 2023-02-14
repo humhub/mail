@@ -205,7 +205,7 @@
   font-style: italic;
 }
 .conversation-entry-badge {
-  padding: 10px 0 15px;
+  padding: 10px 0 8px;
   text-align: center;
 }
 .conversation-entry-badge span {
