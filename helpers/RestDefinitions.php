@@ -37,6 +37,7 @@ class RestDefinitions
             'id' => $entry->id,
             'user_id' => $entry->user_id,
             'content' => $entry->content,
+            'type' => $entry->type,
             'created_at' => $entry->created_at,
             'created_by' => $entry->created_by,
             'updated_at' => $entry->updated_at,

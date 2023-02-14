@@ -499,6 +499,11 @@ definitions:
       content:
         type: string
         example: Sample message
+      type:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 0
       created_at:
         type: string
         format: datetime
