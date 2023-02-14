@@ -3,6 +3,7 @@
 use humhub\libs\Html;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\ConversationDateBadge;
+use humhub\modules\mail\widgets\ConversationEntryMenu;
 use humhub\modules\mail\widgets\MessageEntryTime;
 use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\Image;
@@ -41,14 +42,7 @@ use humhub\modules\content\widgets\richtext\RichText;
         <?= MessageEntryTime::widget(['entry' => $entry]) ?>
     </div>
 
-    <div class="hidden-xs">
-        <?= $this->render('_conversationEntryMenu', ['entry' => $entry, 'badge' => true]) ?>
-    </div>
-
-</div>
-
-<div class="visible-xs">
-    <?= $this->render('_conversationEntryMenu', ['entry' => $entry, 'badge' => false]) ?>
+    <?= ConversationEntryMenu::widget(['entry' => $entry]) ?>
 </div>
 
 <?= Html::endTag('div') ?>

@@ -37,7 +37,7 @@ class MessageEntry extends AbstractMessageEntry
             $user = Yii::$app->user;
         }
 
-        return $this->created_by == $user->id;
+        return $this->created_by === $user->id;
     }
 
     /**
