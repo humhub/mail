@@ -170,9 +170,14 @@ class Message extends ActiveRecord
      * Returns the last message of this conversation
      * @return MessageEntry
      */
-    public function getLastEntry()
+    public function getLastEntry(): MessageEntry
     {
-        return MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1)->one();
+        return MessageEntry::find()
+            ->where(['message_id' => $this->id])
+            ->andWhere(['type' => MessageEntry::type()])
+            ->orderBy('created_at DESC')
+            ->limit(1)
+            ->one();
     }
 
     /**

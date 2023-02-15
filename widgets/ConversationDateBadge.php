@@ -17,7 +17,7 @@ use Yii;
 class ConversationDateBadge extends Widget
 {
     public MessageEntry $entry;
-    public array $options = ['class' => 'conversation-date-badge'];
+    public array $options = ['class' => 'conversation-entry-badge conversation-date-badge'];
     public string $format = 'long';
 
     /**

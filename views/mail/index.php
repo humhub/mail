@@ -8,10 +8,8 @@ use humhub\modules\mail\widgets\ConversationView;
 /* @var $userMessages UserMessage[] */
 
 MailMessengerAsset::register($this);
-
 ?>
-
-<div class="container">
+<div class="container<?= $messageId ? ' mail-conversation-single-message' : '' ?>">
     <div class="row">
         <div class="col-md-4">
             <?= $this->render('_conversation_sidebar') ?>
