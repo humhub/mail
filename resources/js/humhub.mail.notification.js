@@ -1,28 +1,27 @@
-humhub.module('mail.notification', function(module, require, $) {
+humhub.module('mail.notification', function (module, require, $) {
     var client = require('client');
     var loader = require('ui.loader');
     var event = require('event');
     var Widget = require('ui.widget').Widget;
     var currentXhr;
+    var newMessageCount = 0;
 
     module.initOnPjaxLoad = true;
 
-    var init = function(isPjax) {
+    var init = function (isPjax) {
         // open the messages menu
-
-        if(!isPjax) {
+        if (!isPjax) {
             event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events) {
-                event = events[events.length - 1];
-                setMailMessageCount(event.data.count);
+                var evtx = events[events.length - 1];
+                setMailMessageCount(evtx.data.count);
             }).on('humhub:modules:mail:live:UserMessageDeleted', function (evt, events) {
-                event = events[events.length - 1];
-                setMailMessageCount(event.data.count);
+                var evtx = events[events.length - 1];
+                setMailMessageCount(evtx.data.count);
             });
 
 
             $('#icon-messages').click(function () {
-
-                if(currentXhr) {
+                if (currentXhr) {
                     currentXhr.abort();
                 }
 
@@ -30,9 +29,11 @@ humhub.module('mail.notification', function(module, require, $) {
                 $('#loader_messages').parent().find(':not(#loader_messages)').remove();
                 loader.set($('#loader_messages').show());
 
-                client.get(module.config.url.list, {beforeSend: function(xhr) {
-                    currentXhr = xhr;
-                }}).then(function (response) {
+                client.get(module.config.url.list, {
+                    beforeSend: function (xhr) {
+                        currentXhr = xhr;
+                    }
+                }).then(function (response) {
                     currentXhr = undefined;
                     $('#loader_messages').parent().prepend($(response.html));
                     $('#loader_messages').hide();
@@ -43,22 +44,27 @@ humhub.module('mail.notification', function(module, require, $) {
         updateCount();
     };
 
-    var updateCount = function() {
-        client.get(module.config.url.count).then(function(response) {
+    var updateCount = function () {
+        client.get(module.config.url.count).then(function (response) {
             setMailMessageCount(parseInt(response.newMessages));
         });
     };
 
-    var setMailMessageCount = function(count) {
+    var setMailMessageCount = function (count) {
         // show or hide the badge for new messages
         var $badge = $('#badge-messages');
-        if (!count || count == '0') {
+        if (!count || parseInt(count) === 0) {
             $badge.css('display', 'none');
+            newMessageCount = 0;
         } else {
+            newMessageCount = count;
+
             $badge.empty();
             $badge.append(count);
             $badge.fadeIn('fast');
         }
+
+        event.trigger('humhub:modules:notification:UpdateTitleNotificationCount');
     };
 
     var loadMessage = function (evt) {
@@ -70,10 +76,15 @@ humhub.module('mail.notification', function(module, require, $) {
         evt.finish();
     };
 
+    var getNewMessageCount = function () {
+        return newMessageCount;
+    };
+
     module.export({
         init: init,
         loadMessage: loadMessage,
         setMailMessageCount: setMailMessageCount,
-        updateCount: updateCount
+        updateCount: updateCount,
+        getNewMessageCount: getNewMessageCount,
     });
 });
