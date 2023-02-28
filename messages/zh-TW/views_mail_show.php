@@ -5,7 +5,7 @@ return array (
   '<strong>Confirm</strong> message deletion' => '',
   'Add user' => '',
   'Cancel' => '取消',
-  'Delete' => '',
+  'Delete' => '刪除帳戶',
   'Delete conversation' => '',
   'Do you really want to delete this conversation?' => '',
   'Do you really want to delete this message?' => '',
