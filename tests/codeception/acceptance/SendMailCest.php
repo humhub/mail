@@ -80,7 +80,7 @@ class SendMailCest
     private function createConversationByInbox(AcceptanceTester $I)
     {
         $I->wantTo('create another conversation');
-        $I->click('+ Message', '#mail-conversation-overview .panel-heading');
+        $I->jsClick('#mail-conversation-overview #mail-conversation-create-button');
         $I->waitForText('New message', null, '#globalModal');
         $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
         $I->waitForText('Admin test message', null,'#mail-conversation-root');

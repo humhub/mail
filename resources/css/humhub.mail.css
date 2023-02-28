@@ -20,6 +20,9 @@
   right: 10px;
   padding: 5px 10px;
 }
+#mail-conversation-create-button .fa {
+  margin: 0;
+}
 #conversation-filter-link {
   padding-left: 0;
   display: block;

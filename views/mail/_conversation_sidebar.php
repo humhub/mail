@@ -20,10 +20,8 @@ $filterModel = new InboxFilterForm();
         <a data-action-click="mail.inbox.toggleInbox">
             <strong><span class="visible-xs-inline"><?=Icon::get('bars')?></span> <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?></strong>
         </a>
-        <?php if($canStartConversation) : ?>
-            <?= NewMessageButton::widget(['label' => Yii::t('MailModule.base', '+ Message'), 'right' => true, 'icon' => false, 'cssClass' => 'hidden-xs'])?>
-
-            <?= NewMessageButton::widget(['right' => true, 'label' => '+', 'cssClass' => 'visible-xs'])?>
+        <?php if ($canStartConversation) : ?>
+            <?= NewMessageButton::widget(['icon' => 'plus', 'label' => '', 'id' => 'mail-conversation-create-button'])?>
         <?php endif; ?>
 
         <div class="inbox-wrapper">

@@ -21,7 +21,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
             <div class="arrow"></div>
             <?= Yii::t('MailModule.base', 'Conversations') ?>
             <?= ($canStartConversation)
-                ? NewMessageButton::widget([ 'id' => 'create-message-button'])
+                ? NewMessageButton::widget(['id' => 'create-message-button', 'icon' => 'plus'])
                 : '' ?>
         </li>
         <ul class="media-list">
