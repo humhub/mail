@@ -292,13 +292,16 @@ class Message extends ActiveRecord
 
     /**
      * @param User $recipient
+     * @param bool $originator
+     * @param bool $informAfterAdd Notify about user joining with state badge
      * @return bool
      */
-    public function addRecepient(User $recipient, $originator = false)
+    public function addRecepient(User $recipient, bool $originator = false, bool $informAfterAdd = true): bool
     {
         $userMessage = new UserMessage([
             'message_id' => $this->id,
-            'user_id' => $recipient->id
+            'user_id' => $recipient->id,
+            'informAfterAdd' => $informAfterAdd
         ]);
 
         if ($originator) {

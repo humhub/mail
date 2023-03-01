@@ -31,7 +31,14 @@ class ConversationStateBadge extends Widget
             return '';
         }
 
-        return Html::tag('div', Html::tag('span', Html::encode($text)), $this->options);
+        return Html::tag('div', Html::tag('span', Html::encode($text)), $this->getOptions());
+    }
+
+    protected function getOptions(): array
+    {
+        $this->options['data-entry-id'] = $this->entry->id;
+
+        return $this->options;
     }
 
     protected function renderInfoText(): ?string

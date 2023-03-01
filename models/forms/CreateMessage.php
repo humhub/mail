@@ -167,7 +167,7 @@ class CreateMessage extends Model
     {
         // Attach also Recipients
         foreach ($this->getRecipients() as $recipient) {
-            $this->messageInstance->addRecepient($recipient);
+            $this->messageInstance->addRecepient($recipient, false, false);
         }
 
         return true;
@@ -205,7 +205,7 @@ class CreateMessage extends Model
 
     private function saveOriginatorUserMessage()
     {
-        return $this->messageInstance->addRecepient(Yii::$app->user->getIdentity(), true);
+        return $this->messageInstance->addRecepient(Yii::$app->user->getIdentity(), true, false);
     }
 
 }

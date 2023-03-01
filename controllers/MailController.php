@@ -103,7 +103,11 @@ class MailController extends Controller
 
         $this->checkMessagePermissions($message);
 
-        return $this->renderAjaxContent(Messages::widget(['message' => $message, 'entries' => $message->getEntryUpdates($from)->all()]));
+        return $this->renderAjaxContent(Messages::widget([
+            'message' => $message,
+            'entries' => $message->getEntryUpdates($from)->all(),
+            'showDateBadge' => false
+        ]));
     }
 
     public function actionLoadMore($id, $from)
@@ -133,7 +137,7 @@ class MailController extends Controller
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
             return $this->asJson([
                 'success' => true,
-                'content' => ConversationEntry::widget(['entry' => $replyForm->reply])
+                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => false])
             ]);
         }
 

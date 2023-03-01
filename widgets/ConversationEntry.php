@@ -10,7 +10,6 @@ namespace humhub\modules\mail\widgets;
 
 use humhub\libs\Html;
 use humhub\modules\mail\helpers\Url;
-use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
 use Imagine\Image\Palette\RGB;
@@ -37,6 +36,8 @@ class ConversationEntry extends JsWidget
      * @var MessageEntry
      */
     public $nextEntry;
+
+    public bool $showDateBadge = true;
 
     public array $userColors = ['#34568B', '#FF6F61', '#6B5B95', '#88B04B', '#92A8D1', '#955251', '#B565A7', '#009B77',
         '#DD4124', '#D65076', '#45B8AC', '#EFC050', '#5B5EA6', '#9B2335', '#55B4B0', '#E15D44', '#BC243C', '#C3447A'
@@ -147,7 +148,15 @@ class ConversationEntry extends JsWidget
 
     private function showDateBadge(): bool
     {
-        return !$this->prevEntry || substr($this->prevEntry->created_at, 0, 10) !== substr($this->entry->created_at, 0, 10);
+        if (!$this->showDateBadge) {
+            return false;
+        }
+
+        if (!$this->prevEntry) {
+            return true;
+        }
+
+        return substr($this->prevEntry->created_at, 0, 10) !== substr($this->entry->created_at, 0, 10);
     }
 
 }

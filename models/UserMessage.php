@@ -31,6 +31,7 @@ use Yii;
  */
 class UserMessage extends ActiveRecord
 {
+    public bool $informAfterAdd = true;
 
     /**
      * @return string the associated database table name
@@ -133,7 +134,7 @@ class UserMessage extends ActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
 
-        if ($insert) {
+        if ($insert && $this->informAfterAdd) {
             MessageUserJoined::inform($this->message, $this->user);
         }
     }
