@@ -156,7 +156,10 @@ class ConversationEntry extends JsWidget
             return true;
         }
 
-        return substr($this->prevEntry->created_at, 0, 10) !== substr($this->entry->created_at, 0, 10);
+        $previousEntryDay = Yii::$app->formatter->asDatetime($this->prevEntry->created_at, 'php:Y-m-d');
+        $currentEntryDay = Yii::$app->formatter->asDatetime($this->entry->created_at, 'php:Y-m-d');
+
+        return $previousEntryDay !== $currentEntryDay;
     }
 
 }

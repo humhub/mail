@@ -137,7 +137,7 @@ class MailController extends Controller
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
             return $this->asJson([
                 'success' => true,
-                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => false])
+                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => $replyForm->reply->isFirstToday()])
             ]);
         }
 
