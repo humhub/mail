@@ -459,6 +459,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         this.filter = Widget.instance('#mail-filter-root');
 
         this.initScroll();
+        this.initHeight();
 
         var that = this;
         this.filter.off('afterChange.inbox').on('afterChange.inbox', function () {
@@ -482,8 +483,12 @@ humhub.module('mail.inbox', function (module, require, $) {
             that.$.find('.entry').removeClass('selected');
             $(this).addClass('selected');
         })
-
     };
+
+    ConversationList.prototype.initHeight = function() {
+        const offsetTop = this.$.offset().top;
+        this.$.css('max-height', (window.innerHeight - offsetTop - 15) + 'px');
+    }
 
     ConversationList.prototype.updateEntries = function(ids) {
         var that = this;
@@ -513,7 +518,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     };
 
     ConversationList.prototype.getEntry = function(id) {
-        return this.$.find('[data-message-preview="'+id+'"]');
+        return this.$.find('[data-message-id="'+id+'"]');
     };
 
     ConversationList.prototype.initScroll = function() {
@@ -601,15 +606,12 @@ humhub.module('mail.inbox', function (module, require, $) {
 
         this.$.find('.entry').removeClass('selected');
 
-        // Remove New badge from current selection
-        this.$.find('.entry.selected').find('.new-message-badge').hide();
-
         // Set new selection
         this.$.find('.entry').removeClass('selected');
-        var $selected = this.$.find('[data-message-preview="' + activeMessageId + '"]');
+        var $selected = this.$.find('[data-message-id="' + activeMessageId + '"]');
 
         if($selected.length) {
-            $selected.removeClass('unread').addClass('selected').find('.new-message-badge').hide();
+            $selected.removeClass('unread').addClass('selected');
         }
     };
 
@@ -678,13 +680,11 @@ humhub.module('mail.inbox', function (module, require, $) {
     });
 });
 humhub.module('mail.conversation', function (module, require, $) {
-
     var Widget = require('ui.widget').Widget;
     var modal = require('ui.modal');
     var client = require('client');
     var event = require('event');
     var mail = require('mail.notification');
-    var user = require('user');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {
@@ -744,17 +744,11 @@ humhub.module('mail.conversation', function (module, require, $) {
             var updated = false;
             var updatedMessages = [];
             events.forEach(function (event) {
-                var isOwn = event.data['user_guid'] == user.guid();
                 updatedMessages.push(event.data.message_id);
                 if (!updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
                     root.markSeen(event.data.message_id);
-                } else if (!isOwn && root) {
-                    var $entry = getOverViewEntry(event.data.message_id);
-                    if(!$entry.is('.selected')) {
-                        $entry.find('.new-message-badge').show();
-                    }
                 }
             });
 
@@ -772,10 +766,6 @@ humhub.module('mail.conversation', function (module, require, $) {
                 mail.setMailMessageCount(event.data.count);
             });
         });
-    };
-
-    var getOverViewEntry = function (id) {
-        return $('#mail-conversation-overview').find('[data-message-preview="' + id + '"]');
     };
 
     var leave = function (evt) {

@@ -6,16 +6,12 @@ use humhub\modules\mail\widgets\ConversationInbox;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\InboxFilter;
 use humhub\modules\ui\icon\widgets\Icon;
-use humhub\widgets\Button;
-use yii\widgets\LinkPager;
 
 $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
 $filterModel = new InboxFilterForm();
-
 ?>
-
-<div id="mail-conversation-overview" class="panel panel-default">
+<div id="mail-conversation-overview" class="panel panel-default mail-inbox-messages">
     <div class="panel-heading" style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
         <a data-action-click="mail.inbox.toggleInbox">
             <span class="visible-xs-inline"><?=Icon::get('bars')?></span> <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?>

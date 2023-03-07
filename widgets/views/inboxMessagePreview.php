@@ -6,60 +6,43 @@
  * This can be the notification list or the message navigation
  */
 
-use yii\helpers\Html;
+use humhub\modules\mail\models\Message;
 use humhub\modules\mail\widgets\TimeAgo;
-use humhub\libs\Helpers;
-use humhub\modules\mail\helpers\Url;
+use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
-use humhub\widgets\Label;
+use yii\helpers\Html;
 
-
-/* @var $userMessage \humhub\modules\mail\models\UserMessage */
-/* @var $active bool */
-
-$message = $userMessage->message;
-$userCount = $message->getUsers()->count();
-$participant = $message->getLastActiveParticipant();
-$lastEntry = $message->lastEntry;
-$users = $message->users;
-$isNew = $userMessage->isUnread();
+/* @var $message Message */
+/* @var $messageTitle string */
+/* @var $messageText string */
+/* @var $messageTime string */
+/* @var $lastParticipant User */
+/* @var $options array */
 ?>
-
-<?php if ($lastEntry) : ?>
-    <li data-message-preview="<?= $message->id ?>" class="messagePreviewEntry entry<?= $isNew ? ' unread' : ''?>" data-action-click="mail.notification.loadMessage" data-action-url="<?= Url::toMessenger($message)?>"  data-message-id="<?= $message->id ?>">
-        <div class="mail-link">
-            <div class="media">
-                <div class="media-left pull-left">
-                    <?= Image::widget([
-                        'user' => $participant,
-                        'width' => '32',
-                        'link' => false,
-                        'htmlOptions' => $participant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
-                    ])?>
-                </div>
-
-                <div class="media-body text-break">
-                    <h4 class="media-heading">
-                        <a href="#" class="inbox-entry-title"><?= Html::encode(Helpers::truncateText($message->title, 75)) ?></a>
-                    </h4>
-                    <h5>
-                        <small>
-                            <?= Yii::t('MailModule.base','with')?> <a href="#" style="color:<?= $this->theme->variable('info') ?>">
-                                <?= Html::encode($participant->displayName) . (($userCount > 2)
-                                    ? ', '. Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', ['n' => $userCount - 2])
-                                    : '') ?>
-                            </a> &middot; <?= TimeAgo::widget(['timestamp' => $message->updated_at ?? '']) ?>
-                        </small>
-                    </h5>
-
-                    <?= $lastEntry->user->is(Yii::$app->user->getIdentity()) ? Yii::t('MailModule.base', 'You') : Html::encode($lastEntry->user->profile->firstname) ?>:
-
-                        <?= $message->getPreview() ?>
-
-                    <?= Label::danger(Yii::t('MailModule.views_mail_index', 'New'))
-                        ->cssClass('new-message-badge')->style((!$isNew ? 'display:none' : '')) ?>
+<?= Html::beginTag('li', $options) ?>
+    <div class="mail-link">
+        <div class="media">
+            <div class="media-left">
+                <?= Image::widget([
+                    'user' => $lastParticipant,
+                    'width' => '32',
+                    'link' => false,
+                    'htmlOptions' => $lastParticipant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
+                ])?>
+            </div>
+            <div class="media-body text-break">
+                <h4 class="media-heading">
+                    <?= Html::encode($messageTitle) ?>
+                    <time><?= $messageTime ?></time>
+                </h4>
+                <h5>
+                    <span><?= Html::encode($message->title) ?></span>
+                    <span class="new-message-badge"></span>
+                </h5>
+                <div class="mail-last-entry">
+                    <?= $messageText ?>
                 </div>
             </div>
         </div>
-    </li>
-<?php endif; ?>
+    </div>
+<?= Html::endTag('li') ?>

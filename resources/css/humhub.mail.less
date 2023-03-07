@@ -2,8 +2,7 @@
 
 @bgColorDefault: #f7f7f7;
 @bgColorNew: #e9f9ff;
-@bgColorUnread: #EEF8F9;
-@borderColorUnread: #EEF8F9;
+@colorUnread: #21A1B3;
 
 @radius: 10px;
 @radiusMiddle: 7px;
@@ -11,7 +10,8 @@
 @radiusRound: 50%;
 @radiusNone: 0;
 
-@smallScreen: 767px;
+@screen-sm: 767px;
+@screen-md: 991px;
 
 .semiBold() {font-weight: 600}
 
@@ -21,15 +21,33 @@
 
 #dropdown-messages {
   .dropdown-header {
+    color: #000;
     margin-bottom: 12px;
+    .semiBold;
+  }
+  .dropdown-footer {
+    .btn.btn-default {
+      border: 1px solid #F3F3F3;
+      box-shadow: none;
+      &:hover {
+        border-color: #D7D7D7;
+        background: #D7D7D7;
+      }
+      &:active {
+        border-color: #7A7A7A;
+        background: #FFF;
+      }
+    }
   }
   &.dropdown-menu {
     li {
       a {
         font-size: inherit !important;
-        font-weight: inherit !important;
       }
     }
+  }
+  .media-body {
+    font-weight: 200;
   }
 }
 
@@ -47,13 +65,7 @@
   }
 }
 
-#create-message-button {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  padding: 5px 10px;
-}
-#mail-conversation-create-button {
+#mail-conversation-create-button, #create-message-button {
   .fa {
     margin: 0;
   }
@@ -193,10 +205,10 @@
 #mail-filter-root {
   margin-top: 5px;
 }
-#mail-conversation-overview {
+.mail-inbox-messages {
   .panel-heading {
     > a {
-      font-weight: 600;
+      .semiBold;
     }
     #mail-filter-root > a {
       font-weight: 400;
@@ -204,6 +216,29 @@
   }
   .media {
     margin-top: 0;
+    display: flex;
+    h4.media-heading {
+      .semiBold;
+      time {
+        font-weight: normal;
+        float: right;
+      }
+    }
+    h5 {
+      font-size: 11px;
+      font-weight: 500;
+      color: #000;
+      display: flex;
+      justify-content: space-between;
+      span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .mail-last-entry {
+      font-size: 11px;
+    }
   }
 }
 .mail-message-form {
@@ -286,17 +321,23 @@
   max-height: 500px;
   overflow: auto;
   border-radius: @radiusSmall;
-  .new-message-badge {
-    top: 10px;
-    right: 10px;
-  }
 }
 
 .messagePreviewEntry {
   cursor: pointer;
+  time {
+    font-size: 10px;
+  }
+  .new-message-badge {
+    display: none;
+  }
   &.unread {
-    background-color: @bgColorUnread;
-    border-color: @borderColorUnread;
+    .new-message-badge {
+      display: block;
+    }
+    time {
+      color: @colorUnread;
+    }
   }
 }
 
@@ -316,10 +357,12 @@
 }
 
 .new-message-badge {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 3px 5px 4px !important;
+  float: right;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: @colorUnread;
+  margin-left: 2px;
 }
 
 .inbox-entry-title {
@@ -330,7 +373,13 @@
   margin: 0;
 }
 
-@media (max-width: @smallScreen) {
+@media (max-width: @screen-md) {
+  #inbox {
+    max-height: 500px !important;
+  }
+}
+
+@media (max-width: @screen-sm) {
   #dropdown-messages {
     width: 300px !important;
   }
@@ -338,7 +387,7 @@
     margin-left: -101px !important;
   }
   #inbox {
-    max-height: none;
+    max-height: none !important;
   }
   .mail-conversation-single-message {
     #inbox {

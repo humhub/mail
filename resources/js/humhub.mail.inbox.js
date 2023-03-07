@@ -35,6 +35,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         this.filter = Widget.instance('#mail-filter-root');
 
         this.initScroll();
+        this.initHeight();
 
         var that = this;
         this.filter.off('afterChange.inbox').on('afterChange.inbox', function () {
@@ -58,8 +59,12 @@ humhub.module('mail.inbox', function (module, require, $) {
             that.$.find('.entry').removeClass('selected');
             $(this).addClass('selected');
         })
-
     };
+
+    ConversationList.prototype.initHeight = function() {
+        const offsetTop = this.$.offset().top;
+        this.$.css('max-height', (window.innerHeight - offsetTop - 15) + 'px');
+    }
 
     ConversationList.prototype.updateEntries = function(ids) {
         var that = this;
@@ -89,7 +94,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     };
 
     ConversationList.prototype.getEntry = function(id) {
-        return this.$.find('[data-message-preview="'+id+'"]');
+        return this.$.find('[data-message-id="'+id+'"]');
     };
 
     ConversationList.prototype.initScroll = function() {
@@ -177,15 +182,12 @@ humhub.module('mail.inbox', function (module, require, $) {
 
         this.$.find('.entry').removeClass('selected');
 
-        // Remove New badge from current selection
-        this.$.find('.entry.selected').find('.new-message-badge').hide();
-
         // Set new selection
         this.$.find('.entry').removeClass('selected');
-        var $selected = this.$.find('[data-message-preview="' + activeMessageId + '"]');
+        var $selected = this.$.find('[data-message-id="' + activeMessageId + '"]');
 
         if($selected.length) {
-            $selected.removeClass('unread').addClass('selected').find('.new-message-badge').hide();
+            $selected.removeClass('unread').addClass('selected');
         }
     };
 
