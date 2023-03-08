@@ -193,11 +193,11 @@ humhub.module('mail.inbox', function (module, require, $) {
 
 
     ConversationList.prototype.getFirstMessageId = function() {
-        return this.$.find('.entry:first').data('messagePreview');
+        return this.$.find('.entry:first').data('message-id');
     };
 
     ConversationList.prototype.getLastMessageId = function() {
-        return this.$.find('.entry:last').data('messagePreview');
+        return this.$.find('.entry:last').data('message-id');
     };
 
     ConversationList.prototype.hide = function() {

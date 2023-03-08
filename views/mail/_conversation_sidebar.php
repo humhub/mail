@@ -12,7 +12,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 $filterModel = new InboxFilterForm();
 ?>
 <div id="mail-conversation-overview" class="panel panel-default mail-inbox-messages">
-    <div class="panel-heading" style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
+    <div class="panel-heading">
         <a data-action-click="mail.inbox.toggleInbox">
             <span class="visible-xs-inline"><?=Icon::get('bars')?></span> <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?>
         </a>
