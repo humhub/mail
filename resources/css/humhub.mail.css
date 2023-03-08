@@ -165,7 +165,7 @@
   font-weight: 600;
 }
 .mail-inbox-messages .panel-heading #mail-filter-root > a {
-  font-weight: 400;
+  font-weight: normal;
 }
 .mail-inbox-messages .media {
   margin-top: 0;
@@ -192,6 +192,8 @@
 }
 .mail-inbox-messages .media .mail-last-entry {
   font-size: 11px;
+  font-weight: normal;
+  color: #AEAEAE;
 }
 .mail-message-form {
   position: absolute;
@@ -270,6 +272,7 @@
 }
 .messagePreviewEntry time {
   font-size: 10px;
+  color: #7A7A7A;
 }
 .messagePreviewEntry .new-message-badge {
   display: none;
@@ -279,6 +282,9 @@
 }
 .messagePreviewEntry.unread time {
   color: #21A1B3;
+}
+.messagePreviewEntry.unread .mail-last-entry {
+  color: #555;
 }
 .message-tag-filter-group .select2-selection {
   border-bottom-right-radius: 0;
