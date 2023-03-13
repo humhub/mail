@@ -23,13 +23,8 @@ class SendMailCest
 
         $this->addAndFilterTag($I);
 
-
-        $I->logout();
-        
-        $I->amUser2();
-
+        $I->amUser2(true);
         $this->seeNewMessagesAndEnterOverview($I);
-
         $this->leaveConversation($I);
     }
 
@@ -71,7 +66,7 @@ class SendMailCest
     private function addParticipant(AcceptanceTester $I)
     {
         $I->wantTo('ensure I can add a participant');
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Add user', '#mail-conversation-header');
         $I->waitForText('Add more participants to your conversation', 10, '#globalModal');
@@ -79,13 +74,13 @@ class SendMailCest
 
         $I->click('Save', '#globalModal'); //Send
         $I->expectTo('see the new user within the conversation user list');
-        $I->waitForElement('[data-original-title="Admin Tester"]', null, '#mail-conversation-header');
+        $I->waitForText('Admin Tester', null, '#mail-conversation-header');
     }
 
     private function createConversationByInbox(AcceptanceTester $I)
     {
         $I->wantTo('create another conversation');
-        $I->click('+ Message', '#mail-conversation-overview .panel-heading');
+        $I->jsClick('#mail-conversation-overview #mail-conversation-create-button');
         $I->waitForText('New message', null, '#globalModal');
         $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
         $I->waitForText('Admin test message', null,'#mail-conversation-root');
@@ -103,7 +98,7 @@ class SendMailCest
     private function addAndFilterTag(AcceptanceTester $I)
     {
         $I->dontSee('#conversation-tags-root');
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Tags', '#mail-conversation-header');
         $I->waitForText('Edit conversation tags', null, '#globalModal');
@@ -131,14 +126,14 @@ class SendMailCest
 
     private function leaveConversation(AcceptanceTester $I)
     {
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
         $I->click('Leave', '#globalModalConfirm');
 
         $I->waitForText('Third message title', 10, '#mail-conversation-header');
-        $I->click('#conversationSettingsButton');
+        $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');

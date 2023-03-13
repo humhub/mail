@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\models;
-
 
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
@@ -13,9 +11,10 @@ use humhub\modules\notification\components\NotificationCategory;
 use humhub\modules\notification\targets\MailTarget;
 use humhub\modules\user\models\User;
 use Yii;
-use yii\base\Model;use yii\helpers\Html;
+use yii\base\BaseObject;
+use yii\helpers\Html;
 
-class MessageNotification extends Model
+class MessageNotification extends BaseObject
 {
     /**
      * @var Message
@@ -156,7 +155,7 @@ class MessageNotification extends Model
 
         return $this->isNewConversation
             ? Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} created a new conversation {conversationTitle}', $params)
-            : Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} sent you a new message in {conversationTitle}',  $params);
+            : Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} sent you a new message in {conversationTitle}', $params);
     }
 
     /**

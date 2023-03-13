@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Send message' => '',
-];
+return array (
+  'Send message' => '傳送訊息',
+);

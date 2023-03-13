@@ -25,9 +25,9 @@ use humhub\widgets\Button;
             <?= Yii::t('MailModule.views_mail_show', 'There are no messages yet.'); ?>
         </div>
 
-    <?php  else :?>
+    <?php else : ?>
 
-        <div id="mail-conversation-header" class="panel-heading" style="background-color:<?= $this->theme->variable('background-color-secondary')?>">
+        <div id="mail-conversation-header" class="panel-heading">
              <?= ConversationHeader::widget(['message' => $message]) ?>
         </div>
 

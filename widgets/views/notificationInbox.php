@@ -16,12 +16,12 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 <div class="btn-group">
     <a href="#" id="icon-messages" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i></a>
     <span id="badge-messages" style="display:none;" class="label label-danger label-notification"></span>
-    <ul id="dropdown-messages" class="dropdown-menu">
+    <ul id="dropdown-messages" class="dropdown-menu mail-inbox-messages">
         <li class="dropdown-header">
             <div class="arrow"></div>
             <?= Yii::t('MailModule.base', 'Conversations') ?>
             <?= ($canStartConversation)
-                ? NewMessageButton::widget([ 'id' => 'create-message-button'])
+                ? NewMessageButton::widget(['id' => 'create-message-button', 'icon' => 'plus', 'label' => ''])
                 : '' ?>
         </li>
         <ul class="media-list">

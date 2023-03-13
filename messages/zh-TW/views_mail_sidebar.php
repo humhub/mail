@@ -1,7 +1,7 @@
 <?php
 return array (
-  'Groups' => '',
-  'Members' => '',
-  'Spaces' => '空間',
-  'User Posts' => '',
+  'Groups' => '群組',
+  'Members' => '成員',
+  'Spaces' => 'Space',
+  'User Posts' => '用戶的貼文',
 );

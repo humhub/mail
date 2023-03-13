@@ -1,8 +1,7 @@
 <?php
-
-return [
-    'Message' => '訊息',
-    'Recipient' => '',
-    'Subject' => '',
-    'Tags' => '',
-];
+return array (
+  'Message' => '訊息',
+  'Recipient' => '收件者',
+  'Subject' => '主旨',
+  'Tags' => '標籤',
+);

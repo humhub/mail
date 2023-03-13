@@ -1,93 +1,85 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
-
 
 use humhub\components\Widget;
 use humhub\libs\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\user\models\User;
+use humhub\widgets\Link;
 use Yii;
 
 class ParticipantUserList extends Widget
 {
-    /**
-     * @var Message
-     */
-    public $message;
+    public Message $message;
 
     /**
-     * @var User first user
+     * @var array $limits Limit users depending on screen size:
+     *      - key - Number of visible users
+     *      - value 1 - Style class applied for number of other users
+     *      - value 2 - Style class applied for usernames
      */
-    public $user;
-
-    /**
-     * @var array
-     */
-    public $options = [];
-
-    /**
-     * @var array
-     */
-    public $linkOptions = [];
+    public array $limits = [
+        2 => ['visible-xs-inline', 'hidden-xs'],
+        6 => ['visible-md-inline visible-sm-inline', 'hidden-md hidden-sm'],
+        8 => ['visible-lg-inline', '']
+    ];
 
     public function run()
     {
-        if(empty($this->message->users)) {
+        $userList = $this->renderUserList();
+        if ($userList === '') {
             return '';
         }
 
-         $result = Html::beginTag('span', $this->options);
-         $result .= Yii::t('MailModule.base','with').'&nbsp;';
-         $result .= Html::beginTag('a', array_merge($this->getDefaultLinkOptions(), $this->linkOptions));
-         $result .= $this->renderUserList();
-         $result .= Html::endTag('a');
-         $result .= Html::endTag('span');
-
-         return $result;
+        return Link::asLink($userList)->action('ui.modal.load', Url::toConversationUserList($this->message));
     }
 
-    private function renderUserList()
+    private function renderUserList(): string
     {
-        $userCount = count($this->message->users);
+        $maxLimit = max(array_keys($this->limits));
+        $users = $this->message->getUsers()->limit($maxLimit)->all();
+        $userTotalCount = $this->message->getUsers()->count();
+
+        $usernames = '';
+        foreach ($users as $u => $user) {
+            $usernames .= $this->renderUserName($user, $u, $userTotalCount);
+        }
+
+        return $usernames . $this->renderOtherCount($userTotalCount);
+    }
+
+    private function getUserNameClass(int $itemIndex): string
+    {
+        $classes = [];
+        foreach ($this->limits as $limit => $class) {
+            if ($itemIndex >= $limit) {
+                $classes[] = $class[1];
+            }
+        }
+        return implode(' ', $classes);
+    }
+
+    private function renderUserName(User $user, int $itemIndex, int $count): string
+    {
+        $text = Html::encode($user->displayName) . ($itemIndex < $count - 1 ? ', ' : '');
+        $class = $this->getUserNameClass($itemIndex);
+
+        return $class === '' ? $text : Html::tag('span', $text, ['class' => $class]);
+    }
+
+    private function renderOtherCount(int $count): string
+    {
         $result = '';
-
-        if($userCount === 2) {
-            $result .= Html::encode($this->message->users[0]->displayName);
-            $result .= ', '. Html::encode($this->message->users[1]->displayName);
-        } else {
-            $result .= Html::encode($this->getFirstUser()->displayName);
-            $result .= ($userCount > 1)
-                ? ', +'.Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', ['n' => $userCount - 1])
-                : '';
-        }
-        return $result;
-    }
-
-    private function getDefaultLinkOptions()
-    {
-        return  [
-            'href'=> '#',
-            'data-action-click' => 'ui.modal.load',
-            'data-action-url' => Url::toConversationUserList($this->message),
-            'style' => ['color' =>  $this->view->theme->variable('info')]
-        ];
-    }
-
-    private function getFirstUser()
-    {
-        if($this->user) {
-            return $this->user;
-        }
-
-        foreach ($this->message->users as $participant) {
-            if(!$participant->is(Yii::$app->user->getIdentity())) {
-                return $participant;
+        foreach ($this->limits as $limit => $class) {
+            $otherCount = $count - $limit;
+            if ($otherCount > 0) {
+                $otherCountText = '+' . Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', ['n' => $otherCount]);
+                $result .= Html::tag('span', $otherCountText, ['class' => $class[0]]);
             }
         }
 
-        return $this->message->users[0];
+        return $result;
     }
 }

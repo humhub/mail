@@ -7,7 +7,6 @@ namespace humhub\modules\mail\widgets;
 use humhub\components\Widget;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
-use humhub\modules\mail\widgets\ConversationEntry;
 use Yii;
 
 class Messages extends Widget
@@ -27,6 +26,8 @@ class Messages extends Widget
      */
     public $from;
 
+    public bool $showDateBadge = true;
+
     /**
      * @inheritDoc
      */
@@ -39,7 +40,12 @@ class Messages extends Widget
         foreach ($entries as $index => $entry) {
             try {
                 $nextEntry = $entries[$index + 1] ?? null;
-                $result .= ConversationEntry::widget(['entry' => $entry, 'prevEntry' => $prevEntry, 'nextEntry' => $nextEntry]);
+                $result .= ConversationEntry::widget([
+                    'entry' => $entry,
+                    'prevEntry' => $prevEntry,
+                    'nextEntry' => $nextEntry,
+                    'showDateBadge' => $this->showDateBadge
+                ]);
                 $prevEntry = $entry;
             } catch (\Throwable $e) {
                 Yii::error($e);
