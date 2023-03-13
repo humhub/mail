@@ -4,7 +4,6 @@ namespace humhub\modules\mail\models;
 
 
 use humhub\components\ActiveRecord;
-use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\Module;
 use humhub\modules\user\models\User;
 use Yii;
@@ -32,6 +31,8 @@ use yii\helpers\Html;
  */
 class Message extends ActiveRecord
 {
+    private ?MessageEntry $_lastEntry = null;
+    private ?int $_userCount = null;
 
     /**
      * @return string the associated database table name
@@ -104,16 +105,6 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::class, ['id' => 'user_id'])
-            ->viaTable('user_message', ['message_id' => 'id']);
-    }
-
-    /**
      * @param null $userId
      * @return UserMessage|null
      */
@@ -145,6 +136,25 @@ class Message extends ActiveRecord
 
     /**
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('user_message', ['message_id' => 'id']);
+    }
+
+    public function getUsersCount(): int
+    {
+        if ($this->_userCount === null) {
+            $this->_userCount = $this->getUsers()->count();
+        }
+
+        return $this->_userCount;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
      */
     public function getOriginator()
     {
@@ -168,20 +178,29 @@ class Message extends ActiveRecord
 
     /**
      * Returns the last message of this conversation
-     * @return MessageEntry
+     * @return MessageEntry|null
      */
-    public function getLastEntry()
+    public function getLastEntry(): ?MessageEntry
     {
-        return MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1)->one();
+        if ($this->_lastEntry === null) {
+            $this->_lastEntry = MessageEntry::find()
+                ->where(['message_id' => $this->id])
+                ->andWhere(['type' => MessageEntry::type()])
+                ->orderBy('created_at DESC')
+                ->limit(1)
+                ->one();
+        }
+
+        return $this->_lastEntry;
     }
 
     /**
      * @param bool $includeMe
-     * @return \yii\web\IdentityInterface|null
+     * @return \yii\web\IdentityInterface|null|User
      * @throws \Throwable
      * @throws \yii\base\InvalidConfigException
      */
-    public function getLastActiveParticipant($includeMe = false)
+    public function getLastActiveParticipant(bool $includeMe = false): User
     {
         $query = MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1);
 
@@ -276,24 +295,18 @@ class Message extends ActiveRecord
         parent::delete();
     }
 
-    public function getPreview()
-    {
-        if(!$this->lastEntry) {
-            return 'No message found';
-        }
-
-        return RichText::preview($this->lastEntry->content, 80);
-    }
-
     /**
      * @param User $recipient
+     * @param bool $originator
+     * @param bool $informAfterAdd Notify about user joining with state badge
      * @return bool
      */
-    public function addRecepient(User $recipient, $originator = false)
+    public function addRecepient(User $recipient, bool $originator = false, bool $informAfterAdd = true): bool
     {
         $userMessage = new UserMessage([
             'message_id' => $this->id,
-            'user_id' => $recipient->id
+            'user_id' => $recipient->id,
+            'informAfterAdd' => $informAfterAdd
         ]);
 
         if ($originator) {

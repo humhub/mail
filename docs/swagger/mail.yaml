@@ -496,14 +496,14 @@ definitions:
         format: int64
         readOnly: true
         example: 1
-      file_id:
-        type: integer
-        format: int64
-        readOnly: true
-        example: null
       content:
         type: string
         example: Sample message
+      type:
+        type: integer
+        format: int64
+        readOnly: true
+        example: 0
       created_at:
         type: string
         format: datetime

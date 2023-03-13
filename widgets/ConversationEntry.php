@@ -8,12 +8,12 @@
 
 namespace humhub\modules\mail\widgets;
 
-
 use humhub\libs\Html;
-use Yii;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
-use humhub\modules\mail\helpers\Url;
+use Imagine\Image\Palette\RGB;
+use Yii;
 
 class ConversationEntry extends JsWidget
 {
@@ -37,37 +37,71 @@ class ConversationEntry extends JsWidget
      */
     public $nextEntry;
 
+    public bool $showDateBadge = true;
+
+    public array $userColors = ['#34568B', '#FF6F61', '#6B5B95', '#88B04B', '#92A8D1', '#955251', '#B565A7', '#009B77',
+        '#DD4124', '#D65076', '#45B8AC', '#EFC050', '#5B5EA6', '#9B2335', '#55B4B0', '#E15D44', '#BC243C', '#C3447A'
+    ];
+
+    /**
+     * @inheritdoc
+     */
     public function run()
     {
+        if ($this->entry->type === MessageEntry::type()) {
+            return $this->runMessage();
+        }
+
+        return $this->runState();
+    }
+
+    public function runMessage(): string
+    {
+        $showUser = $this->showUser();
+
         return $this->render('conversationEntry', [
             'entry' => $this->entry,
             'contentClass' => $this->getContentClass(),
-            'showUserInfo' => $this->isShowUserInfo(),
-            'isOwnMessage' => $this->isOwnMessage(),
+            'contentColor' => $this->getContentColor(),
+            'showUser' => $showUser,
+            'userColor' => $showUser ? $this->getUserColor() : null,
+            'showDateBadge' => $this->showDateBadge(),
             'options' => $this->getOptions()
         ]);
     }
 
-    private function getContentClass()
+    public function runState(): string
+    {
+        return $this->render('conversationState', [
+            'entry' => $this->entry,
+            'showDateBadge' => $this->showDateBadge()
+        ]);
+    }
+
+    private function getContentClass(): string
     {
         $result = 'conversation-entry-content';
 
-        if($this->isPrevEntryFromSameUser()) {
-            $result .= ' seq-top';
-        }
-
-        if($this->isNextEntryFromSameUser()) {
-            $result .= ' seq-bottom';
-        }
-
-        if($this->isOwnMessage()) {
+        if ($this->isOwnMessage()) {
             $result .= ' own';
         }
 
         return $result;
     }
 
-    private function isOwnMessage()
+    private function getContentColor(): ?string
+    {
+        if (!$this->isOwnMessage()) {
+            return null;
+        }
+
+        $rgb = new RGB();
+        $color = $rgb->color($this->view->theme->variable('info'), 12);
+
+        return sprintf('rgba(%s, %s, %s, %s)', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()/100);
+    }
+
+    private function isOwnMessage(): bool
     {
         return $this->entry->user->is(Yii::$app->user->getIdentity());
     }
@@ -86,34 +120,46 @@ class ConversationEntry extends JsWidget
             'class' => 'media mail-conversation-entry'
         ];
 
-        if($this->isOwnMessage()) {
+        if ($this->isOwnMessage()) {
             Html::addCssClass($result, 'own');
         }
 
-        if($this->isPrevEntryFromSameUser()) {
+        if ($this->isPrevEntryFromSameUser()) {
             Html::addCssClass($result, 'hideUserInfo');
         }
 
         return $result;
     }
 
-    private function isPrevEntryFromSameUser()
+    private function isPrevEntryFromSameUser(): bool
     {
         return $this->prevEntry && $this->prevEntry->created_by === $this->entry->created_by;
     }
 
-    private function isNextEntryFromSameUser()
+    private function showUser(): bool
     {
-        return $this->nextEntry && $this->nextEntry->created_by === $this->entry->created_by;
+        return !$this->isOwnMessage() && $this->entry->message->getUsers()->count() > 2;
     }
 
-
-
-    private function isShowUserInfo()
+    private function getUserColor(): string
     {
-        return !$this->prevEntry || $this->prevEntry->created_by !== $this->entry->created_by;
+        return $this->userColors[$this->entry->created_by % count($this->userColors)];
     }
 
+    private function showDateBadge(): bool
+    {
+        if (!$this->showDateBadge) {
+            return false;
+        }
 
+        if (!$this->prevEntry) {
+            return true;
+        }
+
+        $previousEntryDay = Yii::$app->formatter->asDatetime($this->prevEntry->created_at, 'php:Y-m-d');
+        $currentEntryDay = Yii::$app->formatter->asDatetime($this->entry->created_at, 'php:Y-m-d');
+
+        return $previousEntryDay !== $currentEntryDay;
+    }
 
 }

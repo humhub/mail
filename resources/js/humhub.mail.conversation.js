@@ -1,11 +1,9 @@
 humhub.module('mail.conversation', function (module, require, $) {
-
     var Widget = require('ui.widget').Widget;
     var modal = require('ui.modal');
     var client = require('client');
     var event = require('event');
     var mail = require('mail.notification');
-    var user = require('user');
 
     var submitEditEntry = function (evt) {
         modal.submit(evt).then(function (response) {
@@ -65,17 +63,11 @@ humhub.module('mail.conversation', function (module, require, $) {
             var updated = false;
             var updatedMessages = [];
             events.forEach(function (event) {
-                var isOwn = event.data['user_guid'] == user.guid();
                 updatedMessages.push(event.data.message_id);
                 if (!updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
                     root.markSeen(event.data.message_id);
-                } else if (!isOwn && root) {
-                    var $entry = getOverViewEntry(event.data.message_id);
-                    if(!$entry.is('.selected')) {
-                        $entry.find('.new-message-badge').show();
-                    }
                 }
             });
 
@@ -93,10 +85,6 @@ humhub.module('mail.conversation', function (module, require, $) {
                 mail.setMailMessageCount(event.data.count);
             });
         });
-    };
-
-    var getOverViewEntry = function (id) {
-        return $('#mail-conversation-overview').find('[data-message-preview="' + id + '"]');
     };
 
     var leave = function (evt) {

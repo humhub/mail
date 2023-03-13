@@ -1,11 +1,13 @@
 Changelog
 =========
 
-2.1.1  (Unreleased)
+3.0.0-beta.1  (Unreleased)
 -------------------------
 - Fix #252: Fix wrong user guid in Live Notification
 - Fix #251: Fix edit message
 - Fix: Add markdown-render class to Markdown text for Translator module to work
+- Fix #280: Update styles of message block
+- Enh #274: Browser Tab Indicator on New Unread Message 
 
 2.1.0  (December 7, 2021)
 -------------------------

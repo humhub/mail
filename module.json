@@ -3,16 +3,15 @@
     "name": "Mail",
     "description": "A private messaging system for direct communication",
     "keywords": ["mail", "messaging", "communication"],
-    "version": "2.1.1",
+    "version": "3.0.0-beta.1",
     "humhub": {
-        "minVersion": "1.10"
+        "minVersion": "1.14"
     },
-    "homepage": "https://github.com/humhub/humhub-modules-mail",
+    "homepage": "https://github.com/humhub/mail",
     "authors": [
         {
             "name": "Andreas Strobel"
         },
-
         {
             "name": "Lucas Bartholemy"
         },
