@@ -1,6 +1,32 @@
 Developer
 =========
 
+Build
+-----
+
+In order to build script or stylesheet run:
+
+Install npm packages:
+
+```
+npm install
+```
+
+Manually build:
+
+```
+grunt build
+```
+
+Watch for file changes:
+
+```
+grunt watch
+```
+
+> Note: While development you should set the `forceCopy` publish option of the mail asset bundles to true.
+
+
 REST API
 --------
 

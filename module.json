@@ -1,27 +1,32 @@
 {
-    "id": "mail",
-    "name": "Mail",
-    "description": "A private messaging system for direct communication",
-    "keywords": ["mail", "messaging", "communication"],
-    "version": "3.0.0-beta.1",
-    "humhub": {
-        "minVersion": "1.14"
+  "id": "mail",
+  "name": "Messenger",
+  "description": "A private messaging system for direct communication.",
+  "keywords": [
+    "mail",
+    "messaging",
+    "messenger",
+    "communication"
+  ],
+  "version": "3.0.0-beta.1",
+  "humhub": {
+    "minVersion": "1.14"
+  },
+  "homepage": "https://github.com/humhub/mail",
+  "authors": [
+    {
+      "name": "Andreas Strobel"
     },
-    "homepage": "https://github.com/humhub/mail",
-    "authors": [
-        {
-            "name": "Andreas Strobel"
-        },
-        {
-            "name": "Lucas Bartholemy"
-        },
-
-        {   "name": "Julian Harrer"
-        }
-    ],
-    "screenshots": [
-        "resources/screen1.PNG",
-        "resources/screen2.PNG",
-        "resources/screen3.PNG"
-    ]
+    {
+      "name": "Lucas Bartholemy"
+    },
+    {
+      "name": "Julian Harrer"
+    }
+  ],
+  "screenshots": [
+    "resources/screen1.PNG",
+    "resources/screen2.PNG",
+    "resources/screen3.PNG"
+  ]
 }

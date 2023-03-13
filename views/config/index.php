@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 
 <div class="panel panel-default">
 
-    <div class="panel-heading"><?= Yii::t('MailModule.base', '<strong>Mail</strong> module configuration'); ?></div>
+    <div class="panel-heading"><?= Yii::t('MailModule.base', '<strong>Messenger</strong> module configuration'); ?></div>
 
     <div class="panel-body">
         <?php $form = ActiveForm::begin(['id' => 'configure-form']); ?>
