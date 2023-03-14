@@ -257,6 +257,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         railpadding: {top: 0, right: 0, left: 0, bottom: 0}
                     });
 
+                    that.scrollDownButton = undefined;
                     that.getListNode().on('scroll', () => that.getScrollDownButton().toggle(!that.isScrolledToBottom()));
                 }
             });
