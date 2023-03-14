@@ -1,6 +1,11 @@
 Changelog
 =========
 
+3.0.0  (Unreleased)
+-------------------
+Fix #312: Visibility of scroll down button
+
+
 3.0.0-beta.1  (March 13, 2023)
 ------------------------------
 - Enh #283: Design Optimizations, Renamed to "Messenger"
