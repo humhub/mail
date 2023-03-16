@@ -117,6 +117,7 @@
 }
 .conversation-entry-content.own {
   float: right;
+  background: var(--background-color-highlight);
 }
 .conversation-entry-content .markdown-render {
   float: left;

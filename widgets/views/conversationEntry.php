@@ -13,7 +13,6 @@ use humhub\modules\content\widgets\richtext\RichText;
 /* @var $entry MessageEntry */
 /* @var $options array */
 /* @var $contentClass string */
-/* @var $contentColor string */
 /* @var $showUser bool */
 /* @var $userColor string */
 /* @var $showDateBadge bool */
@@ -32,7 +31,7 @@ use humhub\modules\content\widgets\richtext\RichText;
         </span>
     <?php endif; ?>
 
-    <div class="<?= $contentClass ?>"<?= $contentColor ? 'style="background:' . $contentColor . '"' : '' ?>>
+    <div class="<?= $contentClass ?>">
         <div class="markdown-render">
             <?php if ($showUser) : ?>
                 <div class="author-label" style="color:<?= $userColor ?>"><?= Html::encode($entry->user->displayName) ?></div>
