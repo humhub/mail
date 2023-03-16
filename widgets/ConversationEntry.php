@@ -62,7 +62,6 @@ class ConversationEntry extends JsWidget
         return $this->render('conversationEntry', [
             'entry' => $this->entry,
             'contentClass' => $this->getContentClass(),
-            'contentColor' => $this->getContentColor(),
             'showUser' => $showUser,
             'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
@@ -87,18 +86,6 @@ class ConversationEntry extends JsWidget
         }
 
         return $result;
-    }
-
-    private function getContentColor(): ?string
-    {
-        if (!$this->isOwnMessage()) {
-            return null;
-        }
-
-        $rgb = new RGB();
-        $color = $rgb->color($this->view->theme->variable('info'), 12);
-
-        return sprintf('rgba(%s, %s, %s, %s)', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()/100);
     }
 
     private function isOwnMessage(): bool
