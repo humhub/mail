@@ -4,6 +4,7 @@ Changelog
 3.0.0  (Unreleased)
 -------------------
 Fix #312: Visibility of scroll down button
+Fix #313: Display state(joined/left) messages in inbox
 
 
 3.0.0-beta.1  (March 13, 2023)

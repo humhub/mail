@@ -6,11 +6,11 @@ namespace humhub\modules\mail\widgets;
 
 use DateTime;
 use DateTimeZone;
-use Egulias\EmailValidator\Result\Reason\DotAtEnd;
 use humhub\components\Widget;
 use humhub\libs\Html;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
@@ -68,25 +68,44 @@ class InboxMessagePreview extends Widget
             : $this->getMessage()->getLastActiveParticipant();
     }
 
-    private function getMessageTitle(): string
+    private function getUsername(): string
     {
         $profile = $this->lastParticipant()->profile;
 
+        $lastname = $this->isGroupChat()
+            ? substr($profile->lastname, 0, 1)
+            : $profile->lastname;
+
+        return $profile->firstname . ' ' . $lastname;
+    }
+
+    private function getMessageTitle(): string
+    {
         if ($this->isGroupChat()) {
-            $lastname = substr($profile->lastname, 0, 1);
             $suffix = ', ' . Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', [
                 'n' => $this->getMessage()->getUsersCount() - 2
             ]);
         } else {
-            $lastname = $profile->lastname;
             $suffix = '';
         }
 
-        return $profile->firstname . ' ' . $lastname . $suffix;
+        return $this->getUsername() . $suffix;
     }
 
     private function getMessagePreview(): string
     {
+        switch ($this->getLastEntry()->type) {
+            case AbstractMessageEntry::TYPE_USER_JOINED:
+                return $this->isOwnLastEntry()
+                    ? Yii::t('MailModule.base', 'You joined the conversation.')
+                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->getUsername()]);
+
+            case AbstractMessageEntry::TYPE_USER_LEFT:
+                return $this->isOwnLastEntry()
+                    ? Yii::t('MailModule.base', 'You left the conversation.')
+                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->getUsername()]);
+        }
+
         if ($this->isGroupChat()) {
             $lastUser = $this->getLastEntry()->user;
             $prefix = $lastUser->is(Yii::$app->user->getIdentity())
@@ -132,5 +151,11 @@ class InboxMessagePreview extends Widget
     private function isGroupChat(): bool
     {
         return $this->getMessage()->getUsersCount() > 2;
+    }
+
+    private function isOwnLastEntry(): bool
+    {
+        return !Yii::$app->user->isGuest &&
+            $this->getLastEntry()->user->is(Yii::$app->user->getIdentity());
     }
 }

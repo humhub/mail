@@ -185,7 +185,6 @@ class Message extends ActiveRecord
         if ($this->_lastEntry === null) {
             $this->_lastEntry = MessageEntry::find()
                 ->where(['message_id' => $this->id])
-                ->andWhere(['type' => MessageEntry::type()])
                 ->orderBy('created_at DESC')
                 ->limit(1)
                 ->one();
