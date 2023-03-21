@@ -101,20 +101,19 @@ class UserMessage extends ActiveRecord
             ->andWhere(["<>", 'message.updated_by', $userId])->count();
     }
 
-    public static function findByUser($userId = null, $orderBy = 'message.updated_at DESC')
+    public static function findByUser($userId = null)
     {
         if ($userId === null) {
             $userId = Yii::$app->user->id;
         }
 
-        if($userId instanceof User) {
+        if ($userId instanceof User) {
             $userId = $userId->id;
         }
 
         return static::find()->joinWith('message')
             ->where(['user_message.user_id' => $userId])
             ->orderBy('message.updated_at DESC');
-
     }
 
     public function isUnread($userId = null)
