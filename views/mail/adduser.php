@@ -4,13 +4,10 @@ use yii\widgets\ActiveForm;
 use humhub\widgets\ModalDialog;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\ModalButton;
-use humhub\widgets\Button;
 
 /* @var $inviteForm \humhub\modules\mail\models\forms\InviteParticipantForm */
 ?>
-
-
-<?php ModalDialog::begin(['header' => Yii::t("MailModule.views_mail_adduser", "Add more participants to your conversation...")])?>
+<?php ModalDialog::begin(['header' => Yii::t('MailModule.base', 'Add participants')])?>
 
     <?php $form = ActiveForm::begin(['enableClientValidation' => false]) ?>
         <div class="modal-body">
@@ -21,8 +18,8 @@ use humhub\widgets\Button;
             </div>
         </div>
         <div class="modal-footer">
-            <?= ModalButton::save()->submit()->action('addUser', $inviteForm->getUrl(), '#mail-conversation-root')->close() ?>
             <?= ModalButton::cancel() ?>
+            <?= ModalButton::save(Yii::t('MailModule.base', 'Confirm'))->submit()->action('addUser', $inviteForm->getUrl(), '#mail-conversation-root')->close() ?>
         </div>
     <?php ActiveForm::end() ?>
 
