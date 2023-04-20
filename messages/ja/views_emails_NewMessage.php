@@ -1,7 +1,6 @@
 <?php
-
-return [
-    '<strong>New</strong> message' => '<strong>New</strong> メッセージ',
-    'Reply now' => '返信',
-    '<strong>New</strong> conversation' => '',
-];
+return array (
+  '<strong>New</strong> conversation' => '<strong>新しい</strong> 会話',
+  '<strong>New</strong> message' => '<strong>New</strong> メッセージ',
+  'Reply now' => '返信',
+);

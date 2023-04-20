@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Edit message entry' => '',
-];
+return array (
+  'Edit message entry' => 'メッセージ エントリの編集',
+);
