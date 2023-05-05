@@ -53,17 +53,17 @@
   text-transform: none;
 }
 .conversation-menu .badge {
-  background-color: #f7f7f7;
+  background-color: var(--background-color-secondary);
   border-radius: 10px;
   color: inherit;
 }
 .conversation-menu .conversation-edit-button {
-  background-color: #f7f7f7;
+  background-color: var(--background-color-secondary);
   border-radius: 50%;
   color: inherit;
 }
 .conversation-menu .conversation-edit-button:hover {
-  background-color: #f7f7f7;
+  background-color: var(--background-color-secondary);
   color: inherit;
 }
 .visible-xs .conversation-menu {
@@ -107,7 +107,7 @@
 .conversation-entry-content {
   display: table;
   float: left;
-  background-color: #f7f7f7;
+  background-color: var(--background-color-secondary);
   border-radius: 10px;
   padding: 10px;
   max-width: 70%;
