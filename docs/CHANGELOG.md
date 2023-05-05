@@ -3,9 +3,9 @@ Changelog
 
 3.0.0  (Unreleased)
 -------------------
-Fix #312: Visibility of scroll down button
-Fix #313: Display state(joined/left) messages in inbox
-
+- Fix #312: Visibility of scroll down button
+- Fix #313: Display state(joined/left) messages in inbox
+- Enh #325: Display who is currently online
 
 3.0.0-beta.1  (March 13, 2023)
 ------------------------------

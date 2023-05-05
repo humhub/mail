@@ -1,13 +1,13 @@
 <?php
 
 use humhub\libs\Html;
+use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\ConversationDateBadge;
 use humhub\modules\mail\widgets\ConversationEntryMenu;
 use humhub\modules\mail\widgets\MessageEntryTime;
 use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\Image;
-use humhub\modules\content\widgets\richtext\RichText;
 
 /* @var $this View */
 /* @var $entry MessageEntry */
@@ -27,14 +27,19 @@ use humhub\modules\content\widgets\richtext\RichText;
 
     <?php if ($showUser) : ?>
         <span class="author-image pull-left">
-            <?= Image::widget(['user' => $entry->user, 'width' => 30]) ?>
+            <?= Image::widget([
+                'user' => $entry->user,
+                'width' => 30,
+                'showOnlineStatus' => true,
+            ]) ?>
         </span>
     <?php endif; ?>
 
     <div class="<?= $contentClass ?>">
         <div class="markdown-render">
             <?php if ($showUser) : ?>
-                <div class="author-label" style="color:<?= $userColor ?>"><?= Html::encode($entry->user->displayName) ?></div>
+                <div class="author-label"
+                     style="color:<?= $userColor ?>"><?= Html::encode($entry->user->displayName) ?></div>
             <?php endif; ?>
             <?= RichText::output($entry->content) ?>
         </div>

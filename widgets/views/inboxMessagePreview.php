@@ -7,7 +7,6 @@
  */
 
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\widgets\TimeAgo;
 use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
 use yii\helpers\Html;
@@ -20,29 +19,30 @@ use yii\helpers\Html;
 /* @var $options array */
 ?>
 <?= Html::beginTag('li', $options) ?>
-    <div class="mail-link">
-        <div class="media">
-            <div class="media-left">
-                <?= Image::widget([
-                    'user' => $lastParticipant,
-                    'width' => '32',
-                    'link' => false,
-                    'htmlOptions' => $lastParticipant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
-                ])?>
-            </div>
-            <div class="media-body text-break">
-                <h4 class="media-heading">
-                    <?= Html::encode($messageTitle) ?>
-                    <time><?= $messageTime ?></time>
-                </h4>
-                <h5>
-                    <span><?= Html::encode($message->title) ?></span>
-                    <span class="new-message-badge"></span>
-                </h5>
-                <div class="mail-last-entry">
-                    <?= $messageText ?>
-                </div>
+<div class="mail-link">
+    <div class="media">
+        <div class="media-left">
+            <?= Image::widget([
+                'user' => $lastParticipant,
+                'width' => '32',
+                'link' => false,
+                'htmlOptions' => $lastParticipant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
+                'showOnlineStatus' => true,
+            ]) ?>
+        </div>
+        <div class="media-body text-break">
+            <h4 class="media-heading">
+                <?= Html::encode($messageTitle) ?>
+                <time><?= $messageTime ?></time>
+            </h4>
+            <h5>
+                <span><?= Html::encode($message->title) ?></span>
+                <span class="new-message-badge"></span>
+            </h5>
+            <div class="mail-last-entry">
+                <?= $messageText ?>
             </div>
         </div>
     </div>
+</div>
 <?= Html::endTag('li') ?>
