@@ -122,6 +122,7 @@
 .conversation-entry-content .markdown-render {
   float: left;
   width: 100%;
+  min-width: 230px;
 }
 .conversation-blocked-recipient {
   -webkit-filter: grayscale(100%);
@@ -205,13 +206,6 @@
 .mail-message-form .humhub-ui-richtext {
   padding-right: 45px;
   border-radius: 10px;
-}
-.mail-message-form .reply-button {
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-  z-index: 500;
-  border-radius: 4px;
 }
 .mail-message-form .help-block {
   margin: 0;

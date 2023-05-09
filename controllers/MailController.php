@@ -3,28 +3,29 @@
 namespace humhub\modules\mail\controllers;
 
 use humhub\components\access\ControllerAccess;
-use humhub\modules\mail\Module;
-use humhub\modules\mail\widgets\ConversationHeader;
-use humhub\modules\mail\widgets\Messages;
-use humhub\modules\mail\widgets\ConversationEntry;
-use humhub\modules\user\models\UserFilter;
-use humhub\modules\user\widgets\UserListBox;
-use Yii;
-use humhub\modules\mail\permissions\StartConversation;
-use yii\helpers\Html;
-use humhub\modules\mail\helpers\Url;
-use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
 use humhub\components\Controller;
+use humhub\modules\file\handler\FileHandlerCollection;
+use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\forms\CreateMessage;
+use humhub\modules\mail\models\forms\InviteParticipantForm;
+use humhub\modules\mail\models\forms\ReplyForm;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
-use humhub\modules\User\models\User;
-use humhub\modules\mail\models\forms\InviteParticipantForm;
-use humhub\modules\mail\models\forms\ReplyForm;
-use humhub\modules\mail\models\forms\CreateMessage;
+use humhub\modules\mail\Module;
 use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\mail\widgets\ConversationEntry;
+use humhub\modules\mail\widgets\ConversationHeader;
+use humhub\modules\mail\widgets\Messages;
+use humhub\modules\User\models\User;
+use humhub\modules\user\models\UserFilter;
 use humhub\modules\user\models\UserPicker;
+use humhub\modules\user\widgets\UserListBox;
+use Yii;
+use yii\helpers\Html;
+use yii\web\ForbiddenHttpException;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -79,6 +80,7 @@ class MailController extends Controller
             'message' => $message,
             'messageCount' => UserMessage::getNewMessageCount(),
             'replyForm' => new ReplyForm(['model' => $message]),
+            'fileHandlers' => FileHandlerCollection::getByType([FileHandlerCollection::TYPE_IMPORT, FileHandlerCollection::TYPE_CREATE]),
         ]);
     }
 
@@ -86,7 +88,7 @@ class MailController extends Controller
     {
         $id = Yii::$app->request->post('id');
 
-        if($id) {
+        if ($id) {
             $message = ($id instanceof Message) ? $id : $this->getMessage($id);
             $this->checkMessagePermissions($message);
             $message->seen(Yii::$app->user->id);
@@ -158,7 +160,7 @@ class MailController extends Controller
     {
         return $this->renderAjaxContent(UserListBox::widget([
             'query' => $this->getMessage($id, true)->getUsers(),
-            'title' => '<strong>'.Yii::t('MailModule.base', 'Participants').'</strong>'
+            'title' => '<strong>' . Yii::t('MailModule.base', 'Participants') . '</strong>'
         ]));
     }
 
@@ -177,7 +179,7 @@ class MailController extends Controller
         $inviteForm = new InviteParticipantForm(['message' => $message]);
 
         if ($inviteForm->load(Yii::$app->request->post())) {
-            if($inviteForm->save()) {
+            if ($inviteForm->save()) {
                 return $this->asJson([
                     'result' => ConversationHeader::widget(['message' => $message])
                 ]);
@@ -218,7 +220,7 @@ class MailController extends Controller
     {
         $message = $this->getMessage($id);
 
-        if($message) {
+        if ($message) {
             $this->checkMessagePermissions($message);
         }
 
@@ -227,16 +229,16 @@ class MailController extends Controller
             'keyword' => $keyword,
             'permission' => (!Yii::$app->user->isAdmin()) ? new SendMail() : null,
             'disableFillUser' => true,
-            'disabledText' => Yii::t('MailModule.base','You are not allowed to start a conversation with this user.')
+            'disabledText' => Yii::t('MailModule.base', 'You are not allowed to start a conversation with this user.')
         ]);
 
         // Disable already participating users
-        if($message) {
-            foreach($result as $i=>$user) {
-                if($this->isParticipant($message, $user)) {
+        if ($message) {
+            foreach ($result as $i => $user) {
+                if ($this->isParticipant($message, $user)) {
                     $index = $i++;
                     $result[$index]['disabled'] = true;
-                    $result[$index]['disabledText'] = Yii::t('MailModule.base','This user is already participating in this conversation.');
+                    $result[$index]['disabledText'] = Yii::t('MailModule.base', 'This user is already participating in this conversation.');
                 }
             }
         }
@@ -250,22 +252,23 @@ class MailController extends Controller
             throw new HttpException(404, 'Could not find message!');
         }
 
-        if(!$message->isParticipant(Yii::$app->user->getIdentity())) {
+        if (!$message->isParticipant(Yii::$app->user->getIdentity())) {
             throw new HttpException(403, 'Access denied!');
         }
     }
-    
+
     /**
      * Checks if a user (user json representation) is participant of a given
      * message.
-     * 
+     *
      * @param type $message
      * @param type $user
      * @return boolean
      */
-    private function isParticipant($message, $user) {
-        foreach($message->users as $participant) {
-            if($participant->guid === $user['guid']) {
+    private function isParticipant($message, $user)
+    {
+        foreach ($message->users as $participant) {
+            if ($participant->guid === $user['guid']) {
                 return true;
             }
         }
@@ -310,25 +313,25 @@ class MailController extends Controller
     public function actionCreate($userGuid = null)
     {
         $model = new CreateMessage(['recipient' => [$userGuid]]);
-        
+
         // Preselect user if userGuid is given
         if ($userGuid) {
             /* @var User $user */
             $user = User::find()->where(['guid' => $userGuid])->available()->one();
 
-            if(!$user) {
+            if (!$user) {
                 throw new NotFoundHttpException();
             }
 
-            if(!$user->getPermissionManager()->can(SendMail::class) && !Yii::$app->user->isAdmin()) {
+            if (!$user->getPermissionManager()->can(SendMail::class) && !Yii::$app->user->isAdmin()) {
                 throw new ForbiddenHttpException();
             }
         }
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->htmlRedirect(['index', 'id' => $model->messageInstance->id]);
         }
-        
+
         return $this->renderAjax('create', ['model' => $model]);
     }
 
@@ -364,7 +367,7 @@ class MailController extends Controller
     {
         $entry = MessageEntry::findOne(['id' => $id]);
 
-        if(!$entry) {
+        if (!$entry) {
             throw new HttpException(404);
         }
 
@@ -373,7 +376,7 @@ class MailController extends Controller
         }
 
         if ($entry->load(Yii::$app->request->post()) && $entry->save()) {
-            $entry->fileManager->attach(Yii::$app->request->post('fileList'));
+            $entry->fileManager->attach(Yii::$app->request->post('MessageEntry')['files'] ?? null);
             return $this->asJson([
                 'success' => true,
                 'content' => ConversationEntry::widget(['entry' => $entry])
@@ -393,7 +396,7 @@ class MailController extends Controller
         $this->forcePostRequest();
         $entry = MessageEntry::findOne(['id' => $id]);
 
-        if(!$entry) {
+        if (!$entry) {
             throw new HttpException(404);
         }
 
@@ -440,7 +443,7 @@ class MailController extends Controller
             }
         }
 
-        if($throw) {
+        if ($throw) {
             throw new HttpException(404, 'Could not find message!');
         }
 

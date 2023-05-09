@@ -1,7 +1,7 @@
 <?php
+
 namespace humhub\modules\mail\assets;
 
-use humhub\modules\mail\helpers\Url;
 use yii\web\AssetBundle;
 
 /**
@@ -10,7 +10,6 @@ use yii\web\AssetBundle;
  * Date: 29.07.2018
  * Time: 08:19
  */
-
 class MailMessengerAsset extends AssetBundle
 {
     public $defer = true;
@@ -22,7 +21,7 @@ class MailMessengerAsset extends AssetBundle
     ];
 
     public $js = [
-        'humhub.mail.messenger.bundle.js',
+        'humhub.mail.messenger.bundle.min.js',
     ];
 
     public $depends = [
