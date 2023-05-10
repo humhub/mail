@@ -159,7 +159,6 @@ class MailController extends Controller
         return $this->renderAjaxContent(UserListBox::widget([
             'query' => $this->getMessage($id, true)->getUsers(),
             'title' => '<strong>' . Yii::t('MailModule.base', 'Participants') . '</strong>',
-            'showOnlineStatus' => true,
         ]));
     }
 

@@ -30,7 +30,6 @@ use humhub\modules\user\widgets\Image;
             <?= Image::widget([
                 'user' => $entry->user,
                 'width' => 30,
-                'showOnlineStatus' => true,
             ]) ?>
         </span>
     <?php endif; ?>

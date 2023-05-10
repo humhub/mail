@@ -27,7 +27,6 @@ use yii\helpers\Html;
                 'width' => '32',
                 'link' => false,
                 'htmlOptions' => $lastParticipant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
-                'showOnlineStatus' => true,
             ]) ?>
         </div>
         <div class="media-body text-break">
