@@ -332,7 +332,10 @@ class MailController extends Controller
             return $this->htmlRedirect(['index', 'id' => $model->messageInstance->id]);
         }
 
-        return $this->renderAjax('create', ['model' => $model]);
+        return $this->renderAjax('create', [
+            'model' => $model,
+            'fileHandlers' => FileHandlerCollection::getByType([FileHandlerCollection::TYPE_IMPORT, FileHandlerCollection::TYPE_CREATE]),
+        ]);
     }
 
     /**
@@ -383,7 +386,10 @@ class MailController extends Controller
             ]);
         }
 
-        return $this->renderAjax('editEntry', ['entry' => $entry]);
+        return $this->renderAjax('editEntry', [
+            'entry' => $entry,
+            'fileHandlers' => FileHandlerCollection::getByType([FileHandlerCollection::TYPE_IMPORT, FileHandlerCollection::TYPE_CREATE]),
+        ]);
     }
 
     /**

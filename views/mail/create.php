@@ -1,6 +1,8 @@
 <?php
 
 use humhub\libs\Html;
+use humhub\modules\file\handler\BaseFileHandler;
+use humhub\modules\file\widgets\FileHandlerButtonDropdown;
 use humhub\modules\file\widgets\FilePreview;
 use humhub\modules\file\widgets\UploadButton;
 use humhub\modules\file\widgets\UploadProgress;
@@ -13,6 +15,7 @@ use humhub\widgets\ModalDialog;
 use yii\widgets\ActiveForm;
 
 /* @var $model CreateMessage */
+/* @var $fileHandlers BaseFileHandler[] */
 ?>
 
 <?php ModalDialog::begin([
@@ -43,7 +46,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'message')->widget(
             MailRichtextEditor::class)->label(false) ?>
 
-        <?= UploadButton::widget([
+        <?php $uploadButton = UploadButton::widget([
             'id' => 'mail-upload',
             'model' => $model,
             'label' => Yii::t('ContentModule.base', 'Attach Files'),
@@ -54,6 +57,12 @@ use yii\widgets\ActiveForm;
             'preview' => '#mail-preview',
             'dropZone' => '#mail-create',
             'max' => Yii::$app->getModule('content')->maxAttachedFiles,
+        ]) ?>
+        <?= FileHandlerButtonDropdown::widget([
+            'primaryButton' => $uploadButton,
+            'handlers' => $fileHandlers,
+            'cssButtonClass' => 'btn-default',
+            'pullRight' => true,
         ]) ?>
         <?= UploadProgress::widget(['id' => 'mail-progress']) ?>
         <?= FilePreview::widget([
