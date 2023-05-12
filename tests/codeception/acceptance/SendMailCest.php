@@ -69,10 +69,10 @@ class SendMailCest
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Add user', '#mail-conversation-header');
-        $I->waitForText('Add more participants to your conversation', 10, '#globalModal');
+        $I->waitForText('Add participants', 10, '#globalModal');
         $I->selectUserFromPicker('#inviteparticipantform-recipients', 'Admin');
 
-        $I->click('Save', '#globalModal'); //Send
+        $I->click('Confirm', '#globalModal'); //Send
         $I->expectTo('see the new user within the conversation user list');
         $I->waitForText('Admin Tester', null, '#mail-conversation-header');
     }
@@ -132,7 +132,7 @@ class SendMailCest
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
         $I->click('Leave', '#globalModalConfirm');
 
-        $I->waitForText('Third message title', 10, '#mail-conversation-header');
+        $I->waitForText('Third message title', null, '#mail-conversation-header');
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
