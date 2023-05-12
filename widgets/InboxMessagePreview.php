@@ -121,7 +121,8 @@ class InboxMessagePreview extends Widget
 
     private function getMessageTime(): string
     {
-        $datetime = new DateTime($this->getMessage()->updated_at, new DateTimeZone(Yii::$app->timeZone));
+        $datetime = $this->getMessage()->updated_at ?? $this->getMessage()->created_at;
+        $datetime = new DateTime($datetime, new DateTimeZone(Yii::$app->timeZone));
 
         if ($datetime->format('Y-m-d') === date('Y-m-d')) {
             // Show time for today

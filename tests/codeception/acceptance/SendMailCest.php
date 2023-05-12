@@ -69,10 +69,10 @@ class SendMailCest
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Add user', '#mail-conversation-header');
-        $I->waitForText('Add more participants to your conversation', 10, '#globalModal');
+        $I->waitForText('Add participants', 10, '#globalModal');
         $I->selectUserFromPicker('#inviteparticipantform-recipients', 'Admin');
 
-        $I->click('Save', '#globalModal'); //Send
+        $I->click('Confirm', '#globalModal'); //Send
         $I->expectTo('see the new user within the conversation user list');
         $I->waitForText('Admin Tester', null, '#mail-conversation-header');
     }
