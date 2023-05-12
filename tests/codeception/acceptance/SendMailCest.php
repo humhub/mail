@@ -132,7 +132,7 @@ class SendMailCest
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
         $I->click('Leave', '#globalModalConfirm');
 
-        $I->waitForText('Third message title', 10, '#mail-conversation-header');
+        $I->waitForText('Third message title', null, '#mail-conversation-header');
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
