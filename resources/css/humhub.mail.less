@@ -1,8 +1,6 @@
-@text-color-main: #555;
-
 @bgColorDefault: var(--background-color-secondary);
 @bgColorNew: #e9f9ff;
-@colorUnread: #21A1B3;
+@colorUnread: var(--info);
 
 @radius: 10px;
 @radiusMiddle: 7px;
@@ -27,14 +25,14 @@
   }
   .dropdown-footer {
     .btn.btn-default {
-      border: 1px solid #F3F3F3;
+      border: 1px solid var(--default);
       box-shadow: none;
       &:hover {
-        border-color: #D7D7D7;
-        background: #D7D7D7;
+        border-color: var(--background3);
+        background: var(--background3);
       }
       &:active {
-        border-color: #7A7A7A;
+        border-color: var(--text-color-secondary);
         background: #FFF;
       }
     }
@@ -182,7 +180,7 @@
 }
 #mail-conversation-header {
   padding: 18px;
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid var(--background3);
   border-bottom-left-radius: @radiusNone;
   border-bottom-right-radius: @radiusNone;
   h1 {
@@ -195,7 +193,7 @@
     font-size: 11px;
     font-weight: normal;
     a {
-      color: @text-color-main;
+      color: var(--text-color-main);
     }
   }
 }
@@ -240,7 +238,12 @@
     .mail-last-entry {
       font-size: 11px;
       font-weight: normal;
-      color: #AEAEAE;
+      color: var(--text-color-soft2);
+    }
+  }
+  .selected, .media-list > li:hover {
+    .mail-last-entry {
+      color: var(--text-color-main);
     }
   }
 }
@@ -300,7 +303,7 @@
   .conversation-entry-time {
     float: right;
     font-size: 10px;
-    color: @text-color-main;
+    color: var(--text-color-main);
     > span {
       font-style: italic;
     }
@@ -330,7 +333,7 @@
   cursor: pointer;
   time {
     font-size: 10px;
-    color: #7A7A7A;
+    color: var(--text-color-secondary);
   }
   .new-message-badge {
     display: none;
@@ -343,7 +346,7 @@
       color: @colorUnread;
     }
     .mail-last-entry {
-      color: @text-color-main;
+      color: var(--text-color-main);
     }
   }
 }
