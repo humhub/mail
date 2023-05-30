@@ -7,15 +7,15 @@
   font-weight: 600;
 }
 #dropdown-messages .dropdown-footer .btn.btn-default {
-  border: 1px solid #F3F3F3;
+  border: 1px solid var(--default);
   box-shadow: none;
 }
 #dropdown-messages .dropdown-footer .btn.btn-default:hover {
-  border-color: #D7D7D7;
-  background: #D7D7D7;
+  border-color: var(--background3);
+  background: var(--background3);
 }
 #dropdown-messages .dropdown-footer .btn.btn-default:active {
-  border-color: #7A7A7A;
+  border-color: var(--text-color-secondary);
   background: #FFF;
 }
 #dropdown-messages.dropdown-menu li a {
@@ -138,7 +138,7 @@
 }
 #mail-conversation-header {
   padding: 18px;
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid var(--background3);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -153,7 +153,7 @@
   font-weight: normal;
 }
 #mail-conversation-header small a {
-  color: #555;
+  color: var(--text-color-main);
 }
 #conversation-settings-button {
   padding: 6px;
@@ -194,7 +194,11 @@
 .mail-inbox-messages .media .mail-last-entry {
   font-size: 11px;
   font-weight: normal;
-  color: #AEAEAE;
+  color: var(--text-color-soft2);
+}
+.mail-inbox-messages .selected .mail-last-entry,
+.mail-inbox-messages .media-list > li:hover .mail-last-entry {
+  color: var(--text-color-main);
 }
 .mail-message-form {
   position: absolute;
@@ -245,7 +249,7 @@
 .mail-conversation-entry .conversation-entry-time {
   float: right;
   font-size: 10px;
-  color: #555;
+  color: var(--text-color-main);
 }
 .mail-conversation-entry .conversation-entry-time > span {
   font-style: italic;
@@ -273,7 +277,7 @@
 }
 .messagePreviewEntry time {
   font-size: 10px;
-  color: #7A7A7A;
+  color: var(--text-color-secondary);
 }
 .messagePreviewEntry .new-message-badge {
   display: none;
@@ -282,10 +286,10 @@
   display: block;
 }
 .messagePreviewEntry.unread time {
-  color: #21A1B3;
+  color: var(--info);
 }
 .messagePreviewEntry.unread .mail-last-entry {
-  color: #555;
+  color: var(--text-color-main);
 }
 .message-tag-filter-group .select2-selection {
   border-bottom-right-radius: 0;
@@ -304,7 +308,7 @@
   min-width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #21A1B3;
+  background: var(--info);
   margin-left: 2px;
 }
 .inbox-entry-title {
