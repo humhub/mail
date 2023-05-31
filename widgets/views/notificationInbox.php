@@ -36,4 +36,3 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
         </li>
     </ul>
 </div>
-
