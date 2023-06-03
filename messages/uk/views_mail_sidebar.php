@@ -2,6 +2,6 @@
 return array (
   'Groups' => '',
   'Members' => 'Члени',
-  'Spaces' => '',
+  'Spaces' => 'Спільноти',
   'User Posts' => '',
 );
