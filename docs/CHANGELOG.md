@@ -6,7 +6,8 @@ Changelog
 - Fix #312: Visibility of scroll down button
 - Fix #313: Display state(joined/left) messages in inbox
 - Fix #322: Fix color of hover or active sub headline
-- Fix #335: Remove new lines in notificationInbox view 
+- Fix #335: Remove new lines in notificationInbox view
+- Fix #338: Remove deprecated class `humhub\widgets\MarkdownView`
 
 
 3.0.0-beta.1  (March 13, 2023)
