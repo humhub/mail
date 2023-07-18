@@ -42,7 +42,7 @@ class SendMailCest
     private function submitInvalidMessageByModal(AcceptanceTester $I)
     {
         $I->expectTo('see create new message form');
-        $I->waitForText('New message', 10, '#globalModal');
+        $I->waitForText('New message', null, '#globalModal');
         $this->sendMessage($I, 'Sara', null, 'Just a test message.');
         $I->waitForText('Subject cannot be blank.', null, '#globalModal');
     }
@@ -82,7 +82,7 @@ class SendMailCest
         $I->wantTo('create another conversation');
         $I->waitForElementVisible('#mail-conversation-create-button');
         $I->jsClick('#mail-conversation-create-button');
-        $I->waitForText('New message', 10, '#globalModal');
+        $I->waitForText('New message', null, '#globalModal');
         $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
         $I->waitForText('Admin test message', null,'#mail-conversation-root');
         $I->see('Hi Admin!', '#mail-conversation-root');
@@ -118,7 +118,7 @@ class SendMailCest
         $I->wantTo('get sure I received the new message');
         $I->waitForElement('#badge-messages');
         $I->click('#icon-messages');
-        $I->waitForElementVisible('#create-message-button', 10);
+        $I->waitForElementVisible('#create-message-button');
         $I->click('Show all messages');
         $I->expectTo('see my message overview with the new conversation');
         $I->waitForText('Hello there!', null,'#mail-conversation-root');
