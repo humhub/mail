@@ -17,7 +17,7 @@ $filterModel = new InboxFilterForm();
             <span class="visible-xs-inline"><?=Icon::get('bars')?></span> <?= Yii::t('MailModule.views_mail_index', 'Conversations') ?>
         </a>
         <?php if ($canStartConversation) : ?>
-            <?= NewMessageButton::widget(['icon' => 'plus', 'label' => '', 'id' => 'mail-conversation-create-button'])?>
+            <?= NewMessageButton::widget(['icon' => 'plus', 'label' => 'TESTBTN', 'id' => 'mail-conversation-create-button'])?>
         <?php endif; ?>
 
         <div class="inbox-wrapper">
