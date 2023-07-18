@@ -81,7 +81,7 @@ class SendMailCest
     {
         $I->wantTo('create another conversation');
         $I->waitForElementVisible('#mail-conversation-create-button');
-        $I->executeJS('$("#mail-conversation-create-button").click()');
+        $I->click('TESTBTN');
         $I->waitForText('New message', 10, '#globalModal');
         $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
         $I->waitForText('Admin test message', null,'#mail-conversation-root');
