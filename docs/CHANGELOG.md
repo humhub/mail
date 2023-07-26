@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.0.0  (Unreleased)
--------------------
+3.0.0  (July 26, 2023)
+----------------------
 - Fix #312: Visibility of scroll down button
 - Fix #313: Display state(joined/left) messages in inbox
 - Fix #322: Fix color of hover or active sub headline
