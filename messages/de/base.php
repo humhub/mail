@@ -4,7 +4,7 @@ return array (
   '<strong>Edit</strong> conversation tags' => 'Konversations-Tags <strong>bearbeiten</strong>',
   '<strong>Edit</strong> tag' => 'Tag <strong>bearbeiten</strong>',
   '<strong>Manage</strong> conversation tags' => 'Konversations-Tags <strong>verwalten</strong>',
-  '<strong>Messenger</strong> module configuration' => '',
+  '<strong>Messenger</strong> module configuration' => '<strong>Messenger</strong> Modul Konfiguration',
   'A tag with the same name already exists.' => 'Ein Tag mit diesem Namen existiert bereits.',
   'Add Tag' => 'Tag hinzufügen',
   'Add participants' => 'Teilnehmer hinzufügen',
