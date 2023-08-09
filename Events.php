@@ -57,6 +57,11 @@ class Events
                         $messageEntry->delete();
                     }
                 }
+                if(!$messageEntry->message) {
+                    if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing conversation!")) {
+                        $messageEntry->delete();
+                    }
+                }
             }
 
             $integrityController->showTestHeadline("Mail Module (" . UserMessage::find()->count() . " user message entries)");

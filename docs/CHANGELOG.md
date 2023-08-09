@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.0.1  (Unreleased)
+----------------------
+- Fix #343: Fix error after deleting a user from system
+
 3.0.0  (July 26, 2023)
 ----------------------
 - Fix #312: Visibility of scroll down button
