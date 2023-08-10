@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.0.1  (Unreleased)
-----------------------
+3.0.1  (August 10, 2023)
+-------------------------
 - Fix #343: Fix error after deleting a user from system
 
 3.0.0  (July 26, 2023)
