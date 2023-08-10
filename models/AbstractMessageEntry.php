@@ -144,13 +144,15 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function afterDelete()
     {
-        foreach ($this->message->users as $user) {
-            Yii::$app->live->send(new UserMessageDeleted([
-                'contentContainerId' => $user->contentcontainer_id,
-                'message_id' => $this->message_id,
-                'entry_id' => $this->id,
-                'user_id' => $user->id
-            ]));
+        if ($this->message instanceof Message) {
+            foreach ($this->message->users as $user) {
+                Yii::$app->live->send(new UserMessageDeleted([
+                    'contentContainerId' => $user->contentcontainer_id,
+                    'message_id' => $this->message_id,
+                    'entry_id' => $this->id,
+                    'user_id' => $user->id
+                ]));
+            }
         }
 
         parent::afterDelete();
