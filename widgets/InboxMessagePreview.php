@@ -61,7 +61,7 @@ class InboxMessagePreview extends Widget
         return $this->_message;
     }
 
-    private function lastParticipant(): User
+    private function lastParticipant(): ?User
     {
         return $this->isGroupChat()
             ? $this->getLastEntry()->user
@@ -70,7 +70,13 @@ class InboxMessagePreview extends Widget
 
     private function getUsername(): string
     {
-        $profile = $this->lastParticipant()->profile;
+        $lastParticipant = $this->lastParticipant();
+
+        if (!$lastParticipant) {
+            return '[DELETED]';
+        }
+
+        $profile = $lastParticipant->profile;
 
         $lastname = $this->isGroupChat()
             ? substr($profile->lastname, 0, 1)
@@ -108,9 +114,11 @@ class InboxMessagePreview extends Widget
 
         if ($this->isGroupChat()) {
             $lastUser = $this->getLastEntry()->user;
-            $prefix = $lastUser->is(Yii::$app->user->getIdentity())
+            $prefix = $this->isOwnLastEntry()
                 ? Yii::t('MailModule.base', 'You')
-                : Html::encode($lastUser->profile->firstname . ' ' . substr($lastUser->profile->lastname, 0, 1));
+                : ($lastUser
+                    ? Html::encode($lastUser->profile->firstname . ' ' . substr($lastUser->profile->lastname, 0, 1))
+                    : '[DELETED]' );
             $prefix .= ': ';
         } else {
             $prefix = '';
@@ -156,7 +164,13 @@ class InboxMessagePreview extends Widget
 
     private function isOwnLastEntry(): bool
     {
-        return !Yii::$app->user->isGuest &&
-            $this->getLastEntry()->user->is(Yii::$app->user->getIdentity());
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+
+        $lastEntryUser = $this->getLastEntry()->user;
+
+        return $lastEntryUser instanceof User &&
+            $lastEntryUser->is(Yii::$app->user->getIdentity());
     }
 }
