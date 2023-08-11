@@ -7,7 +7,6 @@
  */
 
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\widgets\TimeAgo;
 use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
 use yii\helpers\Html;
@@ -23,12 +22,12 @@ use yii\helpers\Html;
     <div class="mail-link">
         <div class="media">
             <div class="media-left">
-                <?= Image::widget([
+                <?= $lastParticipant ? Image::widget([
                     'user' => $lastParticipant,
                     'width' => '32',
                     'link' => false,
                     'htmlOptions' => $lastParticipant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
-                ])?>
+                ]) : '' ?>
             </div>
             <div class="media-body text-break">
                 <h4 class="media-heading">

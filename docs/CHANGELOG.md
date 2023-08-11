@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.0.2  (Unreleased)
+-------------------------
+- Fix #345: Fix last entry with missed user
+
 3.0.1  (August 10, 2023)
 -------------------------
 - Fix #343: Fix error after deleting a user from system
