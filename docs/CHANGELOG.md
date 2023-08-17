@@ -1,5 +1,6 @@
 Changelog
 =========
+- Fix #348: Remove new lines in notificationInbox view
 
 3.0.2  (August 17, 2023)
 -------------------------
