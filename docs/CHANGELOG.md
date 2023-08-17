@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.2  (Unreleased)
+3.0.2  (August 17, 2023)
 -------------------------
 - Fix #345: Fix last entry with missed user
 
