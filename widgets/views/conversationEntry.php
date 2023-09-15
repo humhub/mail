@@ -28,7 +28,10 @@ use humhub\modules\user\widgets\Image;
 
     <?php if ($showUser) : ?>
         <span class="author-image pull-left">
-            <?= Image::widget(['user' => $entry->user, 'width' => 30]) ?>
+            <?= Image::widget([
+                'user' => $entry->user,
+                'width' => 30,
+            ]) ?>
         </span>
     <?php endif; ?>
 

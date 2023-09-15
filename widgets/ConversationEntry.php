@@ -12,7 +12,6 @@ use humhub\libs\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
-use Imagine\Image\Palette\RGB;
 use Yii;
 
 class ConversationEntry extends JsWidget
@@ -103,7 +102,7 @@ class ConversationEntry extends JsWidget
 
     public function getAttributes()
     {
-        $result =  [
+        $result = [
             'class' => 'media mail-conversation-entry'
         ];
 
@@ -125,7 +124,7 @@ class ConversationEntry extends JsWidget
 
     private function showUser(): bool
     {
-        return !$this->isOwnMessage() && $this->entry->message->getUsers()->count() > 2;
+        return !$this->isOwnMessage();
     }
 
     private function getUserColor(): string

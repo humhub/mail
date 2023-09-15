@@ -6,6 +6,7 @@ Changelog
 - Fix #348: Remove new lines in notificationInbox view
 - Fix #349: Assets now extending `humhub\components\assets\AssetBundle` instead of `yii\web\AssetBundle`
 - Enh #324: Possibility to attach files to a message entry
+- Enh #325: Display who is currently online
 
 3.0.2  (August 17, 2023)
 -------------------------

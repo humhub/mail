@@ -231,7 +231,7 @@
 .mail-conversation-entry.hideUserInfo .author-label {
   display: none;
 }
-.mail-conversation-entry.hideUserInfo .author-image img {
+.mail-conversation-entry.hideUserInfo .author-image .img-user {
   visibility: hidden;
   margin-top: 0;
 }
