@@ -1,10 +1,11 @@
 Changelog
 =========
 
-Unreleased
--------------------------
+3.1.0  (Unreleased)
+-------------------
 - Fix #348: Remove new lines in notificationInbox view
 - Fix #349: Assets now extending `humhub\components\assets\AssetBundle` instead of `yii\web\AssetBundle`
+- Enh #324: Possibility to attach files to a message entry
 
 3.0.2  (August 17, 2023)
 -------------------------
@@ -29,7 +30,7 @@ Unreleased
 - Fix #283: Add markdown-render class to Markdown text for Translator module to work
 - Fix #272: Exclude invisible users from recipients
 - Fix #280: Update styles of message block
-- Enh #274: Browser Tab Indicator on New Unread Message
+- Enh #274: Browser Tab Indicator on New Unread Message 
 
 2.1.0  (December 7, 2021)
 -------------------------
@@ -47,7 +48,7 @@ Unreleased
 2.0.6  (April 8, 2021)
 ----------------------
 - Enh: Use controller config for not intercepted actions
-- Enh #217: RESTFul API Module Support
+- Enh #217: RESTFul API Module Support 
 
 2.0.5 - January 21, 2021
 ------------------------
