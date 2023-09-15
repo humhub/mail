@@ -230,7 +230,7 @@
   margin-top: 3px;
   position: relative;
 }
-.mail-conversation-entry .author-image img {
+.mail-conversation-entry .author-image .img-user {
   max-width: 100%;
 }
 .mail-conversation-entry .author-label {
