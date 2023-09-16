@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.1.0  (Unreleased)
--------------------
+3.1.0  (September 16, 2023)
+---------------------------
 - Fix #348: Remove new lines in notificationInbox view
 - Fix #349: Assets now extending `humhub\components\assets\AssetBundle` instead of `yii\web\AssetBundle`
 - Enh #324: Possibility to attach files to a message entry
