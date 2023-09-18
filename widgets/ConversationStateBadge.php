@@ -11,6 +11,7 @@ use humhub\components\Widget;
 use humhub\libs\Html;
 use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\user\models\User;
 use Yii;
 
 /**
@@ -60,12 +61,19 @@ class ConversationStateBadge extends Widget
 
     public function getUsername(): string
     {
-        return $this->entry->user->displayName;
+        $user = $this->entry->user;
+
+        return $user instanceof User ? $this->entry->user->displayName : '[DELETED]';
     }
 
     protected function isOwn(): bool
     {
-        return !Yii::$app->user->isGuest &&
-            $this->entry->user->is(Yii::$app->user->getIdentity());
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+
+        $user = $this->entry->user;
+
+        return $user instanceof User && $user->is(Yii::$app->user->getIdentity());
     }
 }
