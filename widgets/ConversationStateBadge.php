@@ -63,7 +63,7 @@ class ConversationStateBadge extends Widget
     {
         $user = $this->entry->user;
 
-        return $user instanceof User ? $this->entry->user->displayName : '[DELETED]';
+        return $user instanceof User ? $user->displayName : '[DELETED]';
     }
 
     protected function isOwn(): bool
