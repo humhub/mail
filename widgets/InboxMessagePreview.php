@@ -70,13 +70,7 @@ class InboxMessagePreview extends Widget
 
     private function getUsername(): string
     {
-        $lastParticipant = $this->lastParticipant();
-
-        if (!$lastParticipant) {
-            return '[DELETED]';
-        }
-
-        $profile = $lastParticipant->profile;
+        $profile = $this->lastParticipant()->profile;
 
         $lastname = $this->isGroupChat()
             ? substr($profile->lastname, 0, 1)
@@ -116,9 +110,7 @@ class InboxMessagePreview extends Widget
             $lastUser = $this->getLastEntry()->user;
             $prefix = $this->isOwnLastEntry()
                 ? Yii::t('MailModule.base', 'You')
-                : ($lastUser
-                    ? Html::encode($lastUser->profile->firstname . ' ' . substr($lastUser->profile->lastname, 0, 1))
-                    : '[DELETED]' );
+                : Html::encode($lastUser->profile->firstname . ' ' . substr($lastUser->profile->lastname, 0, 1));
             $prefix .= ': ';
         } else {
             $prefix = '';

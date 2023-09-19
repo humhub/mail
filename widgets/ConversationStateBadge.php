@@ -61,19 +61,12 @@ class ConversationStateBadge extends Widget
 
     public function getUsername(): string
     {
-        $user = $this->entry->user;
-
-        return $user instanceof User ? $user->displayName : '[DELETED]';
+        return $this->entry->user->displayName;
     }
 
     protected function isOwn(): bool
     {
-        if (Yii::$app->user->isGuest) {
-            return false;
-        }
-
-        $user = $this->entry->user;
-
-        return $user instanceof User && $user->is(Yii::$app->user->getIdentity());
+        return !Yii::$app->user->isGuest &&
+            $this->entry->user->is(Yii::$app->user->getIdentity());
     }
 }
