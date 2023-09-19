@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1.1  (Unreleased)
+3.1.1  (September 19, 2023)
 ---------------------------
 - Fix #351: Fix a deleted user in state badge
 
