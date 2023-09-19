@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.1.1  (Unreleased)
+---------------------------
+- Fix #351: Fix a deleted user in state badge
+
 3.1.0  (September 16, 2023)
 ---------------------------
 - Fix #348: Remove new lines in notificationInbox view
