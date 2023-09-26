@@ -382,7 +382,10 @@ class MailController extends Controller
             $entry->fileManager->attach(Yii::$app->request->post('MessageEntry')['files'] ?? null);
             return $this->asJson([
                 'success' => true,
-                'content' => ConversationEntry::widget(['entry' => $entry])
+                'content' => ConversationEntry::widget([
+                    'entry' => $entry,
+                    'showDateBadge' => false
+                ])
             ]);
         }
 

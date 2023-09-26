@@ -4,6 +4,7 @@ Changelog
 3.1.2 (Unreleased)
 ----------------------
 - Enh #353: Tests for `next` version
+- Fix #354: Don't display date badge twice after update a message
 
 3.1.1  (September 19, 2023)
 ---------------------------
