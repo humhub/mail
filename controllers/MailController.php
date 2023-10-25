@@ -44,7 +44,10 @@ class MailController extends Controller
 
     public $pageSize = 30;
 
-    public function getAccessRules()
+    /**
+     * @inheritdoc
+     */
+    protected function getAccessRules()
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY],

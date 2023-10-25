@@ -5,6 +5,7 @@ Changelog
 ----------------------
 - Enh #353: Tests for `next` version
 - Fix #354: Don't display date badge twice after update a message
+- Fix #356: Fix visibility of the method `Controller::getAccessRules()`
 
 3.1.1  (September 19, 2023)
 ---------------------------
