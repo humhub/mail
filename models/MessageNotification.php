@@ -53,9 +53,7 @@ class MessageNotification extends BaseObject
             // Backup the flag because it may be forced per user in order to select a proper notification type
             $isNewConversation = $this->isNewConversation;
 
-            if ($this->isSendMail($user)) {
-                $this->sendMail($user);
-            }
+            $this->sendMail($user);
 
             // Restore the flag
             $this->isNewConversation = $isNewConversation;
@@ -73,8 +71,12 @@ class MessageNotification extends BaseObject
         ]));
     }
 
-    private function isSendMail(User $user): bool
+    private function canReceiveMail(User $user): bool
     {
+        if ($user->email === null) {
+            return false;
+        }
+
         if ($user->is($this->getEntrySender())) {
             return false;
         }
@@ -105,6 +107,10 @@ class MessageNotification extends BaseObject
 
     private function sendMail(User $user)
     {
+        if (!$this->canReceiveMail($user)) {
+            return;
+        }
+
         Yii::$app->i18n->setUserLocale($user);
 
         $mail = Yii::$app->mailer->compose([
