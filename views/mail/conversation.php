@@ -85,7 +85,7 @@ use humhub\widgets\Button;
                             ->cssClass('reply-button')
                             ->submit()
                             ->action('reply', $replyForm->getUrl())
-                            ->icon('paper-plane-o')
+                            ->icon('paper-plane')
                             ->sm() ?>
                     </div>
                 </div>

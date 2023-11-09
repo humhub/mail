@@ -206,16 +206,64 @@
   bottom: 0;
   width: 100%;
   padding: 10px;
+  background: #F3F3F3;
 }
 .mail-message-form .humhub-ui-richtext {
   padding-right: 105px;
   border-radius: 10px;
 }
+.mail-message-form .content-create-input-group {
+  display: flex;
+  align-items: flex-end;
+}
+.mail-message-form .form-group {
+  flex-grow: 1;
+  flex-basis: min-content;
+}
+.mail-message-form .form-group .form-control {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 19px;
+  min-height: auto;
+}
+.mail-message-form .form-group .form-control:not(:focus) {
+  border-color: transparent;
+}
 .mail-message-form .upload-buttons {
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-  z-index: 500;
+  white-space: nowrap;
+  padding-left: 7px;
+}
+.mail-message-form .upload-buttons .btn {
+  background: #D9D9D9;
+  border: none;
+  border-radius: 10px;
+  height: 33px;
+  padding: 0 9px;
+}
+.mail-message-form .upload-buttons .btn:hover,
+.mail-message-form .upload-buttons .btn:focus {
+  background: #eee !important;
+}
+.mail-message-form .upload-buttons .btn:active {
+  background: #fff !important;
+}
+.mail-message-form .upload-buttons .btn .fa {
+  color: #666;
+  font-size: 15px;
+}
+.mail-message-form .upload-buttons .btn-group {
+  margin-right: 4px;
+}
+.mail-message-form .upload-buttons .btn-group span.btn {
+  padding: 8px;
+}
+.mail-message-form .upload-buttons .btn-group span.btn i.fa {
+  margin: 0;
+}
+.mail-message-form .upload-buttons .btn-group button.btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  color: #666 !important;
 }
 .mail-message-form .reply-button {
   margin-left: 0 !important;

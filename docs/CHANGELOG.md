@@ -7,6 +7,7 @@ Changelog
 - Fix #354: Don't display date badge twice after update a message
 - Fix #356: Fix visibility of the method `Controller::getAccessRules()`
 - Fix #358: Fix sending email notification to deleted users
+- Enh #360: Restyle new message form
 
 3.1.1  (September 19, 2023)
 ---------------------------
