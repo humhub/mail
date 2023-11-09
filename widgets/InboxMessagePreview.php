@@ -73,7 +73,7 @@ class InboxMessagePreview extends Widget
         $profile = $this->lastParticipant()->profile;
 
         $lastname = $this->isGroupChat()
-            ? substr($profile->lastname, 0, 1)
+            ? mb_substr($profile->lastname, 0, 1)
             : $profile->lastname;
 
         return $profile->firstname . ' ' . $lastname;
@@ -110,7 +110,7 @@ class InboxMessagePreview extends Widget
             $lastUser = $this->getLastEntry()->user;
             $prefix = $this->isOwnLastEntry()
                 ? Yii::t('MailModule.base', 'You')
-                : Html::encode($lastUser->profile->firstname . ' ' . substr($lastUser->profile->lastname, 0, 1));
+                : Html::encode($lastUser->profile->firstname . ' ' . mb_substr($lastUser->profile->lastname, 0, 1));
             $prefix .= ': ';
         } else {
             $prefix = '';
