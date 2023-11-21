@@ -126,13 +126,13 @@ class Message extends ActiveRecord
      */
     public function isParticipant($user = null): bool
     {
-        if (!$user instanceof User) {
+        if (empty($user->guid)) {
             if ($user === null && !Yii::$app->user->isGuest) {
                 $user = Yii::$app->user->getIdentity();
-            } elseif (!empty($user)) {
+            } elseif (!empty($user) && is_scalar($user)) {
                 $user = User::findOne(['id' => $user]);
             }
-            if (!$user instanceof User) {
+            if (empty($user->guid)) {
                 return false;
             }
         }
