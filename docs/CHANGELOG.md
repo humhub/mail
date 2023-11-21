@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.2.0 (Unreleased)
+----------------------
+- Enh #363: Deny access for files from message where current user is not participant
+
 3.1.2 (Unreleased)
 ----------------------
 - Enh #353: Tests for `next` version
