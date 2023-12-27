@@ -24,6 +24,6 @@ class MailNotification extends BaseNotification
     
     public function getUrl()
     {
-        return Yii::$app->homeUrl; . '/mail/mail';// To do: specific conversation
+        return Yii::$app->homeUrl . '/mail/mail';// To do: specific conversation
     }
 }
