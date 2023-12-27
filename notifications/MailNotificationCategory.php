@@ -21,10 +21,8 @@ class MailNotificationCategory extends NotificationCategory
     public function getFixedSettings()
     {
         $webTarget = Yii::createObject(WebTarget::class);
-        $mobileTarget = Yii::createObject(MobileTarget::class);
         return [
-            $webTarget->id,
-            $mobileTarget->id
+            $webTarget->id
         ];
     }
 
