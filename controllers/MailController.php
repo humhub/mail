@@ -313,9 +313,9 @@ class MailController extends Controller
      * Creates a new Message
      * and redirects to it.
      */
-    public function actionCreate($userGuid = null)
+    public function actionCreate($userGuid = null, ?string $title = null, ?string $message = null)
     {
-        $model = new CreateMessage(['recipient' => [$userGuid]]);
+        $model = new CreateMessage(['recipient' => [$userGuid], 'title' => $title, 'message' => $message]);
 
         // Preselect user if userGuid is given
         if ($userGuid) {
