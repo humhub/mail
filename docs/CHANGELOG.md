@@ -9,7 +9,8 @@ Changelog
 - Fix #358: Fix sending email notification to deleted users
 - Fix #361: Encoding issue 
 - Enh #364: Confirm before leaving a filled message form
-- Enh #170: Add push notifications when FCM Push Module is active
+- Enh #367: Allow message title and body be provided by `GET` request for new messages
+- Enh #368: Add push notifications when FCM Push Module is active
 
 3.1.1  (September 19, 2023)
 ---------------------------
