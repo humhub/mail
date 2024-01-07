@@ -16,14 +16,5 @@ class MailNotification extends BaseNotification
     {
         return new MailNotificationCategory();
     }
-    
-    public function html()
-    {
-        return 'Someone has sent a message'; //WIP
-    }
-    
-    public function getUrl()
-    {
-        return Yii::$app->homeUrl . '/mail/mail';// To do: specific conversation
-    }
+
 }

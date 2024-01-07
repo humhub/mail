@@ -8,7 +8,6 @@ use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
 use humhub\modules\mail\notifications\MailNotificationCategory;
-use humhub\modules\mail\notifications\MailNotification;
 use humhub\modules\notification\components\NotificationCategory;
 use humhub\modules\notification\targets\MailTarget;
 use humhub\modules\notification\targets\MobileTarget;
