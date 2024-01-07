@@ -172,6 +172,8 @@ class MessageNotification extends BaseObject
         if (!$this->canReceivePush($user)) {
             return;
         }
+        
+        $url = Url::toRoute(['/mail/mail/index', 'id' => $this->message->id], true);
 
         $firebaseService = new \humhub\modules\fcmPush\services\MessagingService($fcmModule->getConfigureForm());
 
@@ -179,7 +181,7 @@ class MessageNotification extends BaseObject
             $user,
             Yii::$app->name,
             $this->getSubHeadline(),
-            Url::toMessenger($this->message),
+            $url,
             null,
             null
         );
