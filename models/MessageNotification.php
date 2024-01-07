@@ -4,6 +4,7 @@ namespace humhub\modules\mail\models;
 
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
 use humhub\modules\mail\notifications\MailNotificationCategory;
@@ -165,13 +166,24 @@ class MessageNotification extends BaseObject
     
     private function sendPush(User $user)
     {
+        $fcmModule = Yii::$app->getModule('fcm-push');
+        if (!$fcmModule || !$fcmModule->isActivated) {
+            return;
+        }
         if (!$this->canReceivePush($user)) {
             return;
         }
-        
-        $notification = new MailNotification; // to do ConversationNotification
-        $target = new MobileTarget;
-        $target->send($notification, $user);
+
+        $firebaseService = new \humhub\modules\fcmPush\services\MessagingService($fcmModule->getConfigureForm());
+
+        $firebaseService->processMessage(
+            $user,
+            Yii::$app->name,
+            $this->getSubHeadline(),
+            Url::toMessenger($this->message),
+            null,
+            null
+        );
     }
 
     protected function getContent(User $user)
