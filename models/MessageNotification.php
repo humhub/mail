@@ -4,11 +4,13 @@ namespace humhub\modules\mail\models;
 
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
 use humhub\modules\mail\notifications\MailNotificationCategory;
 use humhub\modules\notification\components\NotificationCategory;
 use humhub\modules\notification\targets\MailTarget;
+use humhub\modules\notification\targets\MobileTarget;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\base\BaseObject;
@@ -54,6 +56,8 @@ class MessageNotification extends BaseObject
             $isNewConversation = $this->isNewConversation;
 
             $this->sendMail($user);
+            
+            $this->sendPush($user);
 
             // Restore the flag
             $this->isNewConversation = $isNewConversation;
@@ -97,6 +101,29 @@ class MessageNotification extends BaseObject
 
         return false;
     }
+    
+    private function canReceivePush(User $user): bool
+    {
+        if ($user->is($this->getEntrySender())) {
+            return false;
+        }
+
+        if (!($mobileTarget = Yii::$app->notification->getTarget(MobileTarget::class))) {
+            return false;
+        }
+
+        if ($mobileTarget->isCategoryEnabled($this->getNotificationCategory(), $user)) {
+            return true;
+        }
+
+        // Try to send notification as "New message" when notification "New conversation" is disabled for the user
+        if ($this->isNewConversation && $mobileTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
+            $this->isNewConversation = false;
+            return true;
+        }
+
+        return false;
+    }
 
     private function getNotificationCategory(): NotificationCategory
     {
@@ -134,6 +161,28 @@ class MessageNotification extends BaseObject
         $mail->send();
 
         Yii::$app->i18n->autosetLocale();
+    }
+    
+    private function sendPush(User $user)
+    {
+        $fcmModule = Yii::$app->getModule('fcm-push');
+        if (!$fcmModule || !$fcmModule->isActivated) {
+            return;
+        }
+        if (!$this->canReceivePush($user)) {
+            return;
+        }
+
+        $firebaseService = new \humhub\modules\fcmPush\services\MessagingService($fcmModule->getConfigureForm());
+
+        $firebaseService->processMessage(
+            $user,
+            Yii::$app->name,
+            $this->getSubHeadline(),
+            Url::toMessenger($this->message, true),
+            null,
+            null
+        );
     }
 
     protected function getContent(User $user)
