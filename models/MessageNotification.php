@@ -75,9 +75,9 @@ class MessageNotification extends BaseObject
         ]));
     }
 
-    private function canReceiveMail(User $user): bool
+    private function canReceiveByTarget(User $user, string $targetClass): bool
     {
-        if ($user->email === null) {
+        if ($user->status != User::STATUS_ENABLED) {
             return false;
         }
 
@@ -85,44 +85,35 @@ class MessageNotification extends BaseObject
             return false;
         }
 
-        if (!($mailTarget = Yii::$app->notification->getTarget(MailTarget::class))) {
+        if (!($target = Yii::$app->notification->getTarget($targetClass))) {
             return false;
         }
 
-        if ($mailTarget->isCategoryEnabled($this->getNotificationCategory(), $user)) {
+        if ($target->isCategoryEnabled($this->getNotificationCategory(), $user)) {
             return true;
         }
 
         // Try to send notification as "New message" when notification "New conversation" is disabled for the user
-        if ($this->isNewConversation && $mailTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
+        if ($this->isNewConversation && $target->isCategoryEnabled(new MailNotificationCategory(), $user)) {
             $this->isNewConversation = false;
             return true;
         }
 
         return false;
     }
+
+    private function canReceiveMail(User $user): bool
+    {
+        if ($user->email === null) {
+            return false;
+        }
+
+        return $this->canReceiveByTarget($user, MailTarget::class);
+    }
     
     private function canReceivePush(User $user): bool
     {
-        if ($user->is($this->getEntrySender())) {
-            return false;
-        }
-
-        if (!($mobileTarget = Yii::$app->notification->getTarget(MobileTarget::class))) {
-            return false;
-        }
-
-        if ($mobileTarget->isCategoryEnabled($this->getNotificationCategory(), $user)) {
-            return true;
-        }
-
-        // Try to send notification as "New message" when notification "New conversation" is disabled for the user
-        if ($this->isNewConversation && $mobileTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
-            $this->isNewConversation = false;
-            return true;
-        }
-
-        return false;
+        return $this->canReceiveByTarget($user, MobileTarget::class);
     }
 
     private function getNotificationCategory(): NotificationCategory

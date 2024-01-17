@@ -11,6 +11,7 @@ Changelog
 - Enh #364: Confirm before leaving a filled message form
 - Enh #367: Allow message title and body be provided by `GET` request for new messages
 - Enh #368: Add push notifications when FCM Push Module is active
+- Fix #371: Don't send notification to deactivated user
 
 3.1.1  (September 19, 2023)
 ---------------------------
