@@ -69,10 +69,10 @@ class SendMailCest
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Add user', '#mail-conversation-header');
-        $I->waitForText('Add more participants to your conversation', 10, '#globalModal');
+        $I->waitForText('Add participants', 10, '#globalModal');
         $I->selectUserFromPicker('#inviteparticipantform-recipients', 'Admin');
 
-        $I->click('Save', '#globalModal'); //Send
+        $I->click('Confirm', '#globalModal'); //Send
         $I->expectTo('see the new user within the conversation user list');
         $I->waitForText('Admin Tester', null, '#mail-conversation-header');
     }
@@ -80,8 +80,9 @@ class SendMailCest
     private function createConversationByInbox(AcceptanceTester $I)
     {
         $I->wantTo('create another conversation');
-        $I->jsClick('#mail-conversation-overview #mail-conversation-create-button');
-        $I->waitForText('New message', null, '#globalModal');
+        $I->waitForElementVisible('#mail-conversation-create-button');
+        $I->click('#mail-conversation-create-button');
+        $I->waitForText('New message', 10, '#globalModal');
         $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
         $I->waitForText('Admin test message', null,'#mail-conversation-root');
         $I->see('Hi Admin!', '#mail-conversation-root');
@@ -117,7 +118,7 @@ class SendMailCest
         $I->wantTo('get sure I received the new message');
         $I->waitForElement('#badge-messages');
         $I->click('#icon-messages');
-        $I->waitForElementVisible('#create-message-button', 10);
+        $I->waitForElementVisible('#create-message-button');
         $I->click('Show all messages');
         $I->expectTo('see my message overview with the new conversation');
         $I->waitForText('Hello there!', null,'#mail-conversation-root');
@@ -132,7 +133,7 @@ class SendMailCest
         $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
         $I->click('Leave', '#globalModalConfirm');
 
-        $I->waitForText('Third message title', 10, '#mail-conversation-header');
+        $I->waitForText('Third message title', null, '#mail-conversation-header');
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');

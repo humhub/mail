@@ -68,14 +68,19 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
         client.submit(evt).then(function (response) {
             if (response.success) {
-                that.appendEntry(response.content).then(function() {
+                that.appendEntry(response.content).then(function () {
                     that.$.find(".time").timeago(); // somehow this is not triggered after reply
                     var richtext = that.getReplyRichtext();
                     if (richtext) {
                         richtext.$.trigger('clear');
                     }
+                    var filePreview = that.getReplyFilePreview();
+                    if (filePreview.length) {
+                        filePreview.hide();
+                        filePreview.children('ul.files').html('');
+                    }
                     that.scrollToBottom();
-                    if(!view.isSmall()) { // prevent autofocus on mobile
+                    if (!view.isSmall()) { // prevent autofocus on mobile
                         that.focus();
                     }
                     Widget.instance('#inbox').updateEntries([that.getActiveMessageId()]);
@@ -98,6 +103,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.getReplyRichtext = function () {
         return Widget.instance(this.$.find('.ProsemirrorEditor'));
+    };
+
+    ConversationView.prototype.getReplyFilePreview = function () {
+        return this.$.find('.post-file-list');
     };
 
 
@@ -151,10 +160,12 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         // call insert callback
         this.getListNode().append($html);
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             $elements.css('opacity', 1).fadeIn('fast', function () {
                 that.onUpdate();
-                setTimeout(function() {that.scrollToBottom()}, 100);
+                setTimeout(function () {
+                    that.scrollToBottom()
+                }, 100);
                 resolve();
             });
         })
@@ -196,8 +207,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
 
-        if(window.ResizeObserver) {
-            var resizeObserver = new ResizeObserver(function(entries) {
+        if (window.ResizeObserver) {
+            var resizeObserver = new ResizeObserver(function (entries) {
                 that.updateSize(that.isScrolledToBottom(100));
             });
 
@@ -207,6 +218,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             }
         }
 
+        var filePreview = that.getReplyFilePreview();
+        filePreview.on('DOMSubtreeModified', function (evt) {
+            that.updateSize(true);
+        });
+
         that.focus();
 
     };
@@ -214,7 +230,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.isScrolledToBottom = function (tolerance) {
         var $list = this.getListNode();
 
-        if(!$list.length) {
+        if (!$list.length) {
             return false;
         }
 
@@ -247,7 +263,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             // Assure the conversation list is scrollable by loading more entries until overflow
             return this.assureScroll().then(function () {
                 observer.observe($streamEnd[0]);
-                if(view.isLarge()) {
+                if (view.isLarge()) {
                     that.getListNode().niceScroll({
                         cursorwidth: "7",
                         cursorborder: "",
@@ -257,6 +273,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         railpadding: {top: 0, right: 0, left: 0, bottom: 0}
                     });
 
+                    that.scrollDownButton = undefined;
                     that.getListNode().on('scroll', () => that.getScrollDownButton().toggle(!that.isScrolledToBottom()));
                 }
             });
@@ -342,10 +359,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var that = this;
 
         return new Promise(function (resolve) {
-            setTimeout(function() {
-                that.$.imagesLoaded(function() {
+            setTimeout(function () {
+                that.$.imagesLoaded(function () {
                     var $list = that.getListNode();
-                    if(!$list.length) {
+                    if (!$list.length) {
                         return;
                     }
 
@@ -369,15 +386,15 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                 }
 
                 var replyRichtext = that.getReplyRichtext();
-                var formHeight = replyRichtext ? replyRichtext.$.innerHeight() : 0;
-                $entryContainer.css('margin-bottom' , formHeight + 5 + 'px');
+                var formHeight = replyRichtext ? replyRichtext.$.closest('.mail-message-form').innerHeight() : 0;
+                $entryContainer.css('margin-bottom', formHeight + 5 + 'px');
 
                 var offsetTop = that.getListNode().offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
                 $entryContainer.css('height', max_height);
                 $entryContainer.css('max-height', max_height);
 
-                if(scrollToButtom !== false) {
+                if (scrollToButtom !== false) {
                     that.scrollToBottom();
                 }
                 resolve();
@@ -391,13 +408,14 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.onUpdate = function () {
-        if(view.isLarge()) {
+        if (view.isLarge()) {
             this.getListNode().getNiceScroll().resize();
         }
     };
 
     module.export = ConversationView;
 });
+
 humhub.module('mail.ConversationEntry', function (module, require, $) {
 
     var Widget = require('ui.widget').Widget;

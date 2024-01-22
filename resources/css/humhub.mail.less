@@ -1,8 +1,6 @@
-@text-color-main: #555;
-
-@bgColorDefault: #f7f7f7;
+@bgColorDefault: var(--background-color-secondary);
 @bgColorNew: #e9f9ff;
-@colorUnread: #21A1B3;
+@colorUnread: var(--info);
 
 @radius: 10px;
 @radiusMiddle: 7px;
@@ -13,7 +11,9 @@
 @screen-sm: 767px;
 @screen-md: 991px;
 
-.semiBold() {font-weight: 600}
+.semiBold() {
+  font-weight: 600
+}
 
 .placeholder {
   color: #77777A;
@@ -32,6 +32,7 @@
       }
     }
   }
+
   .media-body {
     font-weight: 200;
   }
@@ -62,51 +63,64 @@
   display: block;
   padding-bottom: 0;
 }
+
 #conversation-tags-root {
   border-bottom: 1px solid #eee;
+
   .my-tags-label {
     padding-right: 10px;
   }
 }
+
 .conversation-menu {
   display: none;
+
   .time {
     color: inherit;
     text-transform: none;
   }
+
   .badge {
     background-color: @bgColorDefault;
     border-radius: @radius;
     color: inherit;
   }
+
   .conversation-edit-button {
     background-color: @bgColorDefault;
     border-radius: @radiusRound;
     color: inherit;
+
     &:hover {
       background-color: @bgColorDefault;
       color: inherit;
     }
   }
 }
+
 .visible-xs {
   .conversation-menu {
     padding-left: 35px;
+
     .conversation-menu-item {
       margin-bottom: 10px;
     }
   }
 }
+
 .conversation-menu-item {
   margin-left: 5px;
+
   a {
     cursor: pointer;
   }
 }
+
 .conversation-edit-button {
   border-bottom-right-radius: @radiusNone;
   border-top-right-radius: @radiusNone;
 }
+
 .conversation-scroll-down-button {
   position: absolute;
   bottom: 58px;
@@ -116,19 +130,23 @@
   background: #fff;
   border-radius: 50%;
   box-shadow: 1px 1px 2px #999;
+
   .fa {
     font-size: 26px;
     margin: 7px 0 0 11px;
   }
 }
+
 .conversation-entry-list {
   max-height: 600px;
   min-height: 150px;
   overflow: auto;
+
   .media {
     padding-right: 5px;
   }
 }
+
 .conversation-entry-content {
   display: table;
   float: left;
@@ -136,17 +154,23 @@
   border-radius: @radius;
   padding: 10px;
   max-width: 70%;
+
   pre {
     max-width: 485px;
   }
+
   &.own {
     float: right;
+    background: var(--background-color-highlight);
   }
+
   .markdown-render {
     float: left;
     width: 100%;
+    min-width: 230px;
   }
 }
+
 .conversation-blocked-recipient {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
@@ -156,118 +180,153 @@
   hr {
     border-top: 1px solid #eee;
   }
+
   .ProsemirrorEditor.focusMenu {
     .ProseMirror-menubar {
       margin-top: -0;
     }
   }
+
   .panel-body {
     margin-bottom: 0;
   }
 }
+
 #mail-conversation-header {
   padding: 18px;
-  border-bottom: 1px solid #d7d7d7;
+  border-bottom: 1px solid var(--background3);
   border-bottom-left-radius: @radiusNone;
   border-bottom-right-radius: @radiusNone;
+
   h1 {
     .semiBold;
     font-size: 22px;
     display: inline-block;
   }
+
   small {
     display: block;
     font-size: 11px;
     font-weight: normal;
+
     a {
-      color: @text-color-main;
+      color: var(--text-color-main);
     }
   }
 }
+
 #conversation-settings-button {
   padding: 6px;
   font-size: 12px;
 }
+
 #mail-filter-root {
   margin-top: 5px;
 }
+
 .mail-inbox-messages {
   .panel-heading {
     > a {
       .semiBold;
     }
+
     #mail-filter-root > a {
       font-weight: normal;
     }
   }
+
   .media {
     margin-top: 0;
     display: flex;
+
     h4.media-heading {
       .semiBold;
+
       time {
         font-weight: normal;
         float: right;
       }
     }
+
     h5 {
       font-size: 11px;
       font-weight: 500;
       color: #000;
       display: flex;
       justify-content: space-between;
+
       span:first-child {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
     }
+
     .mail-last-entry {
       font-size: 11px;
       font-weight: normal;
-      color: #AEAEAE;
+      color: var(--text-color-soft2);
+    }
+  }
+
+  .selected, .media-list > li:hover {
+    .mail-last-entry {
+      color: var(--text-color-main);
     }
   }
 }
+
 .mail-message-form {
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 10px;
+
   .humhub-ui-richtext {
-    padding-right: 45px;
+    padding-right: 105px; // For the upload and send button
     border-radius: @radius;
   }
-  .reply-button {
+
+  .upload-buttons {
     position: absolute;
     right: 15px;
     bottom: 15px;
     z-index: 500;
-    border-radius: @radiusSmall;
   }
+
+  .reply-button {
+    margin-left: 0 !important;
+  }
+
   .help-block {
     margin: 0;
   }
+
   .alert {
     margin-bottom: 0;
   }
 }
+
 .mail-conversation-entry {
   margin-top: 3px;
   position: relative;
+
   .author-image {
-    img {
+    .img-user {
       max-width: 100%;
     }
   }
+
   .author-label {
     font-size: 10px;
     .semiBold;
   }
+
   &.hideUserInfo {
     .author-label {
       display: none;
     }
+
     .author-image {
       img {
         visibility: hidden;
@@ -275,6 +334,7 @@
       }
     }
   }
+
   &.own {
     .conversation-menu-item {
       float: right;
@@ -282,24 +342,29 @@
       margin-right: 5px;
     }
   }
+
   .conversation-entry-time {
     float: right;
     font-size: 10px;
-    color: @text-color-main;
+    color: var(--text-color-main);
+
     > span {
       font-style: italic;
     }
   }
 }
+
 .conversation-entry-badge {
   padding: 10px 0 8px;
   text-align: center;
+
   span {
     display: inline-block;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     border-radius: @radiusMiddle;
     padding: 5px 20px;
   }
+
   &.conversation-date-badge span {
     text-transform: uppercase;
   }
@@ -313,22 +378,27 @@
 
 .messagePreviewEntry {
   cursor: pointer;
+
   time {
     font-size: 10px;
-    color: #7A7A7A;
+    color: var(--text-color-secondary);
   }
+
   .new-message-badge {
     display: none;
   }
+
   &.unread {
     .new-message-badge {
       display: block;
     }
+
     time {
       color: @colorUnread;
     }
+
     .mail-last-entry {
-      color: @text-color-main;
+      color: var(--text-color-main);
     }
   }
 }
@@ -337,6 +407,7 @@
   .select2-selection {
     border-bottom-right-radius: @radiusNone;
   }
+
   .manage-tags-link {
     .semiBold;
     font-size: 0.8em;
@@ -375,20 +446,25 @@
   #dropdown-messages {
     width: 300px !important;
   }
+
   .arrow {
     margin-left: -101px !important;
   }
+
   #inbox {
     max-height: none !important;
   }
+
   .mail-conversation-single-message {
     #inbox {
-      max-height: 30vh;
+      max-height: none !important;
     }
+
     .inbox-wrapper {
       display: none;
     }
   }
+
   .conversation-entry-content {
     pre {
       max-width: 245px;

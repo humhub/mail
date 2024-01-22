@@ -25,9 +25,9 @@ use yii\web\NotFoundHttpException;
 class TagController extends Controller
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
-    public function getAccessRules()
+    protected function getAccessRules()
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY]

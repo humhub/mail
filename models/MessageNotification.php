@@ -4,11 +4,13 @@ namespace humhub\modules\mail\models;
 
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
 use humhub\modules\mail\notifications\MailNotificationCategory;
 use humhub\modules\notification\components\NotificationCategory;
 use humhub\modules\notification\targets\MailTarget;
+use humhub\modules\notification\targets\MobileTarget;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\base\BaseObject;
@@ -53,9 +55,9 @@ class MessageNotification extends BaseObject
             // Backup the flag because it may be forced per user in order to select a proper notification type
             $isNewConversation = $this->isNewConversation;
 
-            if ($this->isSendMail($user)) {
-                $this->sendMail($user);
-            }
+            $this->sendMail($user);
+            
+            $this->sendPush($user);
 
             // Restore the flag
             $this->isNewConversation = $isNewConversation;
@@ -73,27 +75,45 @@ class MessageNotification extends BaseObject
         ]));
     }
 
-    private function isSendMail(User $user): bool
+    private function canReceiveByTarget(User $user, string $targetClass): bool
     {
+        if ($user->status != User::STATUS_ENABLED) {
+            return false;
+        }
+
         if ($user->is($this->getEntrySender())) {
             return false;
         }
 
-        if (!($mailTarget = Yii::$app->notification->getTarget(MailTarget::class))) {
+        if (!($target = Yii::$app->notification->getTarget($targetClass))) {
             return false;
         }
 
-        if ($mailTarget->isCategoryEnabled($this->getNotificationCategory(), $user)) {
+        if ($target->isCategoryEnabled($this->getNotificationCategory(), $user)) {
             return true;
         }
 
         // Try to send notification as "New message" when notification "New conversation" is disabled for the user
-        if ($this->isNewConversation && $mailTarget->isCategoryEnabled(new MailNotificationCategory(), $user)) {
+        if ($this->isNewConversation && $target->isCategoryEnabled(new MailNotificationCategory(), $user)) {
             $this->isNewConversation = false;
             return true;
         }
 
         return false;
+    }
+
+    private function canReceiveMail(User $user): bool
+    {
+        if ($user->email === null) {
+            return false;
+        }
+
+        return $this->canReceiveByTarget($user, MailTarget::class);
+    }
+    
+    private function canReceivePush(User $user): bool
+    {
+        return $this->canReceiveByTarget($user, MobileTarget::class);
     }
 
     private function getNotificationCategory(): NotificationCategory
@@ -105,6 +125,10 @@ class MessageNotification extends BaseObject
 
     private function sendMail(User $user)
     {
+        if (!$this->canReceiveMail($user)) {
+            return;
+        }
+
         Yii::$app->i18n->setUserLocale($user);
 
         $mail = Yii::$app->mailer->compose([
@@ -128,6 +152,28 @@ class MessageNotification extends BaseObject
         $mail->send();
 
         Yii::$app->i18n->autosetLocale();
+    }
+    
+    private function sendPush(User $user)
+    {
+        $fcmModule = Yii::$app->getModule('fcm-push');
+        if (!$fcmModule || !$fcmModule->isActivated) {
+            return;
+        }
+        if (!$this->canReceivePush($user)) {
+            return;
+        }
+
+        $firebaseService = new \humhub\modules\fcmPush\services\MessagingService($fcmModule->getConfigureForm());
+
+        $firebaseService->processMessage(
+            $user,
+            Yii::$app->name,
+            $this->getSubHeadline(),
+            Url::toMessenger($this->message, true),
+            null,
+            null
+        );
     }
 
     protected function getContent(User $user)

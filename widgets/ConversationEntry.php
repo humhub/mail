@@ -12,7 +12,6 @@ use humhub\libs\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
-use Imagine\Image\Palette\RGB;
 use Yii;
 
 class ConversationEntry extends JsWidget
@@ -62,7 +61,6 @@ class ConversationEntry extends JsWidget
         return $this->render('conversationEntry', [
             'entry' => $this->entry,
             'contentClass' => $this->getContentClass(),
-            'contentColor' => $this->getContentColor(),
             'showUser' => $showUser,
             'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
@@ -89,18 +87,6 @@ class ConversationEntry extends JsWidget
         return $result;
     }
 
-    private function getContentColor(): ?string
-    {
-        if (!$this->isOwnMessage()) {
-            return null;
-        }
-
-        $rgb = new RGB();
-        $color = $rgb->color($this->view->theme->variable('info'), 12);
-
-        return sprintf('rgba(%s, %s, %s, %s)', $color->getRed(), $color->getGreen(), $color->getBlue(), $color->getAlpha()/100);
-    }
-
     private function isOwnMessage(): bool
     {
         return $this->entry->user->is(Yii::$app->user->getIdentity());
@@ -116,7 +102,7 @@ class ConversationEntry extends JsWidget
 
     public function getAttributes()
     {
-        $result =  [
+        $result = [
             'class' => 'media mail-conversation-entry'
         ];
 
@@ -138,7 +124,7 @@ class ConversationEntry extends JsWidget
 
     private function showUser(): bool
     {
-        return !$this->isOwnMessage() && $this->entry->message->getUsers()->count() > 2;
+        return !$this->isOwnMessage();
     }
 
     private function getUserColor(): string

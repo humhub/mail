@@ -6,11 +6,11 @@ namespace humhub\modules\mail\widgets;
 
 use DateTime;
 use DateTimeZone;
-use Egulias\EmailValidator\Result\Reason\DotAtEnd;
 use humhub\components\Widget;
 use humhub\libs\Html;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
@@ -61,37 +61,60 @@ class InboxMessagePreview extends Widget
         return $this->_message;
     }
 
-    private function lastParticipant(): User
+    private function lastParticipant(): ?User
     {
         return $this->isGroupChat()
             ? $this->getLastEntry()->user
             : $this->getMessage()->getLastActiveParticipant();
     }
 
+    private function getUsername(): string
+    {
+        $user = $this->lastParticipant();
+        $profile = $user->profile;
+
+        if ($profile === null || Yii::$app->settings->get('displayNameFormat') != '{profile.firstname} {profile.lastname}') {
+            return $user->displayName;
+        }
+
+        $lastname = $this->isGroupChat()
+            ? mb_substr($profile->lastname, 0, 1)
+            : $profile->lastname;
+
+        return $profile->firstname . ' ' . $lastname;
+    }
+
     private function getMessageTitle(): string
     {
-        $profile = $this->lastParticipant()->profile;
-
         if ($this->isGroupChat()) {
-            $lastname = substr($profile->lastname, 0, 1);
             $suffix = ', ' . Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', [
                 'n' => $this->getMessage()->getUsersCount() - 2
             ]);
         } else {
-            $lastname = $profile->lastname;
             $suffix = '';
         }
 
-        return $profile->firstname . ' ' . $lastname . $suffix;
+        return $this->getUsername() . $suffix;
     }
 
     private function getMessagePreview(): string
     {
+        switch ($this->getLastEntry()->type) {
+            case AbstractMessageEntry::TYPE_USER_JOINED:
+                return $this->isOwnLastEntry()
+                    ? Yii::t('MailModule.base', 'You joined the conversation.')
+                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->getUsername()]);
+
+            case AbstractMessageEntry::TYPE_USER_LEFT:
+                return $this->isOwnLastEntry()
+                    ? Yii::t('MailModule.base', 'You left the conversation.')
+                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->getUsername()]);
+        }
+
         if ($this->isGroupChat()) {
-            $lastUser = $this->getLastEntry()->user;
-            $prefix = $lastUser->is(Yii::$app->user->getIdentity())
+            $prefix = $this->isOwnLastEntry()
                 ? Yii::t('MailModule.base', 'You')
-                : Html::encode($lastUser->profile->firstname . ' ' . substr($lastUser->profile->lastname, 0, 1));
+                : Html::encode($this->getUsername());
             $prefix .= ': ';
         } else {
             $prefix = '';
@@ -102,7 +125,8 @@ class InboxMessagePreview extends Widget
 
     private function getMessageTime(): string
     {
-        $datetime = new DateTime($this->getMessage()->updated_at, new DateTimeZone(Yii::$app->timeZone));
+        $datetime = $this->getMessage()->updated_at ?? $this->getMessage()->created_at;
+        $datetime = new DateTime($datetime, new DateTimeZone(Yii::$app->timeZone));
 
         if ($datetime->format('Y-m-d') === date('Y-m-d')) {
             // Show time for today
@@ -132,5 +156,17 @@ class InboxMessagePreview extends Widget
     private function isGroupChat(): bool
     {
         return $this->getMessage()->getUsersCount() > 2;
+    }
+
+    private function isOwnLastEntry(): bool
+    {
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+
+        $lastEntryUser = $this->getLastEntry()->user;
+
+        return $lastEntryUser instanceof User &&
+            $lastEntryUser->is(Yii::$app->user->getIdentity());
     }
 }
