@@ -70,7 +70,12 @@ class InboxMessagePreview extends Widget
 
     private function getUsername(): string
     {
-        $profile = $this->lastParticipant()->profile;
+        $user = $this->lastParticipant();
+        $profile = $user->profile;
+
+        if ($profile === null || Yii::$app->settings->get('displayNameFormat') != '{profile.firstname} {profile.lastname}') {
+            return $user->displayName;
+        }
 
         $lastname = $this->isGroupChat()
             ? mb_substr($profile->lastname, 0, 1)
@@ -107,10 +112,9 @@ class InboxMessagePreview extends Widget
         }
 
         if ($this->isGroupChat()) {
-            $lastUser = $this->getLastEntry()->user;
             $prefix = $this->isOwnLastEntry()
                 ? Yii::t('MailModule.base', 'You')
-                : Html::encode($lastUser->profile->firstname . ' ' . mb_substr($lastUser->profile->lastname, 0, 1));
+                : Html::encode($this->getUsername());
             $prefix .= ': ';
         } else {
             $prefix = '';
