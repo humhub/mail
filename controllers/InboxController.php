@@ -18,7 +18,10 @@ use Yii;
 class InboxController extends Controller
 {
 
-    public function getAccessRules()
+    /**
+     * @inheritdoc
+     */
+    protected function getAccessRules()
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY]

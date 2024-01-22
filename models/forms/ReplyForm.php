@@ -2,9 +2,9 @@
 
 namespace humhub\modules\mail\models\forms;
 
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
-use humhub\modules\mail\helpers\Url;
 use Yii;
 use yii\base\Model;
 
@@ -69,7 +69,7 @@ class ReplyForm extends Model
 
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -79,10 +79,10 @@ class ReplyForm extends Model
             'content' => $this->message
         ]);
 
-        if($this->reply->save()) {
+        if ($this->reply->save()) {
             $this->reply->refresh(); // Update created_by date, otherwise db expression is set...
             $this->reply->notify();
-            $this->reply->fileManager->attach(Yii::$app->request->post('fileUploaderHiddenGuidField'));
+            $this->reply->fileManager->attach(Yii::$app->request->post('fileList'));
             return true;
         }
 

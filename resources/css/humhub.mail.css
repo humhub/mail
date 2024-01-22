@@ -122,6 +122,7 @@
 .conversation-entry-content .markdown-render {
   float: left;
   width: 100%;
+  min-width: 230px;
 }
 .conversation-blocked-recipient {
   -webkit-filter: grayscale(100%);
@@ -207,15 +208,17 @@
   padding: 10px;
 }
 .mail-message-form .humhub-ui-richtext {
-  padding-right: 45px;
+  padding-right: 105px;
   border-radius: 10px;
 }
-.mail-message-form .reply-button {
+.mail-message-form .upload-buttons {
   position: absolute;
   right: 15px;
   bottom: 15px;
   z-index: 500;
-  border-radius: 4px;
+}
+.mail-message-form .reply-button {
+  margin-left: 0 !important;
 }
 .mail-message-form .help-block {
   margin: 0;
@@ -227,7 +230,7 @@
   margin-top: 3px;
   position: relative;
 }
-.mail-conversation-entry .author-image img {
+.mail-conversation-entry .author-image .img-user {
   max-width: 100%;
 }
 .mail-conversation-entry .author-label {
@@ -333,7 +336,7 @@
     max-height: none !important;
   }
   .mail-conversation-single-message #inbox {
-    max-height: 30vh;
+    max-height: none !important;
   }
   .mail-conversation-single-message .inbox-wrapper {
     display: none;

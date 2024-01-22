@@ -8,7 +8,6 @@
 
 namespace humhub\modules\mail\notifications;
 
-
 use humhub\modules\notification\components\BaseNotification;
 
 class MailNotification extends BaseNotification
