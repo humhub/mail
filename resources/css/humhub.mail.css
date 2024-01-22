@@ -6,18 +6,6 @@
   margin-bottom: 12px;
   font-weight: 600;
 }
-#dropdown-messages .dropdown-footer .btn.btn-default {
-  border: 1px solid var(--default);
-  box-shadow: none;
-}
-#dropdown-messages .dropdown-footer .btn.btn-default:hover {
-  border-color: var(--background3);
-  background: var(--background3);
-}
-#dropdown-messages .dropdown-footer .btn.btn-default:active {
-  border-color: var(--text-color-secondary);
-  background: #FFF;
-}
 #dropdown-messages.dropdown-menu li a {
   font-size: inherit !important;
 }
