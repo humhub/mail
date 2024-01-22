@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.1.2 (Unreleased)
-----------------------
+3.1.2 (January 22, 2024)
+------------------------
 - Enh #353: Tests for `next` version
 - Fix #354: Don't display date badge twice after update a message
 - Fix #356: Fix visibility of the method `Controller::getAccessRules()`
@@ -13,6 +13,8 @@ Changelog
 - Enh #368: Add push notifications when FCM Push Module is active
 - Fix #371: Don't send notification to deactivated user
 - Fix #373: Display full name only when it is configured in general settings
+- Fix #339: Remove deprecated class `humhub\widgets\MarkdownView`
+
 
 3.1.1  (September 19, 2023)
 ---------------------------
