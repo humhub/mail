@@ -12,6 +12,7 @@ Changelog
 - Enh #367: Allow message title and body be provided by `GET` request for new messages
 - Enh #368: Add push notifications when FCM Push Module is active
 - Fix #371: Don't send notification to deactivated user
+- Fix #373: Display full name only when it is configured in general settings
 
 3.1.1  (September 19, 2023)
 ---------------------------
