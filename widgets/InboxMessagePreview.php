@@ -71,6 +71,10 @@ class InboxMessagePreview extends Widget
     private function getUsername(): string
     {
         $user = $this->lastParticipant();
+        if (!$user) {
+            return Yii::t('MailModule.base', 'Deleted user');
+        }
+
         $profile = $user->profile;
 
         if ($profile === null || Yii::$app->settings->get('displayNameFormat') != '{profile.firstname} {profile.lastname}') {

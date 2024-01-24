@@ -4,6 +4,7 @@ Changelog
 Unreleased
 ------------------------
 - Fix #369: Misplaced Online dot
+- Fix #374: Fix displaying of deleted user
 
 3.1.2 (January 22, 2024)
 ------------------------
