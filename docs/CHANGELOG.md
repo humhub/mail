@@ -1,20 +1,23 @@
 Changelog
 =========
 
+Unreleased
+------------------------
+- Fix #369: Misplaced Online dot
+
 3.1.2 (January 22, 2024)
 ------------------------
 - Enh #353: Tests for `next` version
 - Fix #354: Don't display date badge twice after update a message
 - Fix #356: Fix visibility of the method `Controller::getAccessRules()`
 - Fix #358: Fix sending email notification to deleted users
-- Fix #361: Encoding issue 
+- Fix #361: Encoding issue
 - Enh #364: Confirm before leaving a filled message form
 - Enh #367: Allow message title and body be provided by `GET` request for new messages
 - Enh #368: Add push notifications when FCM Push Module is active
 - Fix #371: Don't send notification to deactivated user
 - Fix #373: Display full name only when it is configured in general settings
 - Fix #339: Remove deprecated class `humhub\widgets\MarkdownView`
-
 
 3.1.1  (September 19, 2023)
 ---------------------------
@@ -50,7 +53,7 @@ Changelog
 - Fix #283: Add markdown-render class to Markdown text for Translator module to work
 - Fix #272: Exclude invisible users from recipients
 - Fix #280: Update styles of message block
-- Enh #274: Browser Tab Indicator on New Unread Message 
+- Enh #274: Browser Tab Indicator on New Unread Message
 
 2.1.0  (December 7, 2021)
 -------------------------
@@ -68,7 +71,7 @@ Changelog
 2.0.6  (April 8, 2021)
 ----------------------
 - Enh: Use controller config for not intercepted actions
-- Enh #217: RESTFul API Module Support 
+- Enh #217: RESTFul API Module Support
 
 2.0.5 - January 21, 2021
 ------------------------
