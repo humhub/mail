@@ -70,9 +70,14 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/mail/user-list', 'id' => $message->id]);
     }
 
+    public static function toMarkUnreadConversation(Message $message)
+    {
+        return static::to(['/mail/mail/mark-unread', 'id' => $message->id]);
+    }
+
     public static function toLeaveConversation(Message $message)
     {
-        return static::to(["/mail/mail/leave", 'id' => $message->id]);
+        return static::to(['/mail/mail/leave', 'id' => $message->id]);
     }
 
     public static function toMessenger(Message $message = null, $scheme = false)

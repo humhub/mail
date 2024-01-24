@@ -796,10 +796,21 @@ humhub.module('mail.conversation', function (module, require, $) {
         });
     };
 
+    var markUnmark = function (evt) {
+        client.post(evt).then(function (response) {
+            if (response.redirect) {
+                client.pjax.redirect(response.redirect);
+            }
+        }).catch(function (e) {
+            module.log.error(e, true);
+        });
+    };
+
     module.export({
-        init: init,
-        leave: leave,
-        submitEditEntry: submitEditEntry,
-        deleteEntry: deleteEntry,
+        init,
+        leave,
+        markUnmark,
+        submitEditEntry,
+        deleteEntry,
     });
 });

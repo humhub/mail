@@ -116,16 +116,8 @@ class UserMessage extends ActiveRecord
             ->orderBy('message.updated_at DESC');
     }
 
-    public function isUnread($userId = null)
+    public function isUnread(): bool
     {
-        if ($userId === null) {
-            $userId = Yii::$app->user->id;
-        }
-
-        if($this->message->lastEntry && ($this->message->lastEntry->user_id === $userId)) {
-            return false;
-        }
-
         return $this->message->updated_at > $this->last_viewed;
     }
 

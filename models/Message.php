@@ -234,6 +234,24 @@ class Message extends ActiveRecord
     }
 
     /**
+     * Mark this message as unread
+     *
+     * @param int $userId
+     */
+    public function markUnread($userId)
+    {
+        $userMessage = UserMessage::findOne([
+            'message_id' => $this->id,
+            'user_id' => $userId
+        ]);
+
+        if ($userMessage) {
+            $userMessage->last_viewed = null;
+            $userMessage->save();
+        }
+    }
+
+    /**
      * User leaves a message
      *
      * If it's the last user, the whole message will be deleted.

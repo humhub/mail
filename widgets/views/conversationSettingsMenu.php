@@ -45,6 +45,12 @@ if (!$isSingleParticipant) {
         <?php endif; ?>
 
         <li>
+            <?= Link::none(Yii::t('MailModule.base', 'Mark Unread'))
+                ->action('mail.conversation.markUnmark', Url::toMarkUnreadConversation($message))
+                ->icon('eye-slash') ?>
+        </li>
+
+        <li>
             <?= Link::none($leaveLinkText)
                 ->action('mail.conversation.leave', Url::toLeaveConversation($message))
                 ->confirm($leaveConfirmTitle, $leaveConfirmText, $leaveConfirmButtonText)
