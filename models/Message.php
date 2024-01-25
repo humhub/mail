@@ -419,6 +419,12 @@ class Message extends ActiveRecord
 
     public function getPinIcon($userId = null): ?Icon
     {
-        return $this->isPinned($userId) ? Icon::get('thumb-tack') : null;
+        if ($this->isPinned($userId)) {
+            return Icon::get('map-pin')
+                ->tooltip(Yii::t('MailModule.base', 'Pinned'))
+                ->color(Yii::$app->view->theme->variable('danger', 'red'));
+        }
+
+        return null;
     }
 }
