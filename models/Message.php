@@ -281,11 +281,11 @@ class Message extends ActiveRecord
      *
      * If it's the last user, the whole message will be deleted.
      *
-     * @param int $userId
+     * @param int|null $userId
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function leave($userId)
+    public function leave($userId = null)
     {
         $userMessage = $this->getUserMessage($userId);
         if (!$userMessage) {
