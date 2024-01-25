@@ -2,6 +2,7 @@
 
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
+use humhub\modules\mail\widgets\PinLink;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\Link;
 use humhub\widgets\ModalButton;
@@ -46,13 +47,17 @@ if (!$isSingleParticipant) {
 
         <li>
             <?= Link::none(Yii::t('MailModule.base', 'Mark Unread'))
-                ->action('mail.conversation.markUnmark', Url::toMarkUnreadConversation($message))
+                ->action('mail.conversation.linkAction', Url::toMarkUnreadConversation($message))
                 ->icon('eye-slash') ?>
         </li>
 
         <li>
+            <?= PinLink::widget(['message' => $message]) ?>
+        </li>
+
+        <li>
             <?= Link::none($leaveLinkText)
-                ->action('mail.conversation.leave', Url::toLeaveConversation($message))
+                ->action('mail.conversation.linkAction', Url::toLeaveConversation($message))
                 ->confirm($leaveConfirmTitle, $leaveConfirmText, $leaveConfirmButtonText)
                 ->icon('sign-out')
                 ->loader(false) ?>

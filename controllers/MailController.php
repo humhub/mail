@@ -205,7 +205,7 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $query = UserMessage::findByUser(null, 'message.updated_at DESC')->limit(5);
+        $query = UserMessage::findByUser()->limit(5);
         return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
     }
 
@@ -349,13 +349,47 @@ class MailController extends Controller
     public function actionMarkUnread($id)
     {
         $this->forcePostRequest();
-        $this->getMessage($id, true)->markUnread(Yii::$app->user->id);
+        $this->getMessage($id, true)->markUnread();
 
         $nextReadMessage = $this->getNextReadMessage($id);
 
         return $this->asJson([
             'success' => true,
             'redirect' => $nextReadMessage ? Url::toMessenger($nextReadMessage) : Url::to(['/dashboard'])
+        ]);
+    }
+
+    /**
+     * Pin a Conversation
+     *
+     * @param int $id
+     */
+    public function actionPin($id)
+    {
+        $this->forcePostRequest();
+        $message = $this->getMessage($id, true);
+        $message->pin();
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::toMessenger($message)
+        ]);
+    }
+
+    /**
+     * Unpin a Conversation
+     *
+     * @param int $id
+     */
+    public function actionUnpin($id)
+    {
+        $this->forcePostRequest();
+        $message = $this->getMessage($id, true);
+        $message->unpin();
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::toMessenger($message)
         ]);
     }
 
@@ -373,7 +407,7 @@ class MailController extends Controller
     public function actionLeave($id)
     {
         $this->forcePostRequest();
-        $this->getMessage($id, true)->leave(Yii::$app->user->id);
+        $this->getMessage($id, true)->leave();
 
         return $this->asJson([
             'success' => true,
@@ -484,7 +518,10 @@ class MailController extends Controller
             ->where(['user_id' => Yii::$app->user->id])
             ->andWhere(['!=', 'message_id', $id])
             ->andWhere(['<=', 'last_viewed', 'updated_at'])
-            ->orderBy(['updated_at' => SORT_DESC])
+            ->orderBy([
+                'user_message.pinned' => SORT_DESC,
+                'message.updated_at' => SORT_DESC
+            ])
             ->one();
     }
 }
