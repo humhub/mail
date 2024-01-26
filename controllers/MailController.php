@@ -517,7 +517,7 @@ class MailController extends Controller
             ->leftJoin('user_message', 'user_message.message_id = message.id')
             ->where(['user_id' => Yii::$app->user->id])
             ->andWhere(['!=', 'message_id', $id])
-            ->andWhere(['<=', 'last_viewed', 'updated_at'])
+            ->andWhere('user_message.last_viewed >= message.updated_at')
             ->orderBy([
                 'user_message.pinned' => SORT_DESC,
                 'message.updated_at' => SORT_DESC
