@@ -1,10 +1,11 @@
 Changelog
 =========
 
-Unreleased
+
+3.2.0 (January 29, 2024)
 ------------------------
-- Fix #369: Misplaced Online dot
 - Enh #377: New features: Unread & Pinned
+- Fix #369: Misplaced Online dot
 
 3.1.2 (January 22, 2024)
 ------------------------
