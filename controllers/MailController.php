@@ -205,7 +205,7 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $query = UserMessage::findByUser(null, 'message.updated_at DESC')->limit(5);
+        $query = UserMessage::findByUser()->limit(5);
         return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
     }
 
@@ -342,6 +342,58 @@ class MailController extends Controller
     }
 
     /**
+     * Mark a Conversation as unread
+     *
+     * @param int $id
+     */
+    public function actionMarkUnread($id)
+    {
+        $this->forcePostRequest();
+        $this->getMessage($id, true)->markUnread();
+
+        $nextReadMessage = $this->getNextReadMessage($id);
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => $nextReadMessage ? Url::toMessenger($nextReadMessage) : Url::to(['/dashboard'])
+        ]);
+    }
+
+    /**
+     * Pin a Conversation
+     *
+     * @param int $id
+     */
+    public function actionPin($id)
+    {
+        $this->forcePostRequest();
+        $message = $this->getMessage($id, true);
+        $message->pin();
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::toMessenger($message)
+        ]);
+    }
+
+    /**
+     * Unpin a Conversation
+     *
+     * @param int $id
+     */
+    public function actionUnpin($id)
+    {
+        $this->forcePostRequest();
+        $message = $this->getMessage($id, true);
+        $message->unpin();
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::toMessenger($message)
+        ]);
+    }
+
+    /**
      * Leave Message / Conversation
      *
      * Leave is only possible when at least two people are in the
@@ -355,7 +407,7 @@ class MailController extends Controller
     public function actionLeave($id)
     {
         $this->forcePostRequest();
-        $this->getMessage($id, true)->leave(Yii::$app->user->id);
+        $this->getMessage($id, true)->leave();
 
         return $this->asJson([
             'success' => true,
@@ -441,18 +493,15 @@ class MailController extends Controller
      *
      * @param int $id
      * @param bool $throw
-     * @return Message
+     * @return Message|null
      * @throws HttpException
      */
-    private function getMessage($id, $throw = false)
+    private function getMessage($id, $throw = false): ?Message
     {
         $message = Message::findOne(['id' => $id]);
 
-        if ($message) {
-            $userMessage = $message->getUserMessage();
-            if ($userMessage != null) {
-                return $message;
-            }
+        if ($message && $message->getUserMessage() !== null) {
+            return $message;
         }
 
         if ($throw) {
@@ -460,5 +509,19 @@ class MailController extends Controller
         }
 
         return null;
+    }
+
+    private function getNextReadMessage($id): ?Message
+    {
+        return Message::find()
+            ->leftJoin('user_message', 'user_message.message_id = message.id')
+            ->where(['user_id' => Yii::$app->user->id])
+            ->andWhere(['!=', 'message_id', $id])
+            ->andWhere('user_message.last_viewed >= message.updated_at')
+            ->orderBy([
+                'user_message.pinned' => SORT_DESC,
+                'message.updated_at' => SORT_DESC
+            ])
+            ->one();
     }
 }

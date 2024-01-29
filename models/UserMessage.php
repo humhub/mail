@@ -22,6 +22,7 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $pinned
  *
  * @property-read Message $message
  * @property-read User $user
@@ -113,19 +114,14 @@ class UserMessage extends ActiveRecord
 
         return static::find()->joinWith('message')
             ->where(['user_message.user_id' => $userId])
-            ->orderBy('message.updated_at DESC');
+            ->orderBy([
+                'user_message.pinned' => SORT_DESC,
+                'message.updated_at' => SORT_DESC
+            ]);
     }
 
-    public function isUnread($userId = null)
+    public function isUnread(): bool
     {
-        if ($userId === null) {
-            $userId = Yii::$app->user->id;
-        }
-
-        if($this->message->lastEntry && ($this->message->lastEntry->user_id === $userId)) {
-            return false;
-        }
-
         return $this->message->updated_at > $this->last_viewed;
     }
 

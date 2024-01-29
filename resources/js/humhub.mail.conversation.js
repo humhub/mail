@@ -87,7 +87,7 @@ humhub.module('mail.conversation', function (module, require, $) {
         });
     };
 
-    var leave = function (evt) {
+    var linkAction = function (evt) {
         client.post(evt).then(function (response) {
             if (response.redirect) {
                 client.pjax.redirect(response.redirect);
@@ -98,9 +98,9 @@ humhub.module('mail.conversation', function (module, require, $) {
     };
 
     module.export({
-        init: init,
-        leave: leave,
-        submitEditEntry: submitEditEntry,
-        deleteEntry: deleteEntry,
+        init,
+        linkAction,
+        submitEditEntry,
+        deleteEntry,
     });
 });

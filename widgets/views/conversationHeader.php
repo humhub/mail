@@ -7,7 +7,7 @@ use humhub\modules\mail\widgets\ParticipantUserList;
 
 /* @var $message Message */
 ?>
-<h1><?= Html::encode($message->title) ?></h1>
+<h1><?= Html::encode($message->title) . ' ' . $message->getPinIcon() ?></h1>
 
 <div class="pull-right">
     <?= ConversationSettingsMenu::widget(['message' => $message]) ?>

@@ -5,6 +5,7 @@ namespace humhub\modules\mail\models;
 
 use humhub\components\ActiveRecord;
 use humhub\modules\mail\Module;
+use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\helpers\Html;
@@ -105,12 +106,15 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @param null $userId
+     * @param int|null $userId
      * @return UserMessage|null
      */
     public function getUserMessage($userId = null)
     {
         if (!$userId) {
+            if (Yii::$app->user->isGuest) {
+                return null;
+            }
             $userId = Yii::$app->user->id;
         }
 
@@ -234,22 +238,57 @@ class Message extends ActiveRecord
     }
 
     /**
+     * Mark this message as unread
+     *
+     * @param int|null $userId
+     */
+    public function markUnread($userId = null)
+    {
+        $userMessage = $this->getUserMessage($userId);
+        if ($userMessage) {
+            $userMessage->last_viewed = null;
+            $userMessage->save();
+        }
+    }
+
+    /**
+     * Pin this message
+     *
+     * @param int|null $userId
+     * @param bool $pin
+     */
+    public function pin($userId = null, bool $pin = true)
+    {
+        $userMessage = $this->getUserMessage($userId);
+        if ($userMessage) {
+            $userMessage->pinned = $pin;
+            $userMessage->save();
+        }
+    }
+
+    /**
+     * Unpin this message
+     *
+     * @param int|null $userId
+     */
+    public function unpin($userId = null)
+    {
+        $this->pin($userId, false);
+    }
+
+    /**
      * User leaves a message
      *
      * If it's the last user, the whole message will be deleted.
      *
-     * @param int $userId
+     * @param int|null $userId
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function leave($userId)
+    public function leave($userId = null)
     {
-        $userMessage = UserMessage::findOne([
-            'message_id' => $this->id,
-            'user_id' => $userId
-        ]);
-
-        if(!$userMessage) {
+        $userMessage = $this->getUserMessage($userId);
+        if (!$userMessage) {
             return;
         }
 
@@ -370,5 +409,22 @@ class Message extends ActiveRecord
         }
 
         return false;
+    }
+
+    public function isPinned($userId = null): bool
+    {
+        $userMessage = $this->getUserMessage($userId);
+        return $userMessage && $userMessage->pinned;
+    }
+
+    public function getPinIcon($userId = null): ?Icon
+    {
+        if ($this->isPinned($userId)) {
+            return Icon::get('map-pin')
+                ->tooltip(Yii::t('MailModule.base', 'Pinned'))
+                ->color(Yii::$app->view->theme->variable('danger', 'red'));
+        }
+
+        return null;
     }
 }
