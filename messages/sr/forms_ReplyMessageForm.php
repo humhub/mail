@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Message' => '',
-];
+return array (
+  'Message' => 'Poruka',
+);
