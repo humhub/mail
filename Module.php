@@ -3,6 +3,7 @@
 namespace humhub\modules\mail;
 
 use humhub\components\console\Application as ConsoleApplication;
+use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\notifications\MailNotification;
 use humhub\modules\mail\notifications\ConversationNotification;
 use humhub\modules\mail\permissions\StartConversation;
@@ -108,6 +109,18 @@ class Module extends \humhub\components\Module
     public function hideInTopNav()
     {
         return !$this->settings->get('showInTopNav', false);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function disable()
+    {
+        foreach (MessageEntry::find()->each() as $messageEntry) {
+            $messageEntry->delete();
+        }
+
+        parent::disable();
     }
 
 }
