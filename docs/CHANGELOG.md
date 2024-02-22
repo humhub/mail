@@ -1,6 +1,9 @@
 Changelog
 =========
 
+3.2.1 (Unreleased)
+------------------------
+- Enh #370: Remove message entries on disable module
 
 3.2.0 (January 29, 2024)
 ------------------------
