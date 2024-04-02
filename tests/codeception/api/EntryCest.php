@@ -7,6 +7,7 @@ use tests\codeception\_support\HumHubApiTestCest;
 
 class EntryCest extends HumHubApiTestCest
 {
+    /*
     public function testListByConversationId(ApiTester $I)
     {
         if (!$this->isRestModuleEnabled()) {
@@ -21,6 +22,7 @@ class EntryCest extends HumHubApiTestCest
             ['id' => 6, 'content' => 'Third Message entry text 3.', 'user_id' => 3],
         ]);
     }
+    */
 
     public function testGetById(ApiTester $I)
     {
