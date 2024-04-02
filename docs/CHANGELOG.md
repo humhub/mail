@@ -5,6 +5,9 @@ Changelog
 ------------------------
 - Enh #370: Remove message entries on disable module
 
+
+
+
 3.2.0 (January 29, 2024)
 ------------------------
 - Enh #377: New features: Unread & Pinned
