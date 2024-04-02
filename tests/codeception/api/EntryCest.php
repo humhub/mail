@@ -7,7 +7,6 @@ use tests\codeception\_support\HumHubApiTestCest;
 
 class EntryCest extends HumHubApiTestCest
 {
-    /*
     public function testListByConversationId(ApiTester $I)
     {
         if (!$this->isRestModuleEnabled()) {
@@ -16,13 +15,13 @@ class EntryCest extends HumHubApiTestCest
 
         $I->wantTo('see entries of the conversation by id');
         $I->amAdmin();
+        sleep(10);
         $I->seePaginationGetResponse('mail/3/entries', [
             ['id' => 4, 'content' => 'Third Message entry text 1.', 'user_id' => 1],
             ['id' => 5, 'content' => 'Third Message entry text 2.', 'user_id' => 2],
             ['id' => 6, 'content' => 'Third Message entry text 3.', 'user_id' => 3],
         ]);
     }
-    */
 
     public function testGetById(ApiTester $I)
     {
