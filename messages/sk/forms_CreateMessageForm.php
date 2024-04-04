@@ -3,5 +3,5 @@ return array (
   'Message' => 'Správa',
   'Recipient' => '',
   'Subject' => 'Predmet',
-  'Tags' => '',
+  'Tags' => 'Značky',
 );
