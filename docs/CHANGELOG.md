@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.2.1 (Unreleased)
-------------------------
+3.2.1 (April 15, 2024)
+----------------------
 - Enh #370: Remove message entries on disable module
 - Fix #385: Fix undefined conversation view
 
