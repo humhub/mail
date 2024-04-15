@@ -8,18 +8,20 @@
 
 namespace humhub\modules\mail;
 
+use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\Config;
+use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\UserMessageTag;
-use humhub\modules\mail\permissions\StartConversation;
-use humhub\modules\user\models\User;
-use Yii;
-use humhub\modules\mail\helpers\Url;
-use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\mail\permissions\StartConversation;
+use humhub\modules\mail\search\SearchProvider;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\NotificationInbox;
-use humhub\modules\mail\permissions\SendMail;
-use humhub\modules\mail\models\Config;
+use humhub\widgets\MetaSearchWidget;
+use humhub\modules\user\models\User;
+use Yii;
 
 /**
  * Description of Events
@@ -28,7 +30,6 @@ use humhub\modules\mail\models\Config;
  */
 class Events
 {
-
     /**
      * @param $event
      */
@@ -216,6 +217,18 @@ class Events
             ['pattern' => 'mail/<messageId:\d+>/tags', 'route' => 'mail/rest/tag/update', 'verb' => 'PUT'],
 
         ], 'mail');
+    }
+
+    public static function onMetaSearchWidgetInit($event)
+    {
+        if (Yii::$app->user->isGuest) {
+            return;
+        }
+
+        /* @var MetaSearchWidget $widget */
+        $widget = $event->sender;
+
+        $widget->addProvider(SearchProvider::class);
     }
 
 }
