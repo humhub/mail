@@ -8,6 +8,7 @@
 namespace humhub\modules\mail\search;
 
 use humhub\interfaces\MetaSearchProviderInterface;
+use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\services\MetaSearchService;
 use Yii;
 
@@ -18,7 +19,7 @@ class SearchProvider implements MetaSearchProviderInterface
 {
     private ?MetaSearchService $service = null;
     public ?string $keyword = null;
-    public string|array|null $route = '/mail/search';
+    public string|array|null $route = '/mail/mail/index';
 
     /**
      * @inheritdoc
@@ -67,18 +68,18 @@ class SearchProvider implements MetaSearchProviderInterface
      */
     public function getResults(int $maxResults): array
     {
-        $resultSet = (new SearchDriver())->search(new SearchRequest([
-            'keyword' => $this->getKeyword(),
-            'pageSize' => $maxResults,
-        ]));
+        $filter = new InboxFilterForm(['term' => $this->getKeyword()]);
+        $filter->apply();
+        $totalCount = $filter->query->count();
+        $resultsQuery = $filter->query->limit($maxResults);
 
         $results = [];
-        foreach ($resultSet->results as $entry) {
-            $results[] = new SearchRecord($entry);
+        foreach ($resultsQuery->all() as $userMessage) {
+            $results[] = new SearchRecord($userMessage);
         }
 
         return [
-            'totalCount' => 10,
+            'totalCount' => $totalCount,
             'results' => $results,
         ];
     }

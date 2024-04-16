@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.2.2 (Unreleased)
+----------------------
+- Enh #382: Implement provider for meta searching
+
 3.2.1 (April 15, 2024)
 ----------------------
 - Enh #370: Remove message entries on disable module

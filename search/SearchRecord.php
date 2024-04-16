@@ -8,24 +8,23 @@
 namespace humhub\modules\mail\search;
 
 use humhub\interfaces\MetaSearchResultInterface;
-use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\helpers\Url;
-use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\widgets\InboxMessagePreview;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
-use Yii;
 
 /**
  * Search Record for Message Entry
  */
 class SearchRecord implements MetaSearchResultInterface
 {
-    public ?MessageEntry $entry = null;
+    public ?InboxMessagePreview $preview = null;
 
-    public function __construct(MessageEntry $entry)
+    public function __construct(UserMessage $userMessage)
     {
-        $this->entry = $entry;
+        $this->preview = new InboxMessagePreview(['userMessage' => $userMessage]);
     }
 
     /**
@@ -33,17 +32,18 @@ class SearchRecord implements MetaSearchResultInterface
      */
     public function getImage(): string
     {
-        $author = $this->entry->createdBy;
-        if ($author instanceof User) {
+        $lastParticipant = $this->preview->lastParticipant();
+
+        if ($lastParticipant instanceof User) {
             return Image::widget([
-                'user' => $author,
+                'user' => $lastParticipant,
                 'width' => 36,
                 'link' => false,
                 'hideOnlineStatus' => true,
             ]);
-        } else {
-            return Icon::get('envelope');
         }
+
+        return Icon::get('envelope');
     }
 
     /**
@@ -51,7 +51,7 @@ class SearchRecord implements MetaSearchResultInterface
      */
     public function getTitle(): string
     {
-        return RichText::output($this->entry->content, ['record' => $this->entry]);
+        return $this->preview->getMessage()->title;
     }
 
     /**
@@ -59,20 +59,7 @@ class SearchRecord implements MetaSearchResultInterface
      */
     public function getDescription(): string
     {
-        $description = [];
-
-        $author = $this->entry->createdBy;
-        if ($author instanceof User) {
-            $description[] = $author->getDisplayName();
-        }
-
-        if ($this->entry->created_at !== null) {
-            $description[] = Yii::$app->formatter->asDate($this->entry->created_at, 'short');
-        }
-
-        $description[] = $this->entry->message->title;
-
-        return implode(' &middot; ', $description);
+        return $this->preview->getMessagePreview();
     }
 
     /**
@@ -80,6 +67,6 @@ class SearchRecord implements MetaSearchResultInterface
      */
     public function getUrl(): string
     {
-        return Url::toMessenger($this->entry->message);
+        return Url::toMessenger($this->preview->getMessage());
     }
 }
