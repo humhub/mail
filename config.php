@@ -2,7 +2,6 @@
 
 use humhub\commands\IntegrityController;
 use humhub\modules\user\models\User;
-use humhub\widgets\MetaSearchWidget;
 use humhub\widgets\TopMenu;
 use humhub\widgets\NotificationArea;
 use humhub\modules\user\widgets\ProfileHeaderControls;
@@ -18,6 +17,6 @@ return [
         ['class' => ProfileHeaderControls::class, 'event' => ProfileHeaderControls::EVENT_INIT, 'callback' => ['humhub\modules\mail\Events', 'onProfileHeaderControlsInit']],
         ['class' => IntegrityController::class, 'event' => IntegrityController::EVENT_ON_RUN, 'callback' => ['humhub\modules\mail\Events', 'onIntegrityCheck']],
         ['class' => 'humhub\modules\rest\Module', 'event' => 'restApiAddRules', 'callback' => ['humhub\modules\mail\Events', 'onRestApiAddRules']],
-        ['class' => MetaSearchWidget::class, 'event' => MetaSearchWidget::EVENT_INIT, 'callback' => ['humhub\modules\mail\Events', 'onMetaSearchWidgetInit']],
+        ['class' => 'humhub\widgets\MetaSearchWidget', 'event' => 'init', 'callback' => ['humhub\modules\mail\Events', 'onMetaSearchWidgetInit']],
     ],
 ];
