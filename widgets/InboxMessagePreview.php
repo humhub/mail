@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
-
 
 use DateTime;
 use DateTimeZone;
@@ -34,7 +32,7 @@ class InboxMessagePreview extends Widget
             'messageText' => $this->getMessagePreview(),
             'messageTime' => $this->getMessageTime(),
             'lastParticipant' => $this->lastParticipant(),
-            'options' => $this->getOptions()
+            'options' => $this->getOptions(),
         ]);
     }
 
@@ -48,11 +46,11 @@ class InboxMessagePreview extends Widget
                 'message-id' => $message->id,
                 'action-click' => 'mail.notification.loadMessage',
                 'action-url' => Url::toMessenger($message),
-            ]
+            ],
         ];
     }
 
-    private function getMessage(): Message
+    public function getMessage(): Message
     {
         if ($this->_message === null) {
             $this->_message = $this->userMessage->message;
@@ -61,7 +59,7 @@ class InboxMessagePreview extends Widget
         return $this->_message;
     }
 
-    private function lastParticipant(): ?User
+    public function lastParticipant(): ?User
     {
         return $this->isGroupChat()
             ? $this->getLastEntry()->user
@@ -88,7 +86,7 @@ class InboxMessagePreview extends Widget
     {
         if ($this->isGroupChat()) {
             $suffix = ', ' . Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', [
-                'n' => $this->getMessage()->getUsersCount() - 2
+                'n' => $this->getMessage()->getUsersCount() - 2,
             ]);
         } else {
             $suffix = '';
@@ -97,7 +95,7 @@ class InboxMessagePreview extends Widget
         return $this->getUsername() . $suffix;
     }
 
-    private function getMessagePreview(): string
+    public function getMessagePreview(): string
     {
         switch ($this->getLastEntry()->type) {
             case AbstractMessageEntry::TYPE_USER_JOINED:
@@ -131,7 +129,7 @@ class InboxMessagePreview extends Widget
         if ($datetime->format('Y-m-d') === date('Y-m-d')) {
             // Show time for today
             return Yii::$app->formatter->asTime($datetime, 'short');
-        } else if (time() - $datetime->getTimestamp() < 3600 * 24 * 7) {
+        } elseif (time() - $datetime->getTimestamp() < 3600 * 24 * 7) {
             // Show week day for week ago messages
             switch ($datetime->format('w')) {
                 case 0: return Yii::t('MailModule.base', 'Sunday');
