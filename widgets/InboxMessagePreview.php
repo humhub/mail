@@ -155,7 +155,7 @@ class InboxMessagePreview extends Widget
 
     public function getLastEntry(): ?MessageEntry
     {
-        return $this->getMessage()->getLastEntry();
+        return $this->getMessage()->lastEntry;
     }
 
     private function isGroupChat(): bool

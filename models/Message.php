@@ -189,6 +189,7 @@ class Message extends ActiveRecord
         if ($this->_lastEntry === null) {
             $this->_lastEntry = MessageEntry::find()
                 ->where(['message_id' => $this->id])
+                ->andWhere(['not', ['entry_content' => null]])
                 ->orderBy('created_at DESC')
                 ->limit(1)
                 ->one();
@@ -229,7 +230,7 @@ class Message extends ActiveRecord
     public function deleteEntry($entry)
     {
         if ($entry->message->id == $this->id) {
-            if($this->getEntries()->count() > 1) {
+            if ($this->getEntries()->count() > 1) {
                 $entry->delete();
             } else {
                 $this->delete();

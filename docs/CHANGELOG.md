@@ -5,6 +5,7 @@ Unreleased
 ----------------------
 - Enh #382: Implement provider for meta searching
 - Enh #188: Add "Like" to message entries
+- Fix #388: Notification not sent to the participant added to the conversion
 
 3.2.1 (April 15, 2024)
 ----------------------
