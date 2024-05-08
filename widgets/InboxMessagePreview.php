@@ -86,8 +86,8 @@ class InboxMessagePreview extends Widget
     {
         if ($this->isGroupChat()) {
             $suffix = ', ' . Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', [
-                'n' => $this->getMessage()->getUsersCount() - 2,
-            ]);
+                    'n' => $this->getMessage()->getUsersCount() - 2,
+                ]);
         } else {
             $suffix = '';
         }
@@ -118,7 +118,7 @@ class InboxMessagePreview extends Widget
             $prefix = '';
         }
 
-        return $prefix . RichText::preview($this->getLastEntry()->content, 70);
+        return $prefix . RichText::preview($this->getLastEntry()->entry_content, 70);
     }
 
     private function getMessageTime(): string
@@ -132,13 +132,20 @@ class InboxMessagePreview extends Widget
         } elseif (time() - $datetime->getTimestamp() < 3600 * 24 * 7) {
             // Show week day for week ago messages
             switch ($datetime->format('w')) {
-                case 0: return Yii::t('MailModule.base', 'Sunday');
-                case 1: return Yii::t('MailModule.base', 'Monday');
-                case 2: return Yii::t('MailModule.base', 'Tuesday');
-                case 3: return Yii::t('MailModule.base', 'Wednesday');
-                case 4: return Yii::t('MailModule.base', 'Thursday');
-                case 5: return Yii::t('MailModule.base', 'Friday');
-                case 6: return Yii::t('MailModule.base', 'Saturday');
+                case 0:
+                    return Yii::t('MailModule.base', 'Sunday');
+                case 1:
+                    return Yii::t('MailModule.base', 'Monday');
+                case 2:
+                    return Yii::t('MailModule.base', 'Tuesday');
+                case 3:
+                    return Yii::t('MailModule.base', 'Wednesday');
+                case 4:
+                    return Yii::t('MailModule.base', 'Thursday');
+                case 5:
+                    return Yii::t('MailModule.base', 'Friday');
+                case 6:
+                    return Yii::t('MailModule.base', 'Saturday');
             }
         }
 

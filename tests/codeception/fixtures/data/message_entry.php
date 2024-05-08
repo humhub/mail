@@ -18,11 +18,10 @@
  * GNU Affero General Public License for more details.
  */
 return [
-    ['id' => 1, 'message_id' => 1, 'user_id' => 1, 'content' => 'First Message entry text 1.', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
-    ['id' => 2, 'message_id' => 2, 'user_id' => 1, 'content' => 'Second Message entry text 1.', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
-    ['id' => 3, 'message_id' => 2, 'user_id' => 2, 'content' => 'Second Message entry text 2.', 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
-    ['id' => 4, 'message_id' => 3, 'user_id' => 1, 'content' => 'Third Message entry text 1.', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
-    ['id' => 5, 'message_id' => 3, 'user_id' => 2, 'content' => 'Third Message entry text 2.', 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
-    ['id' => 6, 'message_id' => 3, 'user_id' => 3, 'content' => 'Third Message entry text 3.', 'created_by' => 3, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 1, 'message_id' => 1, 'user_id' => 1, 'entry_content' => 'First Message entry text 1.', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 2, 'message_id' => 2, 'user_id' => 1, 'entry_content' => 'Second Message entry text 1.', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 3, 'message_id' => 2, 'user_id' => 2, 'entry_content' => 'Second Message entry text 2.', 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 4, 'message_id' => 3, 'user_id' => 1, 'entry_content' => 'Third Message entry text 1.', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 5, 'message_id' => 3, 'user_id' => 2, 'entry_content' => 'Third Message entry text 2.', 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
+    ['id' => 6, 'message_id' => 3, 'user_id' => 3, 'entry_content' => 'Third Message entry text 3.', 'created_by' => 3, 'created_at' => '2021-03-15 14:38:49'],
 ];
-

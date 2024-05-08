@@ -5,6 +5,7 @@ use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\file\widgets\ShowFiles;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\ConversationDateBadge;
+use humhub\modules\mail\widgets\ConversationEntryLinks;
 use humhub\modules\mail\widgets\ConversationEntryMenu;
 use humhub\modules\mail\widgets\MessageEntryTime;
 use humhub\modules\ui\view\components\View;
@@ -41,10 +42,13 @@ use humhub\modules\user\widgets\Image;
                 <div class="author-label"
                      style="color:<?= $userColor ?>"><?= Html::encode($entry->user->displayName) ?></div>
             <?php endif; ?>
-            <?= RichText::output($entry->content) ?>
+            <?= RichText::output($entry->entry_content) ?>
             <?= ShowFiles::widget(['object' => $entry]) ?>
         </div>
-        <?= MessageEntryTime::widget(['entry' => $entry]) ?>
+        <div class="conversation-entry-controls wall-entry-controls">
+            <?= ConversationEntryLinks::widget(['object' => $entry]) ?>
+            <?= MessageEntryTime::widget(['entry' => $entry]) ?>
+        </div>
     </div>
 
     <?= ConversationEntryMenu::widget(['entry' => $entry]) ?>

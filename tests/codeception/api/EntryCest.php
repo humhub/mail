@@ -16,9 +16,9 @@ class EntryCest extends HumHubApiTestCest
         $I->wantTo('see entries of the conversation by id');
         $I->amAdmin();
         $I->seePaginationGetResponse('mail/3/entries', [
-            ['id' => 4, 'content' => 'Third Message entry text 1.', 'user_id' => 1],
-            ['id' => 5, 'content' => 'Third Message entry text 2.', 'user_id' => 2],
-            ['id' => 6, 'content' => 'Third Message entry text 3.', 'user_id' => 3],
+            ['id' => 4, 'entry_content' => 'Third Message entry text 1.', 'user_id' => 1],
+            ['id' => 5, 'entry_content' => 'Third Message entry text 2.', 'user_id' => 2],
+            ['id' => 6, 'entry_content' => 'Third Message entry text 3.', 'user_id' => 3],
         ]);
     }
 
@@ -34,7 +34,7 @@ class EntryCest extends HumHubApiTestCest
         $I->seeSuccessResponseContainsJson([
             'id' => 3,
             'user_id' => 2,
-            'content' => 'Second Message entry text 2.',
+            'entry_content' => 'Second Message entry text 2.',
         ]);
     }
 
@@ -51,7 +51,7 @@ class EntryCest extends HumHubApiTestCest
         $I->seeSuccessResponseContainsJson([
             'id' => 7,
             'user_id' => 2,
-            'content' => $newMessage,
+            'entry_content' => $newMessage,
         ]);
     }
 
@@ -79,11 +79,11 @@ class EntryCest extends HumHubApiTestCest
         $I->wantTo('update entry by id');
         $I->amAdmin();
         $updatedMessage = 'Updated content of the entry #4';
-        $I->sendPut('mail/3/entry/4', ['content' => $updatedMessage]);
+        $I->sendPut('mail/3/entry/4', ['entry_content' => $updatedMessage]);
         $I->seeSuccessResponseContainsJson([
             'id' => 4,
             'user_id' => 1,
-            'content' => $updatedMessage,
+            'entry_content' => $updatedMessage,
         ]);
     }
 
@@ -96,7 +96,7 @@ class EntryCest extends HumHubApiTestCest
         $I->wantTo('cannot update not own entry');
         $I->amUser1();
         $updatedMessage = 'Updated content of the entry #2';
-        $I->sendPut('mail/3/entry/4', ['content' => $updatedMessage]);
+        $I->sendPut('mail/3/entry/4', ['entry_content' => $updatedMessage]);
         $I->seeForbiddenResponseContainsJson([
             'message' => 'You cannot edit the conversation entry!',
         ]);

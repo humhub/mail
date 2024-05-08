@@ -76,7 +76,7 @@ class ReplyForm extends Model
         $this->reply = new MessageEntry([
             'message_id' => $this->model->id,
             'user_id' => Yii::$app->user->id,
-            'content' => $this->message
+            'entry_content' => $this->message
         ]);
 
         if ($this->reply->save()) {

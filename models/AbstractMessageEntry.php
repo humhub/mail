@@ -7,44 +7,75 @@
 
 namespace humhub\modules\mail\models;
 
-use humhub\components\ActiveRecord;
+use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\live\UserMessageDeleted;
 use humhub\modules\user\models\User;
+use Throwable;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\db\Exception;
+use yii\db\StaleObjectException;
 
 /**
  * This class represents abstract class for normal message and state entries within a conversation.
  *
- * The followings are the available columns in table 'message_entry':
- * @property integer $id
- * @property integer $message_id
- * @property integer $user_id
- * @property string $content
- * @property integer $type
+ * The following are the available columns in table 'message_entry':
+ * @property int $id
+ * @property int $message_id
+ * @property int $user_id
+ * @property string $entry_content
+ * @property int $type
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
  *
- * The followings are the available model relations:
+ * The following are the available model relations:
  * @property Message $message
  * @property User $user
+ * @property-read string $contentName
+ * @property-read string $icon
+ * @property-read string $contentDescription
  *
  * @package humhub.modules.mail.models
  * @since 2.1
  */
-abstract class AbstractMessageEntry extends ActiveRecord
+abstract class AbstractMessageEntry extends ContentActiveRecord
 {
-    const TYPE_MESSAGE = 0;
-    const TYPE_USER_JOINED = 1;
-    const TYPE_USER_LEFT = 2;
+    public const TYPE_MESSAGE = 0;
+    public const TYPE_USER_JOINED = 1;
+    public const TYPE_USER_LEFT = 2;
+
+    /**
+     * @inheritdoc
+     */
+    public $canMove = false;
+    /**
+     * @inheritdoc
+     */
+    public $wallEntryClass = null;
+    /**
+     * @inheritdoc
+     */
+    public $autoFollow = false;
+    /**
+     * @inheritdoc
+     */
+    public $silentContentCreation = true;
+    /**
+     * @inheritdoc
+     */
+    protected $moduleId = 'mail';
+    /**
+     * @inheritdoc
+     */
+    protected $streamChannel = null;
 
     protected bool $requiredContent = true;
 
     /**
-     * Get type of the message entry
+     * Get the type of the message entry
      *
      * @return int
      */
@@ -68,7 +99,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'message_entry';
     }
@@ -76,12 +107,12 @@ abstract class AbstractMessageEntry extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         $requiredColumns = ['message_id', 'user_id'];
 
         if ($this->requiredContent) {
-            $requiredColumns[] = 'content';
+            $requiredColumns[] = 'entry_content';
         }
 
         return [
@@ -94,10 +125,34 @@ abstract class AbstractMessageEntry extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
-        $this->type = $this->type();
+        $this->type = $this::type();
+    }
+
+    /**
+     * @inerhitdoc
+     */
+    public function getContentName(): string
+    {
+        return Yii::t('MailModule.base', "Message");
+    }
+
+    /**
+     * @inerhitdoc
+     */
+    public function getContentDescription(): string
+    {
+        return $this->entry_content;
+    }
+
+    /**
+     * @inerhitdoc
+     */
+    public function getIcon(): string
+    {
+        return 'fa-envelope';
     }
 
     /**
@@ -105,6 +160,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
      * @param User $user
      * @param string|null $content
      * @return self
+     * @throws \yii\base\Exception
      */
     public static function createForMessage(Message $message, User $user, ?string $content = null): self
     {
@@ -112,15 +168,16 @@ abstract class AbstractMessageEntry extends ActiveRecord
         return new static([
             'message_id' => $message->id,
             'user_id' => $user->id,
-            'content' => $content,
+            'entry_content' => $content,
             'type' => static::type(),
         ]);
     }
 
     /**
      * @inheritdoc
+     * @throws Exception
      */
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($this->isNewRecord) {
             // Updates the updated_at attribute
@@ -133,16 +190,27 @@ abstract class AbstractMessageEntry extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function afterSave($insert, $changedAttributes)
+    public function afterSave($insert, $changedAttributes): void
     {
-        RichText::postProcess($this->content, $this);
+        RichText::postProcess($this->entry_content, $this);
         parent::afterSave($insert, $changedAttributes); // TODO: Change the autogenerated stub
+    }
+
+    /**
+     * Force hard deletion (no soft deletion)
+     * @return bool|int
+     * @throws StaleObjectException
+     * @throws Throwable
+     */
+    public function delete(): bool|int
+    {
+        return $this->hardDelete();
     }
 
     /**
      * @inheritdoc
      */
-    public function afterDelete()
+    public function afterDelete(): void
     {
         if ($this->message instanceof Message) {
             foreach ($this->message->users as $user) {
@@ -150,7 +218,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
                     'contentContainerId' => $user->contentcontainer_id,
                     'message_id' => $this->message_id,
                     'entry_id' => $this->id,
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
                 ]));
             }
         }

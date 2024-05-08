@@ -56,7 +56,7 @@ class MessageNotification extends BaseObject
             $isNewConversation = $this->isNewConversation;
 
             $this->sendMail($user);
-            
+
             $this->sendPush($user);
 
             // Restore the flag
@@ -110,7 +110,7 @@ class MessageNotification extends BaseObject
 
         return $this->canReceiveByTarget($user, MailTarget::class);
     }
-    
+
     private function canReceivePush(User $user): bool
     {
         return $this->canReceiveByTarget($user, MobileTarget::class);
@@ -153,7 +153,7 @@ class MessageNotification extends BaseObject
 
         Yii::$app->i18n->autosetLocale();
     }
-    
+
     private function sendPush(User $user)
     {
         $fcmModule = Yii::$app->getModule('fcm-push');
@@ -178,7 +178,7 @@ class MessageNotification extends BaseObject
 
     protected function getContent(User $user)
     {
-        return RichTextToEmailHtmlConverter::process($this->entry->content, [
+        return RichTextToEmailHtmlConverter::process($this->entry->entry_content, [
             RichTextToEmailHtmlConverter::OPTION_RECEIVER_USER => $user,
             RichTextToHtmlConverter::OPTION_LINK_AS_TEXT => true,
             RichTextToHtmlConverter::OPTION_CACHE_KEY => 'mail_entry_message_' . $this->entry->id,
