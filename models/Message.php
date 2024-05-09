@@ -427,4 +427,13 @@ class Message extends ActiveRecord
 
         return null;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function refresh()
+    {
+        $this->_lastEntry = null;
+        return parent::refresh();
+    }
 }
