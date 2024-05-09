@@ -4,6 +4,7 @@ Changelog
 3.2.2 (Unreleased)
 ----------------------
 - Enh #382: Implement provider for meta searching
+- Fix #389: Fix notification about participant joining
 
 3.2.1 (April 15, 2024)
 ----------------------

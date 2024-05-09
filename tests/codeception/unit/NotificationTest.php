@@ -100,13 +100,15 @@ class NotificationTest extends HumHubDbTestCase
     {
         $user2 = User::findOne(['id' => 3]);
         $message = $this->createMessage('First', 'First', [$user2->guid]);
-
+        $this->assertSentEmail(1);
+        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailTo($user2->email);
 
         $user3 = User::findOne(['id' => 4]);
         $inviteForm = new InviteParticipantForm(['message' => $message->messageInstance, 'recipients' => [$user3->guid]]);
         $inviteForm->save();
 
-        $this->assertSentEmail(2);
+        $this->assertSentEmail(3);
         $this->assertEqualsLastEmailSubject('New message from Peter Tester');
         $this->assertEqualsLastEmailTo($user3->email);
     }

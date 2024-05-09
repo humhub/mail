@@ -2,15 +2,15 @@
 
 namespace humhub\modules\mail\models\forms;
 
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageNotification;
 use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\permissions\SendMail;
+use humhub\modules\user\models\User;
 use Yii;
 use yii\base\Model;
-use humhub\modules\user\models\User;
-use humhub\modules\mail\permissions\SendMail;
 use yii\helpers\Html;
-use humhub\modules\mail\helpers\Url;
 
 /**
  * @package humhub.modules.mail.forms
@@ -42,7 +42,7 @@ class InviteParticipantForm extends Model
     {
         return [
             ['recipients', 'required'],
-            ['recipients', 'checkRecipient']
+            ['recipients', 'checkRecipient'],
         ];
     }
 
@@ -72,9 +72,9 @@ class InviteParticipantForm extends Model
                 $name = Html::encode($user->getDisplayName());
                 if (Yii::$app->user->identity->is($user)) {
                     $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "You cannot send a email to yourself!"));
-                } else if($this->message->isParticipant($user)) {
+                } elseif($this->message->isParticipant($user)) {
                     $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "User {name} is already participating!", ['name' => $name]));
-                } else if(!$user->can(SendMail::class) && !Yii::$app->user->isAdmin()){
+                } elseif(!$user->can(SendMail::class) && !Yii::$app->user->isAdmin()) {
                     $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "You are not allowed to send user {name} is already!", ['name' => $name]));
                 } else {
                     $this->recipientUsers[] = $user;
@@ -103,11 +103,14 @@ class InviteParticipantForm extends Model
             $userMessage = new UserMessage([
                 'message_id' => $this->message->id,
                 'user_id' => $user->id,
-                'is_originator' => 0
+                'is_originator' => 0,
             ]);
 
-            if($userMessage->save()) {
-                (new MessageNotification($this->message))->notify($user);
+            if ($userMessage->save()) {
+                $this->message->refresh();
+                (new MessageNotification($this->message))
+                    ->setEntrySender(Yii::$app->user->getIdentity())
+                    ->notifyAll();
             }
         }
 
