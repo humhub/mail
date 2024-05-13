@@ -1,10 +1,11 @@
 Changelog
 =========
 
-3.2.2 (Unreleased)
+Unreleased
 ----------------------
 - Enh #382: Implement provider for meta searching
 - Fix #389: Fix notification about participant joining
+- Enh #188: Add "Like" to message entries
 
 3.2.1 (April 15, 2024)
 ----------------------

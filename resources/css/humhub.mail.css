@@ -241,6 +241,7 @@
   float: right;
   font-size: 10px;
   color: var(--text-color-main);
+  padding-top: 4px;
 }
 .mail-conversation-entry .conversation-entry-time > span {
   font-style: italic;
