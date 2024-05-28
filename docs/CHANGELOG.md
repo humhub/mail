@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.0 (Unreleased)
+----------------------
+- Fix #393: Update module resources path
+
 3.2.2 (Unreleased)
 ----------------------
 - Enh #382: Implement provider for meta searching
