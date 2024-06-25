@@ -15,9 +15,6 @@
 .modal-body #createmessage-message .ProseMirror {
   min-height: 100px !important;
 }
-.media-list li.new {
-  background-color: #e9f9ff;
-}
 #mail-conversation-create-button .fa,
 #create-message-button .fa {
   margin: 0;
