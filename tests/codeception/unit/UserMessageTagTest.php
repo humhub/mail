@@ -18,7 +18,7 @@ class UserMessageTagTest extends HumHubDbTestCase
             'message' => 'Hey!',
             'title' => 'Test Conversation',
             'recipient' => [$user2->guid],
-            'tags' => $tags
+            'tags' => $tags,
         ]);
 
         $this->assertTrue($message->save());
@@ -26,20 +26,20 @@ class UserMessageTagTest extends HumHubDbTestCase
         return $message;
     }
 
-   public function testSingleTagIsCreatedOnMessageCreation()
-   {
-       $message = $this->createMessage( ['_add:TestTag']);
+    public function testSingleTagIsCreatedOnMessageCreation()
+    {
+        $message = $this->createMessage(['_add:TestTag']);
 
-       $this->assertCount(7, MessageTag::find()->all());
-       $this->assertCount(7, UserMessageTag::find()->all());
+        $this->assertCount(7, MessageTag::find()->all());
+        $this->assertCount(7, UserMessageTag::find()->all());
 
-       /** @var MessageTag[] $tag */
-       $tags = MessageTag::findByMessage(Yii::$app->user->id, $message->messageInstance)->all();
-       $this->assertNotNull($tags);
-       $this->assertCount(1, $tags);
-       $this->assertEquals(Yii::$app->user->id, $tags[0]->user_id);
-       $this->assertEquals('TestTag',  $tags[0]->name);
-   }
+        /** @var MessageTag[] $tag */
+        $tags = MessageTag::findByMessage(Yii::$app->user->id, $message->messageInstance)->all();
+        $this->assertNotNull($tags);
+        $this->assertCount(1, $tags);
+        $this->assertEquals(Yii::$app->user->id, $tags[0]->user_id);
+        $this->assertEquals('TestTag', $tags[0]->name);
+    }
 
     public function testMultipleTagIsCreatedOnMessageCreation()
     {
@@ -54,8 +54,8 @@ class UserMessageTagTest extends HumHubDbTestCase
         $this->assertCount(2, $tags);
         $this->assertEquals(Yii::$app->user->id, $tags[0]->user_id);
         $this->assertEquals(Yii::$app->user->id, $tags[1]->user_id);
-        $this->assertEquals('TestTag',  $tags[0]->name);
-        $this->assertEquals('TestTag2',  $tags[1]->name);
+        $this->assertEquals('TestTag', $tags[0]->name);
+        $this->assertEquals('TestTag2', $tags[1]->name);
     }
 
     public function testDuplicateTagIsAttachedOnlyOnce()
@@ -70,7 +70,7 @@ class UserMessageTagTest extends HumHubDbTestCase
         $this->assertNotNull($tags);
         $this->assertCount(1, $tags);
         $this->assertEquals(Yii::$app->user->id, $tags[0]->user_id);
-        $this->assertEquals('TestTag',  $tags[0]->name);
+        $this->assertEquals('TestTag', $tags[0]->name);
     }
 
     public function testMissingTagsAreDeletedOnAttach()

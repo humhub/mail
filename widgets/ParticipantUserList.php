@@ -23,7 +23,7 @@ class ParticipantUserList extends Widget
     public array $limits = [
         2 => ['visible-xs-inline', 'hidden-xs'],
         6 => ['visible-md-inline visible-sm-inline', 'hidden-md hidden-sm'],
-        8 => ['visible-lg-inline', '']
+        8 => ['visible-lg-inline', ''],
     ];
 
     public function run()

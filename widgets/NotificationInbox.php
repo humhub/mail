@@ -10,14 +10,13 @@ use humhub\modules\mail\models\UserMessage;
  */
 class NotificationInbox extends Widget
 {
-
     /**
      * Creates the Wall Widget
      */
     public function run()
     {
         return $this->render('notificationInbox', [
-            'newMailMessageCount' => UserMessage::getNewMessageCount()
+            'newMailMessageCount' => UserMessage::getNewMessageCount(),
         ]);
     }
 }

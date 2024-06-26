@@ -22,4 +22,3 @@ return [
     ['id' => 2, 'title' => 'Second message title', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
     ['id' => 3, 'title' => 'Third message title', 'created_by' => 1, 'created_at' => '2021-03-15 14:38:49'],
 ];
-

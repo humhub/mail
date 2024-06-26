@@ -6,7 +6,6 @@ use humhub\modules\mail\models\MessageEntry;
 
 class m150709_050452_message_tags extends Migration
 {
-
     public function safeUp()
     {
         $this->createTable('message_tag', [
@@ -14,7 +13,7 @@ class m150709_050452_message_tags extends Migration
             'user_id' => $this->integer()->notNull(),
             'name' => $this->string(100)->notNull(),
             'sort_order' => $this->integer(11)->defaultValue(0),
-            'color' => $this->string(7)->null()
+            'color' => $this->string(7)->null(),
         ]);
 
         try {

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
-
 
 use humhub\components\Widget;
 use humhub\modules\mail\models\Message;

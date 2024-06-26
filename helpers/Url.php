@@ -7,7 +7,7 @@ use humhub\modules\mail\models\MessageEntry;
 
 class Url extends \yii\helpers\Url
 {
-    const ROUTE_SEARCH_TAG = '/mail/tag/search';
+    public const ROUTE_SEARCH_TAG = '/mail/tag/search';
 
     public static function toCreateConversation($userGuid = null)
     {
@@ -32,7 +32,7 @@ class Url extends \yii\helpers\Url
 
     public static function toEditMessageEntry(MessageEntry $entry)
     {
-        return static::to( ['/mail/mail/edit-entry', 'id' => $entry->id]);
+        return static::to(['/mail/mail/edit-entry', 'id' => $entry->id]);
     }
 
     public static function toEditConversationTags(Message $message)

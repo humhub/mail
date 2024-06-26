@@ -18,7 +18,6 @@ use yii\helpers\Html;
  */
 class CreateMessage extends Model
 {
-
     public $recipient;
     public $recipientUser;
     public $message;
@@ -55,7 +54,7 @@ class CreateMessage extends Model
         return [
             [['message', 'recipient', 'title'], 'required'],
             [['files', 'tags'], 'safe'],
-            ['recipient', 'checkRecipient']
+            ['recipient', 'checkRecipient'],
         ];
     }
 
@@ -96,9 +95,9 @@ class CreateMessage extends Model
 
             if ($user->isCurrentUser()) {
                 $this->addError($attribute, Yii::t('MailModule.base', 'You cannot send a message to yourself!'));
-            } else if (!$this->canSendToUser($user)) {
+            } elseif (!$this->canSendToUser($user)) {
                 $this->addError($attribute, Yii::t('MailModule.base', 'You are not allowed to start a conversation with {userName}!', [
-                    'userName' => Html::encode($user->getDisplayName())
+                    'userName' => Html::encode($user->getDisplayName()),
                 ]));
             } else {
                 $this->recipients[] = $user;
@@ -187,7 +186,7 @@ class CreateMessage extends Model
     private function saveMessage()
     {
         $this->messageInstance = new Message([
-            'title' => $this->title
+            'title' => $this->title,
         ]);
 
         if (!(new Config())->canCreateConversation(Yii::$app->user->getIdentity())) {

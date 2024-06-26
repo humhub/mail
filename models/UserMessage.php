@@ -14,15 +14,15 @@ use Yii;
  * This is the model class for table "user_message".
  *
  * The followings are the available columns in table 'user_message':
- * @property integer $message_id
- * @property integer $user_id
- * @property integer $is_originator
+ * @property int $message_id
+ * @property int $user_id
+ * @property int $is_originator
  * @property string $last_viewed
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
- * @property integer $pinned
+ * @property int $updated_by
+ * @property int $pinned
  *
  * @property-read Message $message
  * @property-read User $user
@@ -116,7 +116,7 @@ class UserMessage extends ActiveRecord
             ->where(['user_message.user_id' => $userId])
             ->orderBy([
                 'user_message.pinned' => SORT_DESC,
-                'message.updated_at' => SORT_DESC
+                'message.updated_at' => SORT_DESC,
             ]);
     }
 

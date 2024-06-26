@@ -17,14 +17,13 @@ use Yii;
  */
 class InboxController extends Controller
 {
-
     /**
      * @inheritdoc
      */
     protected function getAccessRules()
     {
         return [
-            [ControllerAccess::RULE_LOGGED_IN_ONLY]
+            [ControllerAccess::RULE_LOGGED_IN_ONLY],
         ];
     }
 
@@ -37,7 +36,7 @@ class InboxController extends Controller
     public function actionIndex()
     {
         return ConversationInbox::widget([
-            'filter' => new InboxFilterForm()
+            'filter' => new InboxFilterForm(),
         ]);
     }
 
@@ -57,7 +56,7 @@ class InboxController extends Controller
 
         return $this->asJson([
             'result' => $result,
-            'isLast' => $filter->wasLastPage()
+            'isLast' => $filter->wasLastPage(),
         ]);
 
     }

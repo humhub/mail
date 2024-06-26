@@ -2,7 +2,6 @@
 
 namespace humhub\modules\mail\models;
 
-
 use humhub\components\ActiveRecord;
 use humhub\modules\mail\Module;
 use humhub\modules\ui\icon\widgets\Icon;
@@ -14,12 +13,12 @@ use yii\helpers\Html;
  * This class represents a single conversation.
  *
  * The followings are the available columns in table 'message':
- * @property integer $id
+ * @property int $id
  * @property string $title
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
  * @property-read  User $originator
  * @property-read MessageEntry $lastEntry
  *
@@ -120,7 +119,7 @@ class Message extends ActiveRecord
 
         return UserMessage::findOne([
             'user_id' => $userId,
-            'message_id' => $this->id
+            'message_id' => $this->id,
         ]);
     }
 
@@ -309,7 +308,7 @@ class Message extends ActiveRecord
         // Update User Message Entry
         $userMessage = UserMessage::findOne(array(
             'user_id' => $userId,
-            'message_id' => $this->id
+            'message_id' => $this->id,
         ));
         if ($userMessage !== null) {
             $userMessage->last_viewed = date('Y-m-d G:i:s');
@@ -344,7 +343,7 @@ class Message extends ActiveRecord
         $userMessage = new UserMessage([
             'message_id' => $this->id,
             'user_id' => $recipient->id,
-            'informAfterAdd' => $informAfterAdd
+            'informAfterAdd' => $informAfterAdd,
         ]);
 
         if ($originator) {
