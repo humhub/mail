@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\models\forms;
-
 
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageTag;
@@ -30,7 +28,7 @@ class ConversationTagsForm extends Model
     public function rules()
     {
         return [
-            ['tags', 'safe']
+            ['tags', 'safe'],
         ];
     }
 

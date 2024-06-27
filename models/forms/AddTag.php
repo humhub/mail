@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\models\forms;
-
 
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageTag;

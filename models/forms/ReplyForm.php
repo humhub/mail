@@ -14,7 +14,6 @@ use yii\base\Model;
  */
 class ReplyForm extends Model
 {
-
     /**
      * @var Message
      */
@@ -45,7 +44,7 @@ class ReplyForm extends Model
     {
         if ($this->model->isBlocked()) {
             $this->addError($attribute, Yii::t('MailModule.base', 'You are not allowed to reply to users {userNames}!', [
-                'userNames' => implode(', ', $this->model->getBlockerNames())
+                'userNames' => implode(', ', $this->model->getBlockerNames()),
             ]));
         }
     }
@@ -76,7 +75,7 @@ class ReplyForm extends Model
         $this->reply = new MessageEntry([
             'message_id' => $this->model->id,
             'user_id' => Yii::$app->user->id,
-            'content' => $this->message
+            'content' => $this->message,
         ]);
 
         if ($this->reply->save()) {

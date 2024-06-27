@@ -9,7 +9,6 @@ use humhub\components\Widget;
 
 class NewMessageButton extends Widget
 {
-
     /**
      * @var string
      */
@@ -36,7 +35,7 @@ class NewMessageButton extends Widget
     public $label;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $right = false;
 
@@ -93,5 +92,3 @@ class NewMessageButton extends Widget
             : Yii::t('MailModule.base', 'Message');
     }
 }
-
-?>

@@ -16,7 +16,6 @@ use Yii;
  */
 class StartConversation extends \humhub\libs\BasePermission
 {
-
     /**
      * @inheritdoc
      */

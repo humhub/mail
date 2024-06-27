@@ -24,7 +24,7 @@ class MailNotificationAsset extends AssetBundle
     ];
 
     public $depends = [
-        MailStyleAsset::class
+        MailStyleAsset::class,
     ];
 
     public static function register($view)
@@ -34,8 +34,8 @@ class MailNotificationAsset extends AssetBundle
                 'url' => [
                     'count' => Url::toMessageCountUpdate(),
                     'list' => Url::toNotificationList(),
-                ]
-            ]
+                ],
+            ],
         ]);
 
         return parent::register($view);

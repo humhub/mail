@@ -3,7 +3,6 @@
 use humhub\components\Migration;
 use humhub\modules\mail\models\MessageEntry;
 
-
 /**
  * Class m230214_062338_drop_file_id
  */

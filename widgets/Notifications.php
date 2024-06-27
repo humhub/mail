@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
 
 /**
@@ -10,5 +9,4 @@ namespace humhub\modules\mail\widgets;
  */
 class Notifications extends NotificationInbox
 {
-
 }

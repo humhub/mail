@@ -6,6 +6,7 @@ Changelog
 - Enh #382: Implement provider for meta searching
 - Fix #389: Fix notification about participant joining
 - Fix #396: Don't override global styles
+- Enh #397: Use PHP CS Fixer
 
 3.2.1 (April 15, 2024)
 ----------------------

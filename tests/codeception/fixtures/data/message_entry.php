@@ -25,4 +25,3 @@ return [
     ['id' => 5, 'message_id' => 3, 'user_id' => 2, 'content' => 'Third Message entry text 2.', 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
     ['id' => 6, 'message_id' => 3, 'user_id' => 3, 'content' => 'Third Message entry text 3.', 'created_by' => 3, 'created_at' => '2021-03-15 14:38:49'],
 ];
-
