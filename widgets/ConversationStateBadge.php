@@ -11,6 +11,7 @@ use humhub\components\Widget;
 use humhub\libs\Html;
 use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\user\models\User;
 use Yii;
 
 /**

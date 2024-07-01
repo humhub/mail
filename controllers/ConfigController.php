@@ -20,7 +20,6 @@ use humhub\models\Setting;
  */
 class ConfigController extends \humhub\modules\admin\components\Controller
 {
-
     /**
      * Configuration action for super admins.
      */
@@ -35,5 +34,3 @@ class ConfigController extends \humhub\modules\admin\components\Controller
         return $this->render('index', ['model' => $form]);
     }
 }
-
-?>

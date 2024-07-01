@@ -25,12 +25,12 @@ use yii\web\NotFoundHttpException;
 class TagController extends Controller
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
-    public function getAccessRules()
+    protected function getAccessRules()
     {
         return [
-            [ControllerAccess::RULE_LOGGED_IN_ONLY]
+            [ControllerAccess::RULE_LOGGED_IN_ONLY],
         ];
     }
 
@@ -117,7 +117,7 @@ class TagController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return ModalClose::widget([
-                'script' => '$("#' . ConversationTags::ID . '").replaceWith(\'' . ConversationTags::widget(['message' => $message]) . '\');'
+                'script' => '$("#' . ConversationTags::ID . '").replaceWith(\'' . ConversationTags::widget(['message' => $message]) . '\');',
             ]);
         }
 

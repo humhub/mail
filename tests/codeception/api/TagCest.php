@@ -30,13 +30,14 @@ class TagCest extends HumHubApiTestCest
 
         $I->wantTo('update tags');
         $I->amUser1();
-        $I->seePaginationPutResponse('mail/2/tags',
+        $I->seePaginationPutResponse(
+            'mail/2/tags',
             ['tags' => ['User1 tag 1', 'User1 tag 2', 'User1 tag 3']],
             [
                 ['id' => 7, 'name' => 'User1 tag 1'],
                 ['id' => 8, 'name' => 'User1 tag 2'],
                 ['id' => 9, 'name' => 'User1 tag 3'],
-            ]
+            ],
         );
     }
 

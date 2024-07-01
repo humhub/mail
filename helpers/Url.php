@@ -7,7 +7,7 @@ use humhub\modules\mail\models\MessageEntry;
 
 class Url extends \yii\helpers\Url
 {
-    const ROUTE_SEARCH_TAG = '/mail/tag/search';
+    public const ROUTE_SEARCH_TAG = '/mail/tag/search';
 
     public static function toCreateConversation($userGuid = null)
     {
@@ -32,7 +32,7 @@ class Url extends \yii\helpers\Url
 
     public static function toEditMessageEntry(MessageEntry $entry)
     {
-        return static::to( ['/mail/mail/edit-entry', 'id' => $entry->id]);
+        return static::to(['/mail/mail/edit-entry', 'id' => $entry->id]);
     }
 
     public static function toEditConversationTags(Message $message)
@@ -70,9 +70,24 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/mail/user-list', 'id' => $message->id]);
     }
 
+    public static function toMarkUnreadConversation(Message $message)
+    {
+        return static::to(['/mail/mail/mark-unread', 'id' => $message->id]);
+    }
+
+    public static function toPinConversation(Message $message)
+    {
+        return static::to(['/mail/mail/pin', 'id' => $message->id]);
+    }
+
+    public static function toUnpinConversation(Message $message)
+    {
+        return static::to(['/mail/mail/unpin', 'id' => $message->id]);
+    }
+
     public static function toLeaveConversation(Message $message)
     {
-        return static::to(["/mail/mail/leave", 'id' => $message->id]);
+        return static::to(['/mail/mail/leave', 'id' => $message->id]);
     }
 
     public static function toMessenger(Message $message = null, $scheme = false)

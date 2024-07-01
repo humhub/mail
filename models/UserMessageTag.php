@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\models;
-
 
 use humhub\components\ActiveRecord;
 use humhub\modules\user\models\User;
@@ -11,10 +9,10 @@ use yii\db\ActiveQuery;
 /**
  * Class ConversationTag maps user tags to conversations.
  *
- * @property integer $id
- * @property integer $user_id
- * @property integer $message_id
- * @property integer $tag_id
+ * @property int $id
+ * @property int $user_id
+ * @property int $message_id
+ * @property int $tag_id
  */
 class UserMessageTag extends ActiveRecord
 {
@@ -30,7 +28,7 @@ class UserMessageTag extends ActiveRecord
     public function rules()
     {
         return [
-            ['message_id', 'unique', 'targetAttribute' => ['message_id', 'user_id', 'tag_id']]
+            ['message_id', 'unique', 'targetAttribute' => ['message_id', 'user_id', 'tag_id']],
         ];
     }
 
@@ -48,7 +46,7 @@ class UserMessageTag extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class,['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -56,7 +54,7 @@ class UserMessageTag extends ActiveRecord
      */
     public function getTag()
     {
-        return $this->hasOne(MessageTag::class,['id' => 'tag_id']);
+        return $this->hasOne(MessageTag::class, ['id' => 'tag_id']);
     }
 
     /**

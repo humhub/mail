@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
-
 
 use humhub\components\Widget;
 use humhub\modules\mail\models\Message;
@@ -44,7 +42,7 @@ class Messages extends Widget
                     'entry' => $entry,
                     'prevEntry' => $prevEntry,
                     'nextEntry' => $nextEntry,
-                    'showDateBadge' => $this->showDateBadge
+                    'showDateBadge' => $this->showDateBadge,
                 ]);
                 $prevEntry = $entry;
             } catch (\Throwable $e) {

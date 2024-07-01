@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
-
 
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\widgets\JsWidget;

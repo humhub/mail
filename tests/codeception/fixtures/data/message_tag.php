@@ -25,4 +25,3 @@ return [
     ['id' => 5, 'user_id' => 2, 'name' => 'Tag user2 2', 'sort_order' => 20],
     ['id' => 6, 'user_id' => 3, 'name' => 'Tag user3 1', 'sort_order' => 30],
 ];
-

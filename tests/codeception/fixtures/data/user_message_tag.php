@@ -25,4 +25,3 @@ return [
     ['message_id' => 2, 'user_id' => 2, 'tag_id' => 5],
     ['message_id' => 3, 'user_id' => 1, 'tag_id' => 6],
 ];
-

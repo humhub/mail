@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\widgets;
-
 
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\InboxFilterForm;
@@ -55,7 +53,7 @@ class ConversationInbox extends JsWidget
     {
         return $this->render('inbox', [
             'options' => $this->getOptions(),
-            'userMessages' =>  $this->result
+            'userMessages' =>  $this->result,
         ]);
     }
 
@@ -65,14 +63,14 @@ class ConversationInbox extends JsWidget
             'widget-reload-url' => Url::toUpdateInbox(),
             'load-more-url' => Url::toInboxLoadMore(),
             'update-entries-url' => Url::toInboxUpdateEntries(),
-            'is-last' => $this->filter->wasLastPage()
+            'is-last' => $this->filter->wasLastPage(),
         ];
     }
 
     public function getAttributes()
     {
         return [
-            'class' => 'media-list'
+            'class' => 'media-list',
         ];
     }
 

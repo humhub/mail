@@ -11,7 +11,6 @@ use Yii;
 
 class UserRestrictionTest extends HumHubDbTestCase
 {
-
     /**
      * Test registration with whitelist and valid email (with approval process) -> user should be enabled.
      * TODO: Its not possible to completely deny conversations
@@ -48,7 +47,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
 
@@ -57,7 +56,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
 
@@ -66,7 +65,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
 
@@ -75,7 +74,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertFalse($message->save());
@@ -103,7 +102,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
 
@@ -112,7 +111,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertFalse($message->save());
@@ -140,7 +139,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
 
@@ -149,7 +148,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertTrue($message->save());
@@ -157,7 +156,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertFalse($message->save());
@@ -176,7 +175,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
 
@@ -185,7 +184,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertFalse($message->save());
@@ -196,7 +195,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertTrue($message->save());
@@ -204,7 +203,7 @@ class UserRestrictionTest extends HumHubDbTestCase
         $message = new CreateMessage([
             'recipient' => User::findOne(['id' => 1]),
             'title' => 'Test title',
-            'message' => 'Test message'
+            'message' => 'Test message',
         ]);
 
         $this->assertFalse($message->save());

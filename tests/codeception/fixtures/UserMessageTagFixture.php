@@ -13,7 +13,6 @@ use yii\test\ActiveFixture;
 
 class UserMessageTagFixture extends ActiveFixture
 {
-
     public $modelClass = MessageTag::class;
 
     public $dataFile = '@mail/tests/codeception/fixtures/data/message_tag.php';

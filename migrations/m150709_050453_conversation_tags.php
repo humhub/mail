@@ -6,7 +6,6 @@ use humhub\modules\mail\models\MessageEntry;
 
 class m150709_050453_conversation_tags extends Migration
 {
-
     public function safeUp()
     {
 

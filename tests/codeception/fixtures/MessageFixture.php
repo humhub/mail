@@ -13,7 +13,6 @@ use yii\test\ActiveFixture;
 
 class MessageFixture extends ActiveFixture
 {
-
     public $modelClass = Message::class;
     public $depends = [
         MessageEntryFixture::class,

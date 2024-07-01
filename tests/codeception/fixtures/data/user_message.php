@@ -25,4 +25,3 @@ return [
     ['message_id' => 3, 'user_id' => 2, 'is_originator' => 0, 'created_by' => 2, 'created_at' => '2021-03-15 14:38:49'],
     ['message_id' => 3, 'user_id' => 3, 'is_originator' => 0, 'created_by' => 3, 'created_at' => '2021-03-15 14:38:49'],
 ];
-

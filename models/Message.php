@@ -2,9 +2,9 @@
 
 namespace humhub\modules\mail\models;
 
-
 use humhub\components\ActiveRecord;
 use humhub\modules\mail\Module;
+use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\helpers\Html;
@@ -13,12 +13,12 @@ use yii\helpers\Html;
  * This class represents a single conversation.
  *
  * The followings are the available columns in table 'message':
- * @property integer $id
+ * @property int $id
  * @property string $title
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
  * @property-read  User $originator
  * @property-read MessageEntry $lastEntry
  *
@@ -105,18 +105,21 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @param null $userId
+     * @param int|null $userId
      * @return UserMessage|null
      */
     public function getUserMessage($userId = null)
     {
         if (!$userId) {
+            if (Yii::$app->user->isGuest) {
+                return null;
+            }
             $userId = Yii::$app->user->id;
         }
 
         return UserMessage::findOne([
             'user_id' => $userId,
-            'message_id' => $this->id
+            'message_id' => $this->id,
         ]);
     }
 
@@ -234,22 +237,57 @@ class Message extends ActiveRecord
     }
 
     /**
+     * Mark this message as unread
+     *
+     * @param int|null $userId
+     */
+    public function markUnread($userId = null)
+    {
+        $userMessage = $this->getUserMessage($userId);
+        if ($userMessage) {
+            $userMessage->last_viewed = null;
+            $userMessage->save();
+        }
+    }
+
+    /**
+     * Pin this message
+     *
+     * @param int|null $userId
+     * @param bool $pin
+     */
+    public function pin($userId = null, bool $pin = true)
+    {
+        $userMessage = $this->getUserMessage($userId);
+        if ($userMessage) {
+            $userMessage->pinned = $pin;
+            $userMessage->save();
+        }
+    }
+
+    /**
+     * Unpin this message
+     *
+     * @param int|null $userId
+     */
+    public function unpin($userId = null)
+    {
+        $this->pin($userId, false);
+    }
+
+    /**
      * User leaves a message
      *
      * If it's the last user, the whole message will be deleted.
      *
-     * @param int $userId
+     * @param int|null $userId
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function leave($userId)
+    public function leave($userId = null)
     {
-        $userMessage = UserMessage::findOne([
-            'message_id' => $this->id,
-            'user_id' => $userId
-        ]);
-
-        if(!$userMessage) {
+        $userMessage = $this->getUserMessage($userId);
+        if (!$userMessage) {
             return;
         }
 
@@ -270,7 +308,7 @@ class Message extends ActiveRecord
         // Update User Message Entry
         $userMessage = UserMessage::findOne(array(
             'user_id' => $userId,
-            'message_id' => $this->id
+            'message_id' => $this->id,
         ));
         if ($userMessage !== null) {
             $userMessage->last_viewed = date('Y-m-d G:i:s');
@@ -305,7 +343,7 @@ class Message extends ActiveRecord
         $userMessage = new UserMessage([
             'message_id' => $this->id,
             'user_id' => $recipient->id,
-            'informAfterAdd' => $informAfterAdd
+            'informAfterAdd' => $informAfterAdd,
         ]);
 
         if ($originator) {
@@ -370,5 +408,31 @@ class Message extends ActiveRecord
         }
 
         return false;
+    }
+
+    public function isPinned($userId = null): bool
+    {
+        $userMessage = $this->getUserMessage($userId);
+        return $userMessage && $userMessage->pinned;
+    }
+
+    public function getPinIcon($userId = null): ?Icon
+    {
+        if ($this->isPinned($userId)) {
+            return Icon::get('map-pin')
+                ->tooltip(Yii::t('MailModule.base', 'Pinned'))
+                ->color(Yii::$app->view->theme->variable('danger', 'red'));
+        }
+
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function refresh()
+    {
+        $this->_lastEntry = null;
+        return parent::refresh();
     }
 }

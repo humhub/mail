@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'There are no messages yet.' => 'Kol kas nėra žinučių.',
-    'Conversations' => '',
-];
+return array (
+  'Conversations' => 'Pokalbiai',
+  'There are no messages yet.' => 'Kol kas nėra žinučių.',
+);

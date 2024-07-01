@@ -30,9 +30,9 @@ class NewUserMessage extends LiveEvent
      * @var int the id of the new notification
      */
     public $user_guid;
-    
+
     /**
-     * @var string text representation used for frotnend desktop notifications 
+     * @var string text representation used for frotnend desktop notifications
      */
     public $message_id;
 

@@ -68,9 +68,10 @@ humhub.module('mail.notification', function (module, require, $) {
     };
 
     var loadMessage = function (evt) {
-        if ($('#mail-conversation-root').length) {
-            Widget.instance('#mail-conversation-root').loadMessage(evt);
-            $('#mail-conversation-root').closest('.container').addClass('mail-conversation-single-message');
+        var root = Widget.instance('#mail-conversation-root');
+        if (root) {
+            root.loadMessage(evt);
+            root.$.closest('.container').addClass('mail-conversation-single-message');
         } else {
             client.redirect(evt.url);
         }
