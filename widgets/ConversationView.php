@@ -8,6 +8,7 @@
 
 namespace humhub\modules\mail\widgets;
 
+use Yii;
 use humhub\widgets\JsWidget;
 use humhub\modules\mail\helpers\Url;
 
@@ -32,6 +33,19 @@ class ConversationView extends JsWidget
      * @var int
      */
     public $messageId;
+
+    public function init()
+    {
+        parent::init();
+
+        $this->view->registerJsConfig([
+            'mail.ConversationView' => [
+                'text' => [
+                    'warn.onBeforeUnload' => Yii::t('base', 'Unsaved changes will be lost. Do you want to proceed?'),
+                ]
+            ]
+        ]);
+    }
 
     public function getData()
     {

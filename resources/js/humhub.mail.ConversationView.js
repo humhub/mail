@@ -22,6 +22,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             this.setActiveMessageId(Widget.instance('#inbox').getFirstMessageId());
         }
 
+        window.onbeforeunload = function() {
+            return this.onbeforeunloadCheck();
+        }
+
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
@@ -29,6 +33,15 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         }).on('mouseleave', '.mail-conversation-entry', function () {
             $(this).find('.conversation-menu').hide();
         });
+    };
+
+    ConversationView.prototype.onbeforeunloadCheck = function () {
+        var replyRichtext = this.getReplyRichtext();
+        if (replyRichtext && $(replyRichtext.$[0]).closest('form').find('textarea').val().trim().length) {
+            return confirm(module.text('warn.onBeforeUnload'));
+        }
+
+        return true;
     };
 
     ConversationView.prototype.loader = function (load) {
@@ -172,6 +185,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loadMessage = function (evt) {
+        if (!this.onbeforeunloadCheck()) {
+            return false;
+        }
+
         var messageId = object.isNumber(evt) ? evt : evt.$trigger.data('message-id');
         var that = this;
         this.loader();
