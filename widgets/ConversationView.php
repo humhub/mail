@@ -42,8 +42,8 @@ class ConversationView extends JsWidget
             'mail.ConversationView' => [
                 'text' => [
                     'warn.onBeforeUnload' => Yii::t('base', 'Unsaved changes will be lost. Do you want to proceed?'),
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
