@@ -3,5 +3,5 @@ return array (
   'Groups' => 'Skupiny',
   'Members' => 'Členovia',
   'Spaces' => 'Priestory',
-  'User Posts' => '',
+  'User Posts' => 'Používateľské príspevky',
 );
