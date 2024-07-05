@@ -25,9 +25,12 @@ humhub.module('mail.notification', function (module, require, $) {
                     currentXhr.abort();
                 }
 
+                const messageLoader = $('#loader_messages');
+                const messageList = messageLoader.parent();
+
                 // remove all <li> entries from dropdown
-                $('#loader_messages').parent().find(':not(#loader_messages)').remove();
-                loader.set($('#loader_messages').show());
+                messageLoader.parent().find(':not(#loader_messages)').remove();
+                loader.set(messageLoader.show());
 
                 client.get(module.config.url.list, {
                     beforeSend: function (xhr) {
@@ -35,8 +38,16 @@ humhub.module('mail.notification', function (module, require, $) {
                     }
                 }).then(function (response) {
                     currentXhr = undefined;
-                    $('#loader_messages').parent().prepend($(response.html));
-                    $('#loader_messages').hide();
+                    messageList.prepend($(response.html));
+                    messageLoader.hide();
+                    messageList.niceScroll({
+                        cursorwidth: '7',
+                        cursorborder: '',
+                        cursorcolor: '#555',
+                        cursoropacitymax: '0.2',
+                        nativeparentscrolling: false,
+                        railpadding: {top: 0, right: 3, left: 0, bottom: 0}
+                    });
                 });
             });
         }

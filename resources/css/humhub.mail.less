@@ -235,19 +235,23 @@
 
     h4.media-heading {
       .semiBold;
+      font-size: 16px;
 
       time {
+        font-size: 11px !important;
         font-weight: normal;
         float: right;
       }
     }
 
     h5 {
-      font-size: 11px;
+      font-size: 14px;
+      line-height: 16px;
       font-weight: 500;
       color: #000;
       display: flex;
       justify-content: space-between;
+      margin: 7px 0;
 
       span:first-child {
         overflow: hidden;
@@ -257,15 +261,9 @@
     }
 
     .mail-last-entry {
-      font-size: 11px;
-      font-weight: normal;
-      color: var(--text-color-soft2);
-    }
-  }
-
-  .selected, .media-list > li:hover {
-    .mail-last-entry {
-      color: var(--text-color-main);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color-secondary);
     }
   }
 }
@@ -392,7 +390,7 @@
     }
 
     .mail-last-entry {
-      color: var(--text-color-main);
+      color: var(--text-color-highlight);
     }
   }
 }
@@ -415,8 +413,8 @@
 
 .new-message-badge {
   float: right;
-  min-width: 16px;
-  height: 16px;
+  min-width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: @colorUnread;
   margin-left: 2px;

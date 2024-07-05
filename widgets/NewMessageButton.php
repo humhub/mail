@@ -37,7 +37,7 @@ class NewMessageButton extends Widget
     /**
      * @var bool
      */
-    public $right = false;
+    public $right = true;
 
     /**
      * @var string
@@ -49,7 +49,7 @@ class NewMessageButton extends Widget
      */
     public function run()
     {
-        $button = ModalButton::info($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
+        $button = ModalButton::defaultType($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
 
         if($this->icon) {
             $button->icon($this->icon);
