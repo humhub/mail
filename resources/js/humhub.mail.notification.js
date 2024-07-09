@@ -80,7 +80,7 @@ humhub.module('mail.notification', function (module, require, $) {
 
     var loadMessage = function (evt) {
         var root = Widget.instance('#mail-conversation-root');
-        if (root) {
+        if (root && typeof(root.loadMessage) === 'function') {
             root.loadMessage(evt);
             root.$.closest('.container').addClass('mail-conversation-single-message');
         } else {
