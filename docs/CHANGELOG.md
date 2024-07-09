@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.2.2 (Unreleased)
-----------------------
+3.2.2 (July 9, 2024)
+--------------------
 - Enh #382: Implement provider for meta searching
 - Fix #389: Fix notification about participant joining
 - Fix #396: Don't override global styles
