@@ -7,6 +7,7 @@ Changelog
 - Fix #389: Fix notification about participant joining
 - Fix #396: Don't override global styles
 - Enh #397: Use PHP CS Fixer
+- Fix #402: Fix undefined function to load a message
 
 3.2.1 (April 15, 2024)
 ----------------------
