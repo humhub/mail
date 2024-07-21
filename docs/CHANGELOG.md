@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Unreleased
+--------------------
+- Enh #406: Change conversation height calculation from Javascript to CSS
+
 3.2.2 (July 9, 2024)
 --------------------
 - Enh #382: Implement provider for meta searching

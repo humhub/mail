@@ -10,6 +10,23 @@
 @screen-sm: 767px;
 @screen-md: 991px;
 
+:root {
+  --hh-mail-offset-top: 0px;
+  --hh-mail-top-conversation-height: 0px; // Conversation is displayed at the left side of the screen
+}
+
+@media (max-width: @screen-md) {
+  :root {
+    --hh-mail-top-conversation-height: 60px; // Including margins
+  }
+}
+
+@media (max-width: @screen-sm) {
+  :root {
+    --hh-mail-top-conversation-height: 50px; // Bottom margin is 10px less on small screens
+  }
+}
+
 .semiBold() {
   font-weight: 600
 }
@@ -132,9 +149,7 @@
 }
 
 .conversation-entry-list {
-  max-height: 600px;
   min-height: 150px;
-  overflow: auto;
 
   .media {
     padding-right: 5px;
@@ -181,8 +196,17 @@
     }
   }
 
-  .panel-body {
-    margin-bottom: 0;
+  > .panel {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height) - 10px); // 10px is the bottom space
+
+    > .conversation-entry-container {
+      flex: 1;
+      min-height: 300px;
+      overflow: auto;
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -269,10 +293,12 @@
 }
 
 .mail-message-form {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   padding: 10px;
+
+  .content-create-input-group {
+    position: relative;
+  }
 
   .humhub-ui-richtext {
     padding-right: 105px; // For the upload and send button
@@ -281,8 +307,8 @@
 
   .upload-buttons {
     position: absolute;
-    right: 15px;
-    bottom: 15px;
+    right: 6px;
+    bottom: 6px;
     z-index: 500;
   }
 
@@ -363,7 +389,7 @@
 }
 
 #inbox {
-  max-height: 500px;
+  max-height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var('--hh-mail-offset-top'));
   overflow: auto;
   border-radius: @radiusSmall;
 }

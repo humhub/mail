@@ -39,7 +39,7 @@ use humhub\widgets\Button;
 
         <?= ConversationTags::widget(['message' => $message]) ?>
 
-        <div class="panel-body">
+        <div class="panel-body conversation-entry-container">
 
             <div class="media-list conversation-entry-list">
                 <?= Messages::widget(['message' => $message]) ?>
@@ -47,59 +47,61 @@ use humhub\widgets\Button;
 
         </div>
 
-        <div id="'mail-create-form-<?= $message->id ?>" class="mail-message-form content_create">
-            <?php if ($message->isBlocked()) : ?>
-                <div class="alert alert-danger">
-                    <?= Yii::t('MailModule.views_mail_show', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
-                        'userNames' => implode(', ', $message->getBlockerNames())
-                    ]); ?>
-                </div>
-            <?php else : ?>
-                <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
-
-                <div class="content-create-input-group">
-
-                    <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, [
-                        'id' => 'reply-' . time(),
-                        'layout' => AbstractRichTextEditor::LAYOUT_INLINE,
-                    ])->label(false) ?>
-
-                    <div class="upload-buttons">
-                        <?php $uploadButton = UploadButton::widget([
-                            'id' => 'mail-create-upload-' . $message->id,
-                            'tooltip' => Yii::t('ContentModule.base', 'Attach Files'),
-                            'options' => ['class' => 'main_mail_upload'],
-                            'progress' => '#mail-create-upload-progress-' . $message->id,
-                            'preview' => '#mail-create-upload-preview-' . $message->id,
-                            'dropZone' => '#mail-create-form-' . $message->id,
-                            'max' => Yii::$app->getModule('content')->maxAttachedFiles,
-                            'cssButtonClass' => 'btn-sm btn-info',
-                        ]) ?>
-                        <?= FileHandlerButtonDropdown::widget([
-                            'primaryButton' => $uploadButton,
-                            'handlers' => $fileHandlers,
-                            'cssButtonClass' => 'btn-info btn-sm',
-                            'pullRight' => true,
-                        ]) ?>
-                        <?= Button::info()
-                            ->cssClass('reply-button')
-                            ->submit()
-                            ->action('reply', $replyForm->getUrl())
-                            ->icon('paper-plane-o')
-                            ->sm() ?>
+        <div id="'mail-create-form-<?= $message->id ?>" class="panel panel-default mail-message-form content_create">
+            <div class="panel-body">
+                <?php if ($message->isBlocked()) : ?>
+                    <div class="alert alert-danger">
+                        <?= Yii::t('MailModule.views_mail_show', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
+                            'userNames' => implode(', ', $message->getBlockerNames())
+                        ]); ?>
                     </div>
-                </div>
+                <?php else : ?>
+                    <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
 
-                <div id="mail-create-upload-progress-<?= $message->id ?>" style="display:none;margin:10px 0;"></div>
+                    <div class="content-create-input-group">
 
-                <?= FilePreview::widget([
-                    'id' => 'mail-create-upload-preview-' . $message->id,
-                    'options' => ['style' => 'margin-top:10px;'],
-                    'edit' => true,
-                ]) ?>
+                        <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, [
+                            'id' => 'reply-' . time(),
+                            'layout' => AbstractRichTextEditor::LAYOUT_INLINE,
+                        ])->label(false) ?>
 
-                <?php ActiveForm::end(); ?>
-            <?php endif; ?>
+                        <div class="upload-buttons">
+                            <?php $uploadButton = UploadButton::widget([
+                                'id' => 'mail-create-upload-' . $message->id,
+                                'tooltip' => Yii::t('ContentModule.base', 'Attach Files'),
+                                'options' => ['class' => 'main_mail_upload'],
+                                'progress' => '#mail-create-upload-progress-' . $message->id,
+                                'preview' => '#mail-create-upload-preview-' . $message->id,
+                                'dropZone' => '#mail-create-form-' . $message->id,
+                                'max' => Yii::$app->getModule('content')->maxAttachedFiles,
+                                'cssButtonClass' => 'btn-sm btn-info',
+                            ]) ?>
+                            <?= FileHandlerButtonDropdown::widget([
+                                'primaryButton' => $uploadButton,
+                                'handlers' => $fileHandlers,
+                                'cssButtonClass' => 'btn-info btn-sm',
+                                'pullRight' => true,
+                            ]) ?>
+                            <?= Button::info()
+                                ->cssClass('reply-button')
+                                ->submit()
+                                ->action('reply', $replyForm->getUrl())
+                                ->icon('paper-plane-o')
+                                ->sm() ?>
+                        </div>
+                    </div>
+
+                    <div id="mail-create-upload-progress-<?= $message->id ?>" style="display:none;margin:10px 0;"></div>
+
+                    <?= FilePreview::widget([
+                        'id' => 'mail-create-upload-preview-' . $message->id,
+                        'options' => ['style' => 'margin-top:10px;'],
+                        'edit' => true,
+                    ]) ?>
+
+                    <?php ActiveForm::end(); ?>
+                <?php endif; ?>
+            </div>
         </div>
     <?php endif; ?>
 

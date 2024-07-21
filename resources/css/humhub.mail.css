@@ -1,3 +1,17 @@
+:root {
+  --hh-mail-offset-top: 0px;
+  --hh-mail-top-conversation-height: 0px;
+}
+@media (max-width: 991px) {
+  :root {
+    --hh-mail-top-conversation-height: 60px;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --hh-mail-top-conversation-height: 50px;
+  }
+}
 .placeholder {
   color: #77777A;
 }
@@ -82,9 +96,7 @@
   margin: 7px 0 0 11px;
 }
 .conversation-entry-list {
-  max-height: 600px;
   min-height: 150px;
-  overflow: auto;
 }
 .conversation-entry-list .media {
   padding-right: 5px;
@@ -119,7 +131,15 @@
 #mail-conversation-root .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
   margin-top: 0;
 }
-#mail-conversation-root .panel-body {
+#mail-conversation-root > .panel {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height) - 10px);
+}
+#mail-conversation-root > .panel > .conversation-entry-container {
+  flex: 1;
+  min-height: 300px;
+  overflow: auto;
   margin-bottom: 0;
 }
 #mail-conversation-header {
@@ -187,10 +207,11 @@
   color: var(--text-color-secondary);
 }
 .mail-message-form {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   padding: 10px;
+}
+.mail-message-form .content-create-input-group {
+  position: relative;
 }
 .mail-message-form .humhub-ui-richtext {
   padding-right: 105px;
@@ -198,8 +219,8 @@
 }
 .mail-message-form .upload-buttons {
   position: absolute;
-  right: 15px;
-  bottom: 15px;
+  right: 6px;
+  bottom: 6px;
   z-index: 500;
 }
 .mail-message-form .reply-button {
@@ -256,7 +277,7 @@
   text-transform: uppercase;
 }
 #inbox {
-  max-height: 500px;
+  max-height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var('--hh-mail-offset-top'));
   overflow: auto;
   border-radius: 4px;
 }
