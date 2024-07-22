@@ -11,8 +11,8 @@
 @screen-md: 991px;
 
 :root {
-  --hh-mail-offset-top: 0px;
-  --hh-mail-top-conversation-height: 0px; // Conversation is displayed at the left side of the screen
+  --hh-mail-offset-top: ~"0px"; // Force keeping `px` after CSS compilation (required for `calc()` function)
+  --hh-mail-top-conversation-height: ~"0px"; // Conversation is displayed at the left side of the screen
 }
 
 @media (max-width: @screen-md) {
@@ -295,6 +295,9 @@
 .mail-message-form {
   width: 100%;
   padding: 10px;
+  box-shadow: none;
+  border: none;
+  margin-bottom: 0 !important;
 
   .content-create-input-group {
     position: relative;

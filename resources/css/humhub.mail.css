@@ -209,6 +209,9 @@
 .mail-message-form {
   width: 100%;
   padding: 10px;
+  box-shadow: none;
+  border: none;
+  margin-bottom: 0 !important;
 }
 .mail-message-form .content-create-input-group {
   position: relative;
