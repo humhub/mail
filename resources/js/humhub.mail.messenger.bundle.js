@@ -13,11 +13,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.init = function () {
         additions.observe(this.$);
 
-        var that = this;
-        window.onresize = function (evt) {
-            that.updateSize(true);
-        };
-
         if (!this.getActiveMessageId()) {
             this.setActiveMessageId(Widget.instance('#inbox').getFirstMessageId());
         }
@@ -206,25 +201,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
-
-        if (window.ResizeObserver) {
-            var resizeObserver = new ResizeObserver(function (entries) {
-                that.updateSize(that.isScrolledToBottom(100));
-            });
-
-            var replyRichtext = that.getReplyRichtext();
-            if (replyRichtext) {
-                resizeObserver.observe(replyRichtext.$[0]);
-            }
-        }
-
-        var filePreview = that.getReplyFilePreview();
-        filePreview.on('DOMSubtreeModified', function (evt) {
-            that.updateSize(true);
-        });
-
         that.focus();
-
     };
 
     ConversationView.prototype.isScrolledToBottom = function (tolerance) {
@@ -346,7 +323,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         });
     };
 
-
     ConversationView.prototype.getActiveMessageId = function () {
         return this.options.messageId;
     };
@@ -366,41 +342,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         return;
                     }
 
-                    that.updateSize(false).then(function () {
-                        $list[0].scrollTop = $list[0].scrollHeight;
-                        resolve()
-                    });
+                    $list[0].scrollTop = $list[0].scrollHeight;
+                    resolve()
                 })
             });
         });
-    };
-
-    ConversationView.prototype.updateSize = function (scrollToButtom) {
-        var that = this;
-        return new Promise(function (resolve) {
-            setTimeout(function () {
-                var $entryContainer = that.getListNode();
-
-                if (!$entryContainer.length) {
-                    return;
-                }
-
-                var replyRichtext = that.getReplyRichtext();
-                var formHeight = replyRichtext ? replyRichtext.$.closest('.mail-message-form').innerHeight() : 0;
-                $entryContainer.css('margin-bottom', formHeight + 5 + 'px');
-
-                var offsetTop = that.getListNode().offset().top;
-                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
-                $entryContainer.css('height', max_height);
-                $entryContainer.css('max-height', max_height);
-
-                if (scrollToButtom !== false) {
-                    that.scrollToBottom();
-                }
-                resolve();
-            }, 100);
-        })
-
     };
 
     ConversationView.prototype.getListNode = function () {
@@ -449,7 +395,7 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     var ConversationFilter = Filter.extend();
 
-    ConversationFilter.prototype.triggerChange = function() {
+    ConversationFilter.prototype.triggerChange = function () {
         this.super('triggerChange');
         this.updateFilterCount();
     };
@@ -460,12 +406,12 @@ humhub.module('mail.inbox', function (module, require, $) {
         var $filterToggle = this.$.find('#conversation-filter-link');
         var $filterCount = $filterToggle.find('.filterCount');
 
-        if(count) {
-            if(!$filterCount.length) {
+        if (count) {
+            if (!$filterCount.length) {
                 $filterCount = $('<small class="filterCount"></small>').insertBefore($filterToggle.find('.caret'));
             }
-            $filterCount.html(' <b>('+count+')</b> ');
-        } else if($filterCount.length) {
+            $filterCount.html(' <b>(' + count + ')</b> ');
+        } else if ($filterCount.length) {
             $filterCount.remove();
         }
     };
@@ -480,12 +426,12 @@ humhub.module('mail.inbox', function (module, require, $) {
 
         var that = this;
         this.filter.off('afterChange.inbox').on('afterChange.inbox', function () {
-            that.reload().then(function() {
+            that.reload().then(function () {
                 that.updateActiveItem();
             });
         });
 
-        if(view.isLarge()) {
+        if (view.isLarge()) {
             this.$.niceScroll({
                 cursorwidth: "7",
                 cursorborder: "",
@@ -496,49 +442,49 @@ humhub.module('mail.inbox', function (module, require, $) {
             });
         }
 
-        this.$.on('click', '.entry', function() {
+        this.$.on('click', '.entry', function () {
             that.$.find('.entry').removeClass('selected');
             $(this).addClass('selected');
         })
     };
 
-    ConversationList.prototype.initHeight = function() {
+    ConversationList.prototype.initHeight = function () {
         const offsetTop = this.$.offset().top;
-        this.$.css('max-height', (window.innerHeight - offsetTop - 15) + 'px');
+        $(':root').css('--hh-mail-offset-top', offsetTop + 'px');
     }
 
-    ConversationList.prototype.updateEntries = function(ids) {
+    ConversationList.prototype.updateEntries = function (ids) {
         var that = this;
 
-        if(!ids.length) {
+        if (!ids.length) {
             return;
         }
 
-        client.get(this.options.updateEntriesUrl, {data: {ids: ids}}).then(function(response) {
-            if(!response.result)  {
+        client.get(this.options.updateEntriesUrl, {data: {ids: ids}}).then(function (response) {
+            if (!response.result) {
                 return;
             }
 
-            $.each(response.result, function(id, html) {
+            $.each(response.result, function (id, html) {
                 var $entry = that.getEntry(id);
-                if(!$entry.length) {
-                    $(html).prependTo(that.$) ;
+                if (!$entry.length) {
+                    $(html).prependTo(that.$);
                 } else {
-                   $entry.replaceWith(html);
+                    $entry.replaceWith(html);
                 }
             });
 
             that.updateActiveItem();
-        }).catch(function(e) {
+        }).catch(function (e) {
             module.log.error(e);
         });
     };
 
-    ConversationList.prototype.getEntry = function(id) {
-        return this.$.find('[data-message-id="'+id+'"]');
+    ConversationList.prototype.getEntry = function (id) {
+        return this.$.find('[data-message-id="' + id + '"]');
     };
 
-    ConversationList.prototype.initScroll = function() {
+    ConversationList.prototype.initScroll = function () {
         if (window.IntersectionObserver) {
 
             var $streamEnd = $('<div class="inbox-stream-end"></div>');
@@ -552,7 +498,7 @@ humhub.module('mail.inbox', function (module, require, $) {
 
                 if (entries.length && entries[0].isIntersecting) {
                     loader.append(that.$);
-                    that.loadMore().finally(function() {
+                    that.loadMore().finally(function () {
                         loader.reset(that.$);
                     });
                 }
@@ -560,7 +506,7 @@ humhub.module('mail.inbox', function (module, require, $) {
             }, {root: this.$[0], rootMargin: "50px"});
 
             // Assure the conversation list is scrollable by loading more entries until overflow
-            this.assureScroll().then(function() {
+            this.assureScroll().then(function () {
                 observer.observe($streamEnd[0]);
             });
         }
@@ -569,8 +515,8 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.assureScroll = function () {
         var that = this;
 
-        if(this.$[0].offsetHeight >= this.$[0].scrollHeight && this.canLoadMore()) {
-            return this.loadMore().then(function() {
+        if (this.$[0].offsetHeight >= this.$[0].scrollHeight && this.canLoadMore()) {
+            return this.loadMore().then(function () {
                 return that.assureScroll();
             }).catch(function () {
                 return Promise.resolve();
@@ -582,11 +528,11 @@ humhub.module('mail.inbox', function (module, require, $) {
 
     ConversationList.prototype.loadMore = function () {
         var that = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var data = that.filter.getFilterMap();
             data.from = that.getLastMessageId();
-            client.get(that.options.loadMoreUrl, {data: data}).then(function(response) {
-                if(response.result) {
+            client.get(that.options.loadMoreUrl, {data: data}).then(function (response) {
+                if (response.result) {
                     $(response.result).insertBefore('.inbox-stream-end');
                     that.$.find('.inbox-stream-end').append();
                 }
@@ -595,10 +541,10 @@ humhub.module('mail.inbox', function (module, require, $) {
                 that.updateActiveItem();
 
                 resolve();
-            }).catch(function(err) {
+            }).catch(function (err) {
                 module.log.error(err, true);
                 reject();
-            }).finally(function() {
+            }).finally(function () {
                 that.scrollLock = false;
             });
         });
@@ -617,7 +563,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         return {data: this.filter.getFilterMap()};
     };
 
-    ConversationList.prototype.updateActiveItem = function() {
+    ConversationList.prototype.updateActiveItem = function () {
         this.$.find('.entry').removeClass('selected');
 
         // Set new selection
@@ -630,21 +576,18 @@ humhub.module('mail.inbox', function (module, require, $) {
     };
 
 
-    ConversationList.prototype.getFirstMessageId = function() {
+    ConversationList.prototype.getFirstMessageId = function () {
         return this.$.find('.entry:first').data('message-id');
     };
 
-    ConversationList.prototype.getLastMessageId = function() {
+    ConversationList.prototype.getLastMessageId = function () {
         return this.$.find('.entry:last').data('message-id');
     };
 
-    ConversationList.prototype.hide = function() {
+    ConversationList.prototype.hide = function () {
         return new Promise(function (resolve) {
-            if(view.isSmall() && $('.mail-conversation-single-message').length) {
-                $('.inbox-wrapper').slideUp(function() {
-                    if (getRoot()) {
-                        getRoot().updateSize();
-                    }
+            if (view.isSmall() && $('.mail-conversation-single-message').length) {
+                $('.inbox-wrapper').slideUp(function () {
                     resolve();
                 });
             }
@@ -652,14 +595,10 @@ humhub.module('mail.inbox', function (module, require, $) {
         });
     };
 
-    ConversationList.prototype.show = function() {
+    ConversationList.prototype.show = function () {
         return new Promise(function (resolve) {
-            if(view.isSmall()) {
-                $('.inbox-wrapper').slideDown(function() {
-                    if (getRoot()) {
-                        getRoot().updateSize();
-                    }
-
+            if (view.isSmall()) {
+                $('.inbox-wrapper').slideDown(function () {
                     resolve();
                 });
             }
@@ -667,18 +606,14 @@ humhub.module('mail.inbox', function (module, require, $) {
         });
     };
 
-    var toggleInbox = function() {
-        if(view.isSmall()) {
-            $('.inbox-wrapper').slideToggle(function() {
-                if (getRoot()) {
-                    getRoot().updateSize();
-                }
-            });
+    var toggleInbox = function () {
+        if (view.isSmall()) {
+            $('.inbox-wrapper').slideToggle();
         }
     };
 
     var setTagFilter = function (evt) {
-        Widget.instance('#inbox').show().then(function() {
+        Widget.instance('#inbox').show().then(function () {
             $('#mail-filter-menu').collapse('show');
             Widget.instance('#inbox-tag-picker').setSelection([{
                 id: evt.$trigger.data('tagId'),

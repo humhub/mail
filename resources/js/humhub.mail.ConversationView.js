@@ -13,11 +13,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.init = function () {
         additions.observe(this.$);
 
-        var that = this;
-        window.onresize = function (evt) {
-            that.updateSize(true);
-        };
-
         if (!this.getActiveMessageId()) {
             this.setActiveMessageId(Widget.instance('#inbox').getFirstMessageId());
         }
@@ -206,25 +201,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.initReplyRichText = function () {
         var that = this;
-
-        if (window.ResizeObserver) {
-            var resizeObserver = new ResizeObserver(function (entries) {
-                that.updateSize(that.isScrolledToBottom(100));
-            });
-
-            var replyRichtext = that.getReplyRichtext();
-            if (replyRichtext) {
-                resizeObserver.observe(replyRichtext.$[0]);
-            }
-        }
-
-        var filePreview = that.getReplyFilePreview();
-        filePreview.on('DOMSubtreeModified', function (evt) {
-            that.updateSize(true);
-        });
-
         that.focus();
-
     };
 
     ConversationView.prototype.isScrolledToBottom = function (tolerance) {
@@ -346,7 +323,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         });
     };
 
-
     ConversationView.prototype.getActiveMessageId = function () {
         return this.options.messageId;
     };
@@ -366,41 +342,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         return;
                     }
 
-                    that.updateSize(false).then(function () {
-                        $list[0].scrollTop = $list[0].scrollHeight;
-                        resolve()
-                    });
+                    $list[0].scrollTop = $list[0].scrollHeight;
+                    resolve()
                 })
             });
         });
-    };
-
-    ConversationView.prototype.updateSize = function (scrollToButtom) {
-        var that = this;
-        return new Promise(function (resolve) {
-            setTimeout(function () {
-                var $entryContainer = that.getListNode();
-
-                if (!$entryContainer.length) {
-                    return;
-                }
-
-                var replyRichtext = that.getReplyRichtext();
-                var formHeight = replyRichtext ? replyRichtext.$.closest('.mail-message-form').innerHeight() : 0;
-                $entryContainer.css('margin-bottom', formHeight + 5 + 'px');
-
-                var offsetTop = that.getListNode().offset().top;
-                var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
-                $entryContainer.css('height', max_height);
-                $entryContainer.css('max-height', max_height);
-
-                if (scrollToButtom !== false) {
-                    that.scrollToBottom();
-                }
-                resolve();
-            }, 100);
-        })
-
     };
 
     ConversationView.prototype.getListNode = function () {
