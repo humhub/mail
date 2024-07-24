@@ -22,10 +22,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             this.setActiveMessageId(Widget.instance('#inbox').getFirstMessageId());
         }
 
-        window.onbeforeunload = function() {
-            return this.onbeforeunloadCheck();
-        }
-
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
@@ -38,7 +34,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.onbeforeunloadCheck = function () {
         var replyRichtext = this.getReplyRichtext();
         if (replyRichtext && $(replyRichtext.$[0]).closest('form').find('textarea').val().trim().length) {
-            return confirm(module.text('warn.onBeforeUnload'));
+            return client.confirmUnload(module.text('warn.onBeforeUnload'));
         }
 
         return true;
