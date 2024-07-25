@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.2.3 (Unreleased)
+--------------------
+- Enh #408: Implement provider for meta searching
+
 3.2.2 (July 9, 2024)
 --------------------
 - Enh #382: Implement provider for meta searching

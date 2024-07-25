@@ -24,8 +24,10 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($model, 'tags')->widget(ConversationTagPicker::class)->label(false) ?>
         </div>
     <div class="modal-footer">
-        <?= ModalButton::submitModal(Url::toEditConversationTags($model->message)) ?>
+        
         <?= ModalButton::cancel() ?>
+        <?= ModalButton::submitModal(Url::toEditConversationTags($model->message)) ?>
+        
     </div>
     <?php ActiveForm::end() ?>
 <?php ModalDialog::end() ?>
