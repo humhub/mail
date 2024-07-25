@@ -3,7 +3,7 @@ Changelog
 
 3.2.3 (Unreleased)
 --------------------
-- Enh #408: Standardization of Modal Button Positions
+- Enh #411: Standardization of Modal Button Positions
 
 3.2.2 (July 9, 2024)
 --------------------
