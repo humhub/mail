@@ -1,12 +1,13 @@
 Changelog
 =========
 
-3.2.2 (Unreleased)
-----------------------
+3.2.2 (July 9, 2024)
+--------------------
 - Enh #382: Implement provider for meta searching
 - Fix #389: Fix notification about participant joining
 - Fix #396: Don't override global styles
 - Enh #397: Use PHP CS Fixer
+- Fix #402: Fix undefined function to load a message
 - Fix #400: Fixed missing `not saved` warning
 
 3.2.1 (April 15, 2024)

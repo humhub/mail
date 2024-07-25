@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Show all messages' => '',
-];
+return array (
+  'Show all messages' => 'Zobraziť všetky správy',
+);
