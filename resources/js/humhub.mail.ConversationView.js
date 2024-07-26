@@ -34,7 +34,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.onbeforeunloadCheck = function () {
         var replyRichtext = this.getReplyRichtext();
         if (replyRichtext && $(replyRichtext.$[0]).closest('form').find('textarea').val().trim().length) {
-            return client.confirmUnload(module.text('warn.onBeforeUnload'));
+            return client.confirmUnload();
         }
 
         return true;
