@@ -4,6 +4,7 @@ Changelog
 3.2.3 (Unreleased)
 --------------------
 - Fix #400: Fixed missing `not saved` warning
+- Enh #411: Standardization of Modal Button Positions
 
 3.2.2 (July 9, 2024)
 --------------------

@@ -77,8 +77,8 @@ use humhub\widgets\ModalDialog;
     </div>
     <div class="modal-footer">
 
-        <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.views_mail_create', 'Send')) ?>
         <?= ModalButton::cancel() ?>
+        <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.views_mail_create', 'Send')) ?>
 
     </div>
 
