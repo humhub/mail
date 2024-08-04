@@ -1,13 +1,10 @@
 <?php
 
-
 namespace humhub\modules\mail\models\forms;
-
 
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
-use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\Module;
 use humhub\modules\ui\filter\models\QueryFilter;
@@ -16,11 +13,9 @@ use yii\base\InvalidCallException;
 use yii\db\conditions\ExistsCondition;
 use yii\db\conditions\LikeCondition;
 use yii\db\conditions\OrCondition;
-use yii\db\Expression;
 
 class InboxFilterForm extends QueryFilter
 {
-
     /**
      * @var string
      */
@@ -81,6 +76,14 @@ class InboxFilterForm extends QueryFilter
     public function init()
     {
         parent::init();
+
+        if ($this->autoLoad === self::AUTO_LOAD_ALL || $this->autoLoad === self::AUTO_LOAD_GET) {
+            $keyword = Yii::$app->request->get('keyword');
+            if ($keyword !== null) {
+                $this->term = $keyword;
+            }
+        }
+
         $this->query = UserMessage::findByUser();
     }
 
@@ -95,7 +98,7 @@ class InboxFilterForm extends QueryFilter
 
             $this->query->andWhere(new OrCondition([
                 new ExistsCondition('EXISTS', $messageEntryContentSubQuery),
-                $this->createTermLikeCondition('message.title')
+                $this->createTermLikeCondition('message.title'),
             ]));
         }
 
@@ -162,5 +165,10 @@ class InboxFilterForm extends QueryFilter
     public function formName()
     {
         return '';
+    }
+
+    public function isFiltered(): bool
+    {
+        return !empty($this->term) || !empty($this->participants) || !empty($this->tags);
     }
 }

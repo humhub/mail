@@ -6,7 +6,6 @@ use humhub\modules\mail\models\MessageEntry;
 
 class m150709_050451_namespace extends Migration
 {
-
     public function up()
     {
         $this->renameClass('MessageEntry', MessageEntry::className());

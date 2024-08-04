@@ -14,14 +14,15 @@ use Yii;
  * This is the model class for table "user_message".
  *
  * The followings are the available columns in table 'user_message':
- * @property integer $message_id
- * @property integer $user_id
- * @property integer $is_originator
+ * @property int $message_id
+ * @property int $user_id
+ * @property int $is_originator
  * @property string $last_viewed
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
+ * @property int $pinned
  *
  * @property-read Message $message
  * @property-read User $user
@@ -113,19 +114,14 @@ class UserMessage extends ActiveRecord
 
         return static::find()->joinWith('message')
             ->where(['user_message.user_id' => $userId])
-            ->orderBy('message.updated_at DESC');
+            ->orderBy([
+                'user_message.pinned' => SORT_DESC,
+                'message.updated_at' => SORT_DESC,
+            ]);
     }
 
-    public function isUnread($userId = null)
+    public function isUnread(): bool
     {
-        if ($userId === null) {
-            $userId = Yii::$app->user->id;
-        }
-
-        if($this->message->lastEntry && ($this->message->lastEntry->user_id === $userId)) {
-            return false;
-        }
-
         return $this->message->updated_at > $this->last_viewed;
     }
 

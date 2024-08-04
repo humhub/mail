@@ -30,7 +30,7 @@ class InboxFilterFormTest extends HumHubDbTestCase
             'title' => $title,
             'message' => $message,
             'recipient' => $users,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
 
         $this->assertTrue($message->save());
@@ -68,7 +68,7 @@ class InboxFilterFormTest extends HumHubDbTestCase
         $user3 = User::findOne(['id' => 4]);
 
         $message1 = $this->createMessage('First', 'First', [$user2->guid]);
-        $message2 = $this->createMessage('Second', 'First',  [$user3->guid]);
+        $message2 = $this->createMessage('Second', 'First', [$user3->guid]);
 
         $filter = new InboxFilterForm(['participants' => [$user3->guid]]);
         $filter->apply();
@@ -83,8 +83,8 @@ class InboxFilterFormTest extends HumHubDbTestCase
         $user3 = User::findOne(['id' => 4]);
 
         $message1 = $this->createMessage('First', 'First', [$user2->guid]);
-        $message2 = $this->createMessage('Second', 'First',  [$user3->guid]);
-        $message3 = $this->createMessage('Third', 'Third',  [$user3->guid, $user2->guid]);
+        $message2 = $this->createMessage('Second', 'First', [$user3->guid]);
+        $message3 = $this->createMessage('Third', 'Third', [$user3->guid, $user2->guid]);
 
         $filter = new InboxFilterForm(['participants' => [$user3->guid, $user2->guid]]);
         $filter->apply();
@@ -116,7 +116,7 @@ class InboxFilterFormTest extends HumHubDbTestCase
         $userTag2 = MessageTag::findOne(['name' => 'TestTag2']);
 
         $message2 = $this->createMessage('Second', 'First', null, [$userTag->id]);
-        $message3 = $this->createMessage('Third', 'Third',  null, [$userTag2->id]);
+        $message3 = $this->createMessage('Third', 'Third', null, [$userTag2->id]);
 
         $userTag = MessageTag::findOne(['name' => 'TestTag']);
 

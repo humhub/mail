@@ -441,7 +441,6 @@ humhub.module('mail.ConversationEntry', function (module, require, $) {
     module.export = ConversationEntry;
 });
 humhub.module('mail.inbox', function (module, require, $) {
-
     var Widget = require('ui.widget').Widget;
     var Filter = require('ui.filter').Filter;
     var view = require('ui.view');
@@ -619,17 +618,14 @@ humhub.module('mail.inbox', function (module, require, $) {
     };
 
     ConversationList.prototype.updateActiveItem = function() {
-
-        var activeMessageId = Widget.instance('#mail-conversation-root').getActiveMessageId();
-
         this.$.find('.entry').removeClass('selected');
 
         // Set new selection
-        this.$.find('.entry').removeClass('selected');
-        var $selected = this.$.find('[data-message-id="' + activeMessageId + '"]');
-
-        if($selected.length) {
-            $selected.removeClass('unread').addClass('selected');
+        if (getRoot()) {
+            var $selected = this.$.find('[data-message-id="' + getRoot().getActiveMessageId() + '"]');
+            if ($selected.length) {
+                $selected.removeClass('unread').addClass('selected');
+            }
         }
     };
 
@@ -646,8 +642,8 @@ humhub.module('mail.inbox', function (module, require, $) {
         return new Promise(function (resolve) {
             if(view.isSmall() && $('.mail-conversation-single-message').length) {
                 $('.inbox-wrapper').slideUp(function() {
-                    if($('#mail-conversation-root').length) {
-                        Widget.instance('#mail-conversation-root').updateSize();
+                    if (getRoot()) {
+                        getRoot().updateSize();
                     }
                     resolve();
                 });
@@ -660,8 +656,8 @@ humhub.module('mail.inbox', function (module, require, $) {
         return new Promise(function (resolve) {
             if(view.isSmall()) {
                 $('.inbox-wrapper').slideDown(function() {
-                    if($('#mail-conversation-root').length) {
-                        Widget.instance('#mail-conversation-root').updateSize();
+                    if (getRoot()) {
+                        getRoot().updateSize();
                     }
 
                     resolve();
@@ -674,7 +670,9 @@ humhub.module('mail.inbox', function (module, require, $) {
     var toggleInbox = function() {
         if(view.isSmall()) {
             $('.inbox-wrapper').slideToggle(function() {
-                Widget.instance('#mail-conversation-root').updateSize();
+                if (getRoot()) {
+                    getRoot().updateSize();
+                }
             });
         }
     };
@@ -690,6 +688,14 @@ humhub.module('mail.inbox', function (module, require, $) {
         });
     };
 
+    var root = null;
+    var getRoot = function () {
+        if (!root) {
+            root = Widget.instance('#mail-conversation-root');
+        }
+        return root;
+    };
+
     module.export({
         ConversationList: ConversationList,
         Filter: ConversationFilter,
@@ -697,6 +703,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         toggleInbox: toggleInbox
     });
 });
+
 humhub.module('mail.conversation', function (module, require, $) {
     var Widget = require('ui.widget').Widget;
     var modal = require('ui.modal');
@@ -786,7 +793,7 @@ humhub.module('mail.conversation', function (module, require, $) {
         });
     };
 
-    var leave = function (evt) {
+    var linkAction = function (evt) {
         client.post(evt).then(function (response) {
             if (response.redirect) {
                 client.pjax.redirect(response.redirect);
@@ -797,9 +804,9 @@ humhub.module('mail.conversation', function (module, require, $) {
     };
 
     module.export({
-        init: init,
-        leave: leave,
-        submitEditEntry: submitEditEntry,
-        deleteEntry: deleteEntry,
+        init,
+        linkAction,
+        submitEditEntry,
+        deleteEntry,
     });
 });

@@ -1,8 +1,6 @@
 <?php
 
-
 use humhub\libs\Html;
-use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\mail\widgets\ManageTagsLink;
@@ -13,10 +11,9 @@ use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\Link;
 
-
 /* @var $this View */
 /* @var $options array */
-/* @var $model InboxFilterForm# */
+/* @var $model InboxFilterForm */
 ?>
 
 <?= Html::beginTag('div', $options) ?>
@@ -24,14 +21,22 @@ use humhub\widgets\Link;
     ->id('conversation-filter-link')
     ->href('#mail-filter-menu')
     ->icon('filter')
-    ->options(['data-toggle' => "collapse"])
+    ->options(['data-toggle' => 'collapse'])
     ->sm() ?>
 
-<div id="mail-filter-menu" class="collapse clearfix">
+<div id="mail-filter-menu" class="collapse clearfix<?= $model->isFiltered() ? ' in' : '' ?>">
     <hr>
     <?php $filterForm = ActiveForm::begin() ?>
 
-    <?= TextFilterInput::widget(['id' => 'term', 'category' => 'term', 'options' => ['placeholder' => Yii::t('MailModule.base', 'Search')]]) ?>
+    <?= TextFilterInput::widget([
+        'id' => 'term',
+        'category' => 'term',
+        'view' => '@mail/widgets/views/inboxFilterTextInput',
+        'options' => [
+            'placeholder' => Yii::t('MailModule.base', 'Search'),
+            'value' => $model->term,
+        ],
+    ]) ?>
 
     <div class="form-group">
         <?= PickerFilterInput::widget([

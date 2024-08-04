@@ -6,18 +6,6 @@
   margin-bottom: 12px;
   font-weight: 600;
 }
-#dropdown-messages .dropdown-footer .btn.btn-default {
-  border: 1px solid var(--default);
-  box-shadow: none;
-}
-#dropdown-messages .dropdown-footer .btn.btn-default:hover {
-  border-color: var(--background3);
-  background: var(--background3);
-}
-#dropdown-messages .dropdown-footer .btn.btn-default:active {
-  border-color: var(--text-color-secondary);
-  background: #FFF;
-}
 #dropdown-messages.dropdown-menu li a {
   font-size: inherit !important;
 }
@@ -26,9 +14,6 @@
 }
 .modal-body #createmessage-message .ProseMirror {
   min-height: 100px !important;
-}
-.media-list li.new {
-  background-color: #e9f9ff;
 }
 #mail-conversation-create-button .fa,
 #create-message-button .fa {
@@ -175,17 +160,21 @@
 }
 .mail-inbox-messages .media h4.media-heading {
   font-weight: 600;
+  font-size: 16px;
 }
 .mail-inbox-messages .media h4.media-heading time {
+  font-size: 11px !important;
   font-weight: normal;
   float: right;
 }
 .mail-inbox-messages .media h5 {
-  font-size: 11px;
+  font-size: 14px;
+  line-height: 16px;
   font-weight: 500;
   color: #000;
   display: flex;
   justify-content: space-between;
+  margin: 7px 0;
 }
 .mail-inbox-messages .media h5 span:first-child {
   overflow: hidden;
@@ -193,13 +182,9 @@
   white-space: nowrap;
 }
 .mail-inbox-messages .media .mail-last-entry {
-  font-size: 11px;
-  font-weight: normal;
-  color: var(--text-color-soft2);
-}
-.mail-inbox-messages .selected .mail-last-entry,
-.mail-inbox-messages .media-list > li:hover .mail-last-entry {
-  color: var(--text-color-main);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color-secondary);
 }
 .mail-message-form {
   position: absolute;
@@ -240,7 +225,7 @@
 .mail-conversation-entry.hideUserInfo .author-label {
   display: none;
 }
-.mail-conversation-entry.hideUserInfo .author-image img {
+.mail-conversation-entry.hideUserInfo .author-image a {
   visibility: hidden;
   margin-top: 0;
 }
@@ -292,7 +277,7 @@
   color: var(--info);
 }
 .messagePreviewEntry.unread .mail-last-entry {
-  color: var(--text-color-main);
+  color: var(--text-color-highlight);
 }
 .message-tag-filter-group .select2-selection {
   border-bottom-right-radius: 0;
@@ -308,8 +293,8 @@
 }
 .new-message-badge {
   float: right;
-  min-width: 16px;
-  height: 16px;
+  min-width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--info);
   margin-left: 2px;

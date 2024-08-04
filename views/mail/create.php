@@ -9,10 +9,10 @@ use humhub\modules\file\widgets\UploadProgress;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\widgets\MailRichtextEditor;
+use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\ModalButton;
 use humhub\widgets\ModalDialog;
-use yii\widgets\ActiveForm;
 
 /* @var $model CreateMessage */
 /* @var $fileHandlers BaseFileHandler[] */
@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     'closable' => false,
 ]) ?>
 <div class="modal-content">
-    <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
+    <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -77,8 +77,8 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="modal-footer">
 
-        <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.views_mail_create', 'Send')) ?>
         <?= ModalButton::cancel() ?>
+        <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.views_mail_create', 'Send')) ?>
 
     </div>
 

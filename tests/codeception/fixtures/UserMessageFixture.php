@@ -12,7 +12,6 @@ use yii\test\ActiveFixture;
 
 class UserMessageFixture extends ActiveFixture
 {
-
     public $modelClass = 'humhub\modules\mail\models\UserMessage';
 
 }

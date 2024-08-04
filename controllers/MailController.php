@@ -36,7 +36,6 @@ use yii\web\NotFoundHttpException;
  */
 class MailController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -51,7 +50,7 @@ class MailController extends Controller
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY],
-            [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']]
+            [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']],
         ];
     }
 
@@ -98,7 +97,7 @@ class MailController extends Controller
         }
 
         return $this->asJson([
-            'messageCount' => UserMessage::getNewMessageCount()
+            'messageCount' => UserMessage::getNewMessageCount(),
         ]);
     }
 
@@ -111,7 +110,7 @@ class MailController extends Controller
         return $this->renderAjaxContent(Messages::widget([
             'message' => $message,
             'entries' => $message->getEntryUpdates($from)->all(),
-            'showDateBadge' => false
+            'showDateBadge' => false,
         ]));
     }
 
@@ -127,7 +126,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'result' => $result,
-            'isLast' => (count($entries) < Module::getModuleInstance()->conversationUpdatePageSize)
+            'isLast' => (count($entries) < Module::getModuleInstance()->conversationUpdatePageSize),
         ]);
     }
 
@@ -142,15 +141,15 @@ class MailController extends Controller
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
             return $this->asJson([
                 'success' => true,
-                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => $replyForm->reply->isFirstToday()])
+                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => $replyForm->reply->isFirstToday()]),
             ]);
         }
 
         return $this->asJson([
             'success' => false,
             'error' => [
-                'message' => $replyForm->getFirstError('message')
-            ]
+                'message' => $replyForm->getFirstError('message'),
+            ],
         ]);
     }
 
@@ -163,7 +162,7 @@ class MailController extends Controller
     {
         return $this->renderAjaxContent(UserListBox::widget([
             'query' => $this->getMessage($id, true)->getUsers(),
-            'title' => '<strong>' . Yii::t('MailModule.base', 'Participants') . '</strong>'
+            'title' => '<strong>' . Yii::t('MailModule.base', 'Participants') . '</strong>',
         ]));
     }
 
@@ -184,15 +183,15 @@ class MailController extends Controller
         if ($inviteForm->load(Yii::$app->request->post())) {
             if ($inviteForm->save()) {
                 return $this->asJson([
-                    'result' => ConversationHeader::widget(['message' => $message])
+                    'result' => ConversationHeader::widget(['message' => $message]),
                 ]);
             }
 
             return $this->asJson([
                 'success' => false,
                 'error' => [
-                    'message' => $inviteForm->getFirstError('recipients')
-                ]
+                    'message' => $inviteForm->getFirstError('recipients'),
+                ],
             ]);
         }
 
@@ -205,7 +204,7 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $query = UserMessage::findByUser(null, 'message.updated_at DESC')->limit(5);
+        $query = UserMessage::findByUser()->limit(5);
         return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
     }
 
@@ -232,7 +231,7 @@ class MailController extends Controller
             'keyword' => $keyword,
             'permission' => (!Yii::$app->user->isAdmin()) ? new SendMail() : null,
             'disableFillUser' => true,
-            'disabledText' => Yii::t('MailModule.base', 'You are not allowed to start a conversation with this user.')
+            'disabledText' => Yii::t('MailModule.base', 'You are not allowed to start a conversation with this user.'),
         ]);
 
         // Disable already participating users
@@ -266,7 +265,7 @@ class MailController extends Controller
      *
      * @param type $message
      * @param type $user
-     * @return boolean
+     * @return bool
      */
     private function isParticipant($message, $user)
     {
@@ -313,9 +312,9 @@ class MailController extends Controller
      * Creates a new Message
      * and redirects to it.
      */
-    public function actionCreate($userGuid = null)
+    public function actionCreate($userGuid = null, ?string $title = null, ?string $message = null)
     {
-        $model = new CreateMessage(['recipient' => [$userGuid]]);
+        $model = new CreateMessage(['recipient' => [$userGuid], 'title' => $title, 'message' => $message]);
 
         // Preselect user if userGuid is given
         if ($userGuid) {
@@ -342,6 +341,58 @@ class MailController extends Controller
     }
 
     /**
+     * Mark a Conversation as unread
+     *
+     * @param int $id
+     */
+    public function actionMarkUnread($id)
+    {
+        $this->forcePostRequest();
+        $this->getMessage($id, true)->markUnread();
+
+        $nextReadMessage = $this->getNextReadMessage($id);
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => $nextReadMessage ? Url::toMessenger($nextReadMessage) : Url::to(['/dashboard']),
+        ]);
+    }
+
+    /**
+     * Pin a Conversation
+     *
+     * @param int $id
+     */
+    public function actionPin($id)
+    {
+        $this->forcePostRequest();
+        $message = $this->getMessage($id, true);
+        $message->pin();
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::toMessenger($message),
+        ]);
+    }
+
+    /**
+     * Unpin a Conversation
+     *
+     * @param int $id
+     */
+    public function actionUnpin($id)
+    {
+        $this->forcePostRequest();
+        $message = $this->getMessage($id, true);
+        $message->unpin();
+
+        return $this->asJson([
+            'success' => true,
+            'redirect' => Url::toMessenger($message),
+        ]);
+    }
+
+    /**
      * Leave Message / Conversation
      *
      * Leave is only possible when at least two people are in the
@@ -355,11 +406,11 @@ class MailController extends Controller
     public function actionLeave($id)
     {
         $this->forcePostRequest();
-        $this->getMessage($id, true)->leave(Yii::$app->user->id);
+        $this->getMessage($id, true)->leave();
 
         return $this->asJson([
             'success' => true,
-            'redirect' => Url::toMessenger()
+            'redirect' => Url::toMessenger(),
         ]);
     }
 
@@ -387,8 +438,8 @@ class MailController extends Controller
                 'success' => true,
                 'content' => ConversationEntry::widget([
                     'entry' => $entry,
-                    'showDateBadge' => false
-                ])
+                    'showDateBadge' => false,
+                ]),
             ]);
         }
 
@@ -420,7 +471,7 @@ class MailController extends Controller
         $entry->message->deleteEntry($entry);
 
         return $this->asJson([
-            'success' => true
+            'success' => true,
         ]);
     }
 
@@ -441,18 +492,15 @@ class MailController extends Controller
      *
      * @param int $id
      * @param bool $throw
-     * @return Message
+     * @return Message|null
      * @throws HttpException
      */
-    private function getMessage($id, $throw = false)
+    private function getMessage($id, $throw = false): ?Message
     {
         $message = Message::findOne(['id' => $id]);
 
-        if ($message) {
-            $userMessage = $message->getUserMessage();
-            if ($userMessage != null) {
-                return $message;
-            }
+        if ($message && $message->getUserMessage() !== null) {
+            return $message;
         }
 
         if ($throw) {
@@ -460,5 +508,19 @@ class MailController extends Controller
         }
 
         return null;
+    }
+
+    private function getNextReadMessage($id): ?Message
+    {
+        return Message::find()
+            ->leftJoin('user_message', 'user_message.message_id = message.id')
+            ->where(['user_id' => Yii::$app->user->id])
+            ->andWhere(['!=', 'message_id', $id])
+            ->andWhere('user_message.last_viewed >= message.updated_at')
+            ->orderBy([
+                'user_message.pinned' => SORT_DESC,
+                'message.updated_at' => SORT_DESC,
+            ])
+            ->one();
     }
 }

@@ -55,7 +55,7 @@ use humhub\widgets\Button;
                     ]); ?>
                 </div>
             <?php else : ?>
-                <?php $form = ActiveForm::begin(['enableClientValidation' => false]); ?>
+                <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
 
                 <div class="content-create-input-group">
 
