@@ -124,7 +124,7 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @param User|integer|string|null $user
+     * @param User|int|string|null $user
      * @return bool
      */
     public function isParticipant($user = null): bool
