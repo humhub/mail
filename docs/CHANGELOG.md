@@ -4,6 +4,7 @@ Changelog
 3.2.3 (Unreleased)
 --------------------
 - Enh #411: Standardization of Modal Button Positions
+- Enh #363: Deny access for files from message where current user is not participant
 
 3.2.2 (July 9, 2024)
 --------------------

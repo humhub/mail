@@ -124,16 +124,28 @@ class Message extends ActiveRecord
     }
 
     /**
-     * @param $user
+     * @param User|integer|string|null $user
      * @return bool
      */
-    public function isParticipant($user)
+    public function isParticipant($user = null): bool
     {
+        if (empty($user->guid)) {
+            if ($user === null && !Yii::$app->user->isGuest) {
+                $user = Yii::$app->user->getIdentity();
+            } elseif (!empty($user) && is_scalar($user)) {
+                $user = User::findOne(['id' => $user]);
+            }
+            if (empty($user->guid)) {
+                return false;
+            }
+        }
+
         foreach ($this->users as $participant) {
             if ($participant->guid === $user->guid) {
                 return true;
             }
         }
+
         return false;
     }
 
