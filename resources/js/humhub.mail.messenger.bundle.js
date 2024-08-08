@@ -621,6 +621,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         this.$.find('.entry').removeClass('selected');
 
         // Set new selection
+        root = null; // refresh root after load new active message
         if (getRoot()) {
             var $selected = this.$.find('[data-message-id="' + getRoot().getActiveMessageId() + '"]');
             if ($selected.length) {
