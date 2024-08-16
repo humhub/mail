@@ -87,8 +87,10 @@ class ReplyForm extends Model
             $userMessage = $this->model->getUserMessage($this->reply->user_id);
             if ($userMessage) {
                 $userMessage->last_viewed = date('Y-m-d G:i:s');
-                return $userMessage->save();
+                $userMessage->save();
             }
+
+            return true;
         }
 
         return false;
