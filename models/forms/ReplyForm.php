@@ -82,7 +82,13 @@ class ReplyForm extends Model
             $this->reply->refresh(); // Update created_by date, otherwise db expression is set...
             $this->reply->notify();
             $this->reply->fileManager->attach(Yii::$app->request->post('fileList'));
-            return true;
+
+            // Update last viewed date to avoid marking the conversation as unread
+            $userMessage = $this->model->getUserMessage($this->reply->user_id);
+            if ($userMessage) {
+                $userMessage->last_viewed = date('Y-m-d G:i:s');
+                return $userMessage->save();
+            }
         }
 
         return false;
