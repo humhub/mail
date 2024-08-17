@@ -6,6 +6,7 @@ Changelog
 - Enh #411: Standardization of Modal Button Positions
 - Enh #363: Deny access for files from message where current user is not participant
 - Fix #412: Fix active message after mark unread
+- Fix #15: When replying to a message, the conversation is marked as unread
 
 3.2.2 (July 9, 2024)
 --------------------
