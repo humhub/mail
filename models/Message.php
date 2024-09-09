@@ -181,14 +181,14 @@ class Message extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'id' => 'ID',
             'title' => Yii::t('MailModule.base', 'Title'),
             'created_at' => Yii::t('MailModule.base', 'Created At'),
             'created_by' => Yii::t('MailModule.base', 'Created By'),
             'updated_at' => Yii::t('MailModule.base', 'Updated At'),
             'updated_by' => Yii::t('MailModule.base', 'Updated By'),
-        );
+        ];
     }
 
     /**
@@ -240,7 +240,7 @@ class Message extends ActiveRecord
     public function deleteEntry($entry)
     {
         if ($entry->message->id == $this->id) {
-            if($this->getEntries()->count() > 1) {
+            if ($this->getEntries()->count() > 1) {
                 $entry->delete();
             } else {
                 $this->delete();
@@ -318,10 +318,10 @@ class Message extends ActiveRecord
     public function seen($userId)
     {
         // Update User Message Entry
-        $userMessage = UserMessage::findOne(array(
+        $userMessage = UserMessage::findOne([
             'user_id' => $userId,
             'message_id' => $this->id,
-        ));
+        ]);
         if ($userMessage !== null) {
             $userMessage->last_viewed = date('Y-m-d G:i:s');
             $userMessage->save();
@@ -333,11 +333,11 @@ class Message extends ActiveRecord
      */
     public function delete()
     {
-        foreach (MessageEntry::findAll(array('message_id' => $this->id)) as $messageEntry) {
+        foreach (MessageEntry::findAll(['message_id' => $this->id]) as $messageEntry) {
             $messageEntry->delete();
         }
 
-        foreach (UserMessage::findAll(array('message_id' => $this->id)) as $userMessage) {
+        foreach (UserMessage::findAll(['message_id' => $this->id]) as $userMessage) {
             $userMessage->delete();
         }
 

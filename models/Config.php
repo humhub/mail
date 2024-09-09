@@ -86,7 +86,7 @@ class Config extends \yii\base\Model
 
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -103,7 +103,7 @@ class Config extends \yii\base\Model
 
     public function canCreateConversation(User $originator)
     {
-        if($originator->isSystemAdmin()) {
+        if ($originator->isSystemAdmin()) {
             return true;
         }
 
@@ -116,7 +116,7 @@ class Config extends \yii\base\Model
 
     public function isNewUser(User $originator)
     {
-        if(empty($this->newUserRestrictionEnabled)) {
+        if (empty($this->newUserRestrictionEnabled)) {
             return false;
         }
 
@@ -128,7 +128,7 @@ class Config extends \yii\base\Model
         $module = static::getModule();
         $lastTS = $module->settings->contentContainer($originator)->get('conversationCountTime');
 
-        if(!$lastTS) {
+        if (!$lastTS) {
             $module->settings->contentContainer($originator)->set('conversationCountTime', time());
             $module->settings->contentContainer($originator)->set('conversationCount', 0);
             return 0;
@@ -137,7 +137,7 @@ class Config extends \yii\base\Model
         $lastDate = (new \DateTime())->setTimestamp($lastTS);
         $today = (new \DateTime())->setTime(0, 0, 0);
 
-        if($today > $lastDate) {
+        if ($today > $lastDate) {
             $module->settings->contentContainer($originator)->set('conversationCountTime', time());
             $module->settings->contentContainer($originator)->set('conversationCount', 0);
             return 0;

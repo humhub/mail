@@ -49,7 +49,7 @@ class InboxController extends Controller
         foreach ($userMessages as $userMessage) {
             try {
                 $result .= InboxMessagePreview::widget(['userMessage' => $userMessage]);
-            } catch(\Throwable $e) {
+            } catch (\Throwable $e) {
                 Yii::error($e);
             }
         }

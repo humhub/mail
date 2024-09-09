@@ -93,7 +93,7 @@ class UserMessage extends ActiveRecord
             $userId = Yii::$app->user->id;
         }
 
-        if($userId instanceof User) {
+        if ($userId instanceof User) {
             $userId = $userId->id;
         }
 

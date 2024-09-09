@@ -20,7 +20,7 @@ class ConversationTagsForm extends Model
     public function init()
     {
         parent::init();
-        if(empty($this->tags)) {
+        if (empty($this->tags)) {
             $this->tags = MessageTag::findByMessage(Yii::$app->user->id, $this->message)->all();
         }
     }

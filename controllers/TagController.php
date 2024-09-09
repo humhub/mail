@@ -43,7 +43,7 @@ class TagController extends Controller
     {
         $model = new AddTag();
         $model->load(Yii::$app->request->post());
-        if($model->save()) {
+        if ($model->save()) {
             $model = new AddTag();
         }
         return $this->render('manage', ['model' => $model]);
@@ -53,7 +53,7 @@ class TagController extends Controller
     {
         $tag = $this->findTag($id);
 
-        if($tag->load(Yii::$app->request->post()) && $tag->save()) {
+        if ($tag->load(Yii::$app->request->post()) && $tag->save()) {
             return ModalClose::widget(['reload' => true]);
         }
 

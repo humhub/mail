@@ -18,7 +18,7 @@ class m150709_050452_message_tags extends Migration
 
         try {
             $this->addForeignKey('fk-message-tag-user-id', 'message_tag', 'user_id', 'user', 'id', 'cascade');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Yii::error($e);
         }
     }

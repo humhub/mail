@@ -42,7 +42,7 @@ class Events
         try {
             foreach (Message::find()->each() as $message) {
                 /* @var $message Message */
-                if(!$message->getAuthor()->count()) {
+                if (!$message->getAuthor()->count()) {
                     if ($integrityController->showFix("Deleting conversation id " . $message->id . " without existing author!")) {
                         $message->delete();
                     }
@@ -53,12 +53,12 @@ class Events
 
             foreach (MessageEntry::find()->each() as $messageEntry) {
                 /* @var $messageEntry MessageEntry */
-                if(!$messageEntry->getUser()->count()) {
+                if (!$messageEntry->getUser()->count()) {
                     if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing user!")) {
                         $messageEntry->delete();
                     }
                 }
-                if(!$messageEntry->message) {
+                if (!$messageEntry->message) {
                     if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing conversation!")) {
                         $messageEntry->delete();
                     }
@@ -69,7 +69,7 @@ class Events
 
             foreach (UserMessage::find()->each() as $userMessage) {
                 /* @var $userMessage UserMessage */
-                if(!$userMessage->getUser()->count()) {
+                if (!$userMessage->getUser()->count()) {
                     if ($integrityController->showFix("Deleting user message id " . $userMessage->message_id . " without existing user!")) {
                         $userMessage->delete();
                     }
@@ -80,13 +80,13 @@ class Events
 
             foreach (UserMessageTag::find()->each() as $messageTag) {
                 /* @var $messageTag UserMessageTag */
-                if(!$messageTag->getUser()->count()) {
+                if (!$messageTag->getUser()->count()) {
                     if ($integrityController->showFix("Deleting user tag id " . $messageTag->id . " without existing user!")) {
                         $messageTag->delete();
                     }
                 }
             }
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
     }
@@ -109,7 +109,7 @@ class Events
             }
 
             foreach (UserMessage::findAll(['user_id' => $event->sender->id]) as $userMessage) {
-                if($userMessage->message) {
+                if ($userMessage->message) {
                     $userMessage->message->leave($event->sender->id);
                 }
 
@@ -119,7 +119,7 @@ class Events
             foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
                 $userMessageTag->delete();
             }
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
 
@@ -150,7 +150,7 @@ class Events
                     'sortOrder' => 300,
                 ]);
             }
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
     }

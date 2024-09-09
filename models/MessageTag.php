@@ -40,7 +40,7 @@ class MessageTag extends ActiveRecord
 
     public static function search($userId, $keyword)
     {
-        if(empty($userId)) {
+        if (empty($userId)) {
             return [];
         }
 
@@ -63,7 +63,7 @@ class MessageTag extends ActiveRecord
 
         $userMessage = $message->getUserMessage();
 
-        if(!$userMessage) {
+        if (!$userMessage) {
             throw new NotFoundHttpException();
         }
 
@@ -77,7 +77,7 @@ class MessageTag extends ActiveRecord
         $tags = is_array($tags) ? $tags : [$tags];
 
         foreach ($tags as $tag) {
-            if(is_string($tag) && strpos($tag, '_add:') === 0) {
+            if (is_string($tag) && strpos($tag, '_add:') === 0) {
                 $newTag = new static([
                     'name' => substr($tag, strlen('_add:')),
                     'user_id' => $userId,
@@ -108,7 +108,7 @@ class MessageTag extends ActiveRecord
 
     public function afterDelete()
     {
-        foreach(UserMessageTag::find()->where(['tag_id' => $this->id])->all() as $messageTag) {
+        foreach (UserMessageTag::find()->where(['tag_id' => $this->id])->all() as $messageTag) {
             $messageTag->delete();
         }
     }

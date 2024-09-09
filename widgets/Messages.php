@@ -58,7 +58,7 @@ class Messages extends Widget
      */
     private function getEntries()
     {
-        if($this->entries) {
+        if ($this->entries) {
             return $this->entries;
         }
 
