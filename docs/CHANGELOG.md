@@ -8,6 +8,7 @@ Changelog
 - Fix #412: Fix active message after mark unread
 - Fix #15: When replying to a message, the conversation is marked as unread
 - Enh #417: Replace theme variables with CSS variables
+- Enh #418: Update Active Form for Bootstrap 5
 
 3.2.2 (July 9, 2024)
 --------------------

@@ -7,10 +7,10 @@ use humhub\modules\file\widgets\UploadButton;
 use humhub\modules\file\widgets\UploadProgress;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\MailRichtextEditor;
+use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\widgets\Button;
 use humhub\widgets\ModalButton;
 use humhub\widgets\ModalDialog;
-use yii\bootstrap\ActiveForm;
 
 /* @var $entry MessageEntry */
 /* @var $fileHandlers BaseFileHandler[] */
