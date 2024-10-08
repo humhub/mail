@@ -80,8 +80,8 @@ class ReplyForm extends Model
 
         if ($this->reply->save()) {
             $this->reply->refresh(); // Update created_by date, otherwise db expression is set...
-            $this->reply->notify();
             $this->reply->fileManager->attach(Yii::$app->request->post('fileList'));
+            $this->reply->notify();
 
             // Update last viewed date to avoid marking the conversation as unread
             $userMessage = $this->model->getUserMessage($this->reply->user_id);
