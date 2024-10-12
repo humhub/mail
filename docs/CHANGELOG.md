@@ -10,6 +10,7 @@ Changelog
 - Enh #417: Replace theme variables with CSS variables
 - Enh #418: Update Active Form for Bootstrap 5
 - Enh #422: Changed deprecated `DOMSubtreeModified` to `MutationObserver`
+- Fix #423: Fix rendering of attached files on new reply by PushService
 
 3.2.2 (July 9, 2024)
 --------------------
