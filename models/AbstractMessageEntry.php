@@ -41,8 +41,6 @@ abstract class AbstractMessageEntry extends ActiveRecord
     public const TYPE_USER_JOINED = 1;
     public const TYPE_USER_LEFT = 2;
 
-    protected bool $requiredContent = true;
-
     /**
      * Get type of the message entry
      *
@@ -78,14 +76,8 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function rules()
     {
-        $requiredColumns = ['message_id', 'user_id'];
-
-        if ($this->requiredContent) {
-            $requiredColumns[] = 'content';
-        }
-
         return [
-            [$requiredColumns, 'required'],
+            [['message_id', 'user_id'], 'required'],
             [['message_id', 'user_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];

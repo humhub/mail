@@ -138,6 +138,11 @@ class MailController extends Controller
 
         // Reply Form
         $replyForm = new ReplyForm(['model' => $message]);
+
+        if (!empty(Yii::$app->request->post('fileList'))) {
+            $replyForm->scenario = ReplyForm::SCENARIO_HAS_FILES;
+        }
+
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
             return $this->asJson([
                 'success' => true,

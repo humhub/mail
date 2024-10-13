@@ -79,6 +79,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         filePreview.hide();
                         filePreview.children('ul.files').html('');
                     }
+                    var fileListInputs = that.getReplyFileListInputs();
+                    if (fileListInputs.length) {
+                        fileListInputs.remove();
+                    }
                     that.scrollToBottom();
                     if (!view.isSmall()) { // prevent autofocus on mobile
                         that.focus();
@@ -107,6 +111,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.getReplyFilePreview = function () {
         return this.$.find('.post-file-list');
+    };
+
+    ConversationView.prototype.getReplyFileListInputs = function () {
+        return this.$.find('input[name="fileList[]"]');
     };
 
 
