@@ -1,6 +1,6 @@
 <?php
 
-use yii\widgets\ActiveForm;
+use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\widgets\ModalDialog;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\ModalButton;

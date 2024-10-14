@@ -219,8 +219,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         }
 
         var filePreview = that.getReplyFilePreview();
-        filePreview.on('DOMSubtreeModified', function (evt) {
+        var observer = new MutationObserver(function () {
             that.updateSize(true);
+        });
+        filePreview.each(function () {
+            observer.observe(element, { childList: true, subtree: true });
         });
 
         that.focus();

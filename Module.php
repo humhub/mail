@@ -20,7 +20,6 @@ use Yii;
  */
 class Module extends \humhub\components\Module
 {
-
     /**
      * @inheritdoc
      */
@@ -82,11 +81,11 @@ class Module extends \humhub\components\Module
     {
         if (!$contentContainer) {
             return [
-                new StartConversation()
+                new StartConversation(),
             ];
-        } else if ($contentContainer instanceof User) {
+        } elseif ($contentContainer instanceof User) {
             return [
-                new SendMail()
+                new SendMail(),
             ];
         }
 
@@ -97,14 +96,14 @@ class Module extends \humhub\components\Module
     {
         return [
             MailNotification::class,
-            ConversationNotification::class
+            ConversationNotification::class,
         ];
     }
 
     /**
      * Determines showInTopNav is enabled or not
      *
-     * @return boolean is showInTopNav enabled
+     * @return bool is showInTopNav enabled
      */
     public function hideInTopNav()
     {

@@ -7,7 +7,6 @@
 
 namespace humhub\modules\mail\widgets;
 
-
 use humhub\modules\content\widgets\richtext\ProsemirrorRichTextEditor;
 use Yii;
 

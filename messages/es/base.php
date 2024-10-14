@@ -8,6 +8,7 @@ return array (
   'A tag with the same name already exists.' => 'Ya existe una etiqueta con el mismo nombre.',
   'Add Tag' => 'Añadir etiqueta',
   'Add participants' => 'Agregar participantes',
+  'Advanced Messages Search' => 'Búsqueda avanzada de mensajes',
   'Allow others to send you private messages' => 'Permitir que otros le envíen mensajes privados',
   'Allow users to start new conversations' => 'Permitir a los usuarios iniciar nuevas conversaciones',
   'Confirm' => 'Confirmar',

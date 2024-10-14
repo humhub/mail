@@ -9,7 +9,6 @@ use humhub\components\Widget;
 
 class NewMessageButton extends Widget
 {
-
     /**
      * @var string
      */
@@ -36,9 +35,9 @@ class NewMessageButton extends Widget
     public $label;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    public $right = false;
+    public $right = true;
 
     /**
      * @var string
@@ -50,17 +49,17 @@ class NewMessageButton extends Widget
      */
     public function run()
     {
-        $button = ModalButton::info($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
+        $button = ModalButton::defaultType($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
 
-        if($this->icon) {
+        if ($this->icon) {
             $button->icon($this->icon);
         }
 
-        if($this->right) {
+        if ($this->right) {
             $button->right();
         }
 
-        if($this->cssClass) {
+        if ($this->cssClass) {
             $button->cssClass($this->cssClass);
         }
 
@@ -84,7 +83,7 @@ class NewMessageButton extends Widget
 
     public function getLabel()
     {
-        if($this->label !== null) {
+        if ($this->label !== null) {
             return $this->label;
         }
 
@@ -93,5 +92,3 @@ class NewMessageButton extends Widget
             : Yii::t('MailModule.base', 'Message');
     }
 }
-
-?>

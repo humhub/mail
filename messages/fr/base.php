@@ -8,6 +8,7 @@ return array (
   'A tag with the same name already exists.' => 'Il existe déjà un tag avec ce nom',
   'Add Tag' => 'Ajouter tag',
   'Add participants' => 'Ajouter des participants',
+  'Advanced Messages Search' => 'Recherche avancée de messages',
   'Allow others to send you private messages' => 'Autoriser les autres utilisateurs à vous envoyer des messages privés',
   'Allow users to start new conversations' => 'Autoriser les utilisateurs à lancer des nouvelles conversations',
   'Confirm' => 'Confirmer',

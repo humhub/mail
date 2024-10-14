@@ -22,7 +22,7 @@ class ConversationSettingsMenu extends Widget
         return $this->render('conversationSettingsMenu', [
             'message' => $this->message,
             'isSingleParticipant' => $this->message->getUsers()->count() === 1,
-            'canAddParticipant' => Yii::$app->user->can(StartConversation::class)
+            'canAddParticipant' => Yii::$app->user->can(StartConversation::class),
         ]);
     }
 

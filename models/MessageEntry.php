@@ -3,6 +3,7 @@
 namespace humhub\modules\mail\models;
 
 use DateTime;
+use humhub\interfaces\ViewableInterface;
 use humhub\modules\content\widgets\richtext\AbstractRichText;
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\RichText;
@@ -18,7 +19,7 @@ use yii\base\InvalidConfigException;
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class MessageEntry extends AbstractMessageEntry implements LikeNotificationInterface
+class MessageEntry extends AbstractMessageEntry implements ViewableInterface, LikeNotificationInterface
 {
     /**
      * @inheritdoc
@@ -66,6 +67,16 @@ class MessageEntry extends AbstractMessageEntry implements LikeNotificationInter
             ->andWhere(['!=', 'id', $this->id])
             ->andWhere(['>=', 'created_at', $today])
             ->exists();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function canView($user = null): bool
+    {
+        $message = $this->message;
+
+        return $message instanceof Message && $message->isParticipant($user);
     }
 
     /**

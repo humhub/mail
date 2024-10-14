@@ -92,7 +92,7 @@ class InboxFilterForm extends QueryFilter
      */
     public function apply()
     {
-        if(!empty($this->term)) {
+        if (!empty($this->term)) {
             $messageEntryContentSubQuery = MessageEntry::find()->where('message_entry.message_id = message.id')
                 ->andWhere($this->createTermLikeCondition('message_entry.content'));
 
@@ -102,7 +102,7 @@ class InboxFilterForm extends QueryFilter
             ]));
         }
 
-        if(!empty($this->participants)) {
+        if (!empty($this->participants)) {
             foreach ($this->participants as $userGuid) {
                 $participantsExistsSubQuery = UserMessage::find()->joinWith('user')->where('user_message.message_id = message.id')
                     ->andWhere(['user.guid' => $userGuid]);
@@ -111,7 +111,7 @@ class InboxFilterForm extends QueryFilter
 
         }
 
-        if(!empty($this->tags)) {
+        if (!empty($this->tags)) {
             foreach ($this->tags as $tag) {
                 $participantsExistsSubQuery = UserMessageTag::find()
                     ->where('user_message.message_id = user_message_tag.message_id')
@@ -121,16 +121,16 @@ class InboxFilterForm extends QueryFilter
             }
         }
 
-        if(!empty($this->from)) {
+        if (!empty($this->from)) {
             $message = Message::findOne(['id' => $this->from]);
-            if(!$message) {
+            if (!$message) {
                 throw new InvalidCallException();
             }
             $this->query->andWhere(['<=', 'message.updated_at', $message->updated_at]);
             $this->query->andWhere(['<>', 'message.id', $message->id]);
         }
 
-        if(!empty($this->ids)) {
+        if (!empty($this->ids)) {
             $this->query->andWhere(['IN', 'user_message.message_id', $this->ids]);
         }
     }
@@ -155,7 +155,7 @@ class InboxFilterForm extends QueryFilter
 
     public function wasLastPage()
     {
-        if($this->wasLastPage === null) {
+        if ($this->wasLastPage === null) {
             throw new InvalidCallException();
         }
 

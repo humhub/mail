@@ -14,11 +14,14 @@ class m230213_094842_add_entry_type extends Migration
      */
     public function safeUp()
     {
-        $this->safeAddColumn(AbstractMessageEntry::tableName(), 'type', $this->tinyInteger()
+        $this->safeAddColumn(
+            AbstractMessageEntry::tableName(),
+            'type',
+            $this->tinyInteger()
             ->defaultValue(MessageEntry::type())
             ->notNull()
             ->unsigned()
-            ->after('content')
+            ->after('content'),
         );
         $this->alterColumn(AbstractMessageEntry::tableName(), 'content', $this->text()->null());
     }

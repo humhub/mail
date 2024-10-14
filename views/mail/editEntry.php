@@ -7,10 +7,10 @@ use humhub\modules\file\widgets\UploadButton;
 use humhub\modules\file\widgets\UploadProgress;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\MailRichtextEditor;
+use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\widgets\Button;
 use humhub\widgets\ModalButton;
 use humhub\widgets\ModalDialog;
-use yii\bootstrap\ActiveForm;
 
 /* @var $entry MessageEntry */
 /* @var $fileHandlers BaseFileHandler[] */
@@ -59,8 +59,10 @@ use yii\bootstrap\ActiveForm;
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <?= Button::save(Yii::t('base', 'Save'))->submit()->action('mail.conversation.submitEditEntry')->options(['data-entry-id' => $entry->id]) ?>
+            
             <?= ModalButton::cancel() ?>
+            <?= Button::save(Yii::t('base', 'Save'))->submit()->action('mail.conversation.submitEditEntry')->options(['data-entry-id' => $entry->id]) ?>
+
         </div>
         <div class="col-md-3">
             <?= Button::danger(Yii::t('base', 'Delete'))->right()->options(['data-entry-id' => $entry->id])

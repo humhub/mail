@@ -39,7 +39,7 @@ class ConversationEntry extends JsWidget
     public bool $showDateBadge = true;
 
     public array $userColors = ['#34568B', '#FF6F61', '#6B5B95', '#88B04B', '#92A8D1', '#955251', '#B565A7', '#009B77',
-        '#DD4124', '#D65076', '#45B8AC', '#EFC050', '#5B5EA6', '#9B2335', '#55B4B0', '#E15D44', '#BC243C', '#C3447A'
+        '#DD4124', '#D65076', '#45B8AC', '#EFC050', '#5B5EA6', '#9B2335', '#55B4B0', '#E15D44', '#BC243C', '#C3447A',
     ];
 
     /**
@@ -64,7 +64,7 @@ class ConversationEntry extends JsWidget
             'showUser' => $showUser,
             'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
-            'options' => $this->getOptions()
+            'options' => $this->getOptions(),
         ]);
     }
 
@@ -72,7 +72,7 @@ class ConversationEntry extends JsWidget
     {
         return $this->render('conversationState', [
             'entry' => $this->entry,
-            'showDateBadge' => $this->showDateBadge()
+            'showDateBadge' => $this->showDateBadge(),
         ]);
     }
 
@@ -96,14 +96,14 @@ class ConversationEntry extends JsWidget
     {
         return [
             'entry-id' => $this->entry->id,
-            'delete-url' => Url::toDeleteMessageEntry($this->entry)
+            'delete-url' => Url::toDeleteMessageEntry($this->entry),
         ];
     }
 
     public function getAttributes()
     {
         $result = [
-            'class' => 'media mail-conversation-entry'
+            'class' => 'media mail-conversation-entry',
         ];
 
         if ($this->isOwnMessage()) {

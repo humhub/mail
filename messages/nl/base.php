@@ -8,6 +8,7 @@ return array (
   'A tag with the same name already exists.' => 'Een label met dezelfde naam bestaat al.',
   'Add Tag' => 'Label toeveogen',
   'Add participants' => 'Voeg deelnemers toe',
+  'Advanced Messages Search' => 'Geavanceerd berichten zoeken',
   'Allow others to send you private messages' => 'Sta anderen toe om u privéberichten te sturen',
   'Allow users to start new conversations' => 'Sta gebruikers toe om nieuwe gesprekken te starten',
   'Confirm' => 'Bevestig',

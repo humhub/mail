@@ -8,6 +8,7 @@ return array (
   'A tag with the same name already exists.' => 'Egy címke hasonló névvel már létezik.',
   'Add Tag' => 'Címke hozzáadása',
   'Add participants' => 'Résztvevők hozzáadása',
+  'Advanced Messages Search' => 'Speciális üzenetkeresés',
   'Allow others to send you private messages' => 'Engedélyezed másoknak, hogy privát üzenetet küldjenek.',
   'Allow users to start new conversations' => 'Engedélyezze a felhasználóknak, hogy új beszélgetéseket kezdeményezzenek.',
   'Confirm' => 'Megerősít',

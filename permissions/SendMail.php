@@ -17,7 +17,6 @@ use Yii;
  */
 class SendMail extends \humhub\libs\BasePermission
 {
-
     /**
      * @inheritdoc
      */
@@ -28,14 +27,14 @@ class SendMail extends \humhub\libs\BasePermission
      */
     public $defaultAllowedGroups = [
         User::USERGROUP_USER,
-        User::USERGROUP_FRIEND
+        User::USERGROUP_FRIEND,
     ];
 
     /**
      * @inheritdoc
      */
     protected $fixedGroups = [
-        User::USERGROUP_GUEST
+        User::USERGROUP_GUEST,
     ];
 
     /**

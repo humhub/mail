@@ -8,6 +8,7 @@ return array (
   'A tag with the same name already exists.' => '同じ名前のタグが既に存在します。',
   'Add Tag' => 'タグの追加',
   'Add participants' => '参加者を追加',
+  'Advanced Messages Search' => '高度なメッセージ検索',
   'Allow others to send you private messages' => '他のユーザーがあなたにプライベートメッセージを送るのを許可する',
   'Allow users to start new conversations' => 'ユーザーが新しい会話を開始できるようにする',
   'Confirm' => '確認',

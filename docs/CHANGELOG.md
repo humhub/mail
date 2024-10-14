@@ -1,11 +1,28 @@
 Changelog
 =========
 
-Unreleased
-----------------------
+3.2.4 (Unreleased)
+--------------------
+- Enh #188: Add "Like" to message entries
+
+3.2.3 (Unreleased)
+--------------------
+- Enh #411: Standardization of Modal Button Positions
+- Enh #363: Deny access for files from message where current user is not participant
+- Fix #412: Fix active message after mark unread
+- Fix #15: When replying to a message, the conversation is marked as unread
+- Enh #417: Replace theme variables with CSS variables
+- Enh #418: Update Active Form for Bootstrap 5
+- Enh #422: Changed deprecated `DOMSubtreeModified` to `MutationObserver`
+- Fix #423: Fix rendering of attached files on new reply by PushService
+
+3.2.2 (July 9, 2024)
+--------------------
 - Enh #382: Implement provider for meta searching
 - Fix #389: Fix notification about participant joining
-- Enh #188: Add "Like" to message entries
+- Fix #396: Don't override global styles
+- Enh #397: Use PHP CS Fixer
+- Fix #402: Fix undefined function to load a message
 
 3.2.1 (April 15, 2024)
 ----------------------

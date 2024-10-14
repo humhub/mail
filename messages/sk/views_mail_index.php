@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'Conversations' => '',
-    'There are no messages yet.' => '',
-];
+return array (
+  'Conversations' => 'Rozhovory',
+  'There are no messages yet.' => 'Zatiaľ nie sú žiadne správy.',
+);

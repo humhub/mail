@@ -15,6 +15,7 @@ return [
     'A tag with the same name already exists.' => '',
     'Add Tag' => '',
     'Add participants' => '',
+    'Advanced Messages Search' => '',
     'Allow others to send you private messages' => '',
     'Allow users to start new conversations' => '',
     'Conversation' => '',

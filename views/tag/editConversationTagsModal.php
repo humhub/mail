@@ -3,10 +3,10 @@
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\ConversationTagsForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
+use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\ui\view\components\View;
 use humhub\widgets\ModalButton;
 use humhub\widgets\ModalDialog;
-use yii\bootstrap\ActiveForm;
 
 /* @var $this View */
 /* @var $model ConversationTagsForm */
@@ -24,8 +24,10 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($model, 'tags')->widget(ConversationTagPicker::class)->label(false) ?>
         </div>
     <div class="modal-footer">
-        <?= ModalButton::submitModal(Url::toEditConversationTags($model->message)) ?>
+        
         <?= ModalButton::cancel() ?>
+        <?= ModalButton::submitModal(Url::toEditConversationTags($model->message)) ?>
+        
     </div>
     <?php ActiveForm::end() ?>
 <?php ModalDialog::end() ?>

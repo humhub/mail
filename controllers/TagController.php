@@ -30,7 +30,7 @@ class TagController extends Controller
     protected function getAccessRules()
     {
         return [
-            [ControllerAccess::RULE_LOGGED_IN_ONLY]
+            [ControllerAccess::RULE_LOGGED_IN_ONLY],
         ];
     }
 
@@ -43,7 +43,7 @@ class TagController extends Controller
     {
         $model = new AddTag();
         $model->load(Yii::$app->request->post());
-        if($model->save()) {
+        if ($model->save()) {
             $model = new AddTag();
         }
         return $this->render('manage', ['model' => $model]);
@@ -53,7 +53,7 @@ class TagController extends Controller
     {
         $tag = $this->findTag($id);
 
-        if($tag->load(Yii::$app->request->post()) && $tag->save()) {
+        if ($tag->load(Yii::$app->request->post()) && $tag->save()) {
             return ModalClose::widget(['reload' => true]);
         }
 
@@ -117,7 +117,7 @@ class TagController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return ModalClose::widget([
-                'script' => '$("#' . ConversationTags::ID . '").replaceWith(\'' . ConversationTags::widget(['message' => $message]) . '\');'
+                'script' => '$("#' . ConversationTags::ID . '").replaceWith(\'' . ConversationTags::widget(['message' => $message]) . '\');',
             ]);
         }
 

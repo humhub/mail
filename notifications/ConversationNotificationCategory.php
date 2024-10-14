@@ -28,7 +28,7 @@ class ConversationNotificationCategory extends NotificationCategory
     {
         $webTarget = Yii::createObject(WebTarget::class);
         return [
-            $webTarget->id
+            $webTarget->id,
         ];
     }
 

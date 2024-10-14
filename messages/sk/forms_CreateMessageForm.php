@@ -1,7 +1,7 @@
 <?php
 return array (
   'Message' => 'Správa',
-  'Recipient' => '',
+  'Recipient' => 'Príjemca',
   'Subject' => 'Predmet',
-  'Tags' => 'Značky',
+  'Tags' => 'Štítok',
 );
