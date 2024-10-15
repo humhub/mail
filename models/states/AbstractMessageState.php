@@ -19,8 +19,6 @@ use humhub\modules\user\models\User;
  */
 abstract class AbstractMessageState extends AbstractMessageEntry
 {
-    protected bool $requiredContent = false;
-
     /**
      * @inheritdoc
      */

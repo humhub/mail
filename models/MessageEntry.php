@@ -16,11 +16,26 @@ use Yii;
 class MessageEntry extends AbstractMessageEntry implements ViewableInterface
 {
     /**
+     * Scenario - when related content has attached files
+     */
+    public const SCENARIO_HAS_FILES = 'hasFiles';
+
+    /**
      * @inheritdoc
      */
     public static function type(): int
     {
         return self::TYPE_MESSAGE;
+    }
+
+    /**
+     * @inerhitdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['content'], 'required', 'except' => [self::SCENARIO_HAS_FILES]],
+        ]);
     }
 
     /**

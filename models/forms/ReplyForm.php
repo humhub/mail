@@ -15,6 +15,11 @@ use yii\base\Model;
 class ReplyForm extends Model
 {
     /**
+     * Scenario - when related content has attached files
+     */
+    public const SCENARIO_HAS_FILES = 'hasFiles';
+
+    /**
      * @var Message
      */
     public $model;
@@ -35,7 +40,7 @@ class ReplyForm extends Model
     public function rules()
     {
         return [
-            ['message', 'required'],
+            ['message', 'required', 'except' => [self::SCENARIO_HAS_FILES]],
             ['message', 'validateRecipients'],
         ];
     }
@@ -77,6 +82,9 @@ class ReplyForm extends Model
             'user_id' => Yii::$app->user->id,
             'content' => $this->message,
         ]);
+        if ($this->scenario === self::SCENARIO_HAS_FILES) {
+            $this->reply->scenario = MessageEntry::SCENARIO_HAS_FILES;
+        }
 
         if ($this->reply->save()) {
             $this->reply->refresh(); // Update created_by date, otherwise db expression is set...
