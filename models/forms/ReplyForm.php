@@ -62,7 +62,7 @@ class ReplyForm extends Model
     public function attributeLabels()
     {
         return [
-            'message' => Yii::t('MailModule.forms_ReplyMessageForm', 'Message'),
+            'message' => Yii::t('MailModule.base', 'Message'),
         ];
     }
 

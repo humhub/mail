@@ -28,7 +28,7 @@ use humhub\widgets\Button;
     <?php if ($message === null) : ?>
 
         <div class="panel-body">
-            <?= Yii::t('MailModule.views_mail_show', 'There are no messages yet.'); ?>
+            <?= Yii::t('MailModule.base', 'There are no messages yet.'); ?>
         </div>
 
     <?php else : ?>
@@ -50,7 +50,7 @@ use humhub\widgets\Button;
         <div id="'mail-create-form-<?= $message->id ?>" class="mail-message-form content_create">
             <?php if ($message->isBlocked()) : ?>
                 <div class="alert alert-danger">
-                    <?= Yii::t('MailModule.views_mail_show', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
+                    <?= Yii::t('MailModule.base', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
                         'userNames' => implode(', ', $message->getBlockerNames())
                     ]); ?>
                 </div>

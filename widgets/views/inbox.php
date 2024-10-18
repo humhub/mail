@@ -13,7 +13,7 @@ use humhub\modules\ui\view\components\View;
 
 <?= Html::beginTag('ul', $options) ?>
     <?php if (empty($userMessages)) : ?>
-        <li class="placeholder"><?= Yii::t('MailModule.views_mail_index', 'There are no messages yet.') ?></li>
+        <li class="placeholder"><?= Yii::t('MailModule.base', 'There are no messages yet.') ?></li>
     <?php else: ?>
         <?php foreach ($userMessages as $userMessage) : ?>
             <?= InboxMessagePreview::widget(['userMessage' => $userMessage]) ?>

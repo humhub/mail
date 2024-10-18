@@ -12,6 +12,7 @@ Changelog
 - Enh #422: Changed deprecated `DOMSubtreeModified` to `MutationObserver`
 - Fix #423: Fix rendering of attached files on new reply by PushService
 - Enh #424: Allow sending a message with attached files only, such as an image
+- Enh #426: Reduce translation message categories
 
 3.2.2 (July 9, 2024)
 --------------------

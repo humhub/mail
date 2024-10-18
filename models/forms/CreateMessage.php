@@ -66,10 +66,10 @@ class CreateMessage extends Model
     public function attributeLabels()
     {
         return [
-            'recipient' => Yii::t('MailModule.forms_CreateMessageForm', 'Recipient'),
-            'tags' => Yii::t('MailModule.forms_CreateMessageForm', 'Tags'),
-            'title' => Yii::t('MailModule.forms_CreateMessageForm', 'Subject'),
-            'message' => Yii::t('MailModule.forms_CreateMessageForm', 'Message'),
+            'recipient' => Yii::t('MailModule.base', 'Recipient'),
+            'tags' => Yii::t('MailModule.base', 'Tags'),
+            'title' => Yii::t('MailModule.base', 'Subject'),
+            'message' => Yii::t('MailModule.base', 'Message'),
         ];
     }
 

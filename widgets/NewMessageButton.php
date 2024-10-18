@@ -88,7 +88,7 @@ class NewMessageButton extends Widget
         }
 
         return ($this->guid)
-            ? Yii::t('MailModule.widgets_views_newMessageButton', 'Send message')
+            ? Yii::t('MailModule.base', 'Send message')
             : Yii::t('MailModule.base', 'Message');
     }
 }

@@ -18,7 +18,7 @@ use humhub\widgets\ModalDialog;
 
 <?php ModalDialog::begin([
     'id' => 'mail-edit',
-    'header' => Yii::t("MailModule.views_mail_edit", "Edit message entry"),
+    'header' => Yii::t("MailModule.base", "Edit message entry"),
     'size' => 'large',
 ]) ?>
 
@@ -67,10 +67,10 @@ use humhub\widgets\ModalDialog;
         <div class="col-md-3">
             <?= Button::danger(Yii::t('base', 'Delete'))->right()->options(['data-entry-id' => $entry->id])
                 ->action('mail.conversation.deleteEntry')
-                ->confirm(Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> message deletion'),
-                    Yii::t('MailModule.views_mail_show', 'Do you really want to delete this message?'),
-                    Yii::t('MailModule.views_mail_show', 'Delete'),
-                    Yii::t('MailModule.views_mail_show', 'Cancel')) ?>
+                ->confirm(Yii::t('MailModule.base', '<strong>Confirm</strong> message deletion'),
+                    Yii::t('MailModule.base', 'Do you really want to delete this message?'),
+                    Yii::t('MailModule.base', 'Delete'),
+                    Yii::t('MailModule.base', 'Cancel')) ?>
         </div>
     </div>
 </div>
