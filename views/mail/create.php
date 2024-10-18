@@ -28,7 +28,7 @@ use humhub\widgets\ModalDialog;
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 id="myModalLabel" class="modal-title">
-            <?= Yii::t('MailModule.views_mail_create', '<strong>New</strong> message') ?>
+            <?= Yii::t('MailModule.base', '<strong>New</strong> message') ?>
         </h4>
     </div>
 
@@ -37,7 +37,7 @@ use humhub\widgets\ModalDialog;
         <?= $form->field($model, 'recipient')->widget(UserPickerField::class,
             [
                 'url' => Url::toSearchNewParticipants(),
-                'placeholder' => Yii::t('MailModule.views_mail_create', 'Add recipients'),
+                'placeholder' => Yii::t('MailModule.base', 'Add recipients'),
             ]
         )->label(false) ?>
 
@@ -78,7 +78,7 @@ use humhub\widgets\ModalDialog;
     <div class="modal-footer">
 
         <?= ModalButton::cancel() ?>
-        <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.views_mail_create', 'Send')) ?>
+        <?= ModalButton::submitModal(Url::toCreateConversation(), Yii::t('MailModule.base', 'Send')) ?>
 
     </div>
 

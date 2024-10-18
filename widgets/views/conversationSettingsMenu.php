@@ -12,15 +12,15 @@ use humhub\widgets\ModalButton;
 /* @var $canAddParticipant bool */
 
 if (!$isSingleParticipant) {
-    $leaveLinkText = Yii::t('MailModule.views_mail_show', 'Leave conversation');
-    $leaveConfirmTitle =  Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> leaving conversation');
-    $leaveConfirmText =  Yii::t('MailModule.views_mail_show', 'Do you really want to leave this conversation?');
-    $leaveConfirmButtonText = Yii::t('MailModule.views_mail_show', 'Leave');
+    $leaveLinkText = Yii::t('MailModule.base', 'Leave conversation');
+    $leaveConfirmTitle =  Yii::t('MailModule.base', '<strong>Confirm</strong> leaving conversation');
+    $leaveConfirmText =  Yii::t('MailModule.base', 'Do you really want to leave this conversation?');
+    $leaveConfirmButtonText = Yii::t('MailModule.base', 'Leave');
 } else {
-    $leaveLinkText = Yii::t('MailModule.views_mail_show', 'Delete conversation');
-    $leaveConfirmTitle = Yii::t('MailModule.views_mail_show', '<strong>Confirm</strong> deleting conversation');
-    $leaveConfirmText = Yii::t('MailModule.views_mail_show', 'Do you really want to delete this conversation?');
-    $leaveConfirmButtonText = Yii::t('MailModule.views_mail_show', 'Delete');
+    $leaveLinkText = Yii::t('MailModule.base', 'Delete conversation');
+    $leaveConfirmTitle = Yii::t('MailModule.base', '<strong>Confirm</strong> deleting conversation');
+    $leaveConfirmText = Yii::t('MailModule.base', 'Do you really want to delete this conversation?');
+    $leaveConfirmButtonText = Yii::t('MailModule.base', 'Delete');
 }
 ?>
 <div class="dropdown" style="display:inline-block">
@@ -40,7 +40,7 @@ if (!$isSingleParticipant) {
 
         <?php if ($canAddParticipant) : ?>
             <li>
-                <?= ModalButton::none(Yii::t('MailModule.views_mail_show', 'Add user'))->icon('user-plus')
+                <?= ModalButton::none(Yii::t('MailModule.base', 'Add user'))->icon('user-plus')
                     ->load(Url::toAddParticipant($message))->link()->loader(false) ?>
             </li>
         <?php endif; ?>

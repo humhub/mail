@@ -162,7 +162,7 @@ use humhub\modules\user\models\User;
 
                                                         <span style="color: <?= $this->theme->variable('text-color-contrast') ?>; font-weight: 300;">
                                                             <a href="<?= Url::toMessenger($message, true) ?>" style="text-decoration: none; color: <?= $this->theme->variable('text-color-contrast') ?>; font-weight: 300;">
-                                                                <strong><?= Yii::t('MailModule.views_emails_NewMessage', 'Reply now'); ?></strong>
+                                                                <strong><?= Yii::t('MailModule.base', 'Reply now'); ?></strong>
                                                             </a>
                                                         </span>
                                                     </td>

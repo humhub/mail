@@ -199,8 +199,8 @@ class MessageNotification extends BaseObject
     protected function getHeadline(): string
     {
         return $this->isNewConversation
-            ? Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> conversation')
-            : Yii::t('MailModule.views_emails_NewMessage', '<strong>New</strong> message');
+            ? Yii::t('MailModule.base', '<strong>New</strong> conversation')
+            : Yii::t('MailModule.base', '<strong>New</strong> message');
     }
 
     protected function getSubHeadline(): string
@@ -211,8 +211,8 @@ class MessageNotification extends BaseObject
         ];
 
         return $this->isNewConversation
-            ? Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} created a new conversation {conversationTitle}', $params)
-            : Yii::t('MailModule.views_emails_NewMessageEntry', '{senderName} sent you a new message in {conversationTitle}', $params);
+            ? Yii::t('MailModule.base', '{senderName} created a new conversation {conversationTitle}', $params)
+            : Yii::t('MailModule.base', '{senderName} sent you a new message in {conversationTitle}', $params);
     }
 
     /**
@@ -248,8 +248,8 @@ class MessageNotification extends BaseObject
         }
 
         return $this->isNewConversation
-            ? Yii::t('MailModule.models_Message', 'New conversation from {senderName}', $params)
-            : Yii::t('MailModule.models_Message', 'New message from {senderName}', $params);
+            ? Yii::t('MailModule.base', 'New conversation from {senderName}', $params)
+            : Yii::t('MailModule.base', 'New message from {senderName}', $params);
     }
 
 }
