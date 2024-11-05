@@ -19,12 +19,12 @@ class MessageUserJoined extends AbstractMessageState
     /**
      * The default value for the 'enableMessageUserJoined' setting.
      */
-    const DEFAULT_ENABLE_MESSAGE_USER_JOINED = true;
+    public const DEFAULT_ENABLE_MESSAGE_USER_JOINED = true;
 
     /**
      * The key for the 'enableMessageUserJoined' setting.
      */
-    const SETTING_ENABLE_MESSAGE_USER_JOINED = 'enableMessageUserJoined';
+    public const SETTING_ENABLE_MESSAGE_USER_JOINED = 'enableMessageUserJoined';
 
     /**
      * @inheritdoc

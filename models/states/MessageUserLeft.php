@@ -19,12 +19,12 @@ class MessageUserLeft extends AbstractMessageState
     /**
      * The default value for the 'enableMessageUserLeft' setting.
      */
-    const DEFAULT_ENABLE_MESSAGE_USER_LEFT = true;
+    public const DEFAULT_ENABLE_MESSAGE_USER_LEFT = true;
 
     /**
      * The key for the 'enableMessageUserLeft' setting.
      */
-    const SETTING_ENABLE_MESSAGE_USER_LEFT = 'enableMessageUserLeft';
+    public const SETTING_ENABLE_MESSAGE_USER_LEFT = 'enableMessageUserLeft';
 
     /**
      * @inheritdoc
