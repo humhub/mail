@@ -2,11 +2,13 @@
 
 namespace humhub\modules\mail\models;
 
-use DateInterval;
-use DateTime;
-use humhub\modules\user\models\User;
 use Yii;
+use DateTime;
+use DateInterval;
 use humhub\modules\mail\Module;
+use humhub\modules\user\models\User;
+use humhub\modules\mail\models\states\MessageUserLeft;
+use humhub\modules\mail\models\states\MessageUserJoined;
 
 /**
  * ConfigureForm defines the configurable fields.
@@ -30,6 +32,20 @@ class Config extends \yii\base\Model
 
     public $userMessageRestriction = null;
 
+    public $enableMessageUserJoined = true;
+
+    public $enableMessageUserLeft = true;
+
+    /**
+     * The settings array, containing the necessary settings for the MessageUserJoined and MessageUserLeft states.
+     *
+     * @var array
+     */
+    private $settings = [
+        MessageUserJoined::SETTING_ENABLE_MESSAGE_USER_JOINED => true,
+        MessageUserLeft::SETTING_ENABLE_MESSAGE_USER_LEFT => true,
+    ];
+
     public function init()
     {
         parent::init();
@@ -41,6 +57,8 @@ class Config extends \yii\base\Model
         $this->newUserMessageRestriction = (int) $module->settings->get('newUserMessageRestriction', $this->newUserMessageRestriction);
         $this->userConversationRestriction = (int) $module->settings->get('userConversationRestriction', $this->userConversationRestriction);
         $this->userMessageRestriction = (int) $module->settings->get('userMessageRestriction', $this->userMessageRestriction);
+        $this->enableMessageUserJoined = (bool) $module->settings->get('enableMessageUserJoined', $this->enableMessageUserJoined);
+        $this->enableMessageUserLeft = (bool) $module->settings->get('enableMessageUserLeft', $this->enableMessageUserLeft);
     }
 
     /**
@@ -57,7 +75,7 @@ class Config extends \yii\base\Model
     public function rules()
     {
         return [
-            [['showInTopNav', 'newUserRestrictionEnabled'], 'boolean'],
+            [['showInTopNav', 'newUserRestrictionEnabled', 'enableMessageUserJoined', 'enableMessageUserLeft'], 'boolean'],
             [['newUserConversationRestriction',
                 'newUserMessageRestriction',
                 'userConversationRestriction',
@@ -81,12 +99,14 @@ class Config extends \yii\base\Model
             'newUserMessageRestriction' => Yii::t('MailModule.base', 'Max number of messages allowed for a new user per day'),
             'userConversationRestriction' => Yii::t('MailModule.base', 'Max number of new conversations allowed for a user per day'),
             'userMessageRestriction' => Yii::t('MailModule.base', 'Max messages allowed per day'),
+            'enableMessageUserJoined' => Yii::t('MailModule.base', 'Enable "User Joined" message'),
+            'enableMessageUserLeft' => Yii::t('MailModule.base', 'Enable "User Left" message'),
         ];
     }
 
     public function save()
     {
-        if (!$this->validate()) {
+        if(!$this->validate()) {
             return false;
         }
 
@@ -98,12 +118,37 @@ class Config extends \yii\base\Model
         $module->settings->set('newUserMessageRestriction', $this->newUserMessageRestriction);
         $module->settings->set('userConversationRestriction', $this->userConversationRestriction);
         $module->settings->set('userMessageRestriction', $this->userMessageRestriction);
+        $module->settings->set('enableMessageUserJoined', $this->enableMessageUserJoined);
+        $module->settings->set('enableMessageUserLeft', $this->enableMessageUserLeft);
         return true;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        // Update the settings for MessageUserJoined and MessageUserLeft states
+        $module = $this->getModule();
+        $module->settings->set(MessageUserJoined::SETTING_ENABLE_MESSAGE_USER_JOINED, $this->enableMessageUserJoined);
+        $module->settings->set(MessageUserLeft::SETTING_ENABLE_MESSAGE_USER_LEFT, $this->enableMessageUserLeft);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        // Inform about user left if the corresponding setting is enabled
+        if ($this->settings[MessageUserLeft::SETTING_ENABLE_MESSAGE_USER_LEFT]) {
+            MessageUserLeft::inform($this->message, $this->user);
+        }
     }
 
     public function canCreateConversation(User $originator)
     {
-        if ($originator->isSystemAdmin()) {
+        if($originator->isSystemAdmin()) {
             return true;
         }
 
@@ -116,7 +161,7 @@ class Config extends \yii\base\Model
 
     public function isNewUser(User $originator)
     {
-        if (empty($this->newUserRestrictionEnabled)) {
+        if(empty($this->newUserRestrictionEnabled)) {
             return false;
         }
 
