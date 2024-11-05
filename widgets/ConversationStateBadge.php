@@ -44,16 +44,23 @@ class ConversationStateBadge extends Widget
 
     protected function renderInfoText(): ?string
     {
+        $config = new \humhub\modules\mail\models\Config();
+
         switch ($this->entry->type) {
             case AbstractMessageEntry::TYPE_USER_JOINED:
-                return $this->isOwn()
-                    ? Yii::t('MailModule.base', 'You joined the conversation.')
-                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->username]);
-
+                if ($config->enableMessageUserJoined) {
+                    return $this->isOwn()
+                        ? Yii::t('MailModule.base', 'You joined the conversation.')
+                        : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->username]);
+                }
+                break;
             case AbstractMessageEntry::TYPE_USER_LEFT:
-                return $this->isOwn()
-                    ? Yii::t('MailModule.base', 'You left the conversation.')
-                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->username]);
+                if ($config->enableMessageUserLeft) {
+                    return $this->isOwn()
+                        ? Yii::t('MailModule.base', 'You left the conversation.')
+                        : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->username]);
+                }
+                break;
         }
 
         return null;
