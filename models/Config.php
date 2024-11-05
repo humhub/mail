@@ -106,7 +106,7 @@ class Config extends \yii\base\Model
 
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -148,7 +148,7 @@ class Config extends \yii\base\Model
 
     public function canCreateConversation(User $originator)
     {
-        if($originator->isSystemAdmin()) {
+        if ($originator->isSystemAdmin()) {
             return true;
         }
 
@@ -161,7 +161,7 @@ class Config extends \yii\base\Model
 
     public function isNewUser(User $originator)
     {
-        if(empty($this->newUserRestrictionEnabled)) {
+        if (empty($this->newUserRestrictionEnabled)) {
             return false;
         }
 
