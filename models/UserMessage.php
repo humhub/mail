@@ -2,11 +2,11 @@
 
 namespace humhub\modules\mail\models;
 
-use humhub\components\ActiveRecord;
-use humhub\modules\mail\models\states\MessageUserJoined;
-use humhub\modules\mail\models\states\MessageUserLeft;
-use humhub\modules\user\models\User;
 use Yii;
+use humhub\components\ActiveRecord;
+use humhub\modules\user\models\User;
+use humhub\modules\mail\models\states\MessageUserLeft;
+use humhub\modules\mail\models\states\MessageUserJoined;
 
 /**
  * This class represents the relation between users and conversations.
@@ -32,6 +32,16 @@ use Yii;
  */
 class UserMessage extends ActiveRecord
 {
+    /**
+     * The settings array, containing the necessary settings for the MessageUserJoined and MessageUserLeft states.
+     *
+     * @var array
+     */
+    private $settings = [
+        MessageUserJoined::SETTING_ENABLE_MESSAGE_USER_JOINED => true,
+        MessageUserLeft::SETTING_ENABLE_MESSAGE_USER_LEFT => true,
+    ];
+
     public bool $informAfterAdd = true;
 
     /**
@@ -129,7 +139,7 @@ class UserMessage extends ActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
 
-        if ($insert && $this->informAfterAdd) {
+        if ($insert && $this->informAfterAdd && MessageUserJoined::isEnabled($this->settings)) {
             MessageUserJoined::inform($this->message, $this->user);
         }
     }
@@ -140,6 +150,9 @@ class UserMessage extends ActiveRecord
     public function afterDelete()
     {
         parent::afterDelete();
-        MessageUserLeft::inform($this->message, $this->user);
+
+        if (MessageUserLeft::isEnabled($this->settings)) {
+            MessageUserLeft::inform($this->message, $this->user);
+        }
     }
 }
