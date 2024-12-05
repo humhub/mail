@@ -1,6 +1,9 @@
 name: PHP CS Fixer
 
-on: push
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * 0"
 
 jobs:
   fixers:
