@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.2.4 (Unreleased)
+--------------------
+- Enh #188: Add "Like" to message entries
+
 3.2.3 (Unreleased)
 --------------------
 - Enh #411: Standardization of Modal Button Positions

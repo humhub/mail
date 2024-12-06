@@ -22,7 +22,7 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property int $message_id
  * @property int $user_id
- * @property string $content
+ * @property string|null $content
  * @property int $type
  * @property string $created_at
  * @property int $created_by
