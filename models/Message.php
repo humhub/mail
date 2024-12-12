@@ -52,7 +52,7 @@ class Message extends ActiveRecord
         return [
             [['created_by', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at'], 'safe']
         ];
     }
 
