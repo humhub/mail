@@ -2,6 +2,12 @@ name: PHP CS Fixer
 
 on:
   push:
+    branches:
+      - master
+      - main
+      - develop
+    paths:
+      - '**.php'
   schedule:
     - cron: "0 0 * * 0"
 
