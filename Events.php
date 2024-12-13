@@ -146,7 +146,7 @@ class Events
                     'url' => Url::toMessenger(),
                     'icon' => '<i class="fa fa-envelope"></i>',
                     'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
-                    'sortOrder' => 300,
+                    'sortOrder' => 300
                 ]);
             }
         } catch (\Throwable $e) {
