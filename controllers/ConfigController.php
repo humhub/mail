@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2015 HumHub GmbH & Co. KG
@@ -26,7 +27,7 @@ class ConfigController extends \humhub\modules\admin\components\Controller
     {
         $form = new Config();
 
-        if ($form->load(Yii::$app->request->post()) && $form->save()){
+        if ($form->load(Yii::$app->request->post()) && $form->save()) {
             $this->view->saved();
         }
 
