@@ -119,7 +119,7 @@ class Message extends ActiveRecord
 
         return UserMessage::findOne([
             'user_id' => $userId,
-            'message_id' => $this->id,
+            'message_id' => $this->id
         ]);
     }
 
