@@ -13,7 +13,8 @@ Changelog
 - Fix #423: Fix rendering of attached files on new reply by PushService
 - Enh #424: Allow sending a message with attached files only, such as an image
 - Enh #426: Reduce translation message categories
-- Fix #428: Fixed observer missing parameter 
+- Fix #428: Fixed observer missing parameter
+- Fix #434: Add `cursor: pointer;` to `#conversation-settings-button`
 
 3.2.2 (July 9, 2024)
 --------------------
