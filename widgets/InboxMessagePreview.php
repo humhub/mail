@@ -97,16 +97,27 @@ class InboxMessagePreview extends Widget
 
     public function getMessagePreview(): string
     {
+        // Retrieve the configuration module
+        $config = new \humhub\modules\mail\models\Config();
+
         switch ($this->getLastEntry()->type) {
             case AbstractMessageEntry::TYPE_USER_JOINED:
-                return $this->isOwnLastEntry()
-                    ? Yii::t('MailModule.base', 'You joined the conversation.')
-                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->getUsername()]);
+                // Check if showing user joined message is enabled
+                if ($config->enableMessageUserJoined) {
+                    return $this->isOwnLastEntry()
+                        ? Yii::t('MailModule.base', 'You joined the conversation.')
+                        : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->getUsername()]);
+                }
+                break;
 
             case AbstractMessageEntry::TYPE_USER_LEFT:
-                return $this->isOwnLastEntry()
-                    ? Yii::t('MailModule.base', 'You left the conversation.')
-                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->getUsername()]);
+                // Check if showing user left message is enabled
+                if ($config->enableMessageUserLeft) {
+                    return $this->isOwnLastEntry()
+                        ? Yii::t('MailModule.base', 'You left the conversation.')
+                        : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->getUsername()]);
+                }
+                break;
         }
 
         if ($this->isGroupChat()) {
