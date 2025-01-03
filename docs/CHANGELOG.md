@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.0-beta.1 (unreleased)
+-------------------------
+- Enh: Migration to Bootstrap 5 for HumHub 1.18
+
 3.2.3 (Unreleased)
 --------------------
 - Enh #411: Standardization of Modal Button Positions

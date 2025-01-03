@@ -1,6 +1,6 @@
 <?php
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\file\widgets\ShowFiles;
 use humhub\modules\mail\models\MessageEntry;
@@ -24,10 +24,10 @@ use humhub\modules\user\widgets\Image;
 
 <?= Html::beginTag('div', $options) ?>
 
-<div class="media">
+<div class="d-flex pe-2">
 
     <?php if ($showUser) : ?>
-        <span class="author-image pull-left">
+        <span class="author-image float-start">
             <?= Image::widget([
                 'user' => $entry->user,
                 'width' => 30,
