@@ -32,7 +32,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
             </div>
         </li>
         <li>
-            <a class="dropdown-item btn btn-light col-md-12" href="<?= Url::toMessenger() ?>">
+            <a class="dropdown-item btn btn-light col-lg-12" href="<?= Url::toMessenger() ?>">
                 <?= Yii::t('MailModule.base', 'Show all messages') ?>
             </a>
         </li>

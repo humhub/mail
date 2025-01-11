@@ -23,7 +23,7 @@ $dataProvider = new ActiveDataProvider([
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div id="mail-conversation-header" class="panel-heading">
                     <?= Yii::t('MailModule.base', '<strong>Manage</strong> conversation tags') ?>
