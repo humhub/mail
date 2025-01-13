@@ -20,21 +20,25 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
         <li>
             <div class="dropdown-header">
                 <div class="arrow"></div>
-                <h6><?= Yii::t('MailModule.base', 'Conversations') ?></h6>
-                <?= $canStartConversation
-                    ? NewMessageButton::widget(['id' => 'create-message-button', 'icon' => 'plus', 'label' => ''])
-                    : '' ?>
+                <?= Yii::t('MailModule.base', 'Conversations') ?>
+                <div class="dropdown-header-actions">
+                    <?= $canStartConversation
+                        ? NewMessageButton::widget(['id' => 'create-message-button', 'icon' => 'plus', 'label' => ''])
+                        : '' ?>
+                </div>
             </div>
         </li>
         <li>
-            <div class="dropdown-item">
+            <div class="dropdown-item hh-list">
                 <div id="loader_messages"></div>
             </div>
         </li>
         <li>
-            <a class="dropdown-item btn btn-light col-lg-12" href="<?= Url::toMessenger() ?>">
-                <?= Yii::t('MailModule.base', 'Show all messages') ?>
-            </a>
+            <div class="dropdown-footer">
+                <a class="btn btn-light col-lg-12" href="<?= Url::toMessenger() ?>">
+                    <?= Yii::t('MailModule.base', 'Show all messages') ?>
+                </a>
+            </div>
         </li>
     </ul>
 </div>

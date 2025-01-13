@@ -41,7 +41,7 @@ use humhub\widgets\form\ActiveForm;
 
         <div class="panel-body">
 
-            <div class="hh-list conversation-entry-list">
+            <div class="conversation-entry-list">
                 <?= Messages::widget(['message' => $message]) ?>
             </div>
 

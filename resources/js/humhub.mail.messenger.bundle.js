@@ -552,7 +552,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
-            var $streamEnd = $('<div class="inbox-stream-end"></div>');
+            var $streamEnd = $('<div class="inbox-stream-end stream-end"></div>');
             this.$.append($streamEnd);
 
             var that = this;
