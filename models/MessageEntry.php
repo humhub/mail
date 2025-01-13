@@ -4,8 +4,14 @@ namespace humhub\modules\mail\models;
 
 use DateTime;
 use humhub\interfaces\ViewableInterface;
+use humhub\modules\content\widgets\richtext\AbstractRichText;
+use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
+use humhub\modules\content\widgets\richtext\RichText;
+use humhub\modules\like\interfaces\LikeNotificationInterface;
+use humhub\modules\mail\helpers\Url;
 use humhub\modules\user\models\User;
 use Yii;
+use yii\base\InvalidConfigException;
 
 /**
  * This class represents a message text within a conversation.
@@ -13,7 +19,7 @@ use Yii;
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class MessageEntry extends AbstractMessageEntry implements ViewableInterface
+class MessageEntry extends AbstractMessageEntry implements ViewableInterface, LikeNotificationInterface
 {
     /**
      * Scenario - when related content has attached files
@@ -86,5 +92,28 @@ class MessageEntry extends AbstractMessageEntry implements ViewableInterface
         $message = $this->message;
 
         return $message instanceof Message && $message->isParticipant($user);
+    }
+
+    /**
+     * @inerhitdoc
+     * @throws InvalidConfigException
+     */
+    public function getLikeNotificationPlainTextPreview(): string
+    {
+        return Yii::t('MailModule.base', 'Message') . ' ' . RichText::convert($this->content, AbstractRichText::FORMAT_SHORTTEXT);
+    }
+
+    /**
+     * @inerhitdoc
+     * @throws InvalidConfigException
+     */
+    public function getLikeNotificationHtmlPreview(): string
+    {
+        return RichTextToEmailHtmlConverter::process($this->content);
+    }
+
+    public function getLikeNotificationUrl(bool $scheme = false): string
+    {
+        return Url::toMessenger($this->message, $scheme);
     }
 }
