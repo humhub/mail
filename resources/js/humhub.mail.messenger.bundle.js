@@ -230,7 +230,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         var observer = new MutationObserver(function () {
             that.updateSize(true);
         });
-        filePreview.each(function () {
+        filePreview.each(function (index, element) {
             observer.observe(element, { childList: true, subtree: true });
         });
 
