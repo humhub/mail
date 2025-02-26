@@ -15,6 +15,7 @@ Changelog
 - Enh #426: Reduce translation message categories
 - Fix #428: Fixed observer missing parameter
 - Fix #434: Add `cursor: pointer;` to `#conversation-settings-button`
+- Enh #435: Rename Mailer settings keys
 
 3.2.2 (July 9, 2024)
 --------------------
