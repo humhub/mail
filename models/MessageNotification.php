@@ -151,7 +151,7 @@ class MessageNotification extends BaseObject
             'sender' => $this->getEntrySender(),
         ]);
 
-        $mail->setFrom([Yii::$app->settings->get('mailer.systemEmailAddress') => Yii::$app->settings->get('mailer.systemEmailName')]);
+        $mail->setFrom([Yii::$app->settings->get('mailerSystemEmailAddress') => Yii::$app->settings->get('mailerSystemEmailName')]);
         $mail->setTo($user->email);
         $mail->setSubject($this->getSubject($user));
         $mail->send();
