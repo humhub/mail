@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.3 (Unreleased)
+3.3.0 (Unreleased)
 --------------------
 - Enh #411: Standardization of Modal Button Positions
 - Enh #363: Deny access for files from message where current user is not participant
@@ -15,6 +15,7 @@ Changelog
 - Enh #426: Reduce translation message categories
 - Fix #428: Fixed observer missing parameter
 - Fix #434: Add `cursor: pointer;` to `#conversation-settings-button`
+- Enh #435: Rename Mailer settings keys
 
 3.2.2 (July 9, 2024)
 --------------------
