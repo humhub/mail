@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.2.3 (Unreleased)
---------------------
+3.2.3 (March 5, 2025)
+---------------------
 - Enh #411: Standardization of Modal Button Positions
 - Enh #363: Deny access for files from message where current user is not participant
 - Fix #412: Fix active message after mark unread
