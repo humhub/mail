@@ -169,6 +169,8 @@ class MessageNotification extends BaseObject
             return;
         }
 
+        Yii::$app->i18n->setUserLocale($user);
+
         $firebaseService = new \humhub\modules\fcmPush\services\MessagingService($fcmModule->getConfigureForm());
 
         $firebaseService->processMessage(
@@ -179,6 +181,8 @@ class MessageNotification extends BaseObject
             null,
             null,
         );
+
+        Yii::$app->i18n->autosetLocale();
     }
 
     protected function getContent(User $user)
