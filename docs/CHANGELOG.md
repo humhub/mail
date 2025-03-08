@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.2.4 (Unreleased)
+------------------
+- Fix #436: Fix Push notification language to be language of the sender
+
 3.2.3 (March 5, 2025)
 ---------------------
 - Enh #411: Standardization of Modal Button Positions
