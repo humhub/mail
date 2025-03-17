@@ -4,6 +4,7 @@ Changelog
 3.2.4 (Unreleased)
 ------------------
 - Fix #436: Fix Push notification language to be language of the sender
+- Enh #439: Don't update a conversation when someone leaves
 
 3.2.3 (March 5, 2025)
 ---------------------
