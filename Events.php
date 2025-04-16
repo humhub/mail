@@ -17,10 +17,10 @@ use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\search\SearchProvider;
-use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\NotificationInbox;
+use humhub\modules\ui\menu\MenuLink;
+use humhub\modules\user\widgets\HeaderControlsMenu;
 use humhub\widgets\MetaSearchWidget;
-use humhub\modules\user\models\User;
 use Yii;
 
 /**
@@ -168,22 +168,28 @@ class Events
         }
     }
 
-    public static function onProfileHeaderControlsInit($event)
+    public static function onProfileHeaderControlsMenuInit($event)
     {
         try {
-            /** @var User $profileContainer */
-            $profileContainer = $event->sender->user;
+            /* @var HeaderControlsMenu $menu */
+            $menu = $event->sender;
 
-            if ($profileContainer->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
+            if ($menu->user->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
                 return;
             }
 
             // Is the current logged user allowed to send mails to profile user?
-            if (!Yii::$app->user->isAdmin() && !$profileContainer->can(SendMail::class)) {
+            if (!Yii::$app->user->isAdmin() && !$menu->user->can(SendMail::class)) {
                 return;
             }
 
-            $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
+            $menu->addEntry(new MenuLink([
+                'label' => Yii::t('MailModule.base', 'Send message'),
+                'url' => Url::toCreateConversation($menu->user->guid),
+                'htmlOptions' => ['data-target' => '#globalModal'],
+                'icon' => 'envelope',
+                'sortOrder' => 500,
+            ]));
         } catch (\Throwable $e) {
             Yii::error($e);
         }

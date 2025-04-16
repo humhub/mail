@@ -115,7 +115,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if ($this->isNewRecord) {
+        if ($this->isNewRecord && $this->type != self::TYPE_USER_LEFT) {
             // Updates the updated_at attribute
             $this->message->save();
         }

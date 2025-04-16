@@ -5,8 +5,14 @@ Changelog
 -------------------------
 - Enh: Migration to Bootstrap 5 for HumHub 1.18
 
-3.2.3 (Unreleased)
---------------------
+3.2.4 (Unreleased)
+------------------
+- Fix #436: Fix Push notification language to be language of the sender
+- Enh #439: Don't update a conversation when someone leaves
+- Fix #440: Fix button "Send message" position in profile header
+
+3.2.3 (March 5, 2025)
+---------------------
 - Enh #411: Standardization of Modal Button Positions
 - Enh #363: Deny access for files from message where current user is not participant
 - Fix #412: Fix active message after mark unread
