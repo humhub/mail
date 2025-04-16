@@ -5,6 +5,7 @@ Changelog
 ------------------
 - Fix #436: Fix Push notification language to be language of the sender
 - Enh #439: Don't update a conversation when someone leaves
+- Fix #440: Fix button "Send message" position in profile header
 
 3.2.3 (March 5, 2025)
 ---------------------
