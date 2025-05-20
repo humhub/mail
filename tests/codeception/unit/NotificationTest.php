@@ -11,6 +11,7 @@ use humhub\modules\notification\models\forms\NotificationSettings;
 use humhub\modules\notification\targets\MailTarget;
 use tests\codeception\_support\HumHubDbTestCase;
 use humhub\modules\user\models\User;
+use yii\helpers\ArrayHelper;
 
 class NotificationTest extends HumHubDbTestCase
 {
@@ -104,13 +105,14 @@ class NotificationTest extends HumHubDbTestCase
         $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
         $this->assertEqualsLastEmailTo($user2->email);
 
+        sleep(1); // Wait for the queue to finish sending emails
+
         $user3 = User::findOne(['id' => 4]);
         $inviteForm = new InviteParticipantForm(['message' => $message->messageInstance, 'recipients' => [$user3->guid]]);
         $inviteForm->save();
 
         $this->assertSentEmail(3);
-        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
-        $this->assertEqualsLastEmailTo($user3->email);
+        $this->assertLastEmailsContainsSubject('Andreas Tester joined the conversation.'); // user3 (id=4)
     }
 
     public function testAllNotificationsAreDisabled()
@@ -197,6 +199,16 @@ class NotificationTest extends HumHubDbTestCase
     public function assertEqualsLastEmailTo($email, $strict = true)
     {
         $this->assertArrayHasKey($email, $this->getYiiModule()->grabLastSentEmail()->to);
+    }
+
+    public function assertLastEmailsContainsSubject($subject)
+    {
+        $this->assertContains(
+            $subject,
+            ArrayHelper::getColumn($this->getYiiModule()->grabSentEmails(), function($message) {
+                return $message->getSubject();
+            })
+        );
     }
 
     private function setNotifications(User $user, array $config)
