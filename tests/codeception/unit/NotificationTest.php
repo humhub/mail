@@ -112,7 +112,7 @@ class NotificationTest extends HumHubDbTestCase
         $inviteForm->save();
 
         $this->assertSentEmail(3);
-        $this->assertLastEmailsContainsSubject('Andreas Tester joined the conversation.');
+        $this->assertLastEmailsContainsSubject('Andreas Tester joined the conversation.'); // user3 (id=4)
     }
 
     public function testAllNotificationsAreDisabled()
