@@ -205,9 +205,9 @@ class NotificationTest extends HumHubDbTestCase
     {
         $this->assertContains(
             $subject,
-            ArrayHelper::getColumn($this->getYiiModule()->grabSentEmails(), function($message) {
+            ArrayHelper::getColumn($this->getYiiModule()->grabSentEmails(), function ($message) {
                 return $message->getSubject();
-            })
+            }),
         );
     }
 
