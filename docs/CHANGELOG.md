@@ -3,7 +3,7 @@ Changelog
 
 3.3.0-beta.1 (unreleased)
 -------------------------
-- Enh: Migration to Bootstrap 5 for HumHub 1.18
+- Enh #447: Migration to Bootstrap 5 for HumHub 1.18
 
 3.2.4 (Unreleased)
 ------------------
