@@ -433,7 +433,7 @@ class Message extends ActiveRecord
         if ($this->isPinned($userId)) {
             return Icon::get('map-pin')
                 ->tooltip(Yii::t('MailModule.base', 'Pinned'))
-                ->color('var(--danger)');
+                ->color('var(--bs-danger)');
         }
 
         return null;

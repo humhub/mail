@@ -4,8 +4,8 @@ use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\widgets\PinLink;
 use humhub\modules\ui\icon\widgets\Icon;
-use humhub\widgets\Link;
-use humhub\widgets\ModalButton;
+use humhub\widgets\bootstrap\Link;
+use humhub\widgets\modal\ModalButton;
 
 /* @var $message Message */
 /* @var $isSingleParticipant bool */
@@ -23,31 +23,40 @@ if (!$isSingleParticipant) {
     $leaveConfirmButtonText = Yii::t('MailModule.base', 'Delete');
 }
 ?>
-<div class="dropdown" style="display:inline-block">
+<div class="dropdown d-inline-block">
     <?= Icon::get('chevron-down', [
         'htmlOptions' => [
             'id' => 'conversation-settings-button',
-            'data-toggle' => 'dropdown',
+            'data-bs-toggle' => 'dropdown',
             'aria-haspopup' => 'true',
-            'aria-expanded' => 'false'
-        ]
+            'aria-expanded' => 'false',
+        ],
     ]) ?>
-    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="conversation-settings-button">
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="conversation-settings-button">
         <li>
-            <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))->icon('star')
-                ->load(Url::toEditConversationTags($message))->link()->loader(false) ?>
+            <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))
+                ->icon('star')
+                ->load(Url::toEditConversationTags($message))
+                ->link()
+                ->cssClass('dropdown-item')
+                ->loader(false) ?>
         </li>
 
         <?php if ($canAddParticipant) : ?>
             <li>
-                <?= ModalButton::none(Yii::t('MailModule.base', 'Add user'))->icon('user-plus')
-                    ->load(Url::toAddParticipant($message))->link()->loader(false) ?>
+                <?= ModalButton::none(Yii::t('MailModule.base', 'Add user'))
+                    ->icon('user-plus')
+                    ->load(Url::toAddParticipant($message))
+                    ->link()
+                    ->cssClass('dropdown-item')
+                    ->loader(false) ?>
             </li>
         <?php endif; ?>
 
         <li>
             <?= Link::none(Yii::t('MailModule.base', 'Mark Unread'))
                 ->action('mail.conversation.linkAction', Url::toMarkUnreadConversation($message))
+                ->cssClass('dropdown-item')
                 ->icon('eye-slash') ?>
         </li>
 
@@ -60,6 +69,7 @@ if (!$isSingleParticipant) {
                 ->action('mail.conversation.linkAction', Url::toLeaveConversation($message))
                 ->confirm($leaveConfirmTitle, $leaveConfirmText, $leaveConfirmButtonText)
                 ->icon('sign-out')
+                ->cssClass('dropdown-item')
                 ->loader(false) ?>
         </li>
     </ul>

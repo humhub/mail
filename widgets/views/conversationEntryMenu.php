@@ -7,7 +7,7 @@
 
 /* @var array $menus */
 ?>
-<div class="conversation-menu">
+<div class="conversation-menu d-none">
     <?php foreach ($menus as $menu) : ?>
         <div class="conversation-menu-item">
             <?= $menu ?>

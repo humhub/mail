@@ -5,7 +5,7 @@ namespace humhub\modules\mail\widgets;
 use DateTime;
 use DateTimeZone;
 use humhub\components\Widget;
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\AbstractMessageEntry;

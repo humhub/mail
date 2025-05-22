@@ -9,6 +9,6 @@ use yii\bootstrap\Html;
 
 /* @var array $options */
 ?>
-<div class="form-group">
+<div class="mb-3">
     <?= Html::textInput(null, $options['value'] ?? null, $options) ?>
 </div>

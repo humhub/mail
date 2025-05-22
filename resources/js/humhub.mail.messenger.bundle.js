@@ -25,9 +25,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').show();
+            $(this).find('.conversation-menu').removeClass('d-none');
         }).on('mouseleave', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').hide();
+            $(this).find('.conversation-menu').addClass('d-none');
         });
     };
 
@@ -552,7 +552,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
-            var $streamEnd = $('<div class="inbox-stream-end"></div>');
+            var $streamEnd = $('<div class="inbox-stream-end stream-end"></div>');
             this.$.append($streamEnd);
 
             var that = this;

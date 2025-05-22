@@ -1,6 +1,6 @@
 <?php
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\InboxMessagePreview;
 use humhub\modules\ui\view\components\View;
@@ -11,12 +11,12 @@ use humhub\modules\ui\view\components\View;
 
 ?>
 
-<?= Html::beginTag('ul', $options) ?>
+<?= Html::beginTag('div', $options) ?>
     <?php if (empty($userMessages)) : ?>
-        <li class="placeholder"><?= Yii::t('MailModule.base', 'There are no messages yet.') ?></li>
+        <div><?= Yii::t('MailModule.base', 'There are no messages yet.') ?></div>
     <?php else: ?>
         <?php foreach ($userMessages as $userMessage) : ?>
             <?= InboxMessagePreview::widget(['userMessage' => $userMessage]) ?>
         <?php endforeach; ?>
     <?php endif; ?>
-<?= Html::endTag('ul') ?>
+<?= Html::endTag('div') ?>

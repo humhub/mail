@@ -3,7 +3,7 @@
 namespace humhub\modules\mail\widgets;
 
 use humhub\modules\mail\helpers\Url;
-use humhub\widgets\Link;
+use humhub\widgets\bootstrap\Link;
 use Yii;
 
 class ManageTagsLink extends Link
