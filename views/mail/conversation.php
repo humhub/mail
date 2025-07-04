@@ -73,12 +73,12 @@ use humhub\widgets\form\ActiveForm;
                             'preview' => '#mail-create-upload-preview-' . $message->id,
                             'dropZone' => '#mail-create-form-' . $message->id,
                             'max' => Yii::$app->getModule('content')->maxAttachedFiles,
-                            'cssButtonClass' => 'btn-sm btn-info',
+                            'cssButtonClass' => 'btn-light btn-sm',
                         ]) ?>
                         <?= FileHandlerButtonDropdown::widget([
                             'primaryButton' => $uploadButton,
                             'handlers' => $fileHandlers,
-                            'cssButtonClass' => 'btn-info btn-sm',
+                            'cssButtonClass' => 'btn-light btn-sm',
                             'pullRight' => true,
                         ]) ?>
                         <?= Button::info()
