@@ -14,7 +14,7 @@ use humhub\widgets\modal\ModalButton;
 
 <?php $form = Modal::beginFormDialog([
     'title' => Yii::t('MailModule.base', '<strong>Edit</strong> conversation tags'),
-    'footer' => ModalButton::cancel() . ' ' . ModalButton::save(null, Url::toEditConversationTags($model->message)),
+    'footer' => ModalButton::cancel() . ' ' . ModalButton::save()->submit(Url::toEditConversationTags($model->message)),
 ]) ?>
     <div class="form-text">
             <?= Yii::t('MailModule.base', 'Conversation tags can be used to filter conversations and are only visible to you.') ?>

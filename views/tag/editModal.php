@@ -12,7 +12,7 @@ use humhub\widgets\modal\ModalButton;
 
 <?php $form = Modal::beginFormDialog([
     'title' => Yii::t('MailModule.base', '<strong>Edit</strong> tag'),
-    'footer' => ModalButton::cancel() . ' ' . ModalButton::save(null, Url::toEditTag($model->id)),
+    'footer' => ModalButton::cancel() . ' ' . ModalButton::save()->submit(Url::toEditTag($model->id)),
 ])?>
     <?= $form->field($model, 'name') ?>
 <?php Modal::endFormDialog(); ?>

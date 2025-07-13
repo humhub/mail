@@ -22,7 +22,7 @@ use humhub\widgets\modal\ModalButton;
     'title' => Yii::t('MailModule.base', '<strong>New</strong> message'),
     'closable' => false,
     'form' => ['enableClientValidation' => false, 'acknowledge' => true],
-    'footer' => ModalButton::cancel() . ' ' . ModalButton::save(Yii::t('MailModule.base', 'Send'), Url::toCreateConversation()),
+    'footer' => ModalButton::cancel() . ' ' . ModalButton::save(Yii::t('MailModule.base', 'Send'))->submit(Url::toCreateConversation()),
 ]) ?>
     <?= $form->field($model, 'recipient')->widget(UserPickerField::class,
         [
