@@ -402,8 +402,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
                 var offsetTop = that.getListNode().offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
-                $entryContainer.css('height', max_height);
-                $entryContainer.css('max-height', max_height);
+                $entryContainer.css('height', 'calc(' + max_height + ' - var(--hh-mobile-app-safe-area-inset-bottom,env(safe-area-inset-bottom)))');
+                $entryContainer.css('height', 'calc(' + max_height + ' - var(--hh-mobile-app-safe-area-inset-bottom,env(safe-area-inset-bottom)))');
 
                 if (scrollToButtom !== false) {
                     that.scrollToBottom();

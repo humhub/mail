@@ -192,7 +192,7 @@
 
 .mail-message-form {
   position: absolute;
-  bottom: var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom));
+  bottom: 0;
   width: 100%;
   padding: 10px;
 }
