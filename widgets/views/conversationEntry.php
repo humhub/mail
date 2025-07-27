@@ -17,6 +17,8 @@ use humhub\modules\user\widgets\Image;
 /* @var $showUser bool */
 /* @var $userColor string */
 /* @var $showDateBadge bool */
+/* @var $isOwnMessage bool */
+
 ?>
 <?php if ($showDateBadge) : ?>
     <?= ConversationDateBadge::widget(['entry' => $entry]) ?>
@@ -24,7 +26,9 @@ use humhub\modules\user\widgets\Image;
 
 <?= Html::beginTag('div', $options) ?>
 
-<div class="d-flex pe-2">
+<div class="d-flex pe-2 gap-2<?= $isOwnMessage ? ' justify-content-end' : '' ?>">
+
+    <?= ConversationEntryMenu::widget(['entry' => $entry]) ?>
 
     <?php if ($showUser) : ?>
         <span class="author-image float-start">
@@ -46,8 +50,6 @@ use humhub\modules\user\widgets\Image;
         </div>
         <?= MessageEntryTime::widget(['entry' => $entry]) ?>
     </div>
-
-    <?= ConversationEntryMenu::widget(['entry' => $entry]) ?>
 </div>
 
 <?= Html::endTag('div') ?>

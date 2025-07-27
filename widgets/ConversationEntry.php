@@ -66,6 +66,7 @@ class ConversationEntry extends JsWidget
             'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
             'options' => $this->getOptions(),
+            'isOwnMessage' => $this->isOwnMessage(),
         ]);
     }
 

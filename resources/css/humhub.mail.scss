@@ -54,6 +54,7 @@ $radiusNone: 0;
     padding-left: 0;
     display: block;
     padding-bottom: 0;
+    font-size: 12px;
 }
 
 #conversation-tags-root {
@@ -142,7 +143,6 @@ $radiusNone: 0;
     }
 
     &.own {
-        float: right;
         background: var(--hh-background-color-highlight);
     }
 
@@ -311,14 +311,6 @@ $radiusNone: 0;
                 visibility: hidden;
                 margin-top: 0;
             }
-        }
-    }
-
-    &.own {
-        .conversation-menu-item {
-            float: right;
-            margin-left: 0;
-            margin-right: 5px;
         }
     }
 

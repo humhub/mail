@@ -22,6 +22,7 @@
   padding-left: 0;
   display: block;
   padding-bottom: 0;
+  font-size: 12px;
 }
 
 #conversation-tags-root {
@@ -101,7 +102,6 @@
   max-width: 485px;
 }
 .conversation-entry-content.own {
-  float: right;
   background: var(--hh-background-color-highlight);
 }
 .conversation-entry-content .markdown-render {
@@ -233,11 +233,6 @@
 .mail-conversation-entry.hideUserInfo .author-image a {
   visibility: hidden;
   margin-top: 0;
-}
-.mail-conversation-entry.own .conversation-menu-item {
-  float: right;
-  margin-left: 0;
-  margin-right: 5px;
 }
 .mail-conversation-entry .conversation-entry-time {
   float: right;

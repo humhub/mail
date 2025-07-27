@@ -3,7 +3,8 @@ Changelog
 
 3.3.1 (Unreleased)
 ---------------------
-- Fix: Send Message from User Profile
+- Fix #451: Chat Bubble Misalignment & Filter Color Issue
+- Fix #450: Send Message from User Profile
 
 3.3.0 (July 26, 2025)
 ---------------------
