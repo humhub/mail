@@ -28,9 +28,9 @@ humhub.module('mail.notification', function (module, require, $) {
                 const messageLoader = $('#loader_messages');
                 const messageList = messageLoader.parent();
 
-                // remove all <li> entries from dropdown
+                // remove all entries from dropdown
                 messageLoader.parent().find(':not(#loader_messages)').remove();
-                loader.set(messageLoader.show());
+                loader.set(messageLoader.removeClass('d-none'));
 
                 client.get(module.config.url.list, {
                     beforeSend: function (xhr) {
@@ -39,7 +39,7 @@ humhub.module('mail.notification', function (module, require, $) {
                 }).then(function (response) {
                     currentXhr = undefined;
                     messageList.prepend($(response.html));
-                    messageLoader.hide();
+                    messageLoader.addClass('d-none');
                     messageList.niceScroll({
                         cursorwidth: '7',
                         cursorborder: '',
@@ -65,11 +65,11 @@ humhub.module('mail.notification', function (module, require, $) {
         // show or hide the badge for new messages
         var $badge = $('#badge-messages');
         if (!count || parseInt(count) === 0) {
-            $badge.css('display', 'none');
+            $badge.addClass('d-none');
             newMessageCount = 0;
         } else {
+            $badge.removeClass('d-none');
             newMessageCount = count;
-
             $badge.empty();
             $badge.append(count);
             $badge.fadeIn('fast');

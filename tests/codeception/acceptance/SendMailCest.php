@@ -132,6 +132,7 @@ class SendMailCest
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null, '#globalModalConfirm');
+        $I->wait(1);
         $I->click('Leave', '#globalModalConfirm');
 
         $I->waitForText('Third message title', null, '#mail-conversation-header');
@@ -139,6 +140,7 @@ class SendMailCest
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
         $I->waitForText('Confirm leaving conversation', null, '#globalModalConfirm');
+        $I->wait(1);
         $I->click('Leave', '#globalModalConfirm');
 
         $I->expectTo('see an empty conversation box');

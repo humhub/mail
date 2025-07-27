@@ -1,6 +1,6 @@
 <?php
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\AbstractRichTextEditor;
 use humhub\modules\file\handler\BaseFileHandler;
 use humhub\modules\file\widgets\FileHandlerButtonDropdown;
@@ -12,9 +12,9 @@ use humhub\modules\mail\widgets\ConversationHeader;
 use humhub\modules\mail\widgets\ConversationTags;
 use humhub\modules\mail\widgets\MailRichtextEditor;
 use humhub\modules\mail\widgets\Messages;
-use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\ui\view\components\View;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
 
 /* @var $this View */
 /* @var $replyForm ReplyForm */
@@ -41,7 +41,7 @@ use humhub\widgets\Button;
 
         <div class="panel-body">
 
-            <div class="media-list conversation-entry-list">
+            <div class="conversation-entry-list">
                 <?= Messages::widget(['message' => $message]) ?>
             </div>
 
@@ -73,12 +73,12 @@ use humhub\widgets\Button;
                             'preview' => '#mail-create-upload-preview-' . $message->id,
                             'dropZone' => '#mail-create-form-' . $message->id,
                             'max' => Yii::$app->getModule('content')->maxAttachedFiles,
-                            'cssButtonClass' => 'btn-sm btn-info',
+                            'cssButtonClass' => 'btn-light btn-sm',
                         ]) ?>
                         <?= FileHandlerButtonDropdown::widget([
                             'primaryButton' => $uploadButton,
                             'handlers' => $fileHandlers,
-                            'cssButtonClass' => 'btn-info btn-sm',
+                            'cssButtonClass' => 'btn-light btn-sm',
                             'pullRight' => true,
                         ]) ?>
                         <?= Button::info()

@@ -1,15 +1,15 @@
 <?php
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\mail\widgets\ManageTagsLink;
 use humhub\modules\ui\filter\widgets\PickerFilterInput;
 use humhub\modules\ui\filter\widgets\TextFilterInput;
-use humhub\modules\ui\form\widgets\ActiveForm;
 use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\UserPickerField;
-use humhub\widgets\Link;
+use humhub\widgets\bootstrap\Link;
+use humhub\widgets\form\ActiveForm;
 
 /* @var $this View */
 /* @var $options array */
@@ -21,7 +21,7 @@ use humhub\widgets\Link;
     ->id('conversation-filter-link')
     ->href('#mail-filter-menu')
     ->icon('filter')
-    ->options(['data-toggle' => 'collapse'])
+    ->options(['data-bs-toggle' => 'collapse'])
     ->sm() ?>
 
 <div id="mail-filter-menu" class="collapse clearfix<?= $model->isFiltered() ? ' in' : '' ?>">
@@ -38,7 +38,7 @@ use humhub\widgets\Link;
         ],
     ]) ?>
 
-    <div class="form-group">
+    <div class="mb-3">
         <?= PickerFilterInput::widget([
             'id' => 'participants', 'category' => 'participants',
             'picker' => UserPickerField::class,
