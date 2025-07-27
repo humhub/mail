@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.2 (Unreleased)
+---------------------
+- Fix: Refresh issue after sending a message
+
 3.3.1 (July 27, 2025)
 ---------------------
 - Fix #451: Chat Bubble Misalignment & Filter Color Issue
