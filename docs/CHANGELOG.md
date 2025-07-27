@@ -5,6 +5,7 @@ Changelog
 ---------------------
 - Fix #451: Chat Bubble Misalignment & Filter Color Issue
 - Fix #450: Send Message from User Profile
+- Enh #435: Rename Mailer settings keys
 
 3.3.0 (July 26, 2025)
 ---------------------
