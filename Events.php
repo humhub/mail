@@ -10,10 +10,10 @@ namespace humhub\modules\mail;
 
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Config;
-use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\models\UserMessageTag;
+use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\search\SearchProvider;
@@ -186,7 +186,7 @@ class Events
             $menu->addEntry(new MenuLink([
                 'label' => Yii::t('MailModule.base', 'Send message'),
                 'url' => Url::toCreateConversation($menu->user->guid),
-                'htmlOptions' => ['data-target' => '#globalModal'],
+                'htmlOptions' => ['data-bs-target' => '#globalModal'],
                 'icon' => 'envelope',
                 'sortOrder' => 500,
             ]));

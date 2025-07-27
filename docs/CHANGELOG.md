@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.1 (Unreleased)
+---------------------
+- Fix: Send Message from User Profile
+
 3.3.0 (July 26, 2025)
 ---------------------
 - Enh #447: Migration to Bootstrap 5 for HumHub 1.18
