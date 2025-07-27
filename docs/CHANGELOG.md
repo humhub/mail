@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.3.1 (Unreleased)
+3.3.1 (July 27, 2025)
 ---------------------
 - Fix #451: Chat Bubble Misalignment & Filter Color Issue
 - Fix #450: Send Message from User Profile
