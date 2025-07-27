@@ -169,7 +169,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.getListNode().append($html);
 
         return new Promise(function (resolve, reject) {
-            $elements.css('opacity', 1).fadeIn('fast', function () {
+            $elements.css('opacity', 1).removeClass('d-none', function () {
                 that.onUpdate();
                 setTimeout(function () {
                     that.scrollToBottom()
