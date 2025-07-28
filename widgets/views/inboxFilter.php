@@ -17,10 +17,11 @@ use humhub\widgets\form\ActiveForm;
 ?>
 
 <?= Html::beginTag('div', $options) ?>
-<?= Link::none(Yii::t('MailModule.base', 'Filters') . ' <b class="caret"></b>')
+<?= Link::none(Yii::t('MailModule.base', 'Filters'))
     ->id('conversation-filter-link')
     ->href('#mail-filter-menu')
     ->icon('filter')
+    ->cssClass('filter-toggle-link ')
     ->options(['data-bs-toggle' => 'collapse'])
     ->sm() ?>
 
