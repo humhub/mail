@@ -3,11 +3,11 @@ Changelog
 
 3.3.3 (Unreleased)
 ---------------------
-- Fix: Filter toggle link color
+- Fix #453: Filter toggle link color
 
 3.3.2 (July 27, 2025)
 ---------------------
-- Fix: Refresh issue after sending a message
+- Fix #452: Refresh issue after sending a message
 
 3.3.1 (July 27, 2025)
 ---------------------
