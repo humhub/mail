@@ -17,7 +17,7 @@ use humhub\widgets\form\ActiveForm;
 ?>
 
 <?= Html::beginTag('div', $options) ?>
-<?= Link::none(Yii::t('MailModule.base', 'Filters') . ' <b class="caret"></b>')
+<?= Link::none(Yii::t('MailModule.base', 'Filter') . ' <b class="caret"></b>')
     ->id('conversation-filter-link')
     ->href('#mail-filter-menu')
     ->icon('filter')
