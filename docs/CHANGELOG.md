@@ -1,13 +1,17 @@
 Changelog
 =========
 
+3.3.3 (Unreleased)
+---------------------
+- Fix #453: Filter toggle link color
+
 3.3.2 (July 27, 2025)
 ---------------------
-- Fix: Refresh issue after sending a message
+- Fix #452: Refresh issue after sending a message
 
 3.3.1 (July 27, 2025)
 ---------------------
-- Fix #451: Chat Bubble Misalignment & Filter Color Issue
+- Fix #451: Chat Bubble Misalignment & Filter font size
 - Fix #450: Send Message from User Profile
 - Enh #435: Rename Mailer settings keys
 

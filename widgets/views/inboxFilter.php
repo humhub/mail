@@ -17,10 +17,11 @@ use humhub\widgets\form\ActiveForm;
 ?>
 
 <?= Html::beginTag('div', $options) ?>
-<?= Link::none(Yii::t('MailModule.base', 'Filter') . ' <b class="caret"></b>')
+<?= Link::none(Yii::t('MailModule.base', 'Filter'))
     ->id('conversation-filter-link')
     ->href('#mail-filter-menu')
     ->icon('filter')
+    ->cssClass('filter-toggle-link ')
     ->options(['data-bs-toggle' => 'collapse'])
     ->sm() ?>
 
@@ -50,9 +51,9 @@ use humhub\widgets\form\ActiveForm;
             'picker' => ConversationTagPicker::class,
             'pickerOptions' => ['id' => 'inbox-tag-picker', 'name' => 'tags', 'placeholder' => Yii::t('MailModule.base', 'Tags'), 'placeholderMore' => Yii::t('MailModule.base', 'Tags')]]) ?>
 
-    <small>
-        <?= ManageTagsLink::widget() ?>
-    </small>
+        <small>
+            <?= ManageTagsLink::widget() ?>
+        </small>
     </div>
     <?php ActiveForm::end() ?>
 </div>
