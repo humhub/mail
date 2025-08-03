@@ -5,9 +5,11 @@
  * @license https://www.humhub.com/licences
  */
 
-use yii\bootstrap\Html;
 
 /* @var array $options */
+
+use humhub\helpers\Html;
+
 ?>
 <div class="mb-3">
     <?= Html::textInput(null, $options['value'] ?? null, $options) ?>

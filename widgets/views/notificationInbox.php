@@ -6,7 +6,7 @@ use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\widgets\bootstrap\Badge;
 
-/* @var $this \humhub\modules\ui\view\components\View */
+/* @var $this \humhub\components\View */
 
 MailNotificationAsset::register($this);
 

@@ -1,9 +1,10 @@
 <?php
 
+use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\MessageTag;
-use humhub\modules\ui\view\components\View;
+use humhub\modules\topic\models\Topic;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
 use humhub\widgets\GridView;
@@ -65,18 +66,18 @@ $dataProvider = new ActiveDataProvider([
                                 'contentOptions' => ['style' => 'text-align:right'],
                                 'buttons' => [
                                     'update' => function ($url, $model) {
-                                        /* @var $model \humhub\modules\topic\models\Topic */
-                                        return ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->xs()->loader(false);
+                                        /* @var $model Topic */
+                                        return ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->sm()->loader(false);
                                     },
                                     'view' => function() {
                                         return '';
                                     },
                                     'delete' => function ($url, $model) {
-                                        /* @var $model \humhub\modules\topic\models\Topic */
+                                        /* @var $model Topic */
                                         return Button::danger()->icon('fa-times')->action('client.post', Url::toDeleteTag($model->id))->confirm(
                                             Yii::t('MailModule.base', '<strong>Confirm</strong> tag deletion'),
                                             Yii::t('MailModule.base', 'Do you really want to delete this tag?'),
-                                            Yii::t('base', 'Delete'))->xs()->loader(false);
+                                            Yii::t('base', 'Delete'))->sm()->loader(false);
                                     },
                                 ],
                             ],

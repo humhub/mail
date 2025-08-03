@@ -1,5 +1,6 @@
 <?php
 
+use humhub\components\View;
 use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\modules\file\widgets\ShowFiles;
@@ -7,7 +8,6 @@ use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\ConversationDateBadge;
 use humhub\modules\mail\widgets\ConversationEntryMenu;
 use humhub\modules\mail\widgets\MessageEntryTime;
-use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\Image;
 
 /* @var $this View */

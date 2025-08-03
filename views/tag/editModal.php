@@ -1,8 +1,8 @@
 <?php
 
+use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageTag;
-use humhub\modules\ui\view\components\View;
 use humhub\widgets\modal\Modal;
 use humhub\widgets\modal\ModalButton;
 

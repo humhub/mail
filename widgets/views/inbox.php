@@ -1,9 +1,9 @@
 <?php
 
+use humhub\components\View;
 use humhub\helpers\Html;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\InboxMessagePreview;
-use humhub\modules\ui\view\components\View;
 
 /* @var $this View */
 /* @var $options array */

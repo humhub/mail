@@ -1,12 +1,12 @@
 <?php
 
+use humhub\components\View;
 use humhub\helpers\Html;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\mail\widgets\ManageTagsLink;
 use humhub\modules\ui\filter\widgets\PickerFilterInput;
 use humhub\modules\ui\filter\widgets\TextFilterInput;
-use humhub\modules\ui\view\components\View;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\bootstrap\Link;
 use humhub\widgets\form\ActiveForm;

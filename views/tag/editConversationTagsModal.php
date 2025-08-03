@@ -1,9 +1,9 @@
 <?php
 
+use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\ConversationTagsForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
-use humhub\modules\ui\view\components\View;
 use humhub\widgets\modal\Modal;
 use humhub\widgets\modal\ModalButton;
 

@@ -1,5 +1,6 @@
 <?php
 
+use humhub\components\View;
 use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\AbstractRichTextEditor;
 use humhub\modules\file\handler\BaseFileHandler;
@@ -12,7 +13,6 @@ use humhub\modules\mail\widgets\ConversationHeader;
 use humhub\modules\mail\widgets\ConversationTags;
 use humhub\modules\mail\widgets\MailRichtextEditor;
 use humhub\modules\mail\widgets\Messages;
-use humhub\modules\ui\view\components\View;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
 

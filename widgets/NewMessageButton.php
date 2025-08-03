@@ -72,10 +72,6 @@ class NewMessageButton extends Widget
             case 'large':
                 $button->lg();
                 break;
-            case 'xs':
-            case 'extraSmall':
-                $button->xs();
-                break;
         }
 
         return $button;

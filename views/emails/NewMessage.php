@@ -1,10 +1,10 @@
 <?php
 
+use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\ui\mail\DefaultMailStyle;
-use humhub\modules\ui\view\components\View;
 use humhub\modules\user\models\User;
 
 /* @var $this View */

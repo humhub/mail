@@ -4,6 +4,7 @@ Changelog
 3.3.3 (Unreleased)
 ---------------------
 - Fix #453: Filter toggle link color
+- Fix: Migration to Bootstrap 5 for templates
 
 3.3.2 (July 27, 2025)
 ---------------------
