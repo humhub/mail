@@ -67,7 +67,7 @@ class ConversationStateBadge extends Widget
 
     protected function isOwn(): bool
     {
-        return !Yii::$app->user->isGuest &&
-            $this->entry->user->is(Yii::$app->user->getIdentity());
+        return !Yii::$app->user->isGuest
+            && $this->entry->user->is(Yii::$app->user->getIdentity());
     }
 }
