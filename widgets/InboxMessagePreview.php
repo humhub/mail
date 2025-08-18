@@ -164,7 +164,7 @@ class InboxMessagePreview extends Widget
 
         $lastEntryUser = $this->getLastEntry()->user;
 
-        return $lastEntryUser instanceof User &&
-            $lastEntryUser->is(Yii::$app->user->getIdentity());
+        return $lastEntryUser instanceof User
+            && $lastEntryUser->is(Yii::$app->user->getIdentity());
     }
 }
