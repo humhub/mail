@@ -57,14 +57,14 @@ use humhub\widgets\form\ActiveForm;
             <?php else : ?>
                 <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
 
-                <div class="content-create-input-group">
+                <div class="richtext-create-input-group">
 
                     <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, [
                         'id' => 'reply-' . time(),
                         'layout' => AbstractRichTextEditor::LAYOUT_INLINE,
                     ])->label(false) ?>
 
-                    <div class="upload-buttons">
+                    <div class="richtext-create-buttons">
                         <?php $uploadButton = UploadButton::widget([
                             'id' => 'mail-create-upload-' . $message->id,
                             'tooltip' => Yii::t('ContentModule.base', 'Attach Files'),
