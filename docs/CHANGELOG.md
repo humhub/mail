@@ -5,6 +5,7 @@ Changelog
 ---------------------
 - Fix #453: Filter toggle link color
 - Fix: Migration to Bootstrap 5 for templates
+- Fix: Send button inside upload-buttons class
 
 3.3.2 (July 27, 2025)
 ---------------------
