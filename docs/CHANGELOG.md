@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.3 (Unreleased)
----------------------
+3.3.3 (August 23, 2025)
+-----------------------
 - Fix #453: Filter toggle link color
 - Fix: Migration to Bootstrap 5 for templates
 - Fix #455: Send button inside upload-buttons class

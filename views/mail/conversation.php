@@ -81,7 +81,7 @@ use humhub\widgets\form\ActiveForm;
                             'cssButtonClass' => 'btn-light btn-sm',
                             'pullRight' => true,
                         ]) ?>
-                        <?= Button::info()
+                        <?= Button::accent()
                             ->cssClass('reply-button')
                             ->submit()
                             ->action('reply', $replyForm->getUrl())
