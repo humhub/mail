@@ -2,7 +2,6 @@
 
 namespace humhub\modules\mail\models;
 
-
 use humhub\components\ActiveRecord;
 use humhub\modules\mail\Module;
 use humhub\modules\ui\icon\widgets\Icon;
@@ -14,12 +13,12 @@ use yii\helpers\Html;
  * This class represents a single conversation.
  *
  * The followings are the available columns in table 'message':
- * @property integer $id
+ * @property int $id
  * @property string $title
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
  * @property-read  User $originator
  * @property-read MessageEntry $lastEntry
  *
@@ -120,21 +119,33 @@ class Message extends ActiveRecord
 
         return UserMessage::findOne([
             'user_id' => $userId,
-            'message_id' => $this->id
+            'message_id' => $this->id,
         ]);
     }
 
     /**
-     * @param $user
+     * @param User|int|string|null $user
      * @return bool
      */
-    public function isParticipant($user)
+    public function isParticipant($user = null): bool
     {
+        if (empty($user->guid)) {
+            if ($user === null && !Yii::$app->user->isGuest) {
+                $user = Yii::$app->user->getIdentity();
+            } elseif (!empty($user) && is_scalar($user)) {
+                $user = User::findOne(['id' => $user]);
+            }
+            if (empty($user->guid)) {
+                return false;
+            }
+        }
+
         foreach ($this->users as $participant) {
             if ($participant->guid === $user->guid) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -170,14 +181,14 @@ class Message extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'id' => 'ID',
             'title' => Yii::t('MailModule.base', 'Title'),
             'created_at' => Yii::t('MailModule.base', 'Created At'),
             'created_by' => Yii::t('MailModule.base', 'Created By'),
             'updated_at' => Yii::t('MailModule.base', 'Updated At'),
             'updated_by' => Yii::t('MailModule.base', 'Updated By'),
-        );
+        ];
     }
 
     /**
@@ -229,7 +240,7 @@ class Message extends ActiveRecord
     public function deleteEntry($entry)
     {
         if ($entry->message->id == $this->id) {
-            if($this->getEntries()->count() > 1) {
+            if ($this->getEntries()->count() > 1) {
                 $entry->delete();
             } else {
                 $this->delete();
@@ -307,10 +318,10 @@ class Message extends ActiveRecord
     public function seen($userId)
     {
         // Update User Message Entry
-        $userMessage = UserMessage::findOne(array(
+        $userMessage = UserMessage::findOne([
             'user_id' => $userId,
-            'message_id' => $this->id
-        ));
+            'message_id' => $this->id,
+        ]);
         if ($userMessage !== null) {
             $userMessage->last_viewed = date('Y-m-d G:i:s');
             $userMessage->save();
@@ -322,11 +333,11 @@ class Message extends ActiveRecord
      */
     public function delete()
     {
-        foreach (MessageEntry::findAll(array('message_id' => $this->id)) as $messageEntry) {
+        foreach (MessageEntry::findAll(['message_id' => $this->id]) as $messageEntry) {
             $messageEntry->delete();
         }
 
-        foreach (UserMessage::findAll(array('message_id' => $this->id)) as $userMessage) {
+        foreach (UserMessage::findAll(['message_id' => $this->id]) as $userMessage) {
             $userMessage->delete();
         }
 
@@ -344,7 +355,7 @@ class Message extends ActiveRecord
         $userMessage = new UserMessage([
             'message_id' => $this->id,
             'user_id' => $recipient->id,
-            'informAfterAdd' => $informAfterAdd
+            'informAfterAdd' => $informAfterAdd,
         ]);
 
         if ($originator) {
@@ -422,7 +433,7 @@ class Message extends ActiveRecord
         if ($this->isPinned($userId)) {
             return Icon::get('map-pin')
                 ->tooltip(Yii::t('MailModule.base', 'Pinned'))
-                ->color(Yii::$app->view->theme->variable('danger', 'red'));
+                ->color('var(--bs-danger)');
         }
 
         return null;

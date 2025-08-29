@@ -10,5 +10,5 @@ use humhub\modules\mail\widgets\InboxMessagePreview;
         <?= InboxMessagePreview::widget(['userMessage' => $userMessage]) ?>
     <?php endforeach; ?>
 <?php else: ?>
-    <li class="placeholder"> <?= Yii::t('MailModule.views_mail_list', 'There are no messages yet.'); ?></li>
+    <div> <?= Yii::t('MailModule.base', 'There are no messages yet.') ?></div>
 <?php endif; ?>

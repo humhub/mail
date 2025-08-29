@@ -3,11 +3,11 @@
 namespace humhub\modules\mail\widgets;
 
 use humhub\components\Widget;
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\user\models\User;
-use humhub\widgets\Link;
+use humhub\widgets\bootstrap\Link;
 use Yii;
 
 class ParticipantUserList extends Widget
@@ -21,9 +21,9 @@ class ParticipantUserList extends Widget
      *      - value 2 - Style class applied for usernames
      */
     public array $limits = [
-        2 => ['visible-xs-inline', 'hidden-xs'],
-        6 => ['visible-md-inline visible-sm-inline', 'hidden-md hidden-sm'],
-        8 => ['visible-lg-inline', '']
+        2 => ['d-sm-none', 'd-none d-sm-inline'],
+        6 => ['d-none d-sm-inline d-lg-none', 'd-sm-none d-lg-inline'],
+        8 => ['d-none d-lg-inline', ''],
     ];
 
     public function run()

@@ -4,7 +4,6 @@ use yii\db\Migration;
 
 class m150429_190600_indexes extends Migration
 {
-
     public function up()
     {
         $this->createIndex('index_user_id', 'message_entry', 'user_id', false);

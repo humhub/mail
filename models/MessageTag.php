@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\models;
-
 
 use humhub\components\ActiveRecord;
 use humhub\modules\content\models\Content;
@@ -15,11 +13,11 @@ use yii\web\NotFoundHttpException;
 /**
  * Class MessageTag
  *
- * @property integer $id
- * @property integer $user_id
+ * @property int $id
+ * @property int $user_id
  * @property string $name
  * @property string $color
- * @property integer $sort_order
+ * @property int $sort_order
  */
 class MessageTag extends ActiveRecord
 {
@@ -34,15 +32,15 @@ class MessageTag extends ActiveRecord
             ['name', 'trim'],
             ['name', 'required'],
             ['sort_order', 'integer'],
-            ['name', 'unique', 'targetAttribute' => ['user_id', 'name'], 'when' => function(MessageTag $model) {
+            ['name', 'unique', 'targetAttribute' => ['user_id', 'name'], 'when' => function (MessageTag $model) {
                 return $model->isNewRecord || $model->isAttributeChanged('name');
-            }, 'message' => Yii::t('MailModule.base', 'A tag with the same name already exists.')]
+            }, 'message' => Yii::t('MailModule.base', 'A tag with the same name already exists.')],
         ];
     }
 
     public static function search($userId, $keyword)
     {
-        if(empty($userId)) {
+        if (empty($userId)) {
             return [];
         }
 
@@ -60,12 +58,12 @@ class MessageTag extends ActiveRecord
      */
     public static function attach($userId, Message $message, $tags = [])
     {
-         /* @var $result static[] */
+        /* @var $result static[] */
         $result = [];
 
         $userMessage = $message->getUserMessage();
 
-        if(!$userMessage) {
+        if (!$userMessage) {
             throw new NotFoundHttpException();
         }
 
@@ -79,10 +77,10 @@ class MessageTag extends ActiveRecord
         $tags = is_array($tags) ? $tags : [$tags];
 
         foreach ($tags as $tag) {
-            if(is_string($tag) && strpos($tag, '_add:') === 0) {
+            if (is_string($tag) && strpos($tag, '_add:') === 0) {
                 $newTag = new static([
                     'name' => substr($tag, strlen('_add:')),
-                    'user_id' => $userId
+                    'user_id' => $userId,
                 ]);
 
                 if ($newTag->save()) {
@@ -103,15 +101,14 @@ class MessageTag extends ActiveRecord
 
     private static function deleteTagRelations($userId, UserMessage $message)
     {
-        foreach (UserMessageTag::findAllByUserMessage($message)->all() as $userMessageTag)
-        {
+        foreach (UserMessageTag::findAllByUserMessage($message)->all() as $userMessageTag) {
             $userMessageTag->delete();
         }
     }
 
     public function afterDelete()
     {
-        foreach(UserMessageTag::find()->where(['tag_id' => $this->id])->all() as $messageTag) {
+        foreach (UserMessageTag::find()->where(['tag_id' => $this->id])->all() as $messageTag) {
             $messageTag->delete();
         }
     }
@@ -123,7 +120,7 @@ class MessageTag extends ActiveRecord
     private static function addTagsToConversation(UserMessage $message, array $userTags)
     {
         foreach ($userTags as $userTag) {
-           UserMessageTag::create($message, $userTag);
+            UserMessageTag::create($message, $userTag);
         }
     }
 

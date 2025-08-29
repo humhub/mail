@@ -36,7 +36,6 @@ use yii\web\NotFoundHttpException;
  */
 class MailController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -51,7 +50,7 @@ class MailController extends Controller
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY],
-            [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']]
+            [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']],
         ];
     }
 
@@ -98,7 +97,7 @@ class MailController extends Controller
         }
 
         return $this->asJson([
-            'messageCount' => UserMessage::getNewMessageCount()
+            'messageCount' => UserMessage::getNewMessageCount(),
         ]);
     }
 
@@ -111,7 +110,7 @@ class MailController extends Controller
         return $this->renderAjaxContent(Messages::widget([
             'message' => $message,
             'entries' => $message->getEntryUpdates($from)->all(),
-            'showDateBadge' => false
+            'showDateBadge' => false,
         ]));
     }
 
@@ -127,7 +126,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'result' => $result,
-            'isLast' => (count($entries) < Module::getModuleInstance()->conversationUpdatePageSize)
+            'isLast' => (count($entries) < Module::getModuleInstance()->conversationUpdatePageSize),
         ]);
     }
 
@@ -139,18 +138,23 @@ class MailController extends Controller
 
         // Reply Form
         $replyForm = new ReplyForm(['model' => $message]);
+
+        if (!empty(Yii::$app->request->post('fileList'))) {
+            $replyForm->scenario = ReplyForm::SCENARIO_HAS_FILES;
+        }
+
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
             return $this->asJson([
                 'success' => true,
-                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => $replyForm->reply->isFirstToday()])
+                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => $replyForm->reply->isFirstToday()]),
             ]);
         }
 
         return $this->asJson([
             'success' => false,
             'error' => [
-                'message' => $replyForm->getFirstError('message')
-            ]
+                'message' => $replyForm->getFirstError('message'),
+            ],
         ]);
     }
 
@@ -163,7 +167,7 @@ class MailController extends Controller
     {
         return $this->renderAjaxContent(UserListBox::widget([
             'query' => $this->getMessage($id, true)->getUsers(),
-            'title' => '<strong>' . Yii::t('MailModule.base', 'Participants') . '</strong>'
+            'title' => '<strong>' . Yii::t('MailModule.base', 'Participants') . '</strong>',
         ]));
     }
 
@@ -184,15 +188,15 @@ class MailController extends Controller
         if ($inviteForm->load(Yii::$app->request->post())) {
             if ($inviteForm->save()) {
                 return $this->asJson([
-                    'result' => ConversationHeader::widget(['message' => $message])
+                    'result' => ConversationHeader::widget(['message' => $message]),
                 ]);
             }
 
             return $this->asJson([
                 'success' => false,
                 'error' => [
-                    'message' => $inviteForm->getFirstError('recipients')
-                ]
+                    'message' => $inviteForm->getFirstError('recipients'),
+                ],
             ]);
         }
 
@@ -232,7 +236,7 @@ class MailController extends Controller
             'keyword' => $keyword,
             'permission' => (!Yii::$app->user->isAdmin()) ? new SendMail() : null,
             'disableFillUser' => true,
-            'disabledText' => Yii::t('MailModule.base', 'You are not allowed to start a conversation with this user.')
+            'disabledText' => Yii::t('MailModule.base', 'You are not allowed to start a conversation with this user.'),
         ]);
 
         // Disable already participating users
@@ -266,7 +270,7 @@ class MailController extends Controller
      *
      * @param type $message
      * @param type $user
-     * @return boolean
+     * @return bool
      */
     private function isParticipant($message, $user)
     {
@@ -355,7 +359,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'success' => true,
-            'redirect' => $nextReadMessage ? Url::toMessenger($nextReadMessage) : Url::to(['/dashboard'])
+            'redirect' => $nextReadMessage ? Url::toMessenger($nextReadMessage) : Url::to(['/dashboard']),
         ]);
     }
 
@@ -372,7 +376,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'success' => true,
-            'redirect' => Url::toMessenger($message)
+            'redirect' => Url::toMessenger($message),
         ]);
     }
 
@@ -389,7 +393,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'success' => true,
-            'redirect' => Url::toMessenger($message)
+            'redirect' => Url::toMessenger($message),
         ]);
     }
 
@@ -411,7 +415,7 @@ class MailController extends Controller
 
         return $this->asJson([
             'success' => true,
-            'redirect' => Url::toMessenger()
+            'redirect' => Url::toMessenger(),
         ]);
     }
 
@@ -439,8 +443,8 @@ class MailController extends Controller
                 'success' => true,
                 'content' => ConversationEntry::widget([
                     'entry' => $entry,
-                    'showDateBadge' => false
-                ])
+                    'showDateBadge' => false,
+                ]),
             ]);
         }
 
@@ -472,7 +476,7 @@ class MailController extends Controller
         $entry->message->deleteEntry($entry);
 
         return $this->asJson([
-            'success' => true
+            'success' => true,
         ]);
     }
 
@@ -520,7 +524,7 @@ class MailController extends Controller
             ->andWhere('user_message.last_viewed >= message.updated_at')
             ->orderBy([
                 'user_message.pinned' => SORT_DESC,
-                'message.updated_at' => SORT_DESC
+                'message.updated_at' => SORT_DESC,
             ])
             ->one();
     }

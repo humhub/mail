@@ -25,10 +25,19 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').show();
+            $(this).find('.conversation-menu').removeClass('d-none');
         }).on('mouseleave', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').hide();
+            $(this).find('.conversation-menu').addClass('d-none');
         });
+    };
+
+    ConversationView.prototype.onbeforeunloadCheck = function () {
+        var replyRichtext = this.getReplyRichtext();
+        if (replyRichtext && $(replyRichtext.$[0]).closest('form').find('textarea').val().trim().length) {
+            return client.confirmUnload();
+        }
+
+        return true;
     };
 
     ConversationView.prototype.loader = function (load) {
@@ -79,6 +88,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         filePreview.hide();
                         filePreview.children('ul.files').html('');
                     }
+                    var fileListInputs = that.getReplyFileListInputs();
+                    if (fileListInputs.length) {
+                        fileListInputs.remove();
+                    }
                     that.scrollToBottom();
                     if (!view.isSmall()) { // prevent autofocus on mobile
                         that.focus();
@@ -107,6 +120,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.getReplyFilePreview = function () {
         return this.$.find('.post-file-list');
+    };
+
+    ConversationView.prototype.getReplyFileListInputs = function () {
+        return this.$.find('input[name="fileList[]"]');
     };
 
 
@@ -161,7 +178,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.getListNode().append($html);
 
         return new Promise(function (resolve, reject) {
-            $elements.css('opacity', 1).fadeIn('fast', function () {
+            $elements.css('opacity', 1).removeClass('d-none', function () {
                 that.onUpdate();
                 setTimeout(function () {
                     that.scrollToBottom()
@@ -172,6 +189,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loadMessage = function (evt) {
+        if (!this.onbeforeunloadCheck()) {
+            return false;
+        }
+
         var messageId = object.isNumber(evt) ? evt : evt.$trigger.data('message-id');
         var that = this;
         this.loader();
@@ -219,8 +240,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         }
 
         var filePreview = that.getReplyFilePreview();
-        filePreview.on('DOMSubtreeModified', function (evt) {
+        var observer = new MutationObserver(function () {
             that.updateSize(true);
+        });
+        filePreview.each(function (index, element) {
+            observer.observe(element, { childList: true, subtree: true });
         });
 
         that.focus();
@@ -391,8 +415,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
                 var offsetTop = that.getListNode().offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
-                $entryContainer.css('height', max_height);
-                $entryContainer.css('max-height', max_height);
+                $entryContainer.css('height', 'calc(' + max_height + ' - var(--hh-mobile-app-safe-area-inset-bottom,env(safe-area-inset-bottom)))');
+                $entryContainer.css('height', 'calc(' + max_height + ' - var(--hh-mobile-app-safe-area-inset-bottom,env(safe-area-inset-bottom)))');
 
                 if (scrollToButtom !== false) {
                     that.scrollToBottom();
@@ -541,7 +565,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
-            var $streamEnd = $('<div class="inbox-stream-end"></div>');
+            var $streamEnd = $('<div class="inbox-stream-end stream-end"></div>');
             this.$.append($streamEnd);
 
             var that = this;
@@ -621,6 +645,7 @@ humhub.module('mail.inbox', function (module, require, $) {
         this.$.find('.entry').removeClass('selected');
 
         // Set new selection
+        root = null; // refresh root after load new active message
         if (getRoot()) {
             var $selected = this.$.find('[data-message-id="' + getRoot().getActiveMessageId() + '"]');
             if ($selected.length) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2020 HumHub GmbH & Co. KG
@@ -15,13 +16,11 @@ use humhub\modules\mail\helpers\RestDefinitions;
 use Yii;
 use yii\web\HttpException;
 
-
 /**
  * Class TagController
  */
 class TagController extends BaseController
 {
-
     /**
      * Get all tags of the conversation
      *

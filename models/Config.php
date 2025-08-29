@@ -16,7 +16,6 @@ use humhub\modules\mail\Module;
  */
 class Config extends \yii\base\Model
 {
-
     public $showInTopNav;
 
     public $newUserRestrictionEnabled = 0;
@@ -63,7 +62,7 @@ class Config extends \yii\base\Model
                 'newUserMessageRestriction',
                 'userConversationRestriction',
                 'userMessageRestriction'], 'integer', 'min' => 0],
-            ['newUserSinceDays', 'integer', 'min' => 1]
+            ['newUserSinceDays', 'integer', 'min' => 1],
         ];
     }
 
@@ -81,13 +80,13 @@ class Config extends \yii\base\Model
             'newUserConversationRestriction' => Yii::t('MailModule.base', 'Max number of new conversations allowed for a new user per day'),
             'newUserMessageRestriction' => Yii::t('MailModule.base', 'Max number of messages allowed for a new user per day'),
             'userConversationRestriction' => Yii::t('MailModule.base', 'Max number of new conversations allowed for a user per day'),
-            'userMessageRestriction' => Yii::t('MailModule.base', 'Max messages allowed per day')
+            'userMessageRestriction' => Yii::t('MailModule.base', 'Max messages allowed per day'),
         ];
     }
 
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -104,7 +103,7 @@ class Config extends \yii\base\Model
 
     public function canCreateConversation(User $originator)
     {
-        if($originator->isSystemAdmin()) {
+        if ($originator->isSystemAdmin()) {
             return true;
         }
 
@@ -117,11 +116,11 @@ class Config extends \yii\base\Model
 
     public function isNewUser(User $originator)
     {
-        if(empty($this->newUserRestrictionEnabled)) {
+        if (empty($this->newUserRestrictionEnabled)) {
             return false;
         }
 
-       return (new DateTime($originator->created_at))->diff(new DateTime())->days < $this->newUserSinceDays;
+        return (new DateTime($originator->created_at))->diff(new DateTime())->days < $this->newUserSinceDays;
     }
 
     public function getConversationCount($originator)
@@ -129,22 +128,22 @@ class Config extends \yii\base\Model
         $module = static::getModule();
         $lastTS = $module->settings->contentContainer($originator)->get('conversationCountTime');
 
-        if(!$lastTS) {
+        if (!$lastTS) {
             $module->settings->contentContainer($originator)->set('conversationCountTime', time());
             $module->settings->contentContainer($originator)->set('conversationCount', 0);
             return 0;
         }
 
         $lastDate = (new \DateTime())->setTimestamp($lastTS);
-        $today = (new \DateTime())->setTime(0,0,0);
+        $today = (new \DateTime())->setTime(0, 0, 0);
 
-        if($today > $lastDate) {
+        if ($today > $lastDate) {
             $module->settings->contentContainer($originator)->set('conversationCountTime', time());
             $module->settings->contentContainer($originator)->set('conversationCount', 0);
             return 0;
         }
 
-        return (integer) static::getModule()->settings->contentContainer($originator)->get('conversationCount', 0);
+        return (int) static::getModule()->settings->contentContainer($originator)->get('conversationCount', 0);
     }
 
     public function reset($originator)

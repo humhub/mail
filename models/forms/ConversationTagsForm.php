@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\mail\models\forms;
-
 
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageTag;
@@ -22,7 +20,7 @@ class ConversationTagsForm extends Model
     public function init()
     {
         parent::init();
-        if(empty($this->tags)) {
+        if (empty($this->tags)) {
             $this->tags = MessageTag::findByMessage(Yii::$app->user->id, $this->message)->all();
         }
     }
@@ -30,7 +28,7 @@ class ConversationTagsForm extends Model
     public function rules()
     {
         return [
-            ['tags', 'safe']
+            ['tags', 'safe'],
         ];
     }
 

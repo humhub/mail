@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2020 HumHub GmbH & Co. KG
@@ -16,13 +17,11 @@ use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 
-
 /**
  * Class MessageController
  */
 class MessageController extends BaseController
 {
-
     /**
      * Get list of mail conversations
      *

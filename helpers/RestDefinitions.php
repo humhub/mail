@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2020 HumHub GmbH & Co. KG
@@ -12,13 +13,11 @@ use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\rest\definitions\UserDefinitions;
 
-
 /**
  * Class RestDefinitions
  */
 class RestDefinitions
 {
-
     public static function getMessage(Message $message)
     {
         return [
@@ -64,4 +63,3 @@ class RestDefinitions
         ];
     }
 }
-

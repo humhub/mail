@@ -12,7 +12,6 @@ use yii\test\ActiveFixture;
 
 class MessageEntryFixture extends ActiveFixture
 {
-
     public $modelClass = 'humhub\modules\mail\models\MessageEntry';
 
 }

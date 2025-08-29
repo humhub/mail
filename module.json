@@ -1,16 +1,16 @@
 {
   "id": "mail",
   "name": "Messenger",
-  "description": "A private messaging system for direct communication.",
+  "description": "Engage in private conversations with colleagues and teams through secure messaging.",
   "keywords": [
     "mail",
     "messaging",
     "messenger",
     "communication"
   ],
-  "version": "3.3.0",
+  "version": "3.3.3",
   "humhub": {
-    "minVersion": "1.17"
+    "minVersion": "1.18"
   },
   "homepage": "https://github.com/humhub/mail",
   "authors": [
@@ -25,8 +25,12 @@
     }
   ],
   "screenshots": [
-    "resources/screen1.PNG",
-    "resources/screen2.PNG",
-    "resources/screen3.PNG"
+    "resources/screenshot1.png",
+    "resources/screenshot2.png",
+    "resources/screenshot3.png",
+    "resources/screenshot4.png",
+    "resources/screenshot5.png",
+    "resources/screenshot6.png",
+    "resources/screenshot7.png"
   ]
 }

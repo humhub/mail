@@ -25,9 +25,12 @@ humhub.module('mail.notification', function (module, require, $) {
                     currentXhr.abort();
                 }
 
-                // remove all <li> entries from dropdown
-                $('#loader_messages').parent().find(':not(#loader_messages)').remove();
-                loader.set($('#loader_messages').show());
+                const messageLoader = $('#loader_messages');
+                const messageList = messageLoader.parent();
+
+                // remove all entries from dropdown
+                messageLoader.parent().find(':not(#loader_messages)').remove();
+                loader.set(messageLoader.removeClass('d-none'));
 
                 client.get(module.config.url.list, {
                     beforeSend: function (xhr) {
@@ -35,8 +38,16 @@ humhub.module('mail.notification', function (module, require, $) {
                     }
                 }).then(function (response) {
                     currentXhr = undefined;
-                    $('#loader_messages').parent().prepend($(response.html));
-                    $('#loader_messages').hide();
+                    messageList.prepend($(response.html));
+                    messageLoader.addClass('d-none');
+                    messageList.niceScroll({
+                        cursorwidth: '7',
+                        cursorborder: '',
+                        cursorcolor: '#555',
+                        cursoropacitymax: '0.2',
+                        nativeparentscrolling: false,
+                        railpadding: {top: 0, right: 3, left: 0, bottom: 0}
+                    });
                 });
             });
         }
@@ -54,11 +65,11 @@ humhub.module('mail.notification', function (module, require, $) {
         // show or hide the badge for new messages
         var $badge = $('#badge-messages');
         if (!count || parseInt(count) === 0) {
-            $badge.css('display', 'none');
+            $badge.addClass('d-none');
             newMessageCount = 0;
         } else {
+            $badge.removeClass('d-none');
             newMessageCount = count;
-
             $badge.empty();
             $badge.append(count);
             $badge.fadeIn('fast');
@@ -69,7 +80,7 @@ humhub.module('mail.notification', function (module, require, $) {
 
     var loadMessage = function (evt) {
         var root = Widget.instance('#mail-conversation-root');
-        if (root) {
+        if (root && typeof(root.loadMessage) === 'function') {
             root.loadMessage(evt);
             root.$.closest('.container').addClass('mail-conversation-single-message');
         } else {

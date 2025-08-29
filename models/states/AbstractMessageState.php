@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2023 HumHub GmbH & Co. KG
@@ -19,8 +20,6 @@ use humhub\modules\user\models\User;
  */
 abstract class AbstractMessageState extends AbstractMessageEntry
 {
-    protected bool $requiredContent = false;
-
     /**
      * @inheritdoc
      */

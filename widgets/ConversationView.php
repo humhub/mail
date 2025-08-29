@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kingb
@@ -8,6 +9,7 @@
 
 namespace humhub\modules\mail\widgets;
 
+use Yii;
 use humhub\widgets\JsWidget;
 use humhub\modules\mail\helpers\Url;
 
@@ -40,7 +42,7 @@ class ConversationView extends JsWidget
             'load-message-url' => Url::toLoadMessage(),
             'load-update-url' => Url::toUpdateMessage(),
             'load-more-url' => Url::toLoadMoreMessages(),
-            'mark-seen-url' => Url::toNotificationSeen()
+            'mark-seen-url' => Url::toNotificationSeen(),
         ];
     }
 }

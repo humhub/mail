@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) HumHub GmbH & Co. KG
@@ -10,7 +11,7 @@ namespace humhub\modules\mail\widgets;
 use humhub\components\Widget;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
-use humhub\widgets\Link;
+use humhub\widgets\bootstrap\Link;
 use Yii;
 
 class PinLink extends Widget
@@ -25,11 +26,13 @@ class PinLink extends Widget
         if ($this->message->isPinned()) {
             return Link::none(Yii::t('MailModule.base', 'Unpin'))
                 ->action('mail.conversation.linkAction', Url::toUnpinConversation($this->message))
+                ->cssClass('dropdown-item')
                 ->icon('map-pin');
         }
 
         return Link::none(Yii::t('MailModule.base', 'Pin'))
             ->action('mail.conversation.linkAction', Url::toPinConversation($this->message))
+            ->cssClass('dropdown-item')
             ->icon('map-pin');
     }
 }

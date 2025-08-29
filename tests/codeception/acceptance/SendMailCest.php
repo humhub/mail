@@ -1,4 +1,5 @@
 <?php
+
 namespace mail\acceptance;
 
 use AcceptanceTester;
@@ -44,14 +45,14 @@ class SendMailCest
         $I->expectTo('see create new message form');
         $I->waitForText('New message', 10, '#globalModal');
         $this->sendMessage($I, 'Sara', null, 'Just a test message.');
-        $I->waitForText('Subject cannot be blank.', null, '#globalModal');
+        $I->waitForText('Subject cannot be blank.', 10, '#globalModal');
     }
 
     private function submitMessageMessageByModal(AcceptanceTester $I)
     {
         $this->sendMessage($I, 'Sara', 'Hello there!', 'Just a test message.');
         $I->expectTo('see my message overview with the new conversation');
-        $I->waitForText('Hello there!', null,'#mail-conversation-header');
+        $I->waitForText('Hello there!', 10, '#mail-conversation-header');
     }
 
     private function sendMessage(AcceptanceTester $I, $recipient, $title, $message)
@@ -60,7 +61,7 @@ class SendMailCest
         $I->wait(2);
         $I->fillField('#createmessage-title', $title);
         $I->fillField('#createmessage-message .humhub-ui-richtext', $message);
-        $I->click('Send','#globalModal');
+        $I->click('Send', '#globalModal');
     }
 
     private function addParticipant(AcceptanceTester $I)
@@ -74,7 +75,7 @@ class SendMailCest
 
         $I->click('Confirm', '#globalModal'); //Send
         $I->expectTo('see the new user within the conversation user list');
-        $I->waitForText('Admin Tester', null, '#mail-conversation-header');
+        $I->waitForText('Admin Tester', 10, '#mail-conversation-header');
     }
 
     private function createConversationByInbox(AcceptanceTester $I)
@@ -84,7 +85,7 @@ class SendMailCest
         $I->click('#mail-conversation-create-button');
         $I->waitForText('New message', 10, '#globalModal');
         $this->sendMessage($I, 'Admin', 'Hi Admin!', 'Admin test message');
-        $I->waitForText('Admin test message', null,'#mail-conversation-root');
+        $I->waitForText('Admin test message', 10, '#mail-conversation-root');
         $I->see('Hi Admin!', '#mail-conversation-root');
     }
 
@@ -92,7 +93,7 @@ class SendMailCest
     {
         $I->wantToTest('the switch between conversations');
         $I->click('[data-message-id="4"]', '#mail-conversation-overview');
-        $I->waitForText('Hello there!', null, '#mail-conversation-root');
+        $I->waitForText('Hello there!', 10, '#mail-conversation-root');
         $I->see('Just a test message.');
     }
 
@@ -102,14 +103,14 @@ class SendMailCest
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Tags', '#mail-conversation-header');
-        $I->waitForText('Edit conversation tags', null, '#globalModal');
+        $I->waitForText('Edit conversation tags', 10, '#globalModal');
         $I->selectFromPicker('#conversationtagsform-tags', 'TestTag');
         $I->click('Save', '#globalModal');
-        $I->waitForText('TESTTAG', null, '#conversation-tags-root');
+        $I->waitForText('TESTTAG', 10, '#conversation-tags-root');
         $I->dontSeeElement('#mail-filter-menu');
         $I->click('TestTag', '#conversation-tags-root');
-        $I->waitForText('TestTag', null, '#mail-filter-menu');
-        $I->waitForText('Hello there!', null, '#inbox');
+        $I->waitForText('TestTag', 10, '#mail-filter-menu');
+        $I->waitForText('Hello there!', 10, '#inbox');
         $I->dontSee('Hi Admin!', '#inbox');
     }
 
@@ -121,7 +122,7 @@ class SendMailCest
         $I->waitForElementVisible('#create-message-button');
         $I->click('Show all messages');
         $I->expectTo('see my message overview with the new conversation');
-        $I->waitForText('Hello there!', null,'#mail-conversation-root');
+        $I->waitForText('Hello there!', 10, '#mail-conversation-root');
         $I->see('Just a test message.');
     }
 
@@ -130,14 +131,16 @@ class SendMailCest
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
-        $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
+        $I->waitForText('Confirm leaving conversation', 10, '#globalModalConfirm');
+        $I->wait(1);
         $I->click('Leave', '#globalModalConfirm');
 
-        $I->waitForText('Third message title', null, '#mail-conversation-header');
+        $I->waitForText('Third message title', 10, '#mail-conversation-header');
         $I->click('#conversation-settings-button');
         $I->wait(1);
         $I->click('Leave conversation', '#mail-conversation-header');
-        $I->waitForText('Confirm leaving conversation', null,'#globalModalConfirm');
+        $I->waitForText('Confirm leaving conversation', 10, '#globalModalConfirm');
+        $I->wait(1);
         $I->click('Leave', '#globalModalConfirm');
 
         $I->expectTo('see an empty conversation box');

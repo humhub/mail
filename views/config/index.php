@@ -1,8 +1,8 @@
 <?php
 
-use humhub\libs\Html;
-use humhub\widgets\Button;
-use yii\bootstrap\ActiveForm;
+use humhub\helpers\Html;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
 
 /* @var $model \humhub\modules\mail\models\Config */
 ?>

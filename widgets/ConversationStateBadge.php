@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2023 HumHub GmbH & Co. KG
@@ -8,7 +9,7 @@
 namespace humhub\modules\mail\widgets;
 
 use humhub\components\Widget;
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\mail\models\AbstractMessageEntry;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\user\models\User;
@@ -66,7 +67,7 @@ class ConversationStateBadge extends Widget
 
     protected function isOwn(): bool
     {
-        return !Yii::$app->user->isGuest &&
-            $this->entry->user->is(Yii::$app->user->getIdentity());
+        return !Yii::$app->user->isGuest
+            && $this->entry->user->is(Yii::$app->user->getIdentity());
     }
 }

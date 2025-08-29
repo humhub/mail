@@ -23,4 +23,4 @@ use humhub\modules\user\models\User;
 <?= strip_tags($content) ?>
 
 
-<?= strip_tags(Yii::t('MailModule.views_emails_NewMessage', 'Reply now')) ?>: <?= urldecode(Url::toMessenger($message, true)) ?>
+<?= strip_tags(Yii::t('MailModule.base', 'Reply now')) ?>: <?= urldecode(Url::toMessenger($message, true)) ?>

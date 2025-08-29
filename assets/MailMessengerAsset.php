@@ -17,6 +17,6 @@ class MailMessengerAsset extends AssetBundle
     ];
 
     public $depends = [
-        MailNotificationAsset::class
+        MailNotificationAsset::class,
     ];
 }

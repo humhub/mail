@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2020 HumHub GmbH & Co. KG
@@ -14,13 +15,11 @@ use humhub\modules\mail\helpers\RestDefinitions;
 use Yii;
 use yii\web\HttpException;
 
-
 /**
  * Class EntryController
  */
 class EntryController extends BaseController
 {
-
     /**
      * Get all entries of the conversation
      *
@@ -151,7 +150,7 @@ class EntryController extends BaseController
 
         $entry = MessageEntry::findOne([
             'id' => $entryId,
-            'message_id' => $message->id
+            'message_id' => $message->id,
         ]);
 
         if (!$entry) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2020 HumHub GmbH & Co. KG
@@ -13,13 +14,11 @@ use humhub\modules\user\models\User;
 use Yii;
 use yii\web\HttpException;
 
-
 /**
  * Class UserController
  */
 class UserController extends BaseController
 {
-
     /**
      * Get all participants of the conversation
      *

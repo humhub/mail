@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2023 HumHub GmbH & Co. KG
@@ -18,15 +19,15 @@ use yii\db\ActiveQuery;
  * This class represents abstract class for normal message and state entries within a conversation.
  *
  * The followings are the available columns in table 'message_entry':
- * @property integer $id
- * @property integer $message_id
- * @property integer $user_id
+ * @property int $id
+ * @property int $message_id
+ * @property int $user_id
  * @property string $content
- * @property integer $type
+ * @property int $type
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
  *
  * The followings are the available model relations:
  * @property Message $message
@@ -37,11 +38,9 @@ use yii\db\ActiveQuery;
  */
 abstract class AbstractMessageEntry extends ActiveRecord
 {
-    const TYPE_MESSAGE = 0;
-    const TYPE_USER_JOINED = 1;
-    const TYPE_USER_LEFT = 2;
-
-    protected bool $requiredContent = true;
+    public const TYPE_MESSAGE = 0;
+    public const TYPE_USER_JOINED = 1;
+    public const TYPE_USER_LEFT = 2;
 
     /**
      * Get type of the message entry
@@ -78,14 +77,8 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function rules()
     {
-        $requiredColumns = ['message_id', 'user_id'];
-
-        if ($this->requiredContent) {
-            $requiredColumns[] = 'content';
-        }
-
         return [
-            [$requiredColumns, 'required'],
+            [['message_id', 'user_id'], 'required'],
             [['message_id', 'user_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
@@ -122,7 +115,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if ($this->isNewRecord) {
+        if ($this->isNewRecord && $this->type != self::TYPE_USER_LEFT) {
             // Updates the updated_at attribute
             $this->message->save();
         }
@@ -150,7 +143,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
                     'contentContainerId' => $user->contentcontainer_id,
                     'message_id' => $this->message_id,
                     'entry_id' => $this->id,
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
                 ]));
             }
         }
