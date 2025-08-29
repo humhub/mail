@@ -9,6 +9,7 @@
 
 namespace humhub\modules\mail\widgets;
 
+use Yii;
 use humhub\widgets\JsWidget;
 use humhub\modules\mail\helpers\Url;
 

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.4 (August 29, 2025)
+-----------------------
+- Fix #400: Fixed missing `not saved` warning
+
 3.3.3 (August 23, 2025)
 -----------------------
 - Fix #453: Filter toggle link color

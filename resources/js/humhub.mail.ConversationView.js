@@ -31,6 +31,15 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         });
     };
 
+    ConversationView.prototype.onbeforeunloadCheck = function () {
+        var replyRichtext = this.getReplyRichtext();
+        if (replyRichtext && $(replyRichtext.$[0]).closest('form').find('textarea').val().trim().length) {
+            return client.confirmUnload();
+        }
+
+        return true;
+    };
+
     ConversationView.prototype.loader = function (load) {
         if (load !== false) {
             loader.set(this.$);
@@ -180,6 +189,10 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.loadMessage = function (evt) {
+        if (!this.onbeforeunloadCheck()) {
+            return false;
+        }
+
         var messageId = object.isNumber(evt) ? evt : evt.$trigger.data('message-id');
         var that = this;
         this.loader();
