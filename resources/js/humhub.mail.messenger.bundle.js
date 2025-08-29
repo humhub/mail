@@ -25,9 +25,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.reload();
 
         this.$.on('mouseenter', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').show();
+            $(this).find('.conversation-menu').removeClass('d-none');
         }).on('mouseleave', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').hide();
+            $(this).find('.conversation-menu').addClass('d-none');
         });
     };
 
@@ -169,7 +169,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         this.getListNode().append($html);
 
         return new Promise(function (resolve, reject) {
-            $elements.css('opacity', 1).fadeIn('fast', function () {
+            $elements.css('opacity', 1).removeClass('d-none', function () {
                 that.onUpdate();
                 setTimeout(function () {
                     that.scrollToBottom()
@@ -402,8 +402,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
                 var offsetTop = that.getListNode().offset().top;
                 var max_height = (window.innerHeight - offsetTop - formHeight - (view.isSmall() ? 20 : 30)) + 'px';
-                $entryContainer.css('height', max_height);
-                $entryContainer.css('max-height', max_height);
+                $entryContainer.css('height', 'calc(' + max_height + ' - var(--hh-mobile-app-safe-area-inset-bottom,env(safe-area-inset-bottom)))');
+                $entryContainer.css('height', 'calc(' + max_height + ' - var(--hh-mobile-app-safe-area-inset-bottom,env(safe-area-inset-bottom)))');
 
                 if (scrollToButtom !== false) {
                     that.scrollToBottom();
@@ -552,7 +552,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     ConversationList.prototype.initScroll = function() {
         if (window.IntersectionObserver) {
 
-            var $streamEnd = $('<div class="inbox-stream-end"></div>');
+            var $streamEnd = $('<div class="inbox-stream-end stream-end"></div>');
             this.$.append($streamEnd);
 
             var that = this;

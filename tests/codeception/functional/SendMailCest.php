@@ -21,7 +21,7 @@ class SendMailCest
         $I->seeRecord('humhub\modules\mail\models\UserMessage', ['message_id' => $message->id, 'user_id' => 3]);
 
         $I->amGoingTo('check my conversation overview');
-        $I->amOnPage(['/mail/mail/index']);
+        $I->amOnRoute('/mail/mail/index');
 
         $I->expect('to see the new message');
         $I->see('Conversation');

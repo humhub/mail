@@ -1,6 +1,26 @@
 Changelog
 =========
 
+3.3.3 (August 23, 2025)
+-----------------------
+- Fix #453: Filter toggle link color
+- Fix: Migration to Bootstrap 5 for templates
+- Fix #455: Send button inside upload-buttons class
+
+3.3.2 (July 27, 2025)
+---------------------
+- Fix #452: Refresh issue after sending a message
+
+3.3.1 (July 27, 2025)
+---------------------
+- Fix #451: Chat Bubble Misalignment & Filter font size
+- Fix #450: Send Message from User Profile
+- Enh #435: Rename Mailer settings keys
+
+3.3.0 (July 26, 2025)
+---------------------
+- Enh #447: Migration to Bootstrap 5 for HumHub 1.18
+
 3.2.4 (Unreleased)
 ------------------
 - Fix #436: Fix Push notification language to be language of the sender
