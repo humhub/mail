@@ -15,6 +15,11 @@ use yii\base\Model;
 class ReplyForm extends Model
 {
     /**
+     * Scenario - when related content has attached files
+     */
+    public const SCENARIO_HAS_FILES = 'hasFiles';
+
+    /**
      * @var Message
      */
     public $model;
@@ -35,7 +40,7 @@ class ReplyForm extends Model
     public function rules()
     {
         return [
-            ['message', 'required'],
+            ['message', 'required', 'except' => [self::SCENARIO_HAS_FILES]],
             ['message', 'validateRecipients'],
         ];
     }
@@ -57,7 +62,7 @@ class ReplyForm extends Model
     public function attributeLabels()
     {
         return [
-            'message' => Yii::t('MailModule.forms_ReplyMessageForm', 'Message'),
+            'message' => Yii::t('MailModule.base', 'Message'),
         ];
     }
 
@@ -77,11 +82,22 @@ class ReplyForm extends Model
             'user_id' => Yii::$app->user->id,
             'content' => $this->message,
         ]);
+        if ($this->scenario === self::SCENARIO_HAS_FILES) {
+            $this->reply->scenario = MessageEntry::SCENARIO_HAS_FILES;
+        }
 
         if ($this->reply->save()) {
             $this->reply->refresh(); // Update created_by date, otherwise db expression is set...
-            $this->reply->notify();
             $this->reply->fileManager->attach(Yii::$app->request->post('fileList'));
+            $this->reply->notify();
+
+            // Update last viewed date to avoid marking the conversation as unread
+            $userMessage = $this->model->getUserMessage($this->reply->user_id);
+            if ($userMessage) {
+                $userMessage->last_viewed = date('Y-m-d G:i:s');
+                $userMessage->save();
+            }
+
             return true;
         }
 

@@ -3,6 +3,7 @@
 namespace humhub\modules\mail\models;
 
 use DateTime;
+use humhub\interfaces\ViewableInterface;
 use humhub\modules\user\models\User;
 use Yii;
 
@@ -12,14 +13,29 @@ use Yii;
  * @package humhub.modules.mail.models
  * @since 0.5
  */
-class MessageEntry extends AbstractMessageEntry
+class MessageEntry extends AbstractMessageEntry implements ViewableInterface
 {
+    /**
+     * Scenario - when related content has attached files
+     */
+    public const SCENARIO_HAS_FILES = 'hasFiles';
+
     /**
      * @inheritdoc
      */
     public static function type(): int
     {
         return self::TYPE_MESSAGE;
+    }
+
+    /**
+     * @inerhitdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['content'], 'required', 'except' => [self::SCENARIO_HAS_FILES]],
+        ]);
     }
 
     /**
@@ -60,5 +76,15 @@ class MessageEntry extends AbstractMessageEntry
             ->andWhere(['!=', 'id', $this->id])
             ->andWhere(['>=', 'created_at', $today])
             ->exists();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function canView($user = null): bool
+    {
+        $message = $this->message;
+
+        return $message instanceof Message && $message->isParticipant($user);
     }
 }

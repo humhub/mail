@@ -2,10 +2,10 @@
 
 namespace humhub\modules\mail\widgets;
 
-use humhub\modules\mail\helpers\Url;
-use humhub\widgets\ModalButton;
-use Yii;
 use humhub\components\Widget;
+use humhub\modules\mail\helpers\Url;
+use humhub\widgets\modal\ModalButton;
+use Yii;
 
 class NewMessageButton extends Widget
 {
@@ -49,17 +49,17 @@ class NewMessageButton extends Widget
      */
     public function run()
     {
-        $button = ModalButton::defaultType($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
+        $button = ModalButton::light($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
 
-        if($this->icon) {
+        if ($this->icon) {
             $button->icon($this->icon);
         }
 
-        if($this->right) {
+        if ($this->right) {
             $button->right();
         }
 
-        if($this->cssClass) {
+        if ($this->cssClass) {
             $button->cssClass($this->cssClass);
         }
 
@@ -72,10 +72,6 @@ class NewMessageButton extends Widget
             case 'large':
                 $button->lg();
                 break;
-            case 'xs':
-            case 'extraSmall':
-                $button->xs();
-                break;
         }
 
         return $button;
@@ -83,12 +79,12 @@ class NewMessageButton extends Widget
 
     public function getLabel()
     {
-        if($this->label !== null) {
+        if ($this->label !== null) {
             return $this->label;
         }
 
         return ($this->guid)
-            ? Yii::t('MailModule.widgets_views_newMessageButton', 'Send message')
+            ? Yii::t('MailModule.base', 'Send message')
             : Yii::t('MailModule.base', 'Message');
     }
 }

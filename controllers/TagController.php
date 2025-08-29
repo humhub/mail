@@ -3,17 +3,17 @@
 namespace humhub\modules\mail\controllers;
 
 use humhub\components\access\ControllerAccess;
+use humhub\components\Controller;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\forms\ConversationTagsForm;
+use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageTag;
 use humhub\modules\mail\widgets\ConversationTagPicker;
 use humhub\modules\mail\widgets\ConversationTags;
-use humhub\widgets\ModalClose;
+use humhub\widgets\modal\ModalClose;
 use Yii;
 use yii\web\ForbiddenHttpException;
-use humhub\components\Controller;
-use humhub\modules\mail\models\Message;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -43,7 +43,7 @@ class TagController extends Controller
     {
         $model = new AddTag();
         $model->load(Yii::$app->request->post());
-        if($model->save()) {
+        if ($model->save()) {
             $model = new AddTag();
         }
         return $this->render('manage', ['model' => $model]);
@@ -53,7 +53,7 @@ class TagController extends Controller
     {
         $tag = $this->findTag($id);
 
-        if($tag->load(Yii::$app->request->post()) && $tag->save()) {
+        if ($tag->load(Yii::$app->request->post()) && $tag->save()) {
             return ModalClose::widget(['reload' => true]);
         }
 

@@ -21,7 +21,7 @@ class InboxFilterFormTest extends HumHubDbTestCase
     {
         $this->becomeUser('User1');
 
-        if(!$users) {
+        if (!$users) {
             $user2 = User::findOne(['id' => 3]);
             $users = [$user2->guid];
         }

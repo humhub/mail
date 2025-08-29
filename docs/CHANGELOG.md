@@ -1,10 +1,50 @@
 Changelog
 =========
 
-3.2.3 (Unreleased)
---------------------
+3.3.4 (August 29, 2025)
+-----------------------
 - Fix #400: Fixed missing `not saved` warning
+
+3.3.3 (August 23, 2025)
+-----------------------
+- Fix #453: Filter toggle link color
+- Fix: Migration to Bootstrap 5 for templates
+- Fix #455: Send button inside upload-buttons class
+
+3.3.2 (July 27, 2025)
+---------------------
+- Fix #452: Refresh issue after sending a message
+
+3.3.1 (July 27, 2025)
+---------------------
+- Fix #451: Chat Bubble Misalignment & Filter font size
+- Fix #450: Send Message from User Profile
+- Enh #435: Rename Mailer settings keys
+
+3.3.0 (July 26, 2025)
+---------------------
+- Enh #447: Migration to Bootstrap 5 for HumHub 1.18
+
+3.2.4 (Unreleased)
+------------------
+- Fix #436: Fix Push notification language to be language of the sender
+- Enh #439: Don't update a conversation when someone leaves
+- Fix #440: Fix button "Send message" position in profile header
+
+3.2.3 (March 5, 2025)
+---------------------
 - Enh #411: Standardization of Modal Button Positions
+- Enh #363: Deny access for files from message where current user is not participant
+- Fix #412: Fix active message after mark unread
+- Fix #15: When replying to a message, the conversation is marked as unread
+- Enh #417: Replace theme variables with CSS variables
+- Enh #418: Update Active Form for Bootstrap 5
+- Enh #422: Changed deprecated `DOMSubtreeModified` to `MutationObserver`
+- Fix #423: Fix rendering of attached files on new reply by PushService
+- Enh #424: Allow sending a message with attached files only, such as an image
+- Enh #426: Reduce translation message categories
+- Fix #428: Fixed observer missing parameter
+- Fix #434: Add `cursor: pointer;` to `#conversation-settings-button`
 
 3.2.2 (July 9, 2024)
 --------------------

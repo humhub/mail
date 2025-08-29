@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2023 HumHub GmbH & Co. KG
@@ -10,7 +11,7 @@ namespace humhub\modules\mail\widgets;
 use humhub\components\Widget;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
-use humhub\widgets\ModalButton;
+use humhub\widgets\modal\ModalButton;
 use Yii;
 
 /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2023 HumHub GmbH & Co. KG
@@ -10,7 +11,7 @@ namespace humhub\modules\mail\widgets;
 use DateTime;
 use DateTimeZone;
 use humhub\components\Widget;
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\mail\models\MessageEntry;
 use Yii;
 

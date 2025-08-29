@@ -54,7 +54,7 @@ class InviteParticipantForm extends Model
     public function attributeLabels()
     {
         return [
-            'recipient' => Yii::t('MailModule.forms_InviteRecipientForm', 'Recipient'),
+            'recipient' => Yii::t('MailModule.base', 'Recipient'),
         ];
     }
 
@@ -71,11 +71,11 @@ class InviteParticipantForm extends Model
             if ($user) {
                 $name = Html::encode($user->getDisplayName());
                 if (Yii::$app->user->identity->is($user)) {
-                    $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "You cannot send a email to yourself!"));
-                } elseif($this->message->isParticipant($user)) {
-                    $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "User {name} is already participating!", ['name' => $name]));
-                } elseif(!$user->can(SendMail::class) && !Yii::$app->user->isAdmin()) {
-                    $this->addError($attribute, Yii::t('MailModule.forms_InviteRecipientForm', "You are not allowed to send user {name} is already!", ['name' => $name]));
+                    $this->addError($attribute, Yii::t('MailModule.base', "You cannot send a email to yourself!"));
+                } elseif ($this->message->isParticipant($user)) {
+                    $this->addError($attribute, Yii::t('MailModule.base', "User {name} is already participating!", ['name' => $name]));
+                } elseif (!$user->can(SendMail::class) && !Yii::$app->user->isAdmin()) {
+                    $this->addError($attribute, Yii::t('MailModule.base', "You are not allowed to send user {name} is already!", ['name' => $name]));
                 } else {
                     $this->recipientUsers[] = $user;
                 }
@@ -95,7 +95,7 @@ class InviteParticipantForm extends Model
 
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 

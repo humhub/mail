@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kingb
@@ -8,7 +9,7 @@
 
 namespace humhub\modules\mail\widgets;
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\widgets\JsWidget;
@@ -65,6 +66,7 @@ class ConversationEntry extends JsWidget
             'userColor' => $showUser ? $this->getUserColor() : null,
             'showDateBadge' => $this->showDateBadge(),
             'options' => $this->getOptions(),
+            'isOwnMessage' => $this->isOwnMessage(),
         ]);
     }
 

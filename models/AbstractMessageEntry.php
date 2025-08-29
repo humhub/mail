@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2023 HumHub GmbH & Co. KG
@@ -41,8 +42,6 @@ abstract class AbstractMessageEntry extends ActiveRecord
     public const TYPE_USER_JOINED = 1;
     public const TYPE_USER_LEFT = 2;
 
-    protected bool $requiredContent = true;
-
     /**
      * Get type of the message entry
      *
@@ -78,14 +77,8 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function rules()
     {
-        $requiredColumns = ['message_id', 'user_id'];
-
-        if ($this->requiredContent) {
-            $requiredColumns[] = 'content';
-        }
-
         return [
-            [$requiredColumns, 'required'],
+            [['message_id', 'user_id'], 'required'],
             [['message_id', 'user_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
         ];
@@ -122,7 +115,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
      */
     public function beforeSave($insert)
     {
-        if ($this->isNewRecord) {
+        if ($this->isNewRecord && $this->type != self::TYPE_USER_LEFT) {
             // Updates the updated_at attribute
             $this->message->save();
         }

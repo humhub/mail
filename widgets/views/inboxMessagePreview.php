@@ -18,10 +18,10 @@ use yii\helpers\Html;
 /* @var $lastParticipant User */
 /* @var $options array */
 ?>
-<?= Html::beginTag('li', $options) ?>
+<?= Html::beginTag('div', $options) ?>
     <div class="mail-link">
-        <div class="media">
-            <div class="media-left">
+        <div class="d-flex">
+            <div class="flex-shrink-0 me-2">
                 <?= $lastParticipant ? Image::widget([
                     'user' => $lastParticipant,
                     'width' => '32',
@@ -29,8 +29,8 @@ use yii\helpers\Html;
                     'htmlOptions' => $lastParticipant->isBlockedForUser() ? ['class' => 'conversation-blocked-recipient'] : [],
                 ]) : '' ?>
             </div>
-            <div class="media-body text-break">
-                <h4 class="media-heading">
+            <div class="text-break flex-grow-1">
+                <h4 class="mt-0">
                     <?= Html::encode($messageTitle) . ' ' . $message->getPinIcon() ?>
                     <time><?= $messageTime ?></time>
                 </h4>
@@ -44,4 +44,4 @@ use yii\helpers\Html;
             </div>
         </div>
     </div>
-<?= Html::endTag('li') ?>
+<?= Html::endTag('div') ?>

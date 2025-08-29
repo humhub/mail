@@ -10,17 +10,17 @@ namespace humhub\modules\mail;
 
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Config;
-use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\models\UserMessageTag;
+use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
+use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\search\SearchProvider;
-use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\modules\mail\widgets\NotificationInbox;
+use humhub\modules\ui\menu\MenuLink;
+use humhub\modules\user\widgets\HeaderControlsMenu;
 use humhub\widgets\MetaSearchWidget;
-use humhub\modules\user\models\User;
 use Yii;
 
 /**
@@ -42,7 +42,7 @@ class Events
         try {
             foreach (Message::find()->each() as $message) {
                 /* @var $message Message */
-                if(!$message->getAuthor()->count()) {
+                if (!$message->getAuthor()->count()) {
                     if ($integrityController->showFix("Deleting conversation id " . $message->id . " without existing author!")) {
                         $message->delete();
                     }
@@ -53,12 +53,12 @@ class Events
 
             foreach (MessageEntry::find()->each() as $messageEntry) {
                 /* @var $messageEntry MessageEntry */
-                if(!$messageEntry->getUser()->count()) {
+                if (!$messageEntry->getUser()->count()) {
                     if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing user!")) {
                         $messageEntry->delete();
                     }
                 }
-                if(!$messageEntry->message) {
+                if (!$messageEntry->message) {
                     if ($integrityController->showFix("Deleting message entry id " . $messageEntry->id . " without existing conversation!")) {
                         $messageEntry->delete();
                     }
@@ -69,7 +69,7 @@ class Events
 
             foreach (UserMessage::find()->each() as $userMessage) {
                 /* @var $userMessage UserMessage */
-                if(!$userMessage->getUser()->count()) {
+                if (!$userMessage->getUser()->count()) {
                     if ($integrityController->showFix("Deleting user message id " . $userMessage->message_id . " without existing user!")) {
                         $userMessage->delete();
                     }
@@ -80,13 +80,13 @@ class Events
 
             foreach (UserMessageTag::find()->each() as $messageTag) {
                 /* @var $messageTag UserMessageTag */
-                if(!$messageTag->getUser()->count()) {
+                if (!$messageTag->getUser()->count()) {
                     if ($integrityController->showFix("Deleting user tag id " . $messageTag->id . " without existing user!")) {
                         $messageTag->delete();
                     }
                 }
             }
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
     }
@@ -109,7 +109,7 @@ class Events
             }
 
             foreach (UserMessage::findAll(['user_id' => $event->sender->id]) as $userMessage) {
-                if($userMessage->message) {
+                if ($userMessage->message) {
                     $userMessage->message->leave($event->sender->id);
                 }
 
@@ -119,7 +119,7 @@ class Events
             foreach (UserMessageTag::findAll(['user_id' => $event->sender->id]) as $userMessageTag) {
                 $userMessageTag->delete();
             }
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
 
@@ -150,7 +150,7 @@ class Events
                     'sortOrder' => 300,
                 ]);
             }
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             Yii::error($e);
         }
     }
@@ -168,22 +168,28 @@ class Events
         }
     }
 
-    public static function onProfileHeaderControlsInit($event)
+    public static function onProfileHeaderControlsMenuInit($event)
     {
         try {
-            /** @var User $profileContainer */
-            $profileContainer = $event->sender->user;
+            /* @var HeaderControlsMenu $menu */
+            $menu = $event->sender;
 
-            if ($profileContainer->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
+            if ($menu->user->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
                 return;
             }
 
             // Is the current logged user allowed to send mails to profile user?
-            if (!Yii::$app->user->isAdmin() && !$profileContainer->can(SendMail::class)) {
+            if (!Yii::$app->user->isAdmin() && !$menu->user->can(SendMail::class)) {
                 return;
             }
 
-            $event->sender->addWidget(NewMessageButton::class, ['guid' => $event->sender->user->guid, 'size' => null, 'icon' => null], ['sortOrder' => 90]);
+            $menu->addEntry(new MenuLink([
+                'label' => Yii::t('MailModule.base', 'Send message'),
+                'url' => Url::toCreateConversation($menu->user->guid),
+                'htmlOptions' => ['data-bs-target' => '#globalModal'],
+                'icon' => 'envelope',
+                'sortOrder' => 500,
+            ]));
         } catch (\Throwable $e) {
             Yii::error($e);
         }

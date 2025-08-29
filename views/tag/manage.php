@@ -1,13 +1,14 @@
 <?php
 
+use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\MessageTag;
-use humhub\modules\ui\view\components\View;
-use humhub\widgets\Button;
+use humhub\modules\topic\models\Topic;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
 use humhub\widgets\GridView;
-use humhub\widgets\ModalButton;
-use yii\bootstrap\ActiveForm;
+use humhub\widgets\modal\ModalButton;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
@@ -23,7 +24,7 @@ $dataProvider = new ActiveDataProvider([
 ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div id="mail-conversation-header" class="panel-heading">
                     <?= Yii::t('MailModule.base', '<strong>Manage</strong> conversation tags') ?>
@@ -33,20 +34,18 @@ $dataProvider = new ActiveDataProvider([
 
                 <div class="panel-body">
 
-                    <div class="help-block">
+                    <div class="text-body-secondary">
                         <?= Yii::t('MailModule.base', 'Here you can manage your private conversation tags.') ?><br>
                         <?= Yii::t('MailModule.base', 'Conversation tags can be used to filter conversations and are only visible to you.') ?>
                     </div>
 
                     <?php $form = ActiveForm::begin(['action' => Url::toAddTag()]); ?>
-                    <div class="form-group<?= $model->tag->hasErrors() ? ' has-error' : ''?>" style="margin-bottom:0">
-                        <div class="input-group">
+                    <div class="mb-3" style="margin-bottom:0">
+                        <div class="input-group<?= $model->tag->hasErrors() ? ' is-invalid' : '' ?>">
                             <?= Html::activeTextInput($model->tag, 'name', ['style' => 'height:36px', 'class' => 'form-control', 'placeholder' => Yii::t('MailModule.base', 'Add Tag')]) ?>
-                            <span class="input-group-btn">
-                                <?= Button::defaultType()->icon('fa-plus')->loader()->submit() ?>
-                            </span>
+                            <?= Button::light()->icon('fa-plus')->loader()->submit() ?>
                         </div>
-                        <span class="help-block help-block-error">
+                        <span class="invalid-feedback">
                                  <?= Html::error($model->tag, 'name') ?>
                             </span>
                     </div>
@@ -67,18 +66,18 @@ $dataProvider = new ActiveDataProvider([
                                 'contentOptions' => ['style' => 'text-align:right'],
                                 'buttons' => [
                                     'update' => function ($url, $model) {
-                                        /* @var $model \humhub\modules\topic\models\Topic */
-                                        return ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->xs()->loader(false);
+                                        /* @var $model Topic */
+                                        return ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->sm()->loader(false);
                                     },
                                     'view' => function() {
                                         return '';
                                     },
                                     'delete' => function ($url, $model) {
-                                        /* @var $model \humhub\modules\topic\models\Topic */
+                                        /* @var $model Topic */
                                         return Button::danger()->icon('fa-times')->action('client.post', Url::toDeleteTag($model->id))->confirm(
                                             Yii::t('MailModule.base', '<strong>Confirm</strong> tag deletion'),
                                             Yii::t('MailModule.base', 'Do you really want to delete this tag?'),
-                                            Yii::t('base', 'Delete'))->xs()->loader(false);
+                                            Yii::t('base', 'Delete'))->sm()->loader(false);
                                     },
                                 ],
                             ],
