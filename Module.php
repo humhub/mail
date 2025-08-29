@@ -21,11 +21,6 @@ use Yii;
 class Module extends \humhub\components\Module
 {
     /**
-     * @inheritdoc
-     */
-    public $resourcesPath = 'resources';
-
-    /**
      * @var int Defines the initial page size of conversation overview inbox sidebar in messenger view. Should be > 6
      */
     public $inboxInitPageSize = 30;
