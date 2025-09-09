@@ -227,8 +227,8 @@ $radiusNone: 0;
         h5 {
             font-size: 14px;
             line-height: 16px;
-            font-weight: 500;
-            color: #000;
+            font-weight: 500 !important;
+            color: var(--hh-text-color-highlight) !important;
             display: flex;
             justify-content: space-between;
             margin: 7px 0;

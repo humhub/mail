@@ -166,8 +166,8 @@
 .mail-inbox-messages .text-break h5 {
   font-size: 14px;
   line-height: 16px;
-  font-weight: 500;
-  color: #000;
+  font-weight: 500 !important;
+  color: var(--hh-text-color-highlight) !important;
   display: flex;
   justify-content: space-between;
   margin: 7px 0;
@@ -193,7 +193,7 @@
   padding-right: 105px;
   border-radius: 10px;
 }
-.mail-message-form .upload-buttons {
+.mail-message-form .richtext-create-buttons {
   position: absolute;
   right: 15px;
   bottom: 18px;
