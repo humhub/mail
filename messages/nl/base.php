@@ -35,7 +35,6 @@ return [
     'Edit' => 'Bijwerken',
     'Edit message entry' => 'Bericht bewerken',
     'Edit message...' => 'Bewerk bericht ...',
-    'Filters' => 'Filters',
     'Friday' => 'Vrijdag',
     'Here you can manage your private conversation tags.' => 'Hier kunt u uw privégesprekslabels beheren.',
     'Is Originator' => 'Is bedenker',
@@ -107,4 +106,5 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} heeft u een nieuw bericht gestuurd in {conversationTitle}',
     '{username} joined the conversation.' => '{username}  neemt deel aan het gesprek.',
     '{username} left the conversation.' => '{username} verliet het gesprek.',
+    'Filter' => '',
 ];

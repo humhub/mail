@@ -34,7 +34,6 @@ return [
     'Edit' => 'Modifica',
     'Edit message entry' => 'Modifica messaggio',
     'Edit message...' => 'Modifica messaggio...',
-    'Filters' => 'Filtri',
     'Friday' => 'Venerdì',
     'Here you can manage your private conversation tags.' => 'Qui puoi gestire i tag delle tue conversazioni private.',
     'Is Originator' => 'È l\'Autore',
@@ -105,6 +104,7 @@ return [
     '{username} joined the conversation.' => '{username} si è unito alla conversazione.',
     '{username} left the conversation.' => '{username} ha lasciato la conversazione.',
     'Advanced Messages Search' => '',
+    'Filter' => '',
     'Mark Unread' => '',
     'Pin' => '',
 ];

@@ -38,7 +38,7 @@ return [
     'Edit' => '',
     'Edit message entry' => '',
     'Edit message...' => '',
-    'Filters' => '',
+    'Filter' => '',
     'Friday' => '',
     'Here you can manage your private conversation tags.' => '',
     'Is Originator' => '',

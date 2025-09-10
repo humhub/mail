@@ -35,7 +35,6 @@ return [
     'Edit' => 'Editar',
     'Edit message entry' => 'Editar mensagem',
     'Edit message...' => 'Editar mensagem ...',
-    'Filters' => 'Filtros',
     'Friday' => 'sexta-feira',
     'Here you can manage your private conversation tags.' => 'Aqui você pode gerenciar suas tags de conversas privadas.',
     'Is Originator' => 'É Originador',
@@ -107,4 +106,5 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} lhe enviou uma nova mensagem em {conversationTitle}',
     '{username} joined the conversation.' => '{username} entrou na conversa.',
     '{username} left the conversation.' => '{username} saiu da conversa.',
+    'Filter' => '',
 ];

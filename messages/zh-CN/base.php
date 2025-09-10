@@ -59,7 +59,7 @@ return [
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Do you really want to delete this tag?' => '',
     'Edit message...' => '',
-    'Filters' => '',
+    'Filter' => '',
     'Friday' => '',
     'Here you can manage your private conversation tags.' => '',
     'Leave fields blank in order to disable a restriction.' => '',

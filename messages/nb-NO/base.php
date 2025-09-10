@@ -79,7 +79,7 @@ return [
     'Advanced Messages Search' => '',
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Do you really want to delete this tag?' => '',
-    'Filters' => '',
+    'Filter' => '',
     'Friday' => '',
     'Here you can manage your private conversation tags.' => '',
     'Manage Tags' => '',

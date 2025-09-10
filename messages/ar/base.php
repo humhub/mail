@@ -64,7 +64,7 @@ return [
     'Delete conversation' => '',
     'Do you really want to delete this tag?' => '',
     'Edit message...' => '',
-    'Filters' => '',
+    'Filter' => '',
     'Here you can manage your private conversation tags.' => '',
     'Is Originator' => '',
     'Last Viewed' => '',

@@ -35,7 +35,6 @@ return [
     'Edit' => '編集',
     'Edit message entry' => 'メッセージ エントリの編集',
     'Edit message...' => 'メッセージを編集...',
-    'Filters' => 'フィルター',
     'Friday' => '金曜',
     'Here you can manage your private conversation tags.' => 'ここでは非公開の会話タグを管理できます。',
     'Is Originator' => '作成者',
@@ -107,4 +106,5 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} が {conversationTitle} で新しいメッセージを送信しました',
     '{username} joined the conversation.' => '{username} が会話に参加しました。',
     '{username} left the conversation.' => '{username} さんが会話から退出しました。',
+    'Filter' => '',
 ];

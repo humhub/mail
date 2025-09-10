@@ -57,7 +57,7 @@ return [
     'Do you really want to delete this tag?' => '',
     'Do you really want to leave this conversation?' => '',
     'Edit message...' => '',
-    'Filters' => '',
+    'Filter' => '',
     'Friday' => '',
     'Here you can manage your private conversation tags.' => '',
     'Leave' => '',

@@ -53,7 +53,7 @@ return [
     'Do you really want to leave this conversation?' => '',
     'Edit message entry' => '',
     'Edit message...' => '',
-    'Filters' => '',
+    'Filter' => '',
     'Here you can manage your private conversation tags.' => '',
     'Is Originator' => '',
     'Last Viewed' => '',

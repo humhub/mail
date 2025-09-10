@@ -35,7 +35,6 @@ return [
     'Edit' => 'Upraviť',
     'Edit message entry' => 'Upravte záznam správy',
     'Edit message...' => 'Upraviť správu...',
-    'Filters' => 'Filtre',
     'Friday' => 'Piatok',
     'Here you can manage your private conversation tags.' => 'Tu môžete spravovať štítky súkromných konverzácií.',
     'Is Originator' => 'Je Pôvodcom',
@@ -107,4 +106,5 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} vám poslal novú správu v {conversationTitle}',
     '{username} joined the conversation.' => '{username} sa pripojil ku konverzácii.',
     '{username} left the conversation.' => 'Používateľ {username} opustil konverzáciu.',
+    'Filter' => '',
 ];

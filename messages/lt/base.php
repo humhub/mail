@@ -34,7 +34,6 @@ return [
     'Edit' => 'Taisyti',
     'Edit message entry' => 'Redaguoti žinutės tekstą',
     'Edit message...' => 'Redaguoti žinutę...',
-    'Filters' => 'Filtrai',
     'Friday' => 'Penktadienis',
     'Here you can manage your private conversation tags.' => 'Čia galite tvarkyti privačių pokalbių žymas.',
     'Is Originator' => 'Yra iniciatorius',
@@ -107,4 +106,5 @@ return [
     '{username} joined the conversation.' => '{username} prisijungė prie pokalbio.',
     '{username} left the conversation.' => '{username} paliko pokalbį.',
     'Advanced Messages Search' => '',
+    'Filter' => '',
 ];

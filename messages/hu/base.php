@@ -35,7 +35,6 @@ return [
     'Edit' => 'Szerkesztés',
     'Edit message entry' => 'Üzenet szerkesztése',
     'Edit message...' => 'Üzenet szerkesztése...',
-    'Filters' => 'Szűrők',
     'Friday' => 'Péntek',
     'Here you can manage your private conversation tags.' => 'Itt tudod kezelni a privát beszélgetések címkéit.',
     'Is Originator' => 'Kezdeményező',
@@ -107,4 +106,5 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} új üzenetet küldött ebben a témában: {conversationTitle}',
     '{username} joined the conversation.' => '{username} csatlakozott a beszélgetéshez.',
     '{username} left the conversation.' => '{username} kilépett a beszélgetésből.',
+    'Filter' => '',
 ];
