@@ -1,7 +1,7 @@
 // Import Bootstrap breakpoint functions
-@import "../../../../vendor/bower-asset/bootstrap/scss/functions";
-@import "../../../../vendor/bower-asset/bootstrap/scss/variables";
-@import "../../../../vendor/bower-asset/bootstrap/scss/mixins/breakpoints";
+@import "../../../../vendor/npm-asset/bootstrap/scss/functions";
+@import "../../../../vendor/npm-asset/bootstrap/scss/variables";
+@import "../../../../vendor/npm-asset/bootstrap/scss/mixins/breakpoints";
 
 $bgColorDefault: var(--hh-background-color-secondary);
 $colorUnread: var(--bs-info);
@@ -11,6 +11,21 @@ $radiusMiddle: 7px;
 $radiusSmall: 4px;
 $radiusRound: 50%;
 $radiusNone: 0;
+
+:root {
+    --hh-mail-offset-top: 0px;
+    --hh-mail-top-conversation-height: 0px;
+}
+@include media-breakpoint-down(lg) {
+    :root {
+        --hh-mail-top-conversation-height: 60px;
+    }
+}
+@include media-breakpoint-down(md) {
+    :root {
+        --hh-mail-top-conversation-height: 50px;
+    }
+}
 
 @mixin semiBold(){
     font-weight: 600
@@ -118,9 +133,7 @@ $radiusNone: 0;
 }
 
 .conversation-entry-list {
-    max-height: 600px;
-    min-height: 150px;
-    overflow: auto;
+    height: 100%;
 }
 
 .conversation-entry-content {
@@ -162,21 +175,40 @@ $radiusNone: 0;
         }
     }
 
-    .panel-body {
-        margin-bottom: 0;
+    > .panel {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 10px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height));
+
+        > .conversation-entry-container {
+            flex: 1;
+            overflow: auto;
+        }
+
+        .content_create .richtext-create-input-group>.mb-3 [data-ui-markdown] {
+            max-height: calc(50vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height));
+            overflow-y: auto;
+        }
     }
 }
 
 #mail-conversation-header {
-    padding: 18px;
+    padding: 6px 10px;
     border-bottom: 1px solid var(--hh-background3);
     border-bottom-left-radius: $radiusNone;
     border-bottom-right-radius: $radiusNone;
 
     h1 {
         @include semiBold;
-        font-size: 22px;
+        font-size: 16px;
         display: inline-block;
+    }
+
+    @include media-breakpoint-up(sm) {
+        padding: 18px;
+        h1 {
+            font-size: 18px;
+        }
     }
 
     small {
@@ -186,6 +218,15 @@ $radiusNone: 0;
 
         a {
             color: var(--hh-text-color-main);
+        }
+    }
+
+    @media (max-height: 500px) {
+        h1 {
+            margin-bottom: 0;
+        }
+        small {
+            display: none;
         }
     }
 }
@@ -249,21 +290,36 @@ $radiusNone: 0;
 }
 
 .mail-message-form {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     padding: 10px;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 0 !important;
+
+    > panel-body {
+        margin: 0 10px;
+    }
+
+    .content-create-input-group {
+        position: relative;
+    }
 
     .humhub-ui-richtext {
-        padding-right: 105px; // For the upload and send button
         border-radius: $radius;
     }
 
-    .richtext-create-buttons {
-        position: absolute;
-        right: 15px;
-        bottom: 18px;
-        z-index: 500;
+    @include media-breakpoint-up(md) {
+        // Display the buttons on the bottom right of the richtext editor
+        .humhub-ui-richtext {
+            padding-right: 115px;
+        }
+
+        .richtext-create-buttons {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+            z-index: 500;
+        }
     }
 
     .reply-button {
@@ -335,7 +391,7 @@ $radiusNone: 0;
 }
 
 #inbox {
-    max-height: 500px;
+    max-height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-offset-top));
     overflow: auto;
     border-radius: $radiusSmall;
 }

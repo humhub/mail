@@ -39,7 +39,7 @@ use humhub\widgets\form\ActiveForm;
 
         <?= ConversationTags::widget(['message' => $message]) ?>
 
-        <div class="panel-body">
+        <div class="panel-body conversation-entry-container">
 
             <div class="conversation-entry-list">
                 <?= Messages::widget(['message' => $message]) ?>
@@ -47,46 +47,48 @@ use humhub\widgets\form\ActiveForm;
 
         </div>
 
-        <div id="'mail-create-form-<?= $message->id ?>" class="mail-message-form content_create">
-            <?php if ($message->isBlocked()) : ?>
-                <div class="alert alert-danger">
-                    <?= Yii::t('MailModule.base', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
-                        'userNames' => implode(', ', $message->getBlockerNames())
-                    ]); ?>
-                </div>
-            <?php else : ?>
-                <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
+        <div id="'mail-create-form-<?= $message->id ?>" class="panel panel-default mail-message-form content_create">
+            <div class="panel-body">
+                <?php if ($message->isBlocked()) : ?>
+                    <div class="alert alert-danger">
+                        <?= Yii::t('MailModule.base', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [
+                            'userNames' => implode(', ', $message->getBlockerNames())
+                        ]); ?>
+                    </div>
+                <?php else : ?>
+                    <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
 
-                <div class="richtext-create-input-group">
+                    <div class="richtext-create-input-group">
 
-                    <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, [
-                        'id' => 'reply-' . time(),
-                        'layout' => AbstractRichTextEditor::LAYOUT_INLINE,
-                    ])->label(false) ?>
+                        <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, [
+                            'id' => 'reply-' . time(),
+                            'layout' => AbstractRichTextEditor::LAYOUT_INLINE,
+                        ])->label(false) ?>
 
-                    <div class="richtext-create-buttons">
-                        <?php $uploadButton = UploadButton::widget([
-                            'id' => 'mail-create-upload-' . $message->id,
-                            'tooltip' => Yii::t('ContentModule.base', 'Attach Files'),
-                            'options' => ['class' => 'main_mail_upload'],
-                            'progress' => '#mail-create-upload-progress-' . $message->id,
-                            'preview' => '#mail-create-upload-preview-' . $message->id,
-                            'dropZone' => '#mail-create-form-' . $message->id,
-                            'max' => Yii::$app->getModule('content')->maxAttachedFiles,
-                            'cssButtonClass' => 'btn-light btn-sm',
-                        ]) ?>
-                        <?= FileHandlerButtonDropdown::widget([
-                            'primaryButton' => $uploadButton,
-                            'handlers' => $fileHandlers,
-                            'cssButtonClass' => 'btn-light btn-sm',
-                            'pullRight' => true,
-                        ]) ?>
-                        <?= Button::accent()
-                            ->cssClass('reply-button')
-                            ->submit()
-                            ->action('reply', $replyForm->getUrl())
-                            ->icon('paper-plane-o')
-                            ->sm() ?>
+                        <div class="richtext-create-buttons">
+                            <?php $uploadButton = UploadButton::widget([
+                                'id' => 'mail-create-upload-' . $message->id,
+                                'tooltip' => Yii::t('ContentModule.base', 'Attach Files'),
+                                'options' => ['class' => 'main_mail_upload'],
+                                'progress' => '#mail-create-upload-progress-' . $message->id,
+                                'preview' => '#mail-create-upload-preview-' . $message->id,
+                                'dropZone' => '#mail-create-form-' . $message->id,
+                                'max' => Yii::$app->getModule('content')->maxAttachedFiles,
+                                'cssButtonClass' => 'btn-light btn-sm',
+                            ]) ?>
+                            <?= FileHandlerButtonDropdown::widget([
+                                'primaryButton' => $uploadButton,
+                                'handlers' => $fileHandlers,
+                                'cssButtonClass' => 'btn-light btn-sm',
+                                'pullRight' => true,
+                            ]) ?>
+                            <?= Button::accent()
+                                ->cssClass('reply-button')
+                                ->submit()
+                                ->action('reply', $replyForm->getUrl())
+                                ->icon('paper-plane-o')
+                                ->sm() ?>
+                        </div>
                     </div>
                 </div>
 

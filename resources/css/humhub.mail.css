@@ -1,3 +1,18 @@
+:root {
+  --hh-mail-offset-top: 0px;
+  --hh-mail-top-conversation-height: 0px;
+}
+
+@media (max-width: 991.98px) {
+  :root {
+    --hh-mail-top-conversation-height: 60px;
+  }
+}
+@media (max-width: 767.98px) {
+  :root {
+    --hh-mail-top-conversation-height: 50px;
+  }
+}
 #dropdown-messages .dropdown-header {
   color: #000;
   margin-bottom: 12px;
@@ -78,9 +93,7 @@
 }
 
 .conversation-entry-list {
-  max-height: 600px;
-  min-height: 150px;
-  overflow: auto;
+  height: 100%;
 }
 
 .conversation-entry-content {
@@ -114,20 +127,38 @@
 #mail-conversation-root .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
   margin-top: 0;
 }
-#mail-conversation-root .panel-body {
-  margin-bottom: 0;
+#mail-conversation-root > .panel {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 10px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height));
+}
+#mail-conversation-root > .panel > .conversation-entry-container {
+  flex: 1;
+  overflow: auto;
+}
+#mail-conversation-root > .panel .content_create .richtext-create-input-group > .mb-3 [data-ui-markdown] {
+  max-height: calc(50vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height));
+  overflow-y: auto;
 }
 
 #mail-conversation-header {
-  padding: 18px;
+  padding: 6px 10px;
   border-bottom: 1px solid var(--hh-background3);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 #mail-conversation-header h1 {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 16px;
   display: inline-block;
+}
+@media (min-width: 576px) {
+  #mail-conversation-header {
+    padding: 18px;
+  }
+  #mail-conversation-header h1 {
+    font-size: 18px;
+  }
 }
 #mail-conversation-header small {
   display: block;
@@ -136,6 +167,14 @@
 }
 #mail-conversation-header small a {
   color: var(--hh-text-color-main);
+}
+@media (max-height: 500px) {
+  #mail-conversation-header h1 {
+    margin-bottom: 0;
+  }
+  #mail-conversation-header small {
+    display: none;
+  }
 }
 
 #conversation-settings-button {
@@ -184,20 +223,31 @@
 }
 
 .mail-message-form {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   padding: 10px;
+  box-shadow: none;
+  border: none;
+  margin-bottom: 0 !important;
+}
+.mail-message-form > panel-body {
+  margin: 0 10px;
+}
+.mail-message-form .content-create-input-group {
+  position: relative;
 }
 .mail-message-form .humhub-ui-richtext {
-  padding-right: 105px;
   border-radius: 10px;
 }
-.mail-message-form .richtext-create-buttons {
-  position: absolute;
-  right: 15px;
-  bottom: 18px;
-  z-index: 500;
+@media (min-width: 768px) {
+  .mail-message-form .humhub-ui-richtext {
+    padding-right: 115px;
+  }
+  .mail-message-form .richtext-create-buttons {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 500;
+  }
 }
 .mail-message-form .reply-button {
   margin-left: 0 !important;
@@ -251,7 +301,7 @@
 }
 
 #inbox {
-  max-height: 500px;
+  max-height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-offset-top));
   overflow: auto;
   border-radius: 4px;
 }
