@@ -130,14 +130,14 @@
 #mail-conversation-root > .panel {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 10px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height));
+  height: calc(100vh - 10px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
 }
 #mail-conversation-root > .panel > .conversation-entry-container {
   flex: 1;
   overflow: auto;
 }
 #mail-conversation-root > .panel .content_create .richtext-create-input-group > .mb-3 [data-ui-markdown] {
-  max-height: calc(50vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-top-conversation-height));
+  max-height: calc(50vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
   overflow-y: auto;
 }
 
@@ -301,7 +301,7 @@
 }
 
 #inbox {
-  max-height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mail-offset-top));
+  max-height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-offset-top));
   overflow: auto;
   border-radius: 4px;
 }
