@@ -1,0 +1,14 @@
+name: PHP Codeception Tests - master
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  tests:
+    uses: humhub/actions/.github/workflows/module-tests-master.yml@main
+    with:
+      module-id: mail
+      use-rest-module: true
