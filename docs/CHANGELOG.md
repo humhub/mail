@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.6 (Unreleased)
+--------------------------
+- Enh #460: Improved Module Test GitHub Actions
+
 3.3.5 (September 30, 2025)
 --------------------------
 - Enh #406: Change conversation height calculation from Javascript to CSS
