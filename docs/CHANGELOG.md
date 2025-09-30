@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.4 (Unreleased)
-------------------
+3.3.5 (September 30, 2025)
+--------------------------
 - Enh #406: Change conversation height calculation from Javascript to CSS
 - Fix #406: Buttons vertical alignment in richtext editor toolbar
 - Chg #406: On mobile, display the buttons under the richtext field to save space
