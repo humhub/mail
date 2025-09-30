@@ -1,6 +1,16 @@
 Changelog
 =========
 
+3.3.4 (Unreleased)
+------------------
+- Enh #406: Change conversation height calculation from Javascript to CSS
+- Fix #406: Buttons vertical alignment in richtext editor toolbar
+- Chg #406: On mobile, display the buttons under the richtext field to save space
+- Fix #406: Use npm instead of bower for Bootstrap Saas
+- Chg #406: Reduce conversation title font size to fit longer titles
+- Enh #406: On mobile, reduce the conversation header size
+- Enh #406: When writing a message, devide the screen space equally between conversation and editor
+
 3.3.4 (August 29, 2025)
 -----------------------
 - Fix #393: Update module resources path
