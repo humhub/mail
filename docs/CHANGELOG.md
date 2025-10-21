@@ -4,6 +4,7 @@ Changelog
 3.3.6 (Unreleased)
 --------------------------
 - Enh #460: Improved Module Test GitHub Actions
+- Enh #461: Implemented `module-coding-standards`
 
 3.3.5 (September 30, 2025)
 --------------------------
