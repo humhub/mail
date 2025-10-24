@@ -76,7 +76,7 @@ class InboxMessagePreview extends Widget
         }
 
         $lastname = $this->isGroupChat()
-            ? mb_substr($profile->lastname, 0, 1)
+            ? mb_substr((string) $profile->lastname, 0, 1)
             : $profile->lastname;
 
         return $profile->firstname . ' ' . $lastname;

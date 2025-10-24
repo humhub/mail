@@ -14,13 +14,13 @@ use humhub\modules\user\models\User;
 /* @var $content string */
 /* @var $subHeadline string */
 ?>
-<?= strip_tags($headline) ?>
+<?= strip_tags((string) $headline) ?>
 
 
-<?= strip_tags($subHeadline) ?>
+<?= strip_tags((string) $subHeadline) ?>
 
 
-<?= strip_tags($content) ?>
+<?= strip_tags((string) $content) ?>
 
 
-<?= strip_tags(Yii::t('MailModule.base', 'Reply now')) ?>: <?= urldecode(Url::toMessenger($message, true)) ?>
+<?= strip_tags(Yii::t('MailModule.base', 'Reply now')) ?>: <?= urldecode((string) Url::toMessenger($message, true)) ?>

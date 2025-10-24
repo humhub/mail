@@ -32,9 +32,7 @@ class MessageTag extends ActiveRecord
             ['name', 'trim'],
             ['name', 'required'],
             ['sort_order', 'integer'],
-            ['name', 'unique', 'targetAttribute' => ['user_id', 'name'], 'when' => function (MessageTag $model) {
-                return $model->isNewRecord || $model->isAttributeChanged('name');
-            }, 'message' => Yii::t('MailModule.base', 'A tag with the same name already exists.')],
+            ['name', 'unique', 'targetAttribute' => ['user_id', 'name'], 'when' => fn(MessageTag $model) => $model->isNewRecord || $model->isAttributeChanged('name'), 'message' => Yii::t('MailModule.base', 'A tag with the same name already exists.')],
         ];
     }
 
@@ -77,7 +75,7 @@ class MessageTag extends ActiveRecord
         $tags = is_array($tags) ? $tags : [$tags];
 
         foreach ($tags as $tag) {
-            if (is_string($tag) && strpos($tag, '_add:') === 0) {
+            if (is_string($tag) && str_starts_with($tag, '_add:')) {
                 $newTag = new static([
                     'name' => substr($tag, strlen('_add:')),
                     'user_id' => $userId,

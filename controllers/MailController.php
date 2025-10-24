@@ -289,7 +289,7 @@ class MailController extends Controller
     {
         $query = User::find()->limit($maxResult)->joinWith('profile');
 
-        foreach (explode(" ", $keyword) as $part) {
+        foreach (explode(" ", (string) $keyword) as $part) {
             $query->orFilterWhere(['like', 'user.email', $part]);
             $query->orFilterWhere(['like', 'user.username', $part]);
             $query->orFilterWhere(['like', 'profile.firstname', $part]);

@@ -65,20 +65,16 @@ $dataProvider = new ActiveDataProvider([
                                 'options' => ['width' => '80px'],
                                 'contentOptions' => ['style' => 'text-align:right'],
                                 'buttons' => [
-                                    'update' => function ($url, $model) {
+                                    'update' => fn($url, $model) =>
                                         /* @var $model Topic */
-                                        return ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->sm()->loader(false);
-                                    },
-                                    'view' => function() {
-                                        return '';
-                                    },
-                                    'delete' => function ($url, $model) {
+                                        ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->sm()->loader(false),
+                                    'view' => fn() => '',
+                                    'delete' => fn($url, $model) =>
                                         /* @var $model Topic */
-                                        return Button::danger()->icon('fa-times')->action('client.post', Url::toDeleteTag($model->id))->confirm(
-                                            Yii::t('MailModule.base', '<strong>Confirm</strong> tag deletion'),
-                                            Yii::t('MailModule.base', 'Do you really want to delete this tag?'),
-                                            Yii::t('base', 'Delete'))->sm()->loader(false);
-                                    },
+                                        Button::danger()->icon('fa-times')->action('client.post', Url::toDeleteTag($model->id))->confirm(
+                                        Yii::t('MailModule.base', '<strong>Confirm</strong> tag deletion'),
+                                        Yii::t('MailModule.base', 'Do you really want to delete this tag?'),
+                                        Yii::t('base', 'Delete'))->sm()->loader(false),
                                 ],
                             ],
                         ]]) ?>

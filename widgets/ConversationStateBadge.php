@@ -45,19 +45,15 @@ class ConversationStateBadge extends Widget
 
     protected function renderInfoText(): ?string
     {
-        switch ($this->entry->type) {
-            case AbstractMessageEntry::TYPE_USER_JOINED:
-                return $this->isOwn()
-                    ? Yii::t('MailModule.base', 'You joined the conversation.')
-                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->username]);
-
-            case AbstractMessageEntry::TYPE_USER_LEFT:
-                return $this->isOwn()
-                    ? Yii::t('MailModule.base', 'You left the conversation.')
-                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->username]);
-        }
-
-        return null;
+        return match ($this->entry->type) {
+            AbstractMessageEntry::TYPE_USER_JOINED => $this->isOwn()
+                ? Yii::t('MailModule.base', 'You joined the conversation.')
+                : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->username]),
+            AbstractMessageEntry::TYPE_USER_LEFT => $this->isOwn()
+                ? Yii::t('MailModule.base', 'You left the conversation.')
+                : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->username]),
+            default => null,
+        };
     }
 
     public function getUsername(): string
