@@ -157,10 +157,7 @@ class CreateMessage extends Model
             (new Config())->incrementConversationCount(Yii::$app->user->getIdentity());
 
             $transaction->commit();
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            throw $e;
-        } catch (\Throwable $e) {
+        } catch (\Exception|\Throwable $e) {
             $transaction->rollBack();
             throw $e;
         }

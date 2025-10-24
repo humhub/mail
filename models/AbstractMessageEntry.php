@@ -90,7 +90,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
     public function init()
     {
         parent::init();
-        $this->type = $this->type();
+        $this->type = static::type();
     }
 
     /**

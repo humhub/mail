@@ -50,7 +50,7 @@ class MessageController extends BaseController
      */
     public function actionView($id)
     {
-        $message = static::getMessage($id, true);
+        $message = static::getMessage($id);
         return RestDefinitions::getMessage($message);
     }
 

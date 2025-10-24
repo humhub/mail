@@ -63,16 +63,11 @@ class NewMessageButton extends Widget
             $button->cssClass($this->cssClass);
         }
 
-        switch ($this->size) {
-            case 'sm':
-            case 'small':
-                $button->sm();
-                break;
-            case 'lg':
-            case 'large':
-                $button->lg();
-                break;
-        }
+        match ($this->size) {
+            'sm', 'small' => $button->sm(),
+            'lg', 'large' => $button->lg(),
+            default => $button,
+        };
 
         return $button;
     }
