@@ -90,7 +90,7 @@ class NotificationTest extends HumHubDbTestCase
         $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
         $this->assertEqualsLastEmailTo($user3->email);
 
-        $test =  Live::find(['contentcontainer_id' => $user2->contentcontainer_id])->all();
+        $test =  Live::find()->all();
         $test2 = unserialize($test[0]->serialized_data);
         $test3 = unserialize($test[1]->serialized_data);
         $this->assertCount(1, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
