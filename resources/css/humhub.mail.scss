@@ -178,7 +178,7 @@ $radiusNone: 0;
     > .panel {
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 16px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
+        height: calc(100vh - 15px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height)); // 15px of the .panel margin-bottom
 
         > .conversation-entry-container {
             flex: 1;
