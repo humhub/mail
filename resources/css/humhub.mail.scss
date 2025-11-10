@@ -73,44 +73,6 @@ $radiusNone: 0;
     }
 }
 
-.conversation-menu {
-    padding-left: 35px;
-
-    .conversation-menu-item {
-        margin-bottom: 10px;
-    }
-
-    .time {
-        color: inherit;
-        text-transform: none;
-    }
-
-    .badge {
-        background-color: $bgColorDefault;
-        border-radius: $radius;
-        color: inherit;
-    }
-
-    .conversation-edit-button {
-        background-color: $bgColorDefault;
-        border-radius: $radiusRound;
-        color: inherit;
-
-        &:hover {
-            background-color: $bgColorDefault;
-            color: inherit;
-        }
-    }
-}
-
-.conversation-menu-item {
-    margin-left: 5px;
-
-    a {
-        cursor: pointer;
-    }
-}
-
 .conversation-edit-button {
     border-bottom-right-radius: $radiusNone;
     border-top-right-radius: $radiusNone;
@@ -118,6 +80,8 @@ $radiusNone: 0;
 
 .conversation-scroll-down-button {
     position: absolute;
+    z-index: 1;
+    cursor: pointer;
     bottom: 58px;
     right: 25px;
     width: 38px;
@@ -338,6 +302,48 @@ $radiusNone: 0;
 .mail-conversation-entry {
     margin-top: 3px;
     position: relative;
+
+    .conversation-menu {
+        visibility: hidden; // Visible on .mail-conversation-entry:hover
+        padding-left: 35px;
+
+        .conversation-menu-item {
+            margin-bottom: 10px;
+            margin-left: 5px;
+
+            a {
+                cursor: pointer;
+            }
+        }
+
+        .time {
+            color: inherit;
+            text-transform: none;
+        }
+
+        .badge {
+            background-color: $bgColorDefault;
+            border-radius: $radius;
+            color: inherit;
+        }
+
+        .conversation-edit-button {
+            background-color: $bgColorDefault;
+            border-radius: $radiusRound;
+            color: inherit;
+
+            &:hover {
+                background-color: $bgColorDefault;
+                color: inherit;
+            }
+        }
+    }
+
+    &:hover {
+        .conversation-menu {
+            visibility: visible;
+        }
+    }
 
     .author-image {
         .img-user {

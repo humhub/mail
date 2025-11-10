@@ -5,6 +5,8 @@ Changelog
 --------------------------
 - Enh #460: Improved Module Test GitHub Actions
 - Enh #461: Implemented `module-coding-standards`
+- Fix: Conversation scroll down button truncated
+- Enh: Conversation entry buttons visible on hovering the entry by CSS instead of JS
 
 3.3.5 (September 30, 2025)
 --------------------------
