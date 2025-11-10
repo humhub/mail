@@ -5,7 +5,7 @@ Changelog
 --------------------------
 - Enh #460: Improved Module Test GitHub Actions
 - Enh #461: Implemented `module-coding-standards`
-- Fix: Extra right scrollbar
+- Fix #465: Extra right scrollbar
 
 3.3.5 (September 30, 2025)
 --------------------------
