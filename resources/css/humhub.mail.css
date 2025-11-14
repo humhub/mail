@@ -40,38 +40,6 @@
   padding-right: 10px;
 }
 
-.conversation-menu {
-  padding-left: 35px;
-}
-.conversation-menu .conversation-menu-item {
-  margin-bottom: 10px;
-}
-.conversation-menu .time {
-  color: inherit;
-  text-transform: none;
-}
-.conversation-menu .badge {
-  background-color: var(--hh-background-color-secondary);
-  border-radius: 10px;
-  color: inherit;
-}
-.conversation-menu .conversation-edit-button {
-  background-color: var(--hh-background-color-secondary);
-  border-radius: 50%;
-  color: inherit;
-}
-.conversation-menu .conversation-edit-button:hover {
-  background-color: var(--hh-background-color-secondary);
-  color: inherit;
-}
-
-.conversation-menu-item {
-  margin-left: 5px;
-}
-.conversation-menu-item a {
-  cursor: pointer;
-}
-
 .conversation-edit-button {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
@@ -79,6 +47,8 @@
 
 .conversation-scroll-down-button {
   position: absolute;
+  z-index: 1;
+  cursor: pointer;
   bottom: 58px;
   right: 25px;
   width: 38px;
@@ -262,6 +232,38 @@
 .mail-conversation-entry {
   margin-top: 3px;
   position: relative;
+}
+.mail-conversation-entry .conversation-menu {
+  visibility: hidden;
+  padding-left: 35px;
+}
+.mail-conversation-entry .conversation-menu .conversation-menu-item {
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+.mail-conversation-entry .conversation-menu .conversation-menu-item a {
+  cursor: pointer;
+}
+.mail-conversation-entry .conversation-menu .time {
+  color: inherit;
+  text-transform: none;
+}
+.mail-conversation-entry .conversation-menu .badge {
+  background-color: var(--hh-background-color-secondary);
+  border-radius: 10px;
+  color: inherit;
+}
+.mail-conversation-entry .conversation-menu .conversation-edit-button {
+  background-color: var(--hh-background-color-secondary);
+  border-radius: 50%;
+  color: inherit;
+}
+.mail-conversation-entry .conversation-menu .conversation-edit-button:hover {
+  background-color: var(--hh-background-color-secondary);
+  color: inherit;
+}
+.mail-conversation-entry:hover .conversation-menu {
+  visibility: visible;
 }
 .mail-conversation-entry .author-image .img-user {
   max-width: 100%;

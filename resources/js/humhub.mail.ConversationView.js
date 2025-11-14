@@ -23,12 +23,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         }
 
         this.reload();
-
-        this.$.on('mouseenter', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').removeClass('d-none');
-        }).on('mouseleave', '.mail-conversation-entry', function () {
-            $(this).find('.conversation-menu').addClass('d-none');
-        });
     };
 
     ConversationView.prototype.onbeforeunloadCheck = function () {
