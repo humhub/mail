@@ -6,6 +6,8 @@ use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\ui\mail\DefaultMailStyle;
 use humhub\modules\user\models\User;
+use humhub\widgets\mails\MailButton;
+use humhub\widgets\mails\MailButtonList;
 
 /* @var $this View */
 /* @var $user User */
@@ -155,21 +157,12 @@ use humhub\modules\user\models\User;
                                     <!--end space height -->
                                     <tr>
                                         <td valign="top" width="auto" align="center">
-                                            <!-- start button -->
-                                            <table border="0" align="center" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td width="auto"  align="center" valign="middle" height="32" style=" background-color:<?= $this->theme->variable('primary'); ?>;  border-radius:5px; background-clip: padding-box;font-size:14px; font-family: <?= Yii::$app->view->theme->variable('mail-font-family', DefaultMailStyle::DEFAULT_FONT_FAMILY) ?>; text-align:center; color: <?= $this->theme->variable('text-color-contrast') ?>; font-weight: 600; padding: 5px 30px">
-
-                                                        <span style="color: <?= $this->theme->variable('text-color-contrast') ?>; font-weight: 300;">
-                                                            <a href="<?= Url::toMessenger($message, true) ?>" style="text-decoration: none; color: <?= $this->theme->variable('text-color-contrast') ?>; font-weight: 300;">
-                                                                <strong><?= Yii::t('MailModule.base', 'Reply now'); ?></strong>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-
-                                                </tr>
-                                            </table>
-                                            <!-- end button -->
+                                            <?= MailButtonList::widget(['buttons' => [
+                                                MailButton::widget([
+                                                    'url' => Url::toMessenger($message, true),
+                                                    'text' => Yii::t('MailModule.base', 'Reply now'),
+                                                ]),
+                                            ]]) ?>
                                         </td>
 
                                     </tr>
