@@ -9,6 +9,7 @@ Changelog
 - Enh #464: Conversation entry buttons visible on hovering the entry by CSS instead of JS
 - Fix #465: Extra right scrollbar
 - Enh #466: Convert swagger docs to OpenAPI 3.0
+- Fix: In mail notifications, use core button for "Reply now", to allow auto-contrast
 
 3.3.5 (September 30, 2025)
 --------------------------
