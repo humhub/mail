@@ -10,6 +10,7 @@ Changelog
 - Fix #465: Extra right scrollbar
 - Enh #466: Convert swagger docs to OpenAPI 3.0
 - Fix #469: In mail notifications, use core button for "Reply now", to allow auto-contrast
+- Fix #470: Email inline style from Sass variables, e.g. when overwriting `$mail-font-family` in the Custom SCSS field
 
 3.3.5 (September 30, 2025)
 --------------------------
