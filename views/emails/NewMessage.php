@@ -4,7 +4,7 @@ use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
-use humhub\modules\ui\mail\DefaultMailStyle;
+use humhub\modules\ui\mail\MailStyle;
 use humhub\modules\user\models\User;
 use humhub\widgets\mails\MailButton;
 use humhub\widgets\mails\MailButtonList;
@@ -24,14 +24,14 @@ use humhub\widgets\mails\MailButtonList;
     <td align="center" valign="top"   class="fix-box">
 
         <!-- start  container width 600px -->
-        <table width="600"  align="center" border="0" cellspacing="0" cellpadding="0" class="container" style="background-color: <?= $this->theme->variable('background-color-main') ?>">
+        <table width="600"  align="center" border="0" cellspacing="0" cellpadding="0" class="container" style="background-color: <?= MailStyle::getBackgroundColorMain() ?>">
 
 
             <tr>
                 <td valign="top">
 
                     <!-- start container width 560px -->
-                    <table width="540"  align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: <?= $this->theme->variable('background-color-main') ?>">
+                    <table width="540"  align="center" border="0" cellspacing="0" cellpadding="0" class="full-width" style="background-color: <?= MailStyle::getBackgroundColorMain() ?>">
 
 
                         <!-- start text content -->
@@ -43,9 +43,9 @@ use humhub\widgets\mails\MailButtonList;
                                             <!-- start button -->
                                             <table border="0" align="center" cellpadding="0" cellspacing="0">
                                                 <tr>
-                                                    <td width="auto"  align="center" valign="middle" height="28" style=" background-color: <?= $this->theme->variable('background-color-main') ?>; background-clip: padding-box; font-size:26px; font-family: <?= $this->theme->variable('mail-font-family', DefaultMailStyle::DEFAULT_FONT_FAMILY) ?>; text-align:center; color:<?= $this->theme->variable('text-color-soft2') ?>; font-weight: 300; padding:0 18px">
+                                                    <td width="auto"  align="center" valign="middle" height="28" style=" background-color: <?= MailStyle::getBackgroundColorMain() ?>; background-clip: padding-box; font-size:26px; font-family: <?= MailStyle::getFontFamily() ?>; text-align:center; color:<?= MailStyle::getTextColorSoft2() ?>; font-weight: 300; padding:0 18px">
 
-                                                        <span style="color: <?= $this->theme->variable('text-color-main') ?>; font-weight: 300;">
+                                                        <span style="color: <?= MailStyle::getTextColorMain() ?>; font-weight: 300;">
                                                             <?= $headline ?>
                                                         </span>
                                                     </td>
@@ -81,13 +81,13 @@ use humhub\widgets\mails\MailButtonList;
 
         <!-- start  container width 600px -->
         <table width="600" align="center" border="0" cellspacing="0" cellpadding="0" class="container"
-               style="background-color: <?= $this->theme->variable('background-color-main') ?>; border-radius: 0 0 4px 4px">
+               style="background-color: <?= MailStyle::getBackgroundColorMain() ?>; border-radius: 0 0 4px 4px">
             <tr>
                 <td valign="top">
 
                     <!-- start container width 560px -->
                     <table width="560" align="center" border="0" cellspacing="0" cellpadding="0" class="full-width"
-                           style="background-color: <?= $this->theme->variable('background-color-main') ?>">
+                           style="background-color: <?= MailStyle::getBackgroundColorMain() ?>">
 
                         <!-- start image and content -->
                         <tr>
@@ -130,11 +130,11 @@ use humhub\widgets\mails\MailButtonList;
                                                                align="left">
 
                                                             <tr>
-                                                                <td style="font-size: 13px; line-height: 22px; font-family: <?= $this->theme->variable('mail-font-family', DefaultMailStyle::DEFAULT_FONT_FAMILY) ?>; color:<?= $this->theme->variable('text-color-main') ?>; font-weight:300; text-align:left; ">
+                                                                <td style="font-size: 13px; line-height: 22px; font-family: <?= MailStyle::getFontFamily() ?>; color:<?= MailStyle::getTextColorMain() ?>; font-weight:300; text-align:left; ">
 
-                                                                    <strong><?= $subHeadline ?>
+                                                                    <strong><?= $subHeadline ?></strong>
                                                                     <br><br>
-                                                                    <div style="display:inline-block;background-color:<?= $this->theme->variable('background-color-secondary')?>;border-radius:4px;padding:15px;">
+                                                                    <div style="display:inline-block;background-color:<?= MailStyle::getBackgroundColorSecondary() ?>;border-radius:4px;padding:15px;">
                                                                         <?= $content ?>
                                                                     </div>
 
