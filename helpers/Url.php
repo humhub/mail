@@ -90,7 +90,7 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/mail/leave', 'id' => $message->id]);
     }
 
-    public static function toMessenger(Message $message = null, $scheme = false)
+    public static function toMessenger(?Message $message = null, $scheme = false)
     {
         $route = $message ? ['/mail/mail/index', 'id' => $message->id] : ['/mail/mail/index'];
         return static::to($route, $scheme);
@@ -116,7 +116,7 @@ class Url extends \yii\helpers\Url
         return static::to(['/mail/mail/seen']);
     }
 
-    public static function toSearchNewParticipants(Message $message = null)
+    public static function toSearchNewParticipants(?Message $message = null)
     {
         $route = $message ? ['/mail/mail/search-user', 'id' => $message->id] : ['/mail/mail/search-user'];
         return static::to($route);
