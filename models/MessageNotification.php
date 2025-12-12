@@ -38,7 +38,7 @@ class MessageNotification extends BaseObject
      */
     public $isNewConversation = false;
 
-    public function __construct(Message $message, MessageEntry $entry = null)
+    public function __construct(Message $message, ?MessageEntry $entry = null)
     {
         $this->message = $message;
         $this->entry = $entry ?? $this->message->lastEntry;
