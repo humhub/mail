@@ -27,7 +27,7 @@ class InboxMessagePreview extends Widget
         }
 
         return $this->render('inboxMessagePreview', [
-            'message' => $this->userMessage->message,
+            'message' => $this->userMessage?->message,
             'messageTitle' => $this->getMessageTitle(),
             'messageText' => $this->getMessagePreview(),
             'messageTime' => $this->getMessageTime(),
@@ -41,16 +41,16 @@ class InboxMessagePreview extends Widget
         $message = $this->getMessage();
 
         return [
-            'class' => 'messagePreviewEntry entry' . ($this->userMessage->isUnread() ? ' unread' : ''),
+            'class' => 'messagePreviewEntry entry' . ($this->userMessage?->isUnread() ? ' unread' : ''),
             'data' => [
-                'message-id' => $message->id,
+                'message-id' => $message?->id,
                 'action-click' => 'mail.notification.loadMessage',
                 'action-url' => Url::toMessenger($message),
             ],
         ];
     }
 
-    public function getMessage(): Message
+    public function getMessage(): ?Message
     {
         if ($this->_message === null) {
             $this->_message = $this->userMessage->message;
@@ -62,8 +62,8 @@ class InboxMessagePreview extends Widget
     public function lastParticipant(): ?User
     {
         return $this->isGroupChat()
-            ? $this->getLastEntry()->user
-            : $this->getMessage()->getLastActiveParticipant();
+            ? $this->getLastEntry()?->user
+            : $this->getMessage()?->getLastActiveParticipant();
     }
 
     private function getUsername(): string
@@ -86,7 +86,7 @@ class InboxMessagePreview extends Widget
     {
         if ($this->isGroupChat()) {
             $suffix = ', ' . Yii::t('MailModule.base', '{n,plural,=1{# other} other{# others}}', [
-                'n' => $this->getMessage()->getUsersCount() - 2,
+                'n' => $this->getMessage()?->getUsersCount() - 2,
             ]);
         } else {
             $suffix = '';
@@ -97,7 +97,7 @@ class InboxMessagePreview extends Widget
 
     public function getMessagePreview(): string
     {
-        switch ($this->getLastEntry()->type) {
+        switch ($this->getLastEntry()?->type) {
             case AbstractMessageEntry::TYPE_USER_JOINED:
                 return $this->isOwnLastEntry()
                     ? Yii::t('MailModule.base', 'You joined the conversation.')
@@ -118,12 +118,12 @@ class InboxMessagePreview extends Widget
             $prefix = '';
         }
 
-        return $prefix . RichText::preview($this->getLastEntry()->content, 70);
+        return $prefix . RichText::preview($this->getLastEntry()?->content ?? '', 70);
     }
 
     private function getMessageTime(): string
     {
-        $datetime = $this->getMessage()->updated_at ?? $this->getMessage()->created_at;
+        $datetime = $this->getMessage()?->updated_at ?? $this->getMessage()?->created_at;
         $datetime = new DateTime($datetime, new DateTimeZone(Yii::$app->timeZone));
 
         if ($datetime->format('Y-m-d') === date('Y-m-d')) {
@@ -148,12 +148,12 @@ class InboxMessagePreview extends Widget
 
     public function getLastEntry(): ?MessageEntry
     {
-        return $this->getMessage()->getLastEntry();
+        return $this->getMessage()?->getLastEntry();
     }
 
     private function isGroupChat(): bool
     {
-        return $this->getMessage()->getUsersCount() > 2;
+        return $this->getMessage()?->getUsersCount() > 2;
     }
 
     private function isOwnLastEntry(): bool
@@ -162,7 +162,7 @@ class InboxMessagePreview extends Widget
             return false;
         }
 
-        $lastEntryUser = $this->getLastEntry()->user;
+        $lastEntryUser = $this->getLastEntry()?->user;
 
         return $lastEntryUser instanceof User
             && $lastEntryUser->is(Yii::$app->user->getIdentity());
