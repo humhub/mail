@@ -44,6 +44,14 @@ class UserMessageTag extends ActiveRecord
     /**
      * @return ActiveQuery
      */
+    public function getMessage()
+    {
+        return $this->hasOne(Message::class, ['id' => 'message_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
