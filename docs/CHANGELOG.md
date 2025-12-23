@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.6 (Unreleased)
---------------------------
+3.3.6 (December 23, 2025)
+-------------------------
 - Enh #460: Improved Module Test GitHub Actions
 - Enh #461: Implemented `module-coding-standards`
 - Fix #464: Conversation scroll down button truncated
