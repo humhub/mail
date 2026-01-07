@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.7 (unreleased)
+-------------------------
+- Fix: Compatibility with HumHub 1.18-beta.6
+
 3.3.6 (December 23, 2025)
 -------------------------
 - Enh #460: Improved Module Test GitHub Actions
