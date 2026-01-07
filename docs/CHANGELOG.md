@@ -3,7 +3,7 @@ Changelog
 
 3.3.7 (unreleased)
 -------------------------
-- Fix: Compatibility with HumHub 1.18-beta.6
+- Fix #478: Compatibility with HumHub 1.18-beta.6
 
 3.3.6 (December 23, 2025)
 -------------------------
