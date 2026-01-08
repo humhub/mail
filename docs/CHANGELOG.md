@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.7 (unreleased)
--------------------------
+3.3.7 (January 8, 2026)
+-----------------------
 - Fix #478: Compatibility with HumHub 1.18-beta.6
 
 3.3.6 (December 23, 2025)
