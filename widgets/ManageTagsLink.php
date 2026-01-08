@@ -8,7 +8,7 @@ use Yii;
 
 class ManageTagsLink extends Link
 {
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->setType(static::TYPE_NONE)
