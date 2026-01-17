@@ -1,31 +1,35 @@
 <?php
 
 use humhub\helpers\Html;
+use humhub\modules\mail\models\Config;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
 
-/* @var $model \humhub\modules\mail\models\Config */
+/* @var $model Config */
 ?>
 
 <div class="panel panel-default">
 
-    <div class="panel-heading"><?= Yii::t('MailModule.base', '<strong>Messenger</strong> module configuration'); ?></div>
+    <div class="panel-heading"><?= Yii::t('MailModule.base', '<strong>Messenger</strong> module configuration') ?></div>
 
     <div class="panel-body">
         <?php $form = ActiveForm::begin(['id' => 'configure-form']); ?>
 
-            <?= $form->field($model, 'showInTopNav')->checkbox(); ?>
+            <?= $form->field($model, 'showInTopNav')->checkbox() ?>
 
             <hr>
-            <?= $form->field($model, 'userConversationRestriction')->textInput(['type' => 'number']); ?>
-            <?php // $form->field($model, 'userMessageRestriction')->textInput(['type' => 'number']); ?>
+            <?= $form->field($model, 'userConversationRestriction')->textInput(['type' => 'number']) ?>
+            <?php // $form->field($model, 'userMessageRestriction')->textInput(['type' => 'number']) ?>
 
             <hr>
-            <?= $form->field($model, 'newUserRestrictionEnabled')->checkbox(['id' => 'newUserCheckbox']); ?>
+            <?= $form->field($model, 'titleStatus')->radioList(Config::getTitleStatusLabels()) ?>
+
+            <hr>
+            <?= $form->field($model, 'newUserRestrictionEnabled')->checkbox(['id' => 'newUserCheckbox']) ?>
             <div id="newUserRestriction">
-                <?= $form->field($model, 'newUserSinceDays')->textInput(['type' => 'number']); ?>
-                <?= $form->field($model, 'newUserConversationRestriction')->textInput(['type' => 'number']); ?>
-                <?php // $form->field($model, 'newUserMessageRestriction')->textInput(['type' => 'number']); ?>
+                <?= $form->field($model, 'newUserSinceDays')->textInput(['type' => 'number']) ?>
+                <?= $form->field($model, 'newUserConversationRestriction')->textInput(['type' => 'number']) ?>
+                <?php // $form->field($model, 'newUserMessageRestriction')->textInput(['type' => 'number']) ?>
             </div>
 
             <div class="alert alert-info">
@@ -54,4 +58,4 @@ use humhub\widgets\form\ActiveForm;
         checkNewUserFields();
     })
 JS
-); ?>
+) ?>

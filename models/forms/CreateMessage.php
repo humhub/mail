@@ -51,8 +51,13 @@ class CreateMessage extends Model
      */
     public function rules()
     {
+        $requiredFields = ['message', 'recipient'];
+        if ((new Config())->titleStatus === Config::TITLE_STATUS_REQUIRED) {
+            $requiredFields[] = 'title';
+        }
+
         return [
-            [['message', 'recipient', 'title'], 'required'],
+            [$requiredFields, 'required'],
             [['files', 'tags'], 'safe'],
             ['recipient', 'checkRecipient'],
         ];
