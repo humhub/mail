@@ -6,6 +6,7 @@ use humhub\components\access\ControllerAccess;
 use humhub\components\Controller;
 use humhub\modules\file\handler\FileHandlerCollection;
 use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\models\forms\InviteParticipantForm;
 use humhub\modules\mail\models\forms\ReplyForm;
@@ -342,6 +343,7 @@ class MailController extends Controller
         return $this->renderAjax('create', [
             'model' => $model,
             'fileHandlers' => FileHandlerCollection::getByType([FileHandlerCollection::TYPE_IMPORT, FileHandlerCollection::TYPE_CREATE]),
+            'isTitleEnabled' => (new Config())->titleStatus !== Config::TITLE_STATUS_DISABLED,
         ]);
     }
 

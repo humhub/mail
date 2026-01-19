@@ -7,7 +7,6 @@ use humhub\modules\file\widgets\FilePreview;
 use humhub\modules\file\widgets\UploadButton;
 use humhub\modules\file\widgets\UploadProgress;
 use humhub\modules\mail\helpers\Url;
-use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\widgets\MailRichtextEditor;
 use humhub\modules\user\widgets\UserPickerField;
@@ -16,8 +15,7 @@ use humhub\widgets\modal\ModalButton;
 
 /* @var $model CreateMessage */
 /* @var $fileHandlers BaseFileHandler[] */
-
-$isTitleEnabled = (new Config())->titleStatus !== Config::TITLE_STATUS_DISABLED;
+/* @var $isTitleEnabled bool */
 ?>
 
 <?php $form = Modal::beginFormDialog([
