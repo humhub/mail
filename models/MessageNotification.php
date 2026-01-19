@@ -209,14 +209,18 @@ class MessageNotification extends BaseObject
 
     protected function getSubHeadline(): string
     {
-        $params = [
-            'senderName' => Html::encode($this->getEntrySender()->displayName),
-            'conversationTitle' => '"' . Html::encode($this->message->title) . '"',
-        ];
+        $params = ['senderName' => Html::encode($this->getEntrySender()->displayName)];
+
+        if ($this->message->title) {
+            $params['conversationTitle'] = '"' . Html::encode($this->message->title) . '"';
+            return $this->isNewConversation
+                ? Yii::t('MailModule.base', '{senderName} created a new conversation {conversationTitle}', $params)
+                : Yii::t('MailModule.base', '{senderName} sent you a new message in {conversationTitle}', $params);
+        }
 
         return $this->isNewConversation
-            ? Yii::t('MailModule.base', '{senderName} created a new conversation {conversationTitle}', $params)
-            : Yii::t('MailModule.base', '{senderName} sent you a new message in {conversationTitle}', $params);
+            ? Yii::t('MailModule.base', '{senderName} created a new conversation', $params)
+            : Yii::t('MailModule.base', '{senderName} sent you a new message', $params);
     }
 
     /**

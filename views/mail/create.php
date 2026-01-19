@@ -15,6 +15,7 @@ use humhub\widgets\modal\ModalButton;
 
 /* @var $model CreateMessage */
 /* @var $fileHandlers BaseFileHandler[] */
+/* @var $isTitleEnabled bool */
 ?>
 
 <?php $form = Modal::beginFormDialog([
@@ -31,7 +32,9 @@ use humhub\widgets\modal\ModalButton;
         ]
     )->label(false) ?>
 
-    <?= $form->field($model, 'title')->textInput(['placeholder' => Yii::t('MailModule.base', 'Subject')])->label(false) ?>
+    <?php if ($isTitleEnabled): ?>
+        <?= $form->field($model, 'title')->textInput(['placeholder' => Yii::t('MailModule.base', 'Subject')])->label(false) ?>
+    <?php endif; ?>
 
     <?= $form->field($model, 'message')->widget(MailRichtextEditor::class)->label(false) ?>
 

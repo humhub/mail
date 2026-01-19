@@ -2,11 +2,10 @@
 
 namespace humhub\modules\mail\models;
 
-use DateInterval;
 use DateTime;
+use humhub\modules\mail\Module;
 use humhub\modules\user\models\User;
 use Yii;
-use humhub\modules\mail\Module;
 
 /**
  * ConfigureForm defines the configurable fields.
@@ -30,6 +29,12 @@ class Config extends \yii\base\Model
 
     public $userMessageRestriction = null;
 
+    public string $titleStatus = self::TITLE_STATUS_REQUIRED;
+
+    public const TITLE_STATUS_REQUIRED = 'required';
+    public const TITLE_STATUS_OPTIONAL = 'optional';
+    public const TITLE_STATUS_DISABLED = 'disabled';
+
     public function init()
     {
         parent::init();
@@ -41,6 +46,7 @@ class Config extends \yii\base\Model
         $this->newUserMessageRestriction = (int) $module->settings->get('newUserMessageRestriction', $this->newUserMessageRestriction);
         $this->userConversationRestriction = (int) $module->settings->get('userConversationRestriction', $this->userConversationRestriction);
         $this->userMessageRestriction = (int) $module->settings->get('userMessageRestriction', $this->userMessageRestriction);
+        $this->titleStatus = $module->settings->get('titleStatus', $this->titleStatus);
     }
 
     /**
@@ -63,6 +69,7 @@ class Config extends \yii\base\Model
                 'userConversationRestriction',
                 'userMessageRestriction'], 'integer', 'min' => 0],
             ['newUserSinceDays', 'integer', 'min' => 1],
+            ['titleStatus', 'safe'],
         ];
     }
 
@@ -81,6 +88,7 @@ class Config extends \yii\base\Model
             'newUserMessageRestriction' => Yii::t('MailModule.base', 'Max number of messages allowed for a new user per day'),
             'userConversationRestriction' => Yii::t('MailModule.base', 'Max number of new conversations allowed for a user per day'),
             'userMessageRestriction' => Yii::t('MailModule.base', 'Max messages allowed per day'),
+            'titleStatus' => Yii::t('MailModule.base', 'Subject'),
         ];
     }
 
@@ -98,6 +106,7 @@ class Config extends \yii\base\Model
         $module->settings->set('newUserMessageRestriction', $this->newUserMessageRestriction);
         $module->settings->set('userConversationRestriction', $this->userConversationRestriction);
         $module->settings->set('userMessageRestriction', $this->userMessageRestriction);
+        $module->settings->set('titleStatus', $this->titleStatus);
         return true;
     }
 
@@ -156,5 +165,14 @@ class Config extends \yii\base\Model
     public function incrementConversationCount($originator)
     {
         static::getModule()->settings->contentContainer($originator)->set('conversationCount', ($this->getConversationCount($originator) + 1));
+    }
+
+    public static function getTitleStatusLabels(): array
+    {
+        return [
+            self::TITLE_STATUS_REQUIRED => Yii::t('MailModule.base', 'Required'),
+            self::TITLE_STATUS_OPTIONAL => Yii::t('MailModule.base', 'Optional'),
+            self::TITLE_STATUS_DISABLED => Yii::t('MailModule.base', 'Disabled'),
+        ];
     }
 }

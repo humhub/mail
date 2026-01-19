@@ -34,10 +34,12 @@ use yii\helpers\Html;
                     <?= Html::encode($messageTitle) . ' ' . $message->getPinIcon() ?>
                     <time><?= $messageTime ?></time>
                 </h4>
-                <h5>
-                    <span><?= Html::encode($message->title) ?></span>
-                    <span class="new-message-badge"></span>
-                </h5>
+                <span class="new-message-badge"></span>
+                <?php if ($message->title): ?>
+                    <h5>
+                        <?= Html::encode($message->title) ?>
+                    </h5>
+                <?php endif; ?>
                 <div class="mail-last-entry">
                     <?= $messageText ?>
                 </div>

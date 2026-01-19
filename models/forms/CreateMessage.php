@@ -52,7 +52,8 @@ class CreateMessage extends Model
     public function rules()
     {
         return [
-            [['message', 'recipient', 'title'], 'required'],
+            [['message', 'recipient'], 'required'],
+            [['title'], 'required', 'when' => fn() => (new Config())->titleStatus === Config::TITLE_STATUS_REQUIRED],
             [['files', 'tags'], 'safe'],
             ['recipient', 'checkRecipient'],
         ];
