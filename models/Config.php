@@ -88,7 +88,7 @@ class Config extends \yii\base\Model
             'newUserMessageRestriction' => Yii::t('MailModule.base', 'Max number of messages allowed for a new user per day'),
             'userConversationRestriction' => Yii::t('MailModule.base', 'Max number of new conversations allowed for a user per day'),
             'userMessageRestriction' => Yii::t('MailModule.base', 'Max messages allowed per day'),
-            'titleStatus' => Yii::t('MailModule.base', 'Subject status'),
+            'titleStatus' => Yii::t('MailModule.base', 'Subject'),
         ];
     }
 
