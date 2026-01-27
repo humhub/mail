@@ -1,7 +1,7 @@
 // Import Bootstrap breakpoint functions
-@import "../../../../vendor/npm-asset/bootstrap/scss/functions";
-@import "../../../../vendor/npm-asset/bootstrap/scss/variables";
-@import "../../../../vendor/npm-asset/bootstrap/scss/mixins/breakpoints";
+@import "../../../../vendor/twbs/bootstrap/scss/functions";
+@import "../../../../vendor/twbs/bootstrap/scss/variables";
+@import "../../../../vendor/twbs/bootstrap/scss/mixins/breakpoints";
 
 $bgColorDefault: var(--hh-background-color-secondary);
 $colorUnread: var(--bs-info);
