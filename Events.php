@@ -9,6 +9,7 @@
 namespace humhub\modules\mail;
 
 use humhub\commands\IntegrityController;
+use humhub\helpers\ControllerHelper;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\Message;
@@ -22,6 +23,7 @@ use humhub\modules\mail\widgets\NotificationInbox;
 use humhub\modules\ui\menu\MenuLink;
 use humhub\modules\user\widgets\HeaderControlsMenu;
 use humhub\widgets\MetaSearchWidget;
+use humhub\widgets\TopMenu;
 use Yii;
 
 /**
@@ -156,16 +158,19 @@ class Events
                 return;
             }
 
+            /* @var TopMenu $menu */
+            $menu = $event->sender;
+
             $module = Config::getModule();
             // See https://github.com/humhub/humhub-modules-mail/issues/201
             if (method_exists($module, 'hideInTopNav') && !$module->hideInTopNav()) {
-                $event->sender->addItem([
+                $menu->addEntry(new MenuLink([
                     'label' => Yii::t('MailModule.base', 'Messages'),
                     'url' => Url::toMessenger(),
-                    'icon' => '<i class="fa fa-envelope"></i>',
-                    'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
+                    'icon' => 'envelope',
+                    'isActive' => ControllerHelper::isActivePath('mail'),
                     'sortOrder' => 300,
-                ]);
+                ]));
             }
         } catch (\Throwable $e) {
             Yii::error($e);
@@ -179,7 +184,7 @@ class Events
                 return;
             }
 
-            $event->sender->addWidget(NotificationInbox::className(), [], ['sortOrder' => 90]);
+            $event->sender->addWidget(NotificationInbox::class, [], ['sortOrder' => 90]);
         } catch (\Throwable $e) {
             Yii::error($e);
         }

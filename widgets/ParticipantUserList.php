@@ -33,7 +33,7 @@ class ParticipantUserList extends Widget
             return '';
         }
 
-        return Link::asLink($userList)->action('ui.modal.load', Url::toConversationUserList($this->message));
+        return Link::to($userList)->action('ui.modal.load', Url::toConversationUserList($this->message));
     }
 
     private function renderUserList(): string
