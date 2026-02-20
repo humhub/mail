@@ -8,9 +8,8 @@
 
 namespace humhub\modules\mail\controllers;
 
-use Yii;
 use humhub\modules\mail\models\Config;
-use humhub\models\Setting;
+use Yii;
 
 /**
  * ConfigController handles the configuration requests.

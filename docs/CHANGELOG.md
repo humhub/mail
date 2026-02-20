@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.4.0 (Unreleased)
+------------------
+- Enh #483: Update for HumHub 1.19
+
 3.3.9 (Unreleased)
 -----------------------
 - Enh #68: Make "subject" optional
