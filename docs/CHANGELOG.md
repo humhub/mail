@@ -4,6 +4,7 @@ Changelog
 3.3.9 (Unreleased)
 -----------------------
 - Enh #68: Make "subject" optional
+- Fix #485: Compatibility with HumHub 1.18.1
 
 3.3.8 (January 15, 2026)
 -----------------------
