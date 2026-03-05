@@ -1,8 +1,11 @@
 Changelog
 =========
 
-3.3.9 (Unreleased)
------------------------
+3.3.9 (March 5, 2026)
+---------------------
+
+> This release also fixes a [security](https://github.com/humhub/mail/security/advisories/GHSA-hx69-px7q-rf37) issue.
+
 - Enh #68: Make "subject" optional
 - Fix #485: Compatibility with HumHub 1.18.1
 - Fix #487: Encode user name
