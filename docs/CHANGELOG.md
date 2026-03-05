@@ -5,6 +5,7 @@ Changelog
 -----------------------
 - Enh #68: Make "subject" optional
 - Fix #485: Compatibility with HumHub 1.18.1
+- Fix #487: Encode user name
 
 3.3.8 (January 15, 2026)
 -----------------------
