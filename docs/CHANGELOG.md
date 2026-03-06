@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.10 (Unreleased)
+---------------------
+- Fix #488: Fix fullscreen toolbar
+
 3.3.9 (March 5, 2026)
 ---------------------
 
