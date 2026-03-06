@@ -358,6 +358,34 @@
   margin: 0;
 }
 
+.device-ios-mobile #createmessage-message.ProsemirrorEditor.fullscreen,
+.device-ios-mobile .mail-message-form .ProsemirrorEditor.fullscreen {
+  top: var(--hh-fixed-header-height);
+  height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
+  height: calc(100dvh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
+}
+
+.device-ios-mobile #createmessage-message.ProsemirrorEditor.fullscreen .ProseMirror-menubar-wrapper,
+.device-ios-mobile .mail-message-form .ProsemirrorEditor.fullscreen .ProseMirror-menubar-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.device-ios-mobile #createmessage-message.ProsemirrorEditor.fullscreen .ProseMirror-menubar,
+.device-ios-mobile .mail-message-form .ProsemirrorEditor.fullscreen .ProseMirror-menubar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1;
+}
+
+.device-ios-mobile #createmessage-message.ProsemirrorEditor.fullscreen .ProseMirror,
+.device-ios-mobile .mail-message-form .ProsemirrorEditor.fullscreen .ProseMirror {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
 @media (max-width: 991.98px) {
   #inbox {
     max-height: 500px !important;

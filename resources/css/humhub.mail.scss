@@ -462,6 +462,33 @@ $radiusNone: 0;
     margin: 0;
 }
 
+.device-ios-mobile {
+    #createmessage-message.ProsemirrorEditor.fullscreen,
+    .mail-message-form .ProsemirrorEditor.fullscreen {
+        top: var(--hh-fixed-header-height);
+        height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
+        height: calc(100dvh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
+
+        .ProseMirror-menubar-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .ProseMirror-menubar {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1;
+        }
+
+        .ProseMirror {
+            flex: 1 1 auto;
+            height: auto;
+            min-height: 0;
+        }
+    }
+}
+
 @include media-breakpoint-down(lg) {
     #inbox {
         max-height: 500px !important;
