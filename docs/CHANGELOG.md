@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.10 (Unreleased)
+---------------------
+- fix #489: Fix dropdown text overflow
+
 3.3.9 (March 5, 2026)
 ---------------------
 
