@@ -157,20 +157,32 @@
   margin-top: 5px;
 }
 
+.mail-inbox-messages .hh-list,
+.mail-inbox-messages .messagePreviewEntry,
+.mail-inbox-messages .mail-link {
+  overflow-x: hidden;
+}
 .mail-inbox-messages .panel-heading > a {
   font-weight: 600;
 }
 .mail-inbox-messages .panel-heading #mail-filter-root > a {
   font-weight: normal;
 }
+.mail-inbox-messages .text-break {
+  min-width: 0;
+}
 .mail-inbox-messages .text-break h4 {
   font-weight: 600;
   font-size: 16px;
+  display: flex;
+  gap: 8px;
 }
 .mail-inbox-messages .text-break h4 time {
   font-size: 11px !important;
   font-weight: normal;
-  float: right;
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
 }
 .mail-inbox-messages .text-break h5 {
   font-size: 14px;
@@ -190,6 +202,9 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--hh-text-color-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mail-message-form {
