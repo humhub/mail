@@ -206,6 +206,12 @@ $radiusNone: 0;
 }
 
 .mail-inbox-messages {
+    .hh-list,
+    .messagePreviewEntry,
+    .mail-link {
+        overflow-x: hidden;
+    }
+
     .panel-heading {
         > a {
             @include semiBold;
@@ -217,15 +223,20 @@ $radiusNone: 0;
     }
 
     .text-break {
+        min-width: 0;
 
         h4 {
             @include semiBold;
             font-size: 16px;
+            display: flex;
+            gap: 8px;
 
             time {
                 font-size: 11px !important;
                 font-weight: normal;
-                float: right;
+                flex: 0 0 auto;
+                margin-left: auto;
+                text-align: right;
             }
         }
 
@@ -249,6 +260,9 @@ $radiusNone: 0;
             font-size: 14px;
             font-weight: 500;
             color: var(--hh-text-color-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 }
