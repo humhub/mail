@@ -261,8 +261,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.initScroll = function () {
         if (window.IntersectionObserver) {
             var $container = this.getContainerNode();
+            var $entryList = this.getListNode();
             var $streamEnd = $('<div class="conversation-stream-end"></div>');
-            $container.prepend($streamEnd);
+            $entryList.prepend($streamEnd);
 
             var that = this;
             var observer = new IntersectionObserver(function (entries) {

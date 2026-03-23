@@ -5,6 +5,7 @@ Changelog
 ---------------------
 - Fix #488: Fix fullscreen toolbar
 - fix #489: Fix dropdown text overflow
+- fix #490: Fix loading of more older messages
 
 3.3.9 (March 5, 2026)
 ---------------------
