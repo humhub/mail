@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.10 (Unreleased)
----------------------
+3.3.10 (March 25, 2026)
+-----------------------
 - Fix #488: Fix fullscreen toolbar
 - fix #489: Fix dropdown text overflow
 - fix #490: Fix loading of more older messages
