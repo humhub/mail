@@ -87,9 +87,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                         fileListInputs.remove();
                     }
                     that.scrollToBottom();
-                    if (!view.isSmall()) { // prevent autofocus on mobile
-                        that.focus();
-                    }
+                    that.focus();
                     Widget.instance('#inbox').updateEntries([that.getActiveMessageId()]);
                     that.setLivePollInterval();
                 });
@@ -122,6 +120,11 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
 
     ConversationView.prototype.focus = function (evt) {
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            // Prevent autofocus(hide keyboard) on mobile devices
+            return;
+        }
+
         var replyRichtext = this.getReplyRichtext();
         if (replyRichtext) {
             replyRichtext.focus();

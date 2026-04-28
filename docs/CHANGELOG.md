@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.11 (Unreleased)
+-----------------------
+- Enh #493: Don't open keyboard by default on mobile devices
+
 3.3.10 (March 25, 2026)
 -----------------------
 - Fix #488: Fix fullscreen toolbar
