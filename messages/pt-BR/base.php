@@ -27,7 +27,7 @@ return [
   'Created By' => 'Criado Por',
   'Delete' => 'Apagar',
   'Delete conversation' => 'Apagar conversa',
-  'Disabled' => 'Desabilitado',
+  'Disabled' => 'Desativado',
   'Do you really want to delete this conversation?' => 'Você quer realmente apagar esta conversa?',
   'Do you really want to delete this message?' => 'Você realmente quer apagar esta mensagem?',
   'Do you really want to delete this tag?' => 'Tem certeza de que deseja excluir esta tag?',

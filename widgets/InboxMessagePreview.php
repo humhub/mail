@@ -101,12 +101,12 @@ class InboxMessagePreview extends Widget
             case AbstractMessageEntry::TYPE_USER_JOINED:
                 return $this->isOwnLastEntry()
                     ? Yii::t('MailModule.base', 'You joined the conversation.')
-                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->getUsername()]);
+                    : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => Html::encode($this->getUsername())]);
 
             case AbstractMessageEntry::TYPE_USER_LEFT:
                 return $this->isOwnLastEntry()
                     ? Yii::t('MailModule.base', 'You left the conversation.')
-                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => $this->getUsername()]);
+                    : Yii::t('MailModule.base', '{username} left the conversation.', ['username' => Html::encode($this->getUsername())]);
         }
 
         if ($this->isGroupChat()) {

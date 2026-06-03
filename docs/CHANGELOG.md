@@ -5,9 +5,24 @@ Changelog
 ------------------
 - Enh #483: Update for HumHub 1.19
 
-3.3.9 (Unreleased)
+3.3.11 (Unreleased)
 -----------------------
+- Enh #493: Don't open keyboard by default on mobile devices
+
+3.3.10 (March 25, 2026)
+-----------------------
+- Fix #488: Fix fullscreen toolbar
+- fix #489: Fix dropdown text overflow
+- fix #490: Fix loading of more older messages
+
+3.3.9 (March 5, 2026)
+---------------------
+
+> This release also fixes a [security](https://github.com/humhub/mail/security/advisories/GHSA-hx69-px7q-rf37) issue.
+
 - Enh #68: Make "subject" optional
+- Fix #485: Compatibility with HumHub 1.18.1
+- Fix #487: Encode user name
 
 3.3.8 (January 15, 2026)
 -----------------------

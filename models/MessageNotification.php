@@ -2,6 +2,7 @@
 
 namespace humhub\modules\mail\models;
 
+use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
 use humhub\modules\mail\helpers\Url;
@@ -14,7 +15,6 @@ use humhub\modules\notification\targets\MobileTarget;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\base\BaseObject;
-use yii\helpers\Html;
 
 class MessageNotification extends BaseObject
 {
@@ -190,7 +190,7 @@ class MessageNotification extends BaseObject
         if ($this->entry->type === AbstractMessageEntry::TYPE_USER_JOINED) {
             return $this->entry->user->is($user)
                 ? Yii::t('MailModule.base', 'You joined the conversation.')
-                : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->entry->user->displayName]);
+                : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => Html::encode($this->entry->user->displayName)]);
         }
 
         return RichTextToEmailHtmlConverter::process($this->entry->content, [
@@ -247,13 +247,13 @@ class MessageNotification extends BaseObject
 
     protected function getSubject(User $user): string
     {
-        $params = ['{senderName}' => $this->getEntrySender()->displayName];
-
         if ($this->entry->type === AbstractMessageEntry::TYPE_USER_JOINED) {
             return $this->entry->user->is($user)
                 ? Yii::t('MailModule.base', 'You joined the conversation.')
-                : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => $this->entry->user->displayName]);
+                : Yii::t('MailModule.base', '{username} joined the conversation.', ['username' => Html::encode($this->entry->user->displayName)]);
         }
+
+        $params = ['{senderName}' => Html::encode($this->getEntrySender()->displayName)];
 
         return $this->isNewConversation
             ? Yii::t('MailModule.base', 'New conversation from {senderName}', $params)
