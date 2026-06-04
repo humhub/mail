@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.4.0 (Unreleased)
-------------------
+3.4.0 (June 5, 2026)
+--------------------
 - Enh #483: Update for HumHub 1.19
 
 3.3.11 (Unreleased)
