@@ -162,7 +162,7 @@ class MessageNotification extends BaseObject
     private function sendPush(User $user)
     {
         $fcmModule = Yii::$app->getModule('fcm-push');
-        if (!$fcmModule || !$fcmModule->isActivated) {
+        if (!$fcmModule || !$fcmModule->isEnabled) {
             return;
         }
         if (!$this->canReceivePush($user)) {
