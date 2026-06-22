@@ -1,9 +1,9 @@
 Changelog
 =========
 
-3.4.1 (Unreleased)
---------------------
-- Fix #498: Fix using of removed module property `isActivated`
+3.4.1 (June 22, 2026)
+---------------------
+- Fix #498: Fix use of removed module property `isActivated`
 
 3.4.0 (June 5, 2026)
 --------------------
