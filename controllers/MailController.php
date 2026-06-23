@@ -306,7 +306,7 @@ class MailController extends Controller
                 $userInfo = [];
                 $userInfo['guid'] = $user->guid;
                 $userInfo['displayName'] = Html::encode($user->displayName);
-                $userInfo['image'] = $user->getProfileImage()->getUrl();
+                $userInfo['image'] = $user->image->getUrl();
                 $userInfo['link'] = $user->getUrl();
                 $results[] = $userInfo;
             }
