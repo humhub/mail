@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.4.2 (Unreleased)
+---------------------
+- Fix #499: Update user image
+
 3.4.1 (June 22, 2026)
 ---------------------
 - Fix #498: Fix use of removed module property `isActivated`
