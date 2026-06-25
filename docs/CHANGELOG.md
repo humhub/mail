@@ -4,6 +4,7 @@ Changelog
 3.4.2 (Unreleased)
 ---------------------
 - Fix #499: Update user image
+- Enh #500: Add aria-label attribute for icon-only buttons
 
 3.4.1 (June 22, 2026)
 ---------------------
