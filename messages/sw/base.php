@@ -64,6 +64,7 @@ return [
     'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
     'Recipient' => '',
+    'Reply' => '',
     'Reply now' => '',
     'Required' => '',
     'Saturday' => '',

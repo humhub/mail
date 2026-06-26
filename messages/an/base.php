@@ -77,6 +77,7 @@ return [
     'Receive Notifications when someone opens a new conversation.' => '',
     'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
+    'Reply' => '',
     'Reply now' => '',
     'Required' => '',
     'Saturday' => '',
