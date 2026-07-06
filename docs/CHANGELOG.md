@@ -4,6 +4,7 @@ Changelog
 3.3.11 (Unreleased)
 -----------------------
 - Enh #493: Don't open keyboard by default on mobile devices
+- Enh #416: Possibility to edit the conversation subject
 
 3.3.10 (March 25, 2026)
 -----------------------

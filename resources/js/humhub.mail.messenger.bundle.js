@@ -717,6 +717,22 @@ humhub.module('mail.conversation', function (module, require, $) {
         });
     };
 
+    var submitEditMessage = function (evt) {
+        modal.submit(evt).then(function (response) {
+            if (response.success) {
+                setTimeout(function () {
+                    $('#mail-conversation-header').html(response.conversationHeader);
+                    $('#inbox').replaceWith(response.conversationInbox);
+                }, 300);
+                return;
+            }
+
+            module.log.error(null, true);
+        }).catch(function (e) {
+            module.log.error(e, true);
+        });
+    };
+
     var deleteEntry = function (evt) {
         var entry = getEntry(evt.$trigger.data('entry-id'));
 
@@ -794,6 +810,7 @@ humhub.module('mail.conversation', function (module, require, $) {
         init,
         linkAction,
         submitEditEntry,
+        submitEditMessage,
         deleteEntry,
     });
 });

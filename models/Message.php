@@ -184,7 +184,7 @@ class Message extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => Yii::t('MailModule.base', 'Title'),
+            'title' => Yii::t('MailModule.base', 'Subject'),
             'created_at' => Yii::t('MailModule.base', 'Created At'),
             'created_by' => Yii::t('MailModule.base', 'Created By'),
             'updated_at' => Yii::t('MailModule.base', 'Updated At'),
@@ -447,5 +447,31 @@ class Message extends ActiveRecord
     {
         $this->_lastEntry = null;
         return parent::refresh();
+    }
+
+    public function canEditTitle(): bool
+    {
+        // Allow editing the title only if the message has a title.
+        if (!$this->title) {
+            return false;
+        }
+
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+
+        $currentUser = Yii::$app->user->getIdentity();
+
+        // Only the creator is allowed
+        if ($this->created_by === $currentUser->id) {
+            return true;
+        }
+
+        // But if there's only 1 participant left, then this participant should be allowed as well
+        if ($this->getUsersCount() === 1 && $this->isParticipant($currentUser)) {
+            return true;
+        }
+
+        return false;
     }
 }
