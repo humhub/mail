@@ -146,4 +146,9 @@ class Url extends \yii\helpers\Url
     {
         return static::to(['/mail/mail/load-more']);
     }
+
+    public static function toEditConversationTitle(Message $message)
+    {
+        return static::to(['/mail/mail/edit-title', 'id' => $message->id]);
+    }
 }

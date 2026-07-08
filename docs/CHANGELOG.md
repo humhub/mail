@@ -14,9 +14,10 @@ Changelog
 --------------------
 - Enh #483: Update for HumHub 1.19
 
-3.3.11 (Unreleased)
------------------------
+3.3.11 (July 8, 2026)
+---------------------
 - Enh #493: Don't open keyboard by default on mobile devices
+- Enh #416: Possibility to edit the conversation subject
 
 3.3.10 (March 25, 2026)
 -----------------------

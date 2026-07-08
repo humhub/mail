@@ -60,6 +60,17 @@ if (!$isSingleParticipant) {
                 ->icon('eye-slash') ?>
         </li>
 
+        <?php if ($message->canEditTitle()) : ?>
+            <li>
+                <?= ModalButton::none(Yii::t('MailModule.base', 'Edit subject'))
+                    ->icon('edit')
+                    ->load(Url::toEditConversationTitle($message))
+                    ->link()
+                    ->cssClass('dropdown-item')
+                    ->loader(false) ?>
+            </li>
+        <?php endif; ?>
+
         <li>
             <?= PinLink::widget(['message' => $message]) ?>
         </li>

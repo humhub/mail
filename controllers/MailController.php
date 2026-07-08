@@ -8,6 +8,7 @@ use humhub\modules\file\handler\FileHandlerCollection;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\forms\CreateMessage;
+use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\models\forms\InviteParticipantForm;
 use humhub\modules\mail\models\forms\ReplyForm;
 use humhub\modules\mail\models\Message;
@@ -18,6 +19,7 @@ use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\widgets\ConversationEntry;
 use humhub\modules\mail\widgets\ConversationHeader;
+use humhub\modules\mail\widgets\ConversationInbox;
 use humhub\modules\mail\widgets\Messages;
 use humhub\modules\User\models\User;
 use humhub\modules\user\models\UserFilter;
@@ -362,6 +364,29 @@ class MailController extends Controller
         return $this->asJson([
             'success' => true,
             'redirect' => $nextReadMessage ? Url::toMessenger($nextReadMessage) : Url::to(['/dashboard']),
+        ]);
+    }
+
+    public function actionEditTitle($id)
+    {
+        $message = $this->getMessage($id, true);
+        if (!$message) {
+            throw new NotFoundHttpException();
+        }
+        if (!$message->canEditTitle()) {
+            $this->forbidden();
+        }
+
+        if ($message->load(Yii::$app->request->post()) && $message->save()) {
+            return $this->asJson([
+                'success' => true,
+                'conversationHeader' => ConversationHeader::widget(['message' => $message]),
+                'conversationInbox' => ConversationInbox::widget(['filter' => new InboxFilterForm()]),
+            ]);
+        }
+
+        return $this->renderAjax('editTitle', [
+            'message' => $message,
         ]);
     }
 
