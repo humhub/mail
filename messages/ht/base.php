@@ -3,7 +3,6 @@
 return [
     'Disabled' => 'Andikape',
     'Search' => 'Chèche',
-    'Title' => 'Tit',
     'User' => 'Itilizatè',
     '<strong>Confirm</strong> deleting conversation' => '',
     '<strong>Confirm</strong> leaving conversation' => '',
@@ -37,8 +36,10 @@ return [
     'Do you really want to delete this tag?' => '',
     'Do you really want to leave this conversation?' => '',
     'Edit' => '',
+    'Edit conversation subject' => '',
     'Edit message entry' => '',
     'Edit message...' => '',
+    'Edit subject' => '',
     'Filter' => '',
     'Friday' => '',
     'Here you can manage your private conversation tags.' => '',
