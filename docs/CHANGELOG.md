@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.12 (Unreleased)
+-------------------
+- Fix: Message entries overflow horizontally on iOS Safari
+
 3.3.11 (July 8, 2026)
 ---------------------
 - Enh #493: Don't open keyboard by default on mobile devices
