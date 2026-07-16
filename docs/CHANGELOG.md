@@ -3,7 +3,7 @@ Changelog
 
 3.4.3 (Unreleased)
 ------------------
-- Enh: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
+- Enh #506: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
 
 3.4.2 (July 8, 2026)
 --------------------
