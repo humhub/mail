@@ -190,6 +190,21 @@ class Events
         }
     }
 
+    /**
+     * Adds the number of unseen conversation messages to the push notification
+     * badge count of the `fcm-push` module.
+     *
+     * @param \humhub\modules\fcmPush\events\NotificationCountEvent $event
+     */
+    public static function onPushNotificationCount($event)
+    {
+        try {
+            $event->count += (int)UserMessage::getNewMessageCount($event->user->id);
+        } catch (\Throwable $e) {
+            Yii::error('Messenger - Error onPushNotificationCount: ' . $e);
+        }
+    }
+
     public static function onProfileHeaderControlsMenuInit($event)
     {
         try {

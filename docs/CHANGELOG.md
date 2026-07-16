@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.4.3 (Unreleased)
+------------------
+- Enh: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
+
 3.4.2 (July 8, 2026)
 --------------------
 - Fix #499: Update user image
