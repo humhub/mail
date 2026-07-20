@@ -329,10 +329,13 @@ class Message extends ActiveRecord
             'message_id' => $this->id,
         ]);
         if ($userMessage !== null) {
+            $wasUnread = $userMessage->isUnread();
+
             $userMessage->last_viewed = date('Y-m-d G:i:s');
             $userMessage->save();
 
-            if ($userMessage->user) {
+            // Only the transition from unread to read changes the unread count.
+            if ($wasUnread && $userMessage->user) {
                 UnreadCountChangedEvent::triggerChanged($userMessage->user);
             }
         }
