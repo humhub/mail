@@ -19,6 +19,10 @@ Changelog
 --------------------
 - Enh #483: Update for HumHub 1.19
 
+3.3.12 (July 16, 2026)
+----------------------
+- Fix #504: Message entries overflow horizontally on iOS Safari
+
 3.3.11 (July 8, 2026)
 ---------------------
 - Enh #493: Don't open keyboard by default on mobile devices
