@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.4.3 (Unreleased)
-------------------
+3.4.3 (July 21, 2026)
+---------------------
 - Enh #506: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
 - Enh #507: Trigger the new core `UnreadCountChangedEvent` when a conversation is marked as seen/unread or replied to, so the push notification badge count is refreshed (requires `fcm-push` 2.2.9+)
 
