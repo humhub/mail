@@ -8,10 +8,9 @@
     "messenger",
     "communication"
   ],
-  "version": "3.3.12",
+  "version": "3.4.3",
   "humhub": {
-    "minVersion": "1.18.1",
-    "maxVersion": "1.18"
+    "minVersion": "1.19"
   },
   "homepage": "https://github.com/humhub/mail",
   "authors": [

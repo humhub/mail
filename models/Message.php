@@ -4,6 +4,7 @@ namespace humhub\modules\mail\models;
 
 use humhub\components\ActiveRecord;
 use humhub\modules\mail\Module;
+use humhub\modules\notification\events\UnreadCountChangedEvent;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\models\User;
 use Yii;
@@ -260,6 +261,10 @@ class Message extends ActiveRecord
         if ($userMessage) {
             $userMessage->last_viewed = null;
             $userMessage->save();
+
+            if ($userMessage->user) {
+                UnreadCountChangedEvent::triggerChanged($userMessage->user);
+            }
         }
     }
 
@@ -324,8 +329,15 @@ class Message extends ActiveRecord
             'message_id' => $this->id,
         ]);
         if ($userMessage !== null) {
+            $wasUnread = $userMessage->isUnread();
+
             $userMessage->last_viewed = date('Y-m-d G:i:s');
             $userMessage->save();
+
+            // Only the transition from unread to read changes the unread count.
+            if ($wasUnread && $userMessage->user) {
+                UnreadCountChangedEvent::triggerChanged($userMessage->user);
+            }
         }
     }
 
