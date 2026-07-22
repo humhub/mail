@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.4.3 (Unreleased)
-------------------
+3.4.3 (July 21, 2026)
+---------------------
 - Enh #506: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
 - Enh #507: Trigger the new core `UnreadCountChangedEvent` when a conversation is marked as seen/unread or replied to, so the push notification badge count is refreshed (requires `fcm-push` 2.2.9+)
 
@@ -18,6 +18,10 @@ Changelog
 3.4.0 (June 5, 2026)
 --------------------
 - Enh #483: Update for HumHub 1.19
+
+3.3.12 (July 16, 2026)
+----------------------
+- Fix #504: Message entries overflow horizontally on iOS Safari
 
 3.3.11 (July 8, 2026)
 ---------------------
