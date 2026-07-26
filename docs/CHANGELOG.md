@@ -3,7 +3,7 @@ Changelog
 
 3.4.4 (Unreleased)
 ---------------------
-- Fix: "Write a message" too low on Android Chrome based browsers
+- Fix #509: "Write a message" too low on Android Chrome based browsers
 
 3.4.3 (July 21, 2026)
 ---------------------
