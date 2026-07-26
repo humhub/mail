@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.4.4 (Unreleased)
+---------------------
+- Fix: "Write a message" too low on Android Chrome based browsers
+
 3.4.3 (July 21, 2026)
 ---------------------
 - Enh #506: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
