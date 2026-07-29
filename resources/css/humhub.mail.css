@@ -1,16 +1,18 @@
 :root {
   --hh-mail-offset-top: 0px;
-  --hh-mail-top-conversation-height: 0px;
+  --hh-mail-top-conversation-height: 50px;
+  --hh-mail-conversation-bottom-margin: 0px;
 }
 
-@media (max-width: 991.98px) {
+@media (min-width: 768px) {
   :root {
     --hh-mail-top-conversation-height: 60px;
+    --hh-mail-conversation-bottom-margin: 15px;
   }
 }
-@media (max-width: 767.98px) {
+@media (min-width: 992px) {
   :root {
-    --hh-mail-top-conversation-height: 50px;
+    --hh-mail-top-conversation-height: 0px;
   }
 }
 #dropdown-messages .dropdown-header {
@@ -99,14 +101,15 @@
 #mail-conversation-root > .panel {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 15px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
+  height: calc(100svh - var(--hh-mail-conversation-bottom-margin) - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
+  margin-bottom: var(--hh-mail-conversation-bottom-margin);
 }
 #mail-conversation-root > .panel > .conversation-entry-container {
   flex: 1;
   overflow: auto;
 }
 #mail-conversation-root > .panel .content_create .richtext-create-input-group > .mb-3 [data-ui-markdown] {
-  max-height: calc(50vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
+  max-height: calc(50svh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
   overflow-y: auto;
 }
 
@@ -212,9 +215,6 @@
   box-shadow: none;
   border: none;
   margin-bottom: 0 !important;
-}
-.mail-message-form > panel-body {
-  margin: 0 10px;
 }
 .mail-message-form .content-create-input-group {
   position: relative;
@@ -375,7 +375,6 @@
 .device-ios-mobile #createmessage-message.ProsemirrorEditor.fullscreen,
 .device-ios-mobile .mail-message-form .ProsemirrorEditor.fullscreen {
   top: var(--hh-fixed-header-height);
-  height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
   height: calc(100dvh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
 }
 .device-ios-mobile #createmessage-message.ProsemirrorEditor.fullscreen .ProseMirror-menubar-wrapper,
