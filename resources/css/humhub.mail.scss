@@ -14,16 +14,18 @@ $radiusNone: 0;
 
 :root {
     --hh-mail-offset-top: 0px;
-    --hh-mail-top-conversation-height: 0px;
+    --hh-mail-top-conversation-height: 50px;
+    --hh-mail-conversation-bottom-margin: 0px;
 }
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-up(md) {
     :root {
         --hh-mail-top-conversation-height: 60px;
+        --hh-mail-conversation-bottom-margin: 15px;
     }
 }
-@include media-breakpoint-down(md) {
+@include media-breakpoint-up(lg) {
     :root {
-        --hh-mail-top-conversation-height: 50px;
+        --hh-mail-top-conversation-height: 0px;
     }
 }
 
@@ -141,7 +143,8 @@ $radiusNone: 0;
     > .panel {
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 15px - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height)); // 15px of the .panel margin-bottom
+        height: calc(100svh - var(--hh-mail-conversation-bottom-margin) - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height)); // 15px of the .panel margin-bottom
+        margin-bottom: var(--hh-mail-conversation-bottom-margin);
 
         > .conversation-entry-container {
             flex: 1;
@@ -149,7 +152,7 @@ $radiusNone: 0;
         }
 
         .content_create .richtext-create-input-group>.mb-3 [data-ui-markdown] {
-            max-height: calc(50vh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
+            max-height: calc(50svh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
             overflow-y: auto;
         }
     }
@@ -272,10 +275,6 @@ $radiusNone: 0;
     box-shadow: none;
     border: none;
     margin-bottom: 0 !important;
-
-    > panel-body {
-        margin: 0 10px;
-    }
 
     .content-create-input-group {
         position: relative;
@@ -479,7 +478,6 @@ $radiusNone: 0;
     #createmessage-message.ProsemirrorEditor.fullscreen,
     .mail-message-form .ProsemirrorEditor.fullscreen {
         top: var(--hh-fixed-header-height);
-        height: calc(100vh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
         height: calc(100dvh - var(--hh-fixed-header-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)));
 
         .ProseMirror-menubar-wrapper {

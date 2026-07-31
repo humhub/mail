@@ -5,6 +5,7 @@ namespace humhub\modules\mail\models;
 use humhub\helpers\Html;
 use humhub\modules\content\widgets\richtext\converter\RichTextToEmailHtmlConverter;
 use humhub\modules\content\widgets\richtext\converter\RichTextToHtmlConverter;
+use humhub\modules\fcmPush\Module;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\notifications\ConversationNotificationCategory;
@@ -161,8 +162,9 @@ class MessageNotification extends BaseObject
 
     private function sendPush(User $user)
     {
+        /** @var Module $fcmModule */
         $fcmModule = Yii::$app->getModule('fcm-push');
-        if (!$fcmModule || !$fcmModule->isActivated) {
+        if (!$fcmModule || !$fcmModule->isEnabled) {
             return;
         }
         if (!$this->canReceivePush($user)) {
@@ -173,14 +175,21 @@ class MessageNotification extends BaseObject
 
         $firebaseService = new \humhub\modules\fcmPush\services\MessagingService($fcmModule->getConfigureForm());
 
-        $firebaseService->processMessage(
+        $args = [
             $user,
             Yii::$app->name,
             $this->getSubHeadline(),
             Url::toMessenger($this->message, true),
             null,
-            null,
-        );
+        ];
+
+        // fcm-push < 2.2.9 still requires the $notificationCount parameter
+        // (deprecated and ignored since 2.2.9)
+        if (version_compare($fcmModule->getVersion(), '2.2.9', '<')) {
+            $args[] = null;
+        }
+
+        $firebaseService->processMessage(...$args);
 
         Yii::$app->i18n->autosetLocale();
     }
