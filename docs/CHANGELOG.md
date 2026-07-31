@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.4.4 (Unreleased)
+3.4.4 (July 31, 2026)
 ---------------------
 - Fix #509: "Write a message" too low on Android Chrome based browsers
 
