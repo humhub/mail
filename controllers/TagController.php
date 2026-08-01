@@ -31,6 +31,7 @@ class TagController extends Controller
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY],
+            [ControllerAccess::RULE_PRIVATE_CONTENT_ACCESS],
         ];
     }
 
