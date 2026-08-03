@@ -154,7 +154,7 @@ class Events
     public static function onTopMenuInit($event)
     {
         try {
-            if (Yii::$app->user->isGuest || Yii::$app->user->isPrivateContentRestricted) {
+            if (Yii::$app->user->isGuest || !Yii::$app->user->impersonation->canAccessPrivateContent()) {
                 return;
             }
 
@@ -180,7 +180,7 @@ class Events
     public static function onNotificationAddonInit($event)
     {
         try {
-            if (Yii::$app->user->isGuest || Yii::$app->user->isPrivateContentRestricted) {
+            if (Yii::$app->user->isGuest || !Yii::$app->user->impersonation->canAccessPrivateContent()) {
                 return;
             }
 
@@ -212,7 +212,7 @@ class Events
             $menu = $event->sender;
 
             if ($menu->user->isCurrentUser()
-                || Yii::$app->user->isPrivateContentRestricted
+                || !Yii::$app->user->impersonation->canAccessPrivateContent()
                 || !Yii::$app->user->can(StartConversation::class)) {
                 return;
             }
@@ -266,7 +266,7 @@ class Events
 
     public static function onMetaSearchWidgetInit($event)
     {
-        if (Yii::$app->user->isGuest || Yii::$app->user->isPrivateContentRestricted) {
+        if (Yii::$app->user->isGuest || !Yii::$app->user->impersonation->canAccessPrivateContent()) {
             return;
         }
 

@@ -53,7 +53,7 @@ class MailController extends Controller
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY],
-            [ControllerAccess::RULE_PRIVATE_CONTENT_ACCESS],
+            [ControllerAccess::RULE_DENY_IMPERSONATED],
             [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']],
         ];
     }

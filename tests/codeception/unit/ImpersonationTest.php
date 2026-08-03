@@ -4,41 +4,39 @@ namespace tests\codeception\unit;
 
 use humhub\components\access\ControllerAccess;
 use humhub\components\access\StrictAccess;
-use humhub\modules\admin\Module as AdminModule;
 use humhub\modules\mail\controllers\InboxController;
 use humhub\modules\mail\controllers\MailController;
 use humhub\modules\mail\controllers\TagController;
+use humhub\modules\user\components\Impersonation;
 use humhub\modules\user\models\User;
 use tests\codeception\_support\HumHubDbTestCase;
 use Yii;
 
 /**
  * Conversations are private content, so the Messenger is not accessible while an admin impersonates a user,
- * unless the core `AdminModule::$impersonateMode` allows the access to private content.
+ * unless the core `Impersonation::$allowPrivateContentAccess` option restores the pre-1.19 behavior.
  *
  * @since 3.4.5
  */
-class ImpersonateModeTest extends HumHubDbTestCase
+class ImpersonationTest extends HumHubDbTestCase
 {
     protected $fixtureConfig = ['default'];
 
     public function _after()
     {
-        $this->setImpersonateMode(AdminModule::IMPERSONATE_MODE_DENY_PRIVATE_CONTENT_LOGGED);
+        $this->configureImpersonation(false);
 
         parent::_after();
     }
 
     /**
-     * All impersonation modes with their expected effect: [mode, private content is denied]
+     * Both impersonation configurations with their expected effect: [allowPrivateContentAccess, access denied]
      */
-    private static function impersonateModes(): array
+    private static function impersonationModes(): array
     {
         return [
-            'full access' => [AdminModule::IMPERSONATE_MODE_FULL_ACCESS, false],
-            'full access, logged' => [AdminModule::IMPERSONATE_MODE_FULL_ACCESS_LOGGED, false],
-            'deny private content' => [AdminModule::IMPERSONATE_MODE_DENY_PRIVATE_CONTENT, true],
-            'deny private content, logged' => [AdminModule::IMPERSONATE_MODE_DENY_PRIVATE_CONTENT_LOGGED, true],
+            'deny private content access (default)' => [false, true],
+            'allow private content access' => [true, false],
         ];
     }
 
@@ -55,28 +53,33 @@ class ImpersonateModeTest extends HumHubDbTestCase
     }
 
     /**
-     * Cross product of every impersonation mode with every Messenger controller
+     * Cross product of every impersonation configuration with every Messenger controller
      */
     public static function messengerAccessProvider(): array
     {
         $data = [];
 
-        foreach (static::impersonateModes() as $modeName => [$mode, $expectDenied]) {
+        foreach (static::impersonationModes() as $modeName => [$allowPrivateContentAccess, $expectDenied]) {
             foreach (static::messengerControllers() as $controllerName => [$controllerClass, $action]) {
-                $data[$modeName . ' / ' . $controllerName] = [$mode, $expectDenied, $controllerClass, $action];
+                $data[$modeName . ' / ' . $controllerName] = [
+                    $allowPrivateContentAccess,
+                    $expectDenied,
+                    $controllerClass,
+                    $action,
+                ];
             }
         }
 
         return $data;
     }
 
-    public function testControllersDeclareThePrivateContentAccessRule()
+    public function testControllersDenyImpersonatedUsers()
     {
         foreach (static::messengerControllers() as [$controllerClass, $action]) {
             $this->assertContains(
-                [ControllerAccess::RULE_PRIVATE_CONTENT_ACCESS],
+                [ControllerAccess::RULE_DENY_IMPERSONATED],
                 $this->getAccessRules($controllerClass),
-                $controllerClass . ' must be marked as giving access to private content',
+                $controllerClass . ' must be denied while impersonating',
             );
         }
     }
@@ -84,9 +87,13 @@ class ImpersonateModeTest extends HumHubDbTestCase
     /**
      * @dataProvider messengerAccessProvider
      */
-    public function testMessengerAccess(string $mode, bool $expectDenied, string $controllerClass, string $action)
-    {
-        $this->setImpersonateMode($mode);
+    public function testMessengerAccess(
+        bool $allowPrivateContentAccess,
+        bool $expectDenied,
+        string $controllerClass,
+        string $action,
+    ) {
+        $this->configureImpersonation($allowPrivateContentAccess);
         $this->becomeUser('Admin');
 
         $this->assertTrue(
@@ -94,7 +101,7 @@ class ImpersonateModeTest extends HumHubDbTestCase
             'A user which does not impersonate always has access to the Messenger',
         );
 
-        $this->impersonate('User1');
+        $this->startImpersonation('User1');
 
         $this->assertSame(
             !$expectDenied,
@@ -102,7 +109,7 @@ class ImpersonateModeTest extends HumHubDbTestCase
             'Messenger access while impersonating',
         );
 
-        $this->assertTrue(Yii::$app->user->restoreImpersonator());
+        $this->assertTrue(Yii::$app->user->impersonation->stop());
 
         $this->assertTrue(
             $this->hasAccess($controllerClass, $action),
@@ -125,21 +132,20 @@ class ImpersonateModeTest extends HumHubDbTestCase
         return $controller->behaviors()['acl']['rules'];
     }
 
-    private function setImpersonateMode(string $mode): AdminModule
+    private function configureImpersonation(bool $allowPrivateContentAccess): Impersonation
     {
-        /* @var AdminModule $module */
-        $module = Yii::$app->getModule('admin');
-        $module->impersonateMode = $mode;
+        $impersonation = Yii::$app->user->impersonation;
+        $impersonation->allowPrivateContentAccess = $allowPrivateContentAccess;
 
-        return $module;
+        return $impersonation;
     }
 
-    private function impersonate(string $userName): void
+    private function startImpersonation(string $userName): void
     {
-        $this->assertFalse(Yii::$app->user->isImpersonated);
+        $this->assertFalse(Yii::$app->user->impersonation->isActive());
 
-        $this->assertTrue(Yii::$app->user->impersonate(User::findOne(['username' => $userName])));
+        $this->assertTrue(Yii::$app->user->impersonation->start(User::findOne(['username' => $userName])));
 
-        $this->assertTrue(Yii::$app->user->isImpersonated);
+        $this->assertTrue(Yii::$app->user->impersonation->isActive());
     }
 }

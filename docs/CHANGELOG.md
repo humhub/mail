@@ -3,7 +3,7 @@ Changelog
 
 3.4.5 (Unreleased)
 ------------------
-- Enh #510: Deny access to the Messenger while an admin impersonates a user, since conversations are private content — requires core 1.19 and can be disabled with the core `\humhub\modules\admin\Module::$impersonateMode` option (humhub/humhub#8367)
+- Enh #510: Deny access to the Messenger while an admin impersonates a user, since conversations are private content — requires core 1.19 and can be disabled with the core `\humhub\modules\user\components\Impersonation::$allowPrivateContentAccess` option (humhub/humhub#8372)
 
 3.4.4 (July 31, 2026)
 ---------------------
