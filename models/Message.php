@@ -62,9 +62,17 @@ class Message extends ActiveRecord
         $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
         $query->addOrderBy(['created_at' => SORT_ASC]);
 
-        if ($from) {
+        // Normalize $from: only a strictly positive integer counts as a valid cursor.
+        // (Avoids PHP loose-comparison pitfalls, e.g. the string "0" being falsy but != null.)
+        $from = is_numeric($from) ? (int) $from : null;
+
+        if ($from !== null && $from > 0) {
             $query->andWhere(['>', 'message_entry.id', $from]);
         }
+
+        // Always bound the result set, otherwise an invalid/empty cursor (e.g. from=0 or
+        // no cursor at all) would load the entire conversation in one go.
+        $query->limit(Module::getModuleInstance()->conversationUpdatePageSize);
 
         return $query;
     }
@@ -78,12 +86,16 @@ class Message extends ActiveRecord
         $query = $this->getEntries();
         $query->addOrderBy(['created_at' => SORT_DESC]);
 
-        if ($from) {
+        // Normalize $from: only a strictly positive integer counts as a valid cursor.
+        $from = is_numeric($from) ? (int) $from : null;
+        $hasCursor = ($from !== null && $from > 0);
+
+        if ($hasCursor) {
             $query->andWhere(['<', 'message_entry.id', $from]);
         }
 
         $module = Module::getModuleInstance();
-        $limit = $from ? $module->conversationUpdatePageSize : $module->conversationInitPageSize;
+        $limit = $hasCursor ? $module->conversationUpdatePageSize : $module->conversationInitPageSize;
         $query->limit($limit);
 
         return array_reverse($query->all());
