@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.13 (Unreleased)
+----------------------
+- Fix #512: Validate `from` pagination cursor to prevent unbounded conversation loading
+
 3.3.12 (July 16, 2026)
 ----------------------
 - Fix #504: Message entries overflow horizontally on iOS Safari
