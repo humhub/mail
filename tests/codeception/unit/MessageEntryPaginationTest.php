@@ -84,7 +84,7 @@ class MessageEntryPaginationTest extends HumHubDbTestCase
             $this->assertLessThanOrEqual(
                 3,
                 count($entries),
-                'getEntryUpdates(' . var_export($from, true) . ') must never exceed conversationUpdatePageSize'
+                'getEntryUpdates(' . var_export($from, true) . ') must never exceed conversationUpdatePageSize',
             );
         }
     }
