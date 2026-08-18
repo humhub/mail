@@ -84,7 +84,10 @@ class InboxFilterForm extends QueryFilter
             }
         }
 
-        $this->query = UserMessage::findByUser();
+        // Eager-load what InboxMessagePreview needs for every row (participant list + last entry)
+        // to avoid N+1 queries when rendering the inbox (see Message::getUsersCount(),
+        // Message::getLastEntry(), Message::getLastActiveParticipant()).
+        $this->query = UserMessage::findByUser()->with(['message.users', 'message.lastEntryRelation']);
     }
 
     /**

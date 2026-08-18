@@ -69,6 +69,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.reply = function (evt) {
         var that = this;
+        this.updateDateBadgeFlag();
         client.submit(evt).then(function (response) {
             if (response.success) {
                 that.appendEntry(response.content).then(function () {
@@ -104,6 +105,24 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
     ConversationView.prototype.setLivePollInterval = function () {
         require('live').setDelay(5);
+    };
+
+    /**
+     * Sets the 'showDateBadge' hidden field of the reply form based on the date of the last
+     * entry already rendered in the DOM, so the backend doesn't have to run an extra query
+     * on every reply just to decide whether to show a date badge.
+     */
+    ConversationView.prototype.updateDateBadgeFlag = function () {
+        var $input = this.$.find('input[name="showDateBadge"]');
+        if (!$input.length) {
+            return;
+        }
+
+        var lastEntryDate = this.$.find('.mail-conversation-entry[data-created-at]:last').data('createdAt');
+        var today = new Date().toISOString().slice(0, 10);
+
+        // No prior entry (empty conversation) or last entry is from a previous day -> show badge.
+        $input.val((!lastEntryDate || lastEntryDate !== today) ? '1' : '');
     };
 
     ConversationView.prototype.getReplyRichtext = function () {
