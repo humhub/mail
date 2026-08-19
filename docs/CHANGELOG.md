@@ -4,6 +4,7 @@ Changelog
 3.3.13 (Unreleased)
 ----------------------
 - Fix #512: Validate `from` pagination cursor to prevent unbounded conversation loading
+- Fix #514: Optimize pin icon rendering on the inbox message list
 
 3.3.12 (July 16, 2026)
 ----------------------

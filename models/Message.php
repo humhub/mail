@@ -441,9 +441,15 @@ class Message extends ActiveRecord
         return $userMessage && $userMessage->pinned;
     }
 
-    public function getPinIcon($userId = null): ?Icon
+    /**
+     * @param int|null $userId
+     * @param bool|null $isPinned pass the already known pinned state (e.g. from a
+     * preloaded UserMessage) to avoid an extra lookup via {@see isPinned()}
+     * @return Icon|null
+     */
+    public function getPinIcon($userId = null, ?bool $isPinned = null): ?Icon
     {
-        if ($this->isPinned($userId)) {
+        if ($isPinned ?? $this->isPinned($userId)) {
             return Icon::get('map-pin')
                 ->tooltip(Yii::t('MailModule.base', 'Pinned'))
                 ->color('var(--bs-danger)');
