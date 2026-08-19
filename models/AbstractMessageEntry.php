@@ -133,7 +133,7 @@ abstract class AbstractMessageEntry extends ActiveRecord
         // A new entry (message, or a join/leave state - anything but TYPE_USER_LEFT, see
         // beforeSave()) bumps the conversation's updated_at/updated_by, which can flip it to
         // "unread" for every other participant - so their cached new-message count is now stale.
-        if ($insert && $this->type !== self::TYPE_USER_LEFT) {
+        if ($insert && $this->type != self::TYPE_USER_LEFT) {
             $this->invalidateParticipantsNewMessageCountCache();
         }
 

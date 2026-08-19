@@ -5,6 +5,8 @@ namespace humhub\modules\mail\controllers;
 use humhub\components\access\ControllerAccess;
 use humhub\components\Controller;
 use humhub\modules\mail\models\forms\InboxFilterForm;
+use humhub\modules\mail\models\Message;
+use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\ConversationInbox;
 use humhub\modules\mail\widgets\InboxMessagePreview;
 use Yii;
@@ -66,8 +68,12 @@ class InboxController extends Controller
         $filter = new InboxFilterForm();
         $filter->apply();
 
+        /* @var UserMessage[] $userMessages */
+        $userMessages = $filter->query->all();
+        Message::populateLastEntries(array_filter(array_map(fn (UserMessage $userMessage) => $userMessage->message, $userMessages)));
+
         $result = [];
-        foreach ($filter->query->all() as $userMessage) {
+        foreach ($userMessages as $userMessage) {
             try {
                 $result[$userMessage->message_id] = InboxMessagePreview::widget(['userMessage' => $userMessage]);
             } catch (\Throwable $e) {

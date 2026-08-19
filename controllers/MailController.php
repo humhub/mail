@@ -218,8 +218,10 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $query = UserMessage::findByUser()->with(['message.users', 'message.lastEntryRelation'])->limit(5);
-        return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
+        $userMessages = UserMessage::findByUser()->with('message.users')->limit(5)->all();
+        Message::populateLastEntries(array_filter(array_map(fn (UserMessage $userMessage) => $userMessage->message, $userMessages)));
+
+        return $this->renderAjax('notificationList', ['userMessages' => $userMessages]);
     }
 
     /**

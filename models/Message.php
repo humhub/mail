@@ -7,6 +7,7 @@ use humhub\modules\mail\Module;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\models\User;
 use Yii;
+use yii\db\Expression;
 use yii\helpers\Html;
 
 /**
@@ -151,7 +152,22 @@ class Message extends ActiveRecord
             ? $user->id
             : (is_scalar($user) ? (int) $user : Yii::$app->user->id);
 
-        return $userId && UserMessage::find()
+        if (!$userId) {
+            return false;
+        }
+
+        // Already eager-loaded (e.g. inbox list via InboxFilterForm) - check in memory, no query.
+        if ($this->isRelationPopulated('users')) {
+            foreach ($this->users as $participant) {
+                if ($participant->id === $userId) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return UserMessage::find()
             ->where(['message_id' => $this->id, 'user_id' => $userId])
             ->exists();
     }
@@ -204,11 +220,14 @@ class Message extends ActiveRecord
     }
 
     /**
-     * Relation version of getLastEntry(), so it can be eager-loaded with ->with('lastEntryRelation')
-     * across a whole list of conversations instead of running one query per Message (see
-     * InboxFilterForm::getPage()). The global ORDER BY DESC + Yii's hasOne bucketing (it keeps the
-     * first row seen per key) is what makes this resolve to the most recent entry per message_id
-     * when batch-loaded - this is the standard Yii pattern for "latest child per parent".
+     * Relation declaration for the last entry of this conversation. Kept as a relation so
+     * isRelationPopulated()/populateRelation() work with it (see getLastEntry() and
+     * populateLastEntries() below), but it's intentionally NOT meant to be batch-eager-loaded via
+     * ->with('lastEntryRelation'): Yii's hasOne + ORDER BY DESC bucketing trick correctly resolves
+     * to the newest entry per message_id, but to do so it first has to fetch *every* entry (with
+     * full content) of *every* conversation in the batch before discarding all but one row per
+     * conversation - unbounded for long conversations. Use populateLastEntries() instead to fill
+     * this relation for a batch of messages with one cheap, properly scoped query.
      *
      * @return \yii\db\ActiveQuery
      */
@@ -216,6 +235,42 @@ class Message extends ActiveRecord
     {
         return $this->hasOne(MessageEntry::class, ['message_id' => 'id'])
             ->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * Batch-loads the last entry (with its author eager-loaded) of each given Message and
+     * populates the 'lastEntryRelation' relation on each - the N+1-safe alternative to
+     * ->with('lastEntryRelation') (see the doc comment on getLastEntryRelation()).
+     *
+     * Runs 2 queries total regardless of how many messages are passed: one self-join query finds
+     * and fetches the last entry per message_id in a single round-trip (a MAX(id) GROUP BY,
+     * scoped to just the given messages, joined back onto message_entry for the full row), and
+     * one more for the eager-loaded authors.
+     *
+     * @param Message[] $messages
+     */
+    public static function populateLastEntries(array $messages): void
+    {
+        if (empty($messages)) {
+            return;
+        }
+
+        $messageIds = array_unique(array_map(fn (Message $message) => $message->id, $messages));
+
+        $lastPerMessage = MessageEntry::find()
+            ->select(['message_id', 'max_id' => new Expression('MAX(id)')])
+            ->where(['message_id' => $messageIds])
+            ->groupBy('message_id');
+
+        $lastEntries = MessageEntry::find()
+            ->innerJoin(['last' => $lastPerMessage], 'last.message_id = message_entry.message_id AND last.max_id = message_entry.id')
+            ->with('user')
+            ->indexBy('message_id')
+            ->all();
+
+        foreach ($messages as $message) {
+            $message->populateRelation('lastEntryRelation', $lastEntries[$message->id] ?? null);
+        }
     }
 
     /**

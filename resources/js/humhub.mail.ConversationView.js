@@ -118,8 +118,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             return;
         }
 
-        var lastEntryDate = this.$.find('.mail-conversation-entry[data-created-at]:last').data('createdAt');
-        var today = new Date().toISOString().slice(0, 10);
+        var lastEntryDate = this.$.find('.mail-conversation-entry[data-created-at], .conversation-state-badge[data-created-at]').last().data('createdAt');
+        var now = new Date();
+        var today = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
 
         // No prior entry (empty conversation) or last entry is from a previous day -> show badge.
         $input.val((!lastEntryDate || lastEntryDate !== today) ? '1' : '');

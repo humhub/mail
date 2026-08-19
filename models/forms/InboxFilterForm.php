@@ -84,10 +84,11 @@ class InboxFilterForm extends QueryFilter
             }
         }
 
-        // Eager-load what InboxMessagePreview needs for every row (participant list + last entry)
-        // to avoid N+1 queries when rendering the inbox (see Message::getUsersCount(),
-        // Message::getLastEntry(), Message::getLastActiveParticipant()).
-        $this->query = UserMessage::findByUser()->with(['message.users', 'message.lastEntryRelation']);
+        // Eager-load the participant list for every row to avoid N+1 queries when rendering the
+        // inbox (see Message::getUsersCount(), Message::getLastActiveParticipant()). The last
+        // entry is loaded separately in getPage() via Message::populateLastEntries() - see that
+        // method's doc comment for why it can't just be added to this with().
+        $this->query = UserMessage::findByUser()->with('message.users');
     }
 
     /**
@@ -153,6 +154,9 @@ class InboxFilterForm extends QueryFilter
         $pageSize = $this->from ? $module->inboxUpdatePageSize : $module->inboxInitPageSize;
         $result = $this->query->limit($pageSize)->all();
         $this->wasLastPage = count($result) < $pageSize;
+
+        Message::populateLastEntries(array_filter(array_map(fn (UserMessage $userMessage) => $userMessage->message, $result)));
+
         return $result;
     }
 

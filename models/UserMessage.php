@@ -37,6 +37,14 @@ class UserMessage extends ActiveRecord
     private const NEW_MESSAGE_COUNT_CACHE_KEY = 'mail.newMessageCount.';
 
     /**
+     * TTL for the new-message-count cache, as a safety net on top of the explicit invalidation
+     * below (see getNewMessageCount()) - core's FileCache is configured without a default
+     * duration (the old cacheExpireTime setting was removed, see migration
+     * m250807_194741_remove_cache_settings), so without this a value would otherwise never expire.
+     */
+    private const NEW_MESSAGE_COUNT_CACHE_DURATION = 60;
+
+    /**
      * @return string the associated database table name
      */
     public static function tableName()
@@ -89,7 +97,10 @@ class UserMessage extends ActiveRecord
      * This is polled frequently by the frontend, so the result is cached per user. The cache is
      * invalidated explicitly whenever something that could change the count happens (a new message
      * entry, a conversation being seen, a participant joining/leaving - see afterSave()/afterDelete()
-     * here and in AbstractMessageEntry), rather than relying on a short TTL.
+     * here and in AbstractMessageEntry). A short TTL (NEW_MESSAGE_COUNT_CACHE_DURATION) is set on
+     * top of that as a safety net against the classic read-then-set race (a poll recomputes the
+     * count between another request's invalidation and its own cache write) and against any writes
+     * to message/user_message that happen outside this module's AR events.
      *
      * @param User|int|string|null $userId
      * @return int
@@ -104,10 +115,14 @@ class UserMessage extends ActiveRecord
             return 0;
         }
 
-        return Yii::$app->cache->getOrSet(self::NEW_MESSAGE_COUNT_CACHE_KEY . $userId, fn() => static::findByUser($userId)
-            ->andWhere(['!=', 'message.updated_by', $userId])
-            ->andWhere('message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL')
-            ->count());
+        return Yii::$app->cache->getOrSet(
+            self::NEW_MESSAGE_COUNT_CACHE_KEY . $userId,
+            fn() => static::findByUser($userId)
+                ->andWhere(['!=', 'message.updated_by', $userId])
+                ->andWhere('message.updated_at > user_message.last_viewed OR user_message.last_viewed IS NULL')
+                ->count(),
+            self::NEW_MESSAGE_COUNT_CACHE_DURATION,
+        );
     }
 
     /**
