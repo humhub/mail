@@ -32,6 +32,7 @@ class InboxMessagePreview extends Widget
             'messageText' => $this->getMessagePreview(),
             'messageTime' => $this->getMessageTime(),
             'lastParticipant' => $this->lastParticipant(),
+            'isPinned' => $this->userMessage->pinned,
             'options' => $this->getOptions(),
         ]);
     }
