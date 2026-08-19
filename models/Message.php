@@ -7,6 +7,7 @@ use humhub\modules\mail\Module;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\models\User;
 use Yii;
+use yii\db\Expression;
 use yii\helpers\Html;
 
 /**
@@ -21,6 +22,7 @@ use yii\helpers\Html;
  * @property int $updated_by
  * @property-read  User $originator
  * @property-read MessageEntry $lastEntry
+ * @property-read MessageEntry $lastEntryRelation
  *
  * The followings are the available model relations:
  * @property MessageEntry[] $messageEntries
@@ -59,7 +61,9 @@ class Message extends ActiveRecord
 
     public function getEntryUpdates($from = null)
     {
-        $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id']);
+        // Eager-load the author so ConversationEntry::isOwnMessage() / the entry template
+        // don't lazy-load a User row per entry.
+        $query = $this->hasMany(MessageEntry::class, ['message_id' => 'id'])->with('user');
         $query->addOrderBy(['created_at' => SORT_ASC]);
 
         // Normalize $from: only a strictly positive integer counts as a valid cursor.
@@ -83,7 +87,9 @@ class Message extends ActiveRecord
      */
     public function getEntryPage($from = null)
     {
-        $query = $this->getEntries();
+        // Eager-load the author (see getEntryUpdates()) - covers the initial /mail/show render
+        // and /mail/load-more, not just /mail/update.
+        $query = $this->getEntries()->with('user');
         $query->addOrderBy(['created_at' => SORT_DESC]);
 
         // Normalize $from: only a strictly positive integer counts as a valid cursor.
@@ -142,24 +148,28 @@ class Message extends ActiveRecord
      */
     public function isParticipant($user = null): bool
     {
-        if (empty($user->guid)) {
-            if ($user === null && !Yii::$app->user->isGuest) {
-                $user = Yii::$app->user->getIdentity();
-            } elseif (!empty($user) && is_scalar($user)) {
-                $user = User::findOne(['id' => $user]);
-            }
-            if (empty($user->guid)) {
-                return false;
-            }
+        $userId = $user instanceof User
+            ? $user->id
+            : (is_scalar($user) ? (int) $user : Yii::$app->user->id);
+
+        if (!$userId) {
+            return false;
         }
 
-        foreach ($this->users as $participant) {
-            if ($participant->guid === $user->guid) {
-                return true;
+        // Already eager-loaded (e.g. inbox list via InboxFilterForm) - check in memory, no query.
+        if ($this->isRelationPopulated('users')) {
+            foreach ($this->users as $participant) {
+                if ($participant->id === $userId) {
+                    return true;
+                }
             }
+
+            return false;
         }
 
-        return false;
+        return UserMessage::find()
+            ->where(['message_id' => $this->id, 'user_id' => $userId])
+            ->exists();
     }
 
     /**
@@ -174,6 +184,11 @@ class Message extends ActiveRecord
 
     public function getUsersCount(): int
     {
+        // Already eager-loaded (e.g. inbox list via InboxFilterForm) - count in memory, no query.
+        if ($this->isRelationPopulated('users')) {
+            return count($this->users);
+        }
+
         if ($this->_userCount === null) {
             $this->_userCount = $this->getUsers()->count();
         }
@@ -205,11 +220,69 @@ class Message extends ActiveRecord
     }
 
     /**
+     * Relation declaration for the last entry of this conversation. Kept as a relation so
+     * isRelationPopulated()/populateRelation() work with it (see getLastEntry() and
+     * populateLastEntries() below), but it's intentionally NOT meant to be batch-eager-loaded via
+     * ->with('lastEntryRelation'): Yii's hasOne + ORDER BY DESC bucketing trick correctly resolves
+     * to the newest entry per message_id, but to do so it first has to fetch *every* entry (with
+     * full content) of *every* conversation in the batch before discarding all but one row per
+     * conversation - unbounded for long conversations. Use populateLastEntries() instead to fill
+     * this relation for a batch of messages with one cheap, properly scoped query.
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLastEntryRelation()
+    {
+        return $this->hasOne(MessageEntry::class, ['message_id' => 'id'])
+            ->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * Batch-loads the last entry (with its author eager-loaded) of each given Message and
+     * populates the 'lastEntryRelation' relation on each - the N+1-safe alternative to
+     * ->with('lastEntryRelation') (see the doc comment on getLastEntryRelation()).
+     *
+     * Runs 2 queries total regardless of how many messages are passed: one self-join query finds
+     * and fetches the last entry per message_id in a single round-trip (a MAX(id) GROUP BY,
+     * scoped to just the given messages, joined back onto message_entry for the full row), and
+     * one more for the eager-loaded authors.
+     *
+     * @param Message[] $messages
+     */
+    public static function populateLastEntries(array $messages): void
+    {
+        if (empty($messages)) {
+            return;
+        }
+
+        $messageIds = array_unique(array_map(fn (Message $message) => $message->id, $messages));
+
+        $lastPerMessage = MessageEntry::find()
+            ->select(['message_id', 'max_id' => new Expression('MAX(id)')])
+            ->where(['message_id' => $messageIds])
+            ->groupBy('message_id');
+
+        $lastEntries = MessageEntry::find()
+            ->innerJoin(['last' => $lastPerMessage], 'last.message_id = message_entry.message_id AND last.max_id = message_entry.id')
+            ->with('user')
+            ->indexBy('message_id')
+            ->all();
+
+        foreach ($messages as $message) {
+            $message->populateRelation('lastEntryRelation', $lastEntries[$message->id] ?? null);
+        }
+    }
+
+    /**
      * Returns the last message of this conversation
      * @return MessageEntry|null
      */
     public function getLastEntry(): ?MessageEntry
     {
+        if ($this->isRelationPopulated('lastEntryRelation')) {
+            return $this->lastEntryRelation;
+        }
+
         if ($this->_lastEntry === null) {
             $this->_lastEntry = MessageEntry::find()
                 ->where(['message_id' => $this->id])
@@ -229,6 +302,17 @@ class Message extends ActiveRecord
      */
     public function getLastActiveParticipant(bool $includeMe = false): User
     {
+        // In a conversation with at most 2 people, "the last active participant who isn't me" can
+        // only ever be the other participant - no need for a dedicated query if we already have the
+        // (eager-loaded) participant list in memory.
+        if (!$includeMe && $this->isRelationPopulated('users') && count($this->users) <= 2) {
+            foreach ($this->users as $participant) {
+                if ($participant->id !== Yii::$app->user->id) {
+                    return $participant;
+                }
+            }
+        }
+
         $query = MessageEntry::find()->where(['message_id' => $this->id])->orderBy('created_at DESC')->limit(1);
 
         if (!$includeMe) {

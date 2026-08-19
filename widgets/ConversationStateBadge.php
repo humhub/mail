@@ -39,6 +39,7 @@ class ConversationStateBadge extends Widget
     protected function getOptions(): array
     {
         $this->options['data-entry-id'] = $this->entry->id;
+        $this->options['data-created-at'] = Yii::$app->formatter->asDatetime($this->entry->created_at, 'php:Y-m-d');
 
         return $this->options;
     }
