@@ -58,6 +58,8 @@ use humhub\widgets\form\ActiveForm;
                 <?php else : ?>
                     <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'acknowledge' => true]) ?>
 
+                    <?= Html::hiddenInput('showDateBadge', '1') ?>
+
                     <div class="richtext-create-input-group">
 
                         <?= $form->field($replyForm, 'message')->widget(MailRichtextEditor::class, [
