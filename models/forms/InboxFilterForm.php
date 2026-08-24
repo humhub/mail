@@ -155,7 +155,7 @@ class InboxFilterForm extends QueryFilter
         $result = $this->query->limit($pageSize)->all();
         $this->wasLastPage = count($result) < $pageSize;
 
-        Message::populateLastEntries(array_filter(array_map(fn (UserMessage $userMessage) => $userMessage->message, $result)));
+        Message::populateLastEntries(array_filter(array_map(fn(UserMessage $userMessage) => $userMessage->message, $result)));
 
         return $result;
     }

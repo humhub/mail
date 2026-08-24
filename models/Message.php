@@ -255,7 +255,7 @@ class Message extends ActiveRecord
             return;
         }
 
-        $messageIds = array_unique(array_map(fn (Message $message) => $message->id, $messages));
+        $messageIds = array_unique(array_map(fn(Message $message) => $message->id, $messages));
 
         $lastPerMessage = MessageEntry::find()
             ->select(['message_id', 'max_id' => new Expression('MAX(id)')])
