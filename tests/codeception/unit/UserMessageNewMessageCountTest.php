@@ -32,7 +32,7 @@ class UserMessageNewMessageCountTest extends HumHubDbTestCase
         $form = new CreateMessage([
             'title' => $title,
             'message' => 'Hello',
-            'recipient' => array_map(fn (User $user) => $user->guid, $recipients),
+            'recipient' => array_map(fn(User $user) => $user->guid, $recipients),
         ]);
 
         $this->assertTrue($form->save(), 'Message creation failed: ' . json_encode($form->getErrors()));

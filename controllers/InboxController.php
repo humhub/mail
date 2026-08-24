@@ -70,7 +70,7 @@ class InboxController extends Controller
 
         /* @var UserMessage[] $userMessages */
         $userMessages = $filter->query->all();
-        Message::populateLastEntries(array_filter(array_map(fn (UserMessage $userMessage) => $userMessage->message, $userMessages)));
+        Message::populateLastEntries(array_filter(array_map(fn(UserMessage $userMessage) => $userMessage->message, $userMessages)));
 
         $result = [];
         foreach ($userMessages as $userMessage) {
