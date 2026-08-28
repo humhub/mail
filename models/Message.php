@@ -189,9 +189,7 @@ class Message extends ActiveRecord
             return count($this->users);
         }
 
-        if ($this->_userCount === null) {
-            $this->_userCount = $this->getUsers()->count();
-        }
+        $this->_userCount ??= $this->getUsers()->count();
 
         return $this->_userCount;
     }
@@ -283,13 +281,11 @@ class Message extends ActiveRecord
             return $this->lastEntryRelation;
         }
 
-        if ($this->_lastEntry === null) {
-            $this->_lastEntry = MessageEntry::find()
-                ->where(['message_id' => $this->id])
-                ->orderBy('created_at DESC')
-                ->limit(1)
-                ->one();
-        }
+        $this->_lastEntry ??= MessageEntry::find()
+            ->where(['message_id' => $this->id])
+            ->orderBy('created_at DESC')
+            ->limit(1)
+            ->one();
 
         return $this->_lastEntry;
     }
