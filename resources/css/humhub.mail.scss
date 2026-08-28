@@ -317,7 +317,10 @@ $radiusNone: 0;
     position: relative;
 
     .conversation-menu {
-        visibility: hidden; // Visible on .mail-conversation-entry:hover
+        // Kept in the layout and only visually hidden (not visibility:hidden/display:none),
+        // so the edit button stays focusable and reachable via keyboard Tab.
+        // Revealed on hover or when it (or a child) receives focus below.
+        opacity: 0;
         padding-left: 35px;
 
         .conversation-menu-item {
@@ -349,12 +352,21 @@ $radiusNone: 0;
                 background-color: $bgColorDefault;
                 color: inherit;
             }
+
+            // Now that the button is a real, focusable link (see ConversationEntryMenu::initMenus()),
+            // give it its own visible focus indicator - the round shape/badge background can make the
+            // browser's default outline hard to notice. Same treatment as .task-list-edit etc. in the
+            // tasks module.
+            &:focus-visible {
+                outline: 0;
+                box-shadow: 0 0 0 2px var(--accent);
+            }
         }
     }
 
-    &:hover {
+    &:hover, &:focus-within {
         .conversation-menu {
-            visibility: visible;
+            opacity: 1;
         }
     }
 
