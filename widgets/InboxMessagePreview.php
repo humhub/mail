@@ -53,9 +53,7 @@ class InboxMessagePreview extends Widget
 
     public function getMessage(): Message
     {
-        if ($this->_message === null) {
-            $this->_message = $this->userMessage->message;
-        }
+        $this->_message ??= $this->userMessage->message;
 
         return $this->_message;
     }

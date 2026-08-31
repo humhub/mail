@@ -135,9 +135,7 @@ class UserMessage extends ActiveRecord
 
     public static function findByUser($userId = null)
     {
-        if ($userId === null) {
-            $userId = Yii::$app->user->id;
-        }
+        $userId ??= Yii::$app->user->id;
 
         if ($userId instanceof User) {
             $userId = $userId->id;
