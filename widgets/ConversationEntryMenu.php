@@ -35,10 +35,15 @@ class ConversationEntryMenu extends Widget
     public function initMenus()
     {
         if ($this->entry->canEdit()) {
-            $this->menus[] = ModalButton::none()->link()
+            $editUrl = Url::toEditMessageEntry($this->entry);
+
+            $this->menus[] = ModalButton::none()
+                // href is required so the link is keyboard-focusable (Tab) and
+                // activatable with Enter - without it, browsers skip it entirely.
+                ->link($editUrl)
                 ->icon('pencil')
                 ->tooltip(Yii::t('MailModule.base', 'Edit'))
-                ->load(Url::toEditMessageEntry($this->entry))
+                ->load($editUrl)
                 ->cssClass('conversation-edit-button time badge');
         }
     }

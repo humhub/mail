@@ -6,6 +6,7 @@ Changelog
 - Fix #512: Validate `from` pagination cursor to prevent unbounded conversation loading
 - Fix #514: Optimize pin icon rendering on the inbox message list
 - Fix #515: Reduce database queries in the inbox list, conversation loading, reply action and unread count polling
+- Fix #519: Make the "Edit message" button accessible via keyboard
 - Enh: Automated code refactoring for HumHub 1.18.1 using Rector
 
 3.3.12 (July 16, 2026)
