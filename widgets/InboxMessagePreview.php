@@ -32,6 +32,7 @@ class InboxMessagePreview extends Widget
             'messageText' => $this->getMessagePreview(),
             'messageTime' => $this->getMessageTime(),
             'lastParticipant' => $this->lastParticipant(),
+            'isPinned' => $this->userMessage->pinned,
             'options' => $this->getOptions(),
         ]);
     }
@@ -52,9 +53,7 @@ class InboxMessagePreview extends Widget
 
     public function getMessage(): Message
     {
-        if ($this->_message === null) {
-            $this->_message = $this->userMessage->message;
-        }
+        $this->_message ??= $this->userMessage->message;
 
         return $this->_message;
     }
@@ -75,11 +74,18 @@ class InboxMessagePreview extends Widget
             return $user->displayName;
         }
 
-        $lastname = $this->isGroupChat()
-            ? mb_substr((string) $profile->lastname, 0, 1)
-            : $profile->lastname;
+        $firstname = (string) ($profile->firstname ?? '');
+        $lastname  = (string) ($profile->lastname  ?? '');
 
-        return $profile->firstname . ' ' . $lastname;
+        if ($lastname !== '' && $this->isGroupChat()) {
+            $lastname = mb_substr($lastname, 0, 1);
+        }
+
+        if ($firstname === '' && $lastname === '') {
+            return $user->displayName;
+        }
+
+        return trim($firstname . ' ' . $lastname);
     }
 
     private function getMessageTitle(): string

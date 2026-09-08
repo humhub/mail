@@ -99,6 +99,7 @@ class ConversationEntry extends JsWidget
         return [
             'entry-id' => $this->entry->id,
             'delete-url' => Url::toDeleteMessageEntry($this->entry),
+            'created-at' => Yii::$app->formatter->asDatetime($this->entry->created_at, 'php:Y-m-d'),
         ];
     }
 

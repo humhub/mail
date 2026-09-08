@@ -126,7 +126,11 @@ class MailController extends Controller
 
         $entries = $message->getEntryPage($from);
 
-        $result = Messages::widget(['message' => $message, 'from' => $from]);
+        $result = Messages::widget([
+            'message' => $message,
+            'from' => $from,
+            'entries' => $entries,
+        ]);
 
         return $this->asJson([
             'result' => $result,
@@ -140,7 +144,6 @@ class MailController extends Controller
 
         $this->checkMessagePermissions($message);
 
-        // Reply Form
         $replyForm = new ReplyForm(['model' => $message]);
 
         if (!empty(Yii::$app->request->post('fileList'))) {
@@ -150,7 +153,10 @@ class MailController extends Controller
         if ($replyForm->load(Yii::$app->request->post()) && $replyForm->save()) {
             return $this->asJson([
                 'success' => true,
-                'content' => ConversationEntry::widget(['entry' => $replyForm->reply, 'showDateBadge' => $replyForm->reply->isFirstToday()]),
+                'content' => ConversationEntry::widget([
+                    'entry' => $replyForm->reply,
+                    'showDateBadge' => (bool) Yii::$app->request->post('showDateBadge', true),
+                ]),
             ]);
         }
 
@@ -213,8 +219,10 @@ class MailController extends Controller
      */
     public function actionNotificationList()
     {
-        $query = UserMessage::findByUser()->limit(5);
-        return $this->renderAjax('notificationList', ['userMessages' => $query->all()]);
+        $userMessages = UserMessage::findByUser()->with('message.users')->limit(5)->all();
+        Message::populateLastEntries(array_filter(array_map(fn(UserMessage $userMessage) => $userMessage->message, $userMessages)));
+
+        return $this->renderAjax('notificationList', ['userMessages' => $userMessages]);
     }
 
     /**

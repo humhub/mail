@@ -16,6 +16,7 @@ use yii\helpers\Html;
 /* @var $messageText string */
 /* @var $messageTime string */
 /* @var $lastParticipant User */
+/* @var $isPinned bool */
 /* @var $options array */
 ?>
 <?= Html::beginTag('div', $options) ?>
@@ -31,7 +32,7 @@ use yii\helpers\Html;
             </div>
             <div class="text-break flex-grow-1">
                 <h4 class="mt-0">
-                    <?= Html::encode($messageTitle) . ' ' . $message->getPinIcon() ?>
+                    <?= Html::encode($messageTitle) . ' ' . $message->getPinIcon(isPinned: $isPinned) ?>
                     <time><?= $messageTime ?></time>
                 </h4>
                 <span class="new-message-badge"></span>

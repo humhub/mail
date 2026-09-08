@@ -248,7 +248,7 @@
   position: relative;
 }
 .mail-conversation-entry .conversation-menu {
-  visibility: hidden;
+  opacity: 0;
   padding-left: 35px;
 }
 .mail-conversation-entry .conversation-menu .conversation-menu-item {
@@ -276,8 +276,12 @@
   background-color: var(--hh-background-color-secondary);
   color: inherit;
 }
-.mail-conversation-entry:hover .conversation-menu {
-  visibility: visible;
+.mail-conversation-entry .conversation-menu .conversation-edit-button:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.mail-conversation-entry:hover .conversation-menu, .mail-conversation-entry:focus-within .conversation-menu {
+  opacity: 1;
 }
 .mail-conversation-entry .author-image .img-user {
   max-width: 100%;

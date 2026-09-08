@@ -2,7 +2,6 @@
 
 namespace humhub\modules\mail\models;
 
-use DateTime;
 use humhub\interfaces\ViewableInterface;
 use humhub\modules\user\models\User;
 use Yii;
@@ -65,17 +64,6 @@ class MessageEntry extends AbstractMessageEntry implements ViewableInterface
         $messageNotification = new MessageNotification($this->message, $this);
         $messageNotification->isNewConversation = $isNewConversation;
         $messageNotification->notifyAll();
-    }
-
-    public function isFirstToday(): bool
-    {
-        $today = Yii::$app->formatter->asDatetime(new DateTime('today'), 'php:Y-m-d H:i:s');
-
-        return !MessageEntry::find()
-            ->where(['message_id' => $this->message_id])
-            ->andWhere(['!=', 'id', $this->id])
-            ->andWhere(['>=', 'created_at', $today])
-            ->exists();
     }
 
     /**

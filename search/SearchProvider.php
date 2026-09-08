@@ -90,9 +90,7 @@ class SearchProvider implements MetaSearchProviderInterface
      */
     public function getService(): MetaSearchService
     {
-        if ($this->service === null) {
-            $this->service = new MetaSearchService($this);
-        }
+        $this->service ??= new MetaSearchService($this);
 
         return $this->service;
     }
