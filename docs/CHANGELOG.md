@@ -7,6 +7,7 @@ Changelog
 - Fix #514: Optimize pin icon rendering on the inbox message list
 - Fix #515: Reduce database queries in the inbox list, conversation loading, reply action and unread count polling
 - Fix #519: Make the "Edit message" button accessible via keyboard
+- Fix #524: Handle empty profile first and last name in the inbox message preview
 - Enh: Automated code refactoring for HumHub 1.18.1 using Rector
 
 3.3.12 (July 16, 2026)
