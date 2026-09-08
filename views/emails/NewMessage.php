@@ -114,7 +114,7 @@ use humhub\widgets\mails\MailButtonList;
                                                         <!-- START: USER IMAGE -->
                                                         <a href="<?= $senderUrl ?>">
                                                             <img
-                                                                src="<?= $sender->getProfileImage()->getUrl("", true); ?>"
+                                                                src="<?= $sender->image->getUrl(null, true); ?>"
                                                                 width="50"
                                                                 alt=""
                                                                 style="max-width:50px; display:block !important; border-radius: 4px;"
