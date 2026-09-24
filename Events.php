@@ -9,6 +9,7 @@
 namespace humhub\modules\mail;
 
 use humhub\commands\IntegrityController;
+use humhub\helpers\ControllerHelper;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\Message;
@@ -22,6 +23,7 @@ use humhub\modules\mail\widgets\NotificationInbox;
 use humhub\modules\ui\menu\MenuLink;
 use humhub\modules\user\widgets\HeaderControlsMenu;
 use humhub\widgets\MetaSearchWidget;
+use humhub\widgets\TopMenu;
 use Yii;
 
 /**
@@ -152,20 +154,23 @@ class Events
     public static function onTopMenuInit($event)
     {
         try {
-            if (Yii::$app->user->isGuest) {
+            if (Yii::$app->user->isGuest || !Yii::$app->user->impersonation->canAccessPrivateContent()) {
                 return;
             }
+
+            /* @var TopMenu $menu */
+            $menu = $event->sender;
 
             $module = Config::getModule();
             // See https://github.com/humhub/humhub-modules-mail/issues/201
             if (method_exists($module, 'hideInTopNav') && !$module->hideInTopNav()) {
-                $event->sender->addItem([
+                $menu->addEntry(new MenuLink([
                     'label' => Yii::t('MailModule.base', 'Messages'),
                     'url' => Url::toMessenger(),
-                    'icon' => '<i class="fa fa-envelope"></i>',
-                    'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'mail'),
+                    'icon' => 'envelope',
+                    'isActive' => ControllerHelper::isActivePath('mail'),
                     'sortOrder' => 300,
-                ]);
+                ]));
             }
         } catch (\Throwable $e) {
             Yii::error($e);
@@ -175,13 +180,28 @@ class Events
     public static function onNotificationAddonInit($event)
     {
         try {
-            if (Yii::$app->user->isGuest) {
+            if (Yii::$app->user->isGuest || !Yii::$app->user->impersonation->canAccessPrivateContent()) {
                 return;
             }
 
-            $event->sender->addWidget(NotificationInbox::className(), [], ['sortOrder' => 90]);
+            $event->sender->addWidget(NotificationInbox::class, [], ['sortOrder' => 90]);
         } catch (\Throwable $e) {
             Yii::error($e);
+        }
+    }
+
+    /**
+     * Adds the number of unseen conversation messages to the push notification
+     * badge count of the `fcm-push` module.
+     *
+     * @param \humhub\modules\fcmPush\events\NotificationCountEvent $event
+     */
+    public static function onPushNotificationCount($event)
+    {
+        try {
+            $event->count += (int)UserMessage::getNewMessageCount($event->user->id);
+        } catch (\Throwable $e) {
+            Yii::error('Messenger - Error onPushNotificationCount: ' . $e);
         }
     }
 
@@ -191,7 +211,9 @@ class Events
             /* @var HeaderControlsMenu $menu */
             $menu = $event->sender;
 
-            if ($menu->user->isCurrentUser() || !Yii::$app->user->can(StartConversation::class)) {
+            if ($menu->user->isCurrentUser()
+                || !Yii::$app->user->impersonation->canAccessPrivateContent()
+                || !Yii::$app->user->can(StartConversation::class)) {
                 return;
             }
 
@@ -244,7 +266,7 @@ class Events
 
     public static function onMetaSearchWidgetInit($event)
     {
-        if (Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest || !Yii::$app->user->impersonation->canAccessPrivateContent()) {
             return;
         }
 

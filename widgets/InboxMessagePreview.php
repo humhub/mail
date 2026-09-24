@@ -41,12 +41,15 @@ class InboxMessagePreview extends Widget
     {
         $message = $this->getMessage();
 
+        $url = Url::toMessenger($message);
+
         return [
+            'href' => $url,
             'class' => 'messagePreviewEntry entry' . ($this->userMessage->isUnread() ? ' unread' : ''),
             'data' => [
                 'message-id' => $message->id,
                 'action-click' => 'mail.notification.loadMessage',
-                'action-url' => Url::toMessenger($message),
+                'action-url' => $url,
             ],
         ];
     }

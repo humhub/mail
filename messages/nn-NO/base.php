@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Title' => 'Tittel',
+    'Disabled' => 'Funksjonshemmet',
     'User' => 'Bruker',
     '<strong>Confirm</strong> deleting conversation' => '',
     '<strong>Confirm</strong> leaving conversation' => '',
@@ -30,14 +30,15 @@ return [
     'Created By' => '',
     'Delete' => '',
     'Delete conversation' => '',
-    'Disabled' => '',
     'Do you really want to delete this conversation?' => '',
     'Do you really want to delete this message?' => '',
     'Do you really want to delete this tag?' => '',
     'Do you really want to leave this conversation?' => '',
     'Edit' => '',
+    'Edit conversation subject' => '',
     'Edit message entry' => '',
     'Edit message...' => '',
+    'Edit subject' => '',
     'Filter' => '',
     'Friday' => '',
     'Here you can manage your private conversation tags.' => '',
@@ -66,6 +67,7 @@ return [
     'Receive Notifications when someone sends you a message.' => '',
     'Receive private messages' => '',
     'Recipient' => '',
+    'Reply' => '',
     'Reply now' => '',
     'Required' => '',
     'Saturday' => '',
