@@ -514,8 +514,8 @@ humhub.module('mail.inbox', function (module, require, $) {
         }
 
         this.$.on('click', '.entry', function() {
-            that.$.find('.entry').removeClass('selected');
-            $(this).addClass('selected');
+            that.$.find('.entry').removeClass('selected').removeAttr('aria-current');
+            $(this).addClass('selected').attr('aria-current', 'true');
         })
     };
 
@@ -541,7 +541,11 @@ humhub.module('mail.inbox', function (module, require, $) {
                 if(!$entry.length) {
                     $(html).prependTo(that.$) ;
                 } else {
-                   $entry.replaceWith(html);
+                    var hadFocus = $entry[0] === document.activeElement;
+                    $entry.replaceWith(html);
+                    if (hadFocus) {
+                        that.getEntry(id).trigger('focus');
+                    }
                 }
             });
 
@@ -635,14 +639,14 @@ humhub.module('mail.inbox', function (module, require, $) {
     };
 
     ConversationList.prototype.updateActiveItem = function() {
-        this.$.find('.entry').removeClass('selected');
+        this.$.find('.entry').removeClass('selected').removeAttr('aria-current');
 
         // Set new selection
         root = null; // refresh root after load new active message
         if (getRoot()) {
             var $selected = this.$.find('[data-message-id="' + getRoot().getActiveMessageId() + '"]');
             if ($selected.length) {
-                $selected.removeClass('unread').addClass('selected');
+                $selected.removeClass('unread').addClass('selected').attr('aria-current', 'true');
             }
         }
     };

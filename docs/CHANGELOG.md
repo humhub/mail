@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.4.6 (Unreleased)
+------------------
+- Enh #503: Make inbox conversations focusable and openable via keyboard
+
 3.4.5 (September 8, 2026)
 -------------------------
 - Enh #510: Deny access to the Messenger while an admin impersonates a user, since conversations are private content — requires core 1.19 and can be disabled with the core `\humhub\modules\user\components\Impersonation::$allowPrivateContentAccess` option (humhub/humhub#8372)

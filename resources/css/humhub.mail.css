@@ -327,7 +327,19 @@
 }
 
 .messagePreviewEntry {
+  display: block;
+  color: inherit;
+  text-decoration: none;
   cursor: pointer;
+}
+.messagePreviewEntry:hover, .messagePreviewEntry:focus {
+  color: inherit;
+  text-decoration: none;
+}
+.hh-list > .messagePreviewEntry:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-left-color: var(--accent);
 }
 .messagePreviewEntry time {
   font-size: 10px;
