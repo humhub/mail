@@ -31,7 +31,7 @@
   min-height: 100px !important;
 }
 
-#mail-conversation-create-button .fa, #create-message-button .fa {
+#mail-conversation-create-button .ti, #create-message-button .ti {
   margin: 0;
 }
 
@@ -58,10 +58,12 @@
   background: #fff;
   border-radius: 50%;
   box-shadow: 1px 1px 2px #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.conversation-scroll-down-button .fa {
+.conversation-scroll-down-button .ti {
   font-size: 26px;
-  margin: 7px 0 0 11px;
 }
 
 .conversation-entry-list {

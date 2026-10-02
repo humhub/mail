@@ -12,7 +12,7 @@ use humhub\interfaces\MetaSearchResultInterface;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\widgets\InboxMessagePreview;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Icon;
 use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
 
@@ -44,7 +44,7 @@ class SearchRecord implements MetaSearchResultInterface
             ]);
         }
 
-        return Icon::get('envelope');
+        return Icon::get('mail');
     }
 
     /**

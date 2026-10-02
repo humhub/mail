@@ -4,6 +4,7 @@ use humhub\helpers\Html;
 use humhub\modules\mail\models\Config;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
+use humhub\widgets\Icon;
 
 /* @var $model Config */
 ?>
@@ -33,7 +34,7 @@ use humhub\widgets\form\ActiveForm;
             </div>
 
             <div class="alert alert-info">
-                <i class="fa fa-info-circle"></i> <?= Yii::t('MailModule.base', 'Leave fields blank in order to disable a restriction.') ?>
+                <?= Icon::get('info-circle') ?> <?= Yii::t('MailModule.base', 'Leave fields blank in order to disable a restriction.') ?>
             </div>
 
         <?= Button::save()->submit() ?>

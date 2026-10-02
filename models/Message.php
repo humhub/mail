@@ -5,7 +5,7 @@ namespace humhub\modules\mail\models;
 use humhub\components\ActiveRecord;
 use humhub\modules\mail\Module;
 use humhub\modules\notification\events\UnreadCountChangedEvent;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Icon;
 use humhub\modules\user\models\User;
 use Yii;
 use yii\db\Expression;

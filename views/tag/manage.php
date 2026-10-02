@@ -77,7 +77,7 @@ $dataProvider = new ActiveDataProvider([
                                         ->sm()
                                         ->loader(false),
                                     'delete' => fn($url, Topic $model) => Button::danger()
-                                        ->icon('times')
+                                        ->icon('x')
                                         ->options(['aria-label' => Yii::t('base', 'Delete')])
                                         ->action('client.post', Url::toDeleteTag($model->id))
                                         ->confirm(

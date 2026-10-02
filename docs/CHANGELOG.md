@@ -1,6 +1,13 @@
 Changelog
 =========
 
+3.5.0 (Unreleased)
+------------------
+- Enh: Compatibility with HumHub 1.20
+- Enh: Use Tabler icon names and markup instead of Font Awesome (humhub/humhub#8504)
+- Enh: Use the core classes that replaced the removed `ui` module (`Icon`, `MenuLink`, filter and picker widgets)
+- Enh: Add a "Send message" action to the cards of the People directory (humhub/humhub#8525)
+
 3.4.6 (Unreleased)
 ------------------
 - Enh #503: Make inbox conversations focusable and openable via keyboard

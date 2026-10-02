@@ -5,8 +5,8 @@ namespace humhub\modules\mail\widgets;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\models\MessageTag;
-use humhub\modules\ui\form\widgets\BasePicker;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\form\BasePicker;
+use humhub\widgets\Icon;
 use Yii;
 
 class ConversationTagPicker extends BasePicker
@@ -56,6 +56,6 @@ class ConversationTagPicker extends BasePicker
 
     public static function getIcon()
     {
-        return Icon::get('star')->asString();
+        return Icon::get('star-filled')->asString();
     }
 }

@@ -21,7 +21,7 @@ use humhub\modules\mail\widgets\ConversationEntry;
 use humhub\modules\mail\widgets\ConversationHeader;
 use humhub\modules\mail\widgets\ConversationInbox;
 use humhub\modules\mail\widgets\Messages;
-use humhub\modules\User\models\User;
+use humhub\modules\user\models\User;
 use humhub\modules\user\models\UserFilter;
 use humhub\modules\user\models\UserPicker;
 use humhub\modules\user\widgets\UserListBox;
