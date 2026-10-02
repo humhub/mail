@@ -86,7 +86,7 @@
     return $options.state && $options.state.canMessage && $options.state.url ? (vue.openBlock(), vue.createElementBlock("button", {
       key: 0,
       type: "button",
-      class: vue.normalizeClass(["c-entity-card__action", $props.buttons.mailClass || "btn btn-light"]),
+      class: vue.normalizeClass(["c-entity-card__action c-entity-card__action--icon", $props.buttons.mailClass || "btn btn-light"]),
       title: $options.label,
       "aria-label": $options.label,
       onClick: _cache[0] || (_cache[0] = (...args) => $options.compose && $options.compose(...args))

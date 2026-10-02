@@ -2,7 +2,7 @@
     <button
         v-if="state && state.canMessage && state.url"
         type="button"
-        class="c-entity-card__action"
+        class="c-entity-card__action c-entity-card__action--icon"
         :class="buttons.mailClass || 'btn btn-light'"
         :title="label"
         :aria-label="label"

@@ -77,7 +77,7 @@ describe('MailPeopleCardAction', () => {
         const button = wrapper.find('button');
         expect(button.attributes('aria-label')).toBe('Send message');
         expect(button.attributes('title')).toBe('Send message');
-        expect(button.classes()).toEqual(expect.arrayContaining(['c-entity-card__action', 'btn', 'btn-light']));
+        expect(button.classes()).toEqual(expect.arrayContaining(['c-entity-card__action', 'c-entity-card__action--icon', 'btn', 'btn-light']));
         expect(button.find('i.ti.ti-mail').attributes('aria-hidden')).toBe('true');
         expect(button.text()).toBe('');
         // The rest of the slot context does not leak onto the button.
