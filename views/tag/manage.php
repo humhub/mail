@@ -4,7 +4,6 @@ use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\MessageTag;
-use humhub\modules\topic\models\Topic;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
 use humhub\widgets\GridView;
@@ -70,13 +69,13 @@ $dataProvider = new ActiveDataProvider([
                                 'contentOptions' => ['style' => 'text-align:right'],
                                 'template' => '{update} {delete}',
                                 'buttons' => [
-                                    'update' => fn($url, Topic $model) => ModalButton::primary()
+                                    'update' => fn($url, MessageTag $model) => ModalButton::primary()
                                         ->load(Url::toEditTag($model->id))
                                         ->icon('pencil')
                                         ->options(['aria-label' => Yii::t('base', 'Edit')])
                                         ->sm()
                                         ->loader(false),
-                                    'delete' => fn($url, Topic $model) => Button::danger()
+                                    'delete' => fn($url, MessageTag $model) => Button::danger()
                                         ->icon('times')
                                         ->options(['aria-label' => Yii::t('base', 'Delete')])
                                         ->action('client.post', Url::toDeleteTag($model->id))
