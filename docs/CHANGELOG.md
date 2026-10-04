@@ -11,6 +11,8 @@ Changelog
 3.4.6 (Unreleased)
 ------------------
 - Enh #503: Make inbox conversations focusable and openable via keyboard
+- Fix #529: "Manage Tags" page failed with a `TypeError` when the user had at least one conversation tag (since 3.4.2)
+- Fix: Refined model validation rules
 
 3.4.5 (September 8, 2026)
 -------------------------
@@ -37,6 +39,10 @@ Changelog
 3.4.0 (June 5, 2026)
 --------------------
 - Enh #483: Update for HumHub 1.19
+
+3.3.14 (October 4, 2026)
+------------------------
+- Fix: Refined model validation rules
 
 3.3.13 (September 8, 2026)
 --------------------------

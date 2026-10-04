@@ -53,10 +53,10 @@ class Message extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return [
-            [['created_by', 'updated_by'], 'integer'],
+            [['!created_by', '!updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['title'], 'trim'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['!created_at', '!updated_at'], 'safe'],
         ];
     }
 
