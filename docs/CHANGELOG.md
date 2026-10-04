@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.4.6 (Unreleased)
-------------------
+3.4.6 (October 4, 2026)
+-----------------------
 - Enh #503: Make inbox conversations focusable and openable via keyboard
 - Fix #529: "Manage Tags" page failed with a `TypeError` when the user had at least one conversation tag (since 3.4.2)
 - Fix: Refined model validation rules
