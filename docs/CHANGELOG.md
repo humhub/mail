@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.14 (Unreleased)
--------------------
+3.3.14 (October 4, 2026)
+------------------------
 - Fix: Refined model validation rules
 
 3.3.13 (September 8, 2026)
