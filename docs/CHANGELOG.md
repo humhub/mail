@@ -1,6 +1,10 @@
 Changelog
 =========
 
+3.3.14 (Unreleased)
+-------------------
+- Fix: Refined model validation rules
+
 3.3.13 (September 8, 2026)
 --------------------------
 - Fix #512: Validate `from` pagination cursor to prevent unbounded conversation loading
