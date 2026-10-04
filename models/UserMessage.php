@@ -58,9 +58,9 @@ class UserMessage extends ActiveRecord
     public function rules()
     {
         return [
-            [['message_id', 'user_id'], 'required'],
-            [['message_id', 'user_id', 'is_originator', 'created_by', 'updated_by'], 'integer'],
-            [['last_viewed', 'created_at', 'updated_at'], 'safe'],
+            [['!message_id', '!user_id'], 'required'],
+            [['!message_id', '!user_id', '!is_originator', '!created_by', '!updated_by'], 'integer'],
+            [['!last_viewed', '!created_at', '!updated_at'], 'safe'],
         ];
     }
 
