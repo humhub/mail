@@ -19,7 +19,7 @@ use yii\helpers\Html;
 /* @var $isPinned bool */
 /* @var $options array */
 ?>
-<?= Html::beginTag('div', $options) ?>
+<?= Html::beginTag('a', $options) ?>
     <div class="mail-link">
         <div class="d-flex">
             <div class="flex-shrink-0 me-2">
@@ -47,4 +47,4 @@ use yii\helpers\Html;
             </div>
         </div>
     </div>
-<?= Html::endTag('div') ?>
+<?= Html::endTag('a') ?>

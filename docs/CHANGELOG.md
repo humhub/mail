@@ -1,6 +1,38 @@
 Changelog
 =========
 
+3.4.6 (October 4, 2026)
+-----------------------
+- Enh #503: Make inbox conversations focusable and openable via keyboard
+- Fix #529: "Manage Tags" page failed with a `TypeError` when the user had at least one conversation tag (since 3.4.2)
+- Fix: Refined model validation rules
+
+3.4.5 (September 8, 2026)
+-------------------------
+- Enh #510: Deny access to the Messenger while an admin impersonates a user, since conversations are private content — requires core 1.19 and can be disabled with the core `\humhub\modules\user\components\Impersonation::$allowPrivateContentAccess` option (humhub/humhub#8372)
+
+3.4.4 (July 31, 2026)
+---------------------
+- Fix #509: "Write a message" too low on Android Chrome based browsers
+
+3.4.3 (July 21, 2026)
+---------------------
+- Enh #506: Add the number of unseen conversation messages to the push notification badge count (requires `fcm-push` 2.2.9+)
+- Enh #507: Trigger the new core `UnreadCountChangedEvent` when a conversation is marked as seen/unread or replied to, so the push notification badge count is refreshed (requires `fcm-push` 2.2.9+)
+
+3.4.2 (July 8, 2026)
+--------------------
+- Fix #499: Update user image
+- Enh #500: Add aria-label attribute for icon-only buttons
+
+3.4.1 (June 22, 2026)
+---------------------
+- Fix #498: Fix use of removed module property `isActivated`
+
+3.4.0 (June 5, 2026)
+--------------------
+- Enh #483: Update for HumHub 1.19
+
 3.3.14 (October 4, 2026)
 ------------------------
 - Fix: Refined model validation rules
