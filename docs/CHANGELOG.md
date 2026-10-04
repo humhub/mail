@@ -4,6 +4,7 @@ Changelog
 3.4.6 (Unreleased)
 ------------------
 - Enh #503: Make inbox conversations focusable and openable via keyboard
+- Fix #529: "Manage Tags" page failed with a `TypeError` when the user had at least one conversation tag (since 3.4.2)
 
 3.4.5 (September 8, 2026)
 -------------------------
