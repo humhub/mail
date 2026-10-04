@@ -78,9 +78,9 @@ abstract class AbstractMessageEntry extends ActiveRecord
     public function rules()
     {
         return [
-            [['message_id', 'user_id'], 'required'],
-            [['message_id', 'user_id', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['!message_id', '!user_id'], 'required'],
+            [['!message_id', '!user_id', '!created_by', '!updated_by'], 'integer'],
+            [['!created_at', '!updated_at'], 'safe'],
         ];
     }
 
