@@ -341,9 +341,16 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     ConversationView.prototype.loadMore = function () {
         var that = this;
 
+        // Use any entry with an id (message or joined/left badge), a conversation may have no message entries left
+        var from = this.getListNode().find('[data-entry-id]:first').data('entryId');
+        if (!from) {
+            this.options.isLast = true;
+            return Promise.resolve();
+        }
+
         var data = {
             id: this.getActiveMessageId(),
-            from: this.$.find('.mail-conversation-entry:first').data('entryId')
+            from: from
         };
 
         return client.get(this.options.loadMoreUrl, {data: data}).then(function (response) {
@@ -355,6 +362,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
             that.options.isLast = !response.result || response.isLast;
         }).catch(function (err) {
+            // Stop loading on error, otherwise the same failing request is repeated endlessly
+            that.options.isLast = true;
             module.log.error(err, true);
         });
     };
