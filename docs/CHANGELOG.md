@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3.15 (Unreleased)
--------------------
+3.3.15 (October 12, 2026)
+-------------------------
 - Fix #531: Endless loading requests in a conversation without message entries (e.g. only "joined"/"left" entries left)
 
 3.3.14 (October 4, 2026)
