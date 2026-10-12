@@ -53,6 +53,7 @@ class MailController extends Controller
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY],
+            [ControllerAccess::RULE_DENY_IMPERSONATED],
             [ControllerAccess::RULE_PERMISSION => StartConversation::class, 'actions' => ['create', 'add-user']],
         ];
     }
@@ -316,7 +317,7 @@ class MailController extends Controller
                 $userInfo = [];
                 $userInfo['guid'] = $user->guid;
                 $userInfo['displayName'] = Html::encode($user->displayName);
-                $userInfo['image'] = $user->getProfileImage()->getUrl();
+                $userInfo['image'] = $user->image->getUrl();
                 $userInfo['link'] = $user->getUrl();
                 $results[] = $userInfo;
             }

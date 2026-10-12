@@ -4,7 +4,6 @@ use humhub\components\View;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\AddTag;
 use humhub\modules\mail\models\MessageTag;
-use humhub\modules\topic\models\Topic;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
 use humhub\widgets\GridView;
@@ -43,7 +42,11 @@ $dataProvider = new ActiveDataProvider([
                     <div class="mb-3" style="margin-bottom:0">
                         <div class="input-group<?= $model->tag->hasErrors() ? ' is-invalid' : '' ?>">
                             <?= Html::activeTextInput($model->tag, 'name', ['style' => 'height:36px', 'class' => 'form-control', 'placeholder' => Yii::t('MailModule.base', 'Add Tag')]) ?>
-                            <?= Button::light()->icon('fa-plus')->loader()->submit() ?>
+                            <?= Button::light()
+                                ->icon('plus')
+                                ->options(['aria-label' => Yii::t('MailModule.base', 'Add Tag')])
+                                ->loader()
+                                ->submit() ?>
                         </div>
                         <span class="invalid-feedback">
                                  <?= Html::error($model->tag, 'name') ?>
@@ -64,17 +67,25 @@ $dataProvider = new ActiveDataProvider([
                                 'class' => ActionColumn::class,
                                 'options' => ['width' => '80px'],
                                 'contentOptions' => ['style' => 'text-align:right'],
+                                'template' => '{update} {delete}',
                                 'buttons' => [
-                                    'update' => fn($url, $model) =>
-                                        /* @var $model Topic */
-                                        ModalButton::primary()->load(Url::toEditTag($model->id))->icon('fa-pencil')->sm()->loader(false),
-                                    'view' => fn() => '',
-                                    'delete' => fn($url, $model) =>
-                                        /* @var $model Topic */
-                                        Button::danger()->icon('fa-times')->action('client.post', Url::toDeleteTag($model->id))->confirm(
-                                        Yii::t('MailModule.base', '<strong>Confirm</strong> tag deletion'),
-                                        Yii::t('MailModule.base', 'Do you really want to delete this tag?'),
-                                        Yii::t('base', 'Delete'))->sm()->loader(false),
+                                    'update' => fn($url, MessageTag $model) => ModalButton::primary()
+                                        ->load(Url::toEditTag($model->id))
+                                        ->icon('pencil')
+                                        ->options(['aria-label' => Yii::t('base', 'Edit')])
+                                        ->sm()
+                                        ->loader(false),
+                                    'delete' => fn($url, MessageTag $model) => Button::danger()
+                                        ->icon('times')
+                                        ->options(['aria-label' => Yii::t('base', 'Delete')])
+                                        ->action('client.post', Url::toDeleteTag($model->id))
+                                        ->confirm(
+                                            Yii::t('MailModule.base', '<strong>Confirm</strong> tag deletion'),
+                                            Yii::t('MailModule.base', 'Do you really want to delete this tag?'),
+                                            Yii::t('base', 'Delete'),
+                                        )
+                                        ->sm()
+                                        ->loader(false),
                                 ],
                             ],
                         ]]) ?>

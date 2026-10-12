@@ -5,6 +5,7 @@ namespace humhub\modules\mail\models\forms;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageEntry;
+use humhub\modules\notification\events\UnreadCountChangedEvent;
 use Yii;
 use yii\base\Model;
 
@@ -96,6 +97,10 @@ class ReplyForm extends Model
             if ($userMessage) {
                 $userMessage->last_viewed = date('Y-m-d G:i:s');
                 $userMessage->save();
+
+                if ($userMessage->user) {
+                    UnreadCountChangedEvent::triggerChanged($userMessage->user);
+                }
             }
 
             return true;

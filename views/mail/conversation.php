@@ -89,6 +89,7 @@ use humhub\widgets\form\ActiveForm;
                                 ->submit()
                                 ->action('reply', $replyForm->getUrl())
                                 ->icon('paper-plane-o')
+                                ->options(['aria-label' => Yii::t('MailModule.base', 'Reply')])
                                 ->sm() ?>
                         </div>
                     </div>
