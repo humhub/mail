@@ -3,6 +3,7 @@ Changelog
 
 3.4.7 (Unreleased)
 ------------------
+- Fix: The sender's profile image in "New message" emails broke once the published assets were removed, e.g. by the cache flush after every update; the email now links to the permanent image URL (core: [humhub/humhub#8589](https://github.com/humhub/humhub/pull/8589)). Requires HumHub 1.19.1
 - Fix #531: Endless loading requests in a conversation without message entries (e.g. only "joined"/"left" entries left)
 
 3.4.6 (October 4, 2026)

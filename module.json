@@ -10,7 +10,7 @@
   ],
   "version": "3.4.7",
   "humhub": {
-    "minVersion": "1.19"
+    "minVersion": "1.19.1"
   },
   "homepage": "https://github.com/humhub/mail",
   "authors": [
