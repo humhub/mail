@@ -7,7 +7,7 @@ use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\Module;
-use humhub\modules\ui\filter\models\QueryFilter;
+use humhub\models\filter\QueryFilter;
 use Yii;
 use yii\base\InvalidCallException;
 use yii\db\conditions\ExistsCondition;

@@ -4,7 +4,6 @@ namespace humhub\modules\mail\models\forms;
 
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
-use humhub\modules\mail\models\MessageNotification;
 use humhub\modules\mail\models\UserMessage;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\user\models\User;
@@ -99,6 +98,7 @@ class InviteParticipantForm extends Model
             return false;
         }
 
+        $added = [];
         foreach ($this->recipientUsers as $user) {
             $userMessage = new UserMessage([
                 'message_id' => $this->message->id,
@@ -107,14 +107,14 @@ class InviteParticipantForm extends Model
             ]);
 
             if ($userMessage->save()) {
-                $this->message->refresh();
-                (new MessageNotification($this->message))
-                    ->setEntrySender(Yii::$app->user->getIdentity())
-                    ->notifyAll();
+                $added[] = $user;
             }
         }
 
+        $this->message->refresh();
         unset($this->message->users);
+        $this->message->notifyAddedParticipants($added, Yii::$app->user->getIdentity());
+
         return true;
     }
 

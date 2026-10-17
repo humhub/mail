@@ -3,6 +3,9 @@
 namespace humhub\modules\mail\models;
 
 use humhub\interfaces\ViewableInterface;
+use humhub\components\db\AfterCommit;
+use humhub\modules\mail\notifications\ConversationNotification;
+use humhub\modules\mail\notifications\MailNotification;
 use humhub\modules\user\models\User;
 use Yii;
 
@@ -57,13 +60,37 @@ class MessageEntry extends AbstractMessageEntry implements ViewableInterface
     }
 
     /**
+     * Updates the inbox of all participants and notifies the other participants: of a new
+     * conversation by {@see ConversationNotification}, of a further message by {@see MailNotification}.
+     *
      * @inheritdoc
      */
     public function notify(bool $isNewConversation = false)
     {
-        $messageNotification = new MessageNotification($this->message, $this);
-        $messageNotification->isNewConversation = $isNewConversation;
-        $messageNotification->notifyAll();
+        $message = $this->message;
+
+        // After the commit: the clients fetch the message on the live event
+        AfterCommit::run(fn() => $message->sendLiveEvents(), static::getDb());
+
+        // The sender is left out by the dispatch, as the originator.
+        $recipients = UserMessage::find()
+            ->select('user_id')
+            ->where(['message_id' => $message->id])
+            ->column();
+
+        try {
+            // Each message is an event of its own: no dedupe by conversation and sender
+            $notificationClass = $isNewConversation ? ConversationNotification::class : MailNotification::class;
+            $notificationClass::send(
+                array_map('intval', $recipients),
+                source: $message,
+                originator: $this->user,
+                payload: ['entryId' => (int)$this->id],
+                dedupe: false,
+            );
+        } catch (\Throwable $e) {
+            Yii::error('Could not dispatch the notification of message entry #' . $this->id . ': ' . $e, 'mail');
+        }
     }
 
     /**

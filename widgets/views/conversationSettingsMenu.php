@@ -3,7 +3,7 @@
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\widgets\PinLink;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Icon;
 use humhub\widgets\bootstrap\Link;
 use humhub\widgets\modal\ModalButton;
 
@@ -35,7 +35,7 @@ if (!$isSingleParticipant) {
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="conversation-settings-button">
         <li>
             <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))
-                ->icon('star')
+                ->icon('star-filled')
                 ->load(Url::toEditConversationTags($message))
                 ->link()
                 ->cssClass('dropdown-item')
@@ -57,7 +57,7 @@ if (!$isSingleParticipant) {
             <?= Link::none(Yii::t('MailModule.base', 'Mark Unread'))
                 ->action('mail.conversation.linkAction', Url::toMarkUnreadConversation($message))
                 ->cssClass('dropdown-item')
-                ->icon('eye-slash') ?>
+                ->icon('eye-off') ?>
         </li>
 
         <?php if ($message->canEditTitle()) : ?>
@@ -79,7 +79,7 @@ if (!$isSingleParticipant) {
             <?= Link::none($leaveLinkText)
                 ->action('mail.conversation.linkAction', Url::toLeaveConversation($message))
                 ->confirm($leaveConfirmTitle, $leaveConfirmText, $leaveConfirmButtonText)
-                ->icon('sign-out')
+                ->icon('logout')
                 ->cssClass('dropdown-item')
                 ->loader(false) ?>
         </li>

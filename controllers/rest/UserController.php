@@ -50,6 +50,9 @@ class UserController extends BaseController
         }
 
         if ($message->addRecepient($user)) {
+            $message->refresh();
+            $message->notifyAddedParticipants([$user], Yii::$app->user->getIdentity());
+
             return $this->actionIndex($messageId);
         }
 

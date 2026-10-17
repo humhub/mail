@@ -5,8 +5,8 @@ use humhub\helpers\Html;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\forms\InboxFilterForm;
 use humhub\modules\mail\widgets\ConversationTagPicker;
-use humhub\modules\ui\filter\widgets\PickerFilterInput;
-use humhub\modules\ui\filter\widgets\TextFilterInput;
+use humhub\widgets\filter\PickerFilterInput;
+use humhub\widgets\filter\TextFilterInput;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\widgets\bootstrap\Link;
 use humhub\widgets\form\ActiveForm;
@@ -53,7 +53,7 @@ use humhub\widgets\form\ActiveForm;
 
         <small>
             <?= Link::to(Yii::t('MailModule.base', 'Manage Tags'), Url::toManageTags())
-                ->icon('gear')
+                ->icon('settings')
                 ->right()
                 ->cssClass('manage-tags-link') ?>
         </small>

@@ -30,7 +30,9 @@ class EntryController extends BaseController
     public function actionIndex($messageId)
     {
         // Check the requested Conversation exists and allowed to view by current User
-        MessageController::getMessage($messageId);
+        $message = MessageController::getMessage($messageId);
+        // Reading the conversation, as in the web view
+        $message->seen(Yii::$app->user->id);
 
         $results = [];
         $entriesQuery = MessageEntry::find()->where(['message_id' => $messageId]);

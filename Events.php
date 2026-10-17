@@ -10,6 +10,7 @@ namespace humhub\modules\mail;
 
 use humhub\commands\IntegrityController;
 use humhub\helpers\ControllerHelper;
+use humhub\modules\mail\assets\MailVueAsset;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Config;
 use humhub\modules\mail\models\Message;
@@ -19,8 +20,9 @@ use humhub\modules\mail\models\UserMessageTag;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\search\SearchProvider;
+use humhub\modules\mail\services\RecipientStateService;
 use humhub\modules\mail\widgets\NotificationInbox;
-use humhub\modules\ui\menu\MenuLink;
+use humhub\widgets\menu\MenuLink;
 use humhub\modules\user\widgets\HeaderControlsMenu;
 use humhub\widgets\MetaSearchWidget;
 use humhub\widgets\TopMenu;
@@ -167,7 +169,7 @@ class Events
                 $menu->addEntry(new MenuLink([
                     'label' => Yii::t('MailModule.base', 'Messages'),
                     'url' => Url::toMessenger(),
-                    'icon' => 'envelope',
+                    'icon' => 'mail',
                     'isActive' => ControllerHelper::isActivePath('mail'),
                     'sortOrder' => 300,
                 ]));
@@ -226,11 +228,26 @@ class Events
                 'label' => Yii::t('MailModule.base', 'Send message'),
                 'url' => Url::toCreateConversation($menu->user->guid),
                 'htmlOptions' => ['data-bs-target' => '#globalModal'],
-                'icon' => 'envelope',
+                'icon' => 'mail',
                 'sortOrder' => 500,
             ]));
         } catch (\Throwable $e) {
             Yii::error($e);
+        }
+    }
+
+    /**
+     * Registers the "Send message" action of the cards of the People directory (the entry `mail`
+     * of the `user.card-actions` slot, `vue/components/MailPeopleCardAction.vue`) for a caller who
+     * may start conversations.
+     *
+     * @param $event
+     * @since 3.5.0
+     */
+    public static function onPeopleDirectoryInit($event)
+    {
+        if (RecipientStateService::canStartConversation()) {
+            MailVueAsset::register(Yii::$app->view);
         }
     }
 

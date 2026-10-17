@@ -330,7 +330,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
         this.scrollDownButton = $('<div>')
             .addClass('conversation-scroll-down-button')
-            .html('<i class="fa fa-caret-down"></i>')
+            .html('<i class="ti ti-caret-down-filled"></i>')
             .on('click', () => this.scrollToBottom());
 
         this.getContainerNode().append(this.scrollDownButton);

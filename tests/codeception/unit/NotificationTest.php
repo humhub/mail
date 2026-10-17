@@ -5,10 +5,17 @@ use humhub\modules\mail\models\forms\CreateMessage;
 use humhub\modules\mail\models\forms\InviteParticipantForm;
 use humhub\modules\mail\models\forms\ReplyForm;
 use humhub\modules\mail\notifications\ConversationNotification;
+use humhub\models\RecordMap;
+use humhub\modules\mail\helpers\Url;
+use humhub\modules\mail\models\Message;
 use humhub\modules\mail\notifications\MailNotification;
-use humhub\modules\notification\components\BaseNotification;
-use humhub\modules\notification\models\forms\NotificationSettings;
+use humhub\modules\notification\components\NotificationBlock;
+use humhub\modules\notification\components\NotificationContext;
+use humhub\modules\notification\components\NotificationManager;
+use humhub\modules\notification\components\NotificationPriority;
+use humhub\modules\notification\models\Notification;
 use humhub\modules\notification\targets\MailTarget;
+use humhub\modules\notification\services\NotificationSettingsService;
 use tests\codeception\_support\HumHubDbTestCase;
 use humhub\modules\user\models\User;
 use yii\helpers\ArrayHelper;
@@ -71,7 +78,7 @@ class NotificationTest extends HumHubDbTestCase
 
         // Check mail should only be sent to
         $this->assertMailSent(1);
-        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailSubject('Peter Tester created a new conversation “First”');
         $this->assertEqualsLastEmailTo($user2->email);
         $test = Live::find()->all();
         $this->assertCount(1, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
@@ -87,7 +94,7 @@ class NotificationTest extends HumHubDbTestCase
 
         // Check mail should only be sent to
         $this->assertMailSent(2);
-        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailSubject('Peter Tester created a new conversation “First”');
         $this->assertEqualsLastEmailTo($user3->email);
 
         $test =  Live::find()->all();
@@ -102,98 +109,308 @@ class NotificationTest extends HumHubDbTestCase
         $user2 = User::findOne(['id' => 3]);
         $message = $this->createMessage('First', 'First', [$user2->guid]);
         $this->assertSentEmail(1);
-        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailSubject('Peter Tester created a new conversation “First”');
         $this->assertEqualsLastEmailTo($user2->email);
-
-        sleep(1); // Wait for the queue to finish sending emails
 
         $user3 = User::findOne(['id' => 4]);
         $inviteForm = new InviteParticipantForm(['message' => $message->messageInstance, 'recipients' => [$user3->guid]]);
         $inviteForm->save();
 
-        $this->assertSentEmail(3);
-        $this->assertLastEmailsContainsSubject('Andreas Tester joined the conversation.'); // user3 (id=4)
+        // Only the invited user is notified, the others see the join in the conversation
+        $this->assertSentEmail(2);
+        $this->assertEqualsLastEmailSubject('Peter Tester added you to the conversation “First”');
+        $this->assertEqualsLastEmailTo($user3->email);
+        $this->assertCount(1, Live::find()->where(['contentcontainer_id' => $user3->contentcontainer_id])->all());
     }
 
     public function testAllNotificationsAreDisabled()
     {
         $user2 = User::findOne(['id' => 3]);
-        $this->setNotifications($user2, [
-            ConversationNotification::class => false,
-            MailNotification::class => false,
-        ]);
+        $this->setNotifications($user2, false);
 
         $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
 
-        // No notifications because all disabled
+        // No notifications because the messenger category is switched off
         $this->assertMailSent();
     }
 
-    public function testOnlyNewConversationNotificationIsEnabled()
+    public function testBothNotificationClassesShareTheModuleCategory()
     {
-        $user2 = User::findOne(['id' => 3]);
-        $this->setNotifications($user2, [
-            ConversationNotification::class => true,
-            MailNotification::class => false,
-        ]);
-
-        $message = $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
-
-        // Notification about new conversation is received
-        $this->assertMailSent(1);
-        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
-        $this->assertEqualsLastEmailTo($user2->email);
-
-        $this->createReply($message, 'Reply message');
-
-        // No new notification about new message
-        $this->assertMailSent(1);
-    }
-
-    public function testOnlyNewMessageNotificationIsEnabled()
-    {
-        $user2 = User::findOne(['id' => 3]);
-        $this->setNotifications($user2, [
-            ConversationNotification::class => false,
-            MailNotification::class => true,
-        ]);
-
-        $message = $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
-
-        // Instead of notification about new Conversation the user received a notification of new Message
-        $this->assertMailSent(1);
-        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
-        $this->assertEqualsLastEmailTo($user2->email);
-
-        $this->createReply($message, 'Reply message');
-
-        // New notification about new message is received
-        $this->assertMailSent(2);
-        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
-        $this->assertEqualsLastEmailTo($user2->email);
+        $this->assertSame('mail', MailNotification::category()->id);
+        $this->assertSame('ti-message', MailNotification::category()->icon);
+        $this->assertEquals(MailNotification::category(), ConversationNotification::category());
+        $this->assertFalse(MailNotification::listed());
+        $this->assertFalse(ConversationNotification::listed());
     }
 
     public function testAllNotificationsAreEnabled()
     {
         $user2 = User::findOne(['id' => 3]);
-        $this->setNotifications($user2, [
-            ConversationNotification::class => true,
-            MailNotification::class => true,
-        ]);
+        $this->setNotifications($user2, true);
 
         $message = $this->createMessage('New conversation title', 'New conversation message', [$user2->guid]);
 
         // Notification about new conversation is received
         $this->assertMailSent(1);
-        $this->assertEqualsLastEmailSubject('New conversation from Peter Tester');
+        $this->assertEqualsLastEmailSubject('Peter Tester created a new conversation “New conversation title”');
         $this->assertEqualsLastEmailTo($user2->email);
 
         $this->createReply($message, 'Reply message');
 
         // New notification about new message is received
         $this->assertMailSent(2);
-        $this->assertEqualsLastEmailSubject('New message from Peter Tester');
+        $this->assertEqualsLastEmailSubject('Peter Tester sent you a new message in “New conversation title”');
         $this->assertEqualsLastEmailTo($user2->email);
+    }
+
+    public function testMessageIsDispatchedToTheOtherParticipantsOnly()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid, User::findOne(['id' => 4])->guid]);
+        $conversation = $message->messageInstance;
+
+        $rows = $this->notificationRows(ConversationNotification::class, $conversation);
+        $this->assertSame([3, 4], array_map(fn(Notification $row) => (int)$row->user_id, $rows));
+        foreach ($rows as $row) {
+            $this->assertSame(0, (int)$row->listed);
+            $this->assertSame(2, (int)$row->originator_id);
+            $this->assertSame(RecordMap::getId($conversation), (int)$row->source_record_id);
+            $this->assertSame((int)$conversation->lastEntry->id, NotificationManager::fromRecord($row)->payload['entryId']);
+        }
+
+        $reply = $this->createReply($message, 'Reply message');
+
+        $rows = $this->notificationRows(MailNotification::class, $conversation);
+        $this->assertSame([3, 4], array_map(fn(Notification $row) => (int)$row->user_id, $rows));
+        foreach ($rows as $row) {
+            $this->assertSame(0, (int)$row->listed);
+            $this->assertSame((int)$reply->reply->id, NotificationManager::fromRecord($row)->payload['entryId']);
+        }
+    }
+
+    public function testNewConversationIsHighPriorityAndRepliesNormal()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+        $this->createReply($message, 'Reply message');
+
+        $conversation = $message->messageInstance;
+        $this->assertSame(NotificationPriority::High->value, (int)$this->notificationRows(ConversationNotification::class, $conversation)[0]->priority);
+        $this->assertSame(NotificationPriority::Normal->value, (int)$this->notificationRows(MailNotification::class, $conversation)[0]->priority);
+    }
+
+    public function testReplyBurstIsGrouped()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+        $this->createReply($message, 'Reply 1');
+        $this->createReply($message, 'Reply 2');
+        $this->createReply($message, 'Reply 3');
+
+        $groups = Notification::find()
+            ->forUser(3)
+            ->grouped()
+            ->andWhere(['notification.class' => MailNotification::class])
+            ->all();
+        $this->assertCount(1, $groups);
+        $this->assertSame(3, (int)$groups[0]->group_count);
+
+        $notification = NotificationManager::load($groups[0]);
+        $this->assertSame('Peter Tester sent you 3 messages in “First”', $notification->asMailText());
+        // the newest message as a quote of its author, then the reply button
+        $blocks = $notification->getBlocks(new NotificationContext(MailTarget::ID));
+        $this->assertCount(2, $blocks);
+        $this->assertSame(NotificationBlock::TYPE_QUOTE, $blocks[0]->getType());
+        $this->assertSame('Reply 3', $blocks[0]->getText());
+        $this->assertSame(2, (int)$blocks[0]->getAuthor()?->id);
+        $this->assertNotNull($blocks[0]->getDate());
+        $this->assertSame(NotificationBlock::TYPE_BUTTON, $blocks[1]->getType());
+        $this->assertSame('Reply now', $blocks[1]->getText());
+        $this->assertSame($notification->getEntryUrl(), $blocks[1]->getUrl());
+        $this->assertStringContainsString('<strong>First</strong>', $notification->asWeb());
+    }
+
+    public function testExcerptIsThePlainMessageText()
+    {
+        $this->createMessage('First', '**Hello** <b>World</b>', [User::findOne(['id' => 3])->guid]);
+
+        $mail = $this->getYiiModule()->grabLastSentEmail();
+        $this->assertStringContainsString('Hello', $mail->getTextBody());
+        $this->assertStringNotContainsString('**', $mail->getTextBody());
+        $this->assertStringContainsString('&lt;b&gt;World&lt;/b&gt;', $mail->getHtmlBody());
+        // the quote names its author, the reply button replaces "View online"
+        $this->assertStringContainsString('Peter Tester', $mail->getHtmlBody());
+        $this->assertMatchesRegularExpression('/^Reply now: http\S+$/m', $mail->getTextBody());
+        $this->assertLessThan(strpos($mail->getTextBody(), 'Reply now: '), strpos($mail->getTextBody(), '> '));
+        $this->assertStringNotContainsString('View online', $mail->getTextBody());
+
+        // the module shortens the message to its own excerpt length, below the one of the mail
+        $message = $this->createMessage('Second', str_repeat('Long text ', 100), [User::findOne(['id' => 3])->guid]);
+        $row = $this->notificationRows(ConversationNotification::class, $message->messageInstance)[0];
+        $quote = NotificationManager::fromRecord($row)->getBlocks(new NotificationContext(MailTarget::ID))[0];
+        $this->assertSame(NotificationBlock::TYPE_QUOTE, $quote->getType());
+        $this->assertLessThanOrEqual(503, mb_strlen($quote->getText()));
+
+        $textBody = $this->getYiiModule()->grabLastSentEmail()->getTextBody();
+        $this->assertStringContainsString(str_repeat('Long text ', 40), $textBody);
+        $this->assertStringNotContainsString(str_repeat('Long text ', 60), $textBody);
+    }
+
+    public function testNotificationLinksToTheConversation()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+        $notification = NotificationManager::fromRecord($this->notificationRows(ConversationNotification::class, $message->messageInstance)[0]);
+
+        $this->assertSame(Url::toMessenger($message->messageInstance), $notification->getUrl());
+    }
+
+    public function testReadingTheConversationMarksItsNotificationsSeen()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid, User::findOne(['id' => 4])->guid]);
+        $this->createReply($message, 'Reply message');
+        $conversation = $message->messageInstance;
+
+        $conversation->seen(3);
+
+        foreach ([ConversationNotification::class, MailNotification::class] as $class) {
+            foreach ($this->notificationRows($class, $conversation) as $row) {
+                $row->user_id == 3
+                    ? $this->assertNotNull($row->seen_at, $class . ' of the reader')
+                    : $this->assertNull($row->seen_at, $class . ' of another participant');
+            }
+        }
+    }
+
+    public function testReplyingMarksTheRepliersNotificationsSeen()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+
+        $this->becomeUser('User2');
+        $this->assertTrue((new ReplyForm(['model' => $message->messageInstance, 'message' => 'Answer']))->save());
+
+        $this->assertNotNull($this->notificationRows(ConversationNotification::class, $message->messageInstance)[0]->seen_at);
+    }
+
+    public function testDispatchWaitsForTheCommit()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $transaction = Yii::$app->db->beginTransaction();
+        $message = $this->createMessage('First', 'First', [$user2->guid]);
+        $this->createReply($message, 'Reply message');
+
+        $this->assertMailSent();
+        $this->assertSame([], $this->notificationRows(ConversationNotification::class, $message->messageInstance));
+        $this->assertCount(0, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
+
+        $transaction->commit();
+
+        $this->assertMailSent(2);
+        $this->assertCount(1, $this->notificationRows(ConversationNotification::class, $message->messageInstance));
+        $this->assertCount(1, $this->notificationRows(MailNotification::class, $message->messageInstance));
+        $this->assertCount(2, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
+    }
+
+    public function testRollbackDropsTheDispatch()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $transaction = Yii::$app->db->beginTransaction();
+        $this->createMessage('First', 'First', [$user2->guid]);
+        $transaction->rollBack();
+
+        // a later transaction does not pick up the dropped callbacks
+        $transaction = Yii::$app->db->beginTransaction();
+        $transaction->commit();
+
+        $this->assertMailSent();
+        $this->assertSame(0, (int)Notification::find()->where(['class' => ConversationNotification::class])->count());
+        $this->assertCount(0, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
+    }
+
+    public function testPlainTextConversationTitleIsQuoted()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+        $notification = NotificationManager::fromRecord($this->notificationRows(ConversationNotification::class, $message->messageInstance)[0]);
+
+        $this->assertSame('Peter Tester created a new conversation “First”', $notification->asMailText());
+        $this->assertStringContainsString('<strong>First</strong>', $notification->asWeb());
+    }
+
+    public function testReadMessagesDoNotCountIntoTheGroup()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+        $this->createReply($message, 'Reply 1');
+        $this->createReply($message, 'Reply 2');
+        $message->messageInstance->seen(3);
+        $this->createReply($message, 'Reply 3');
+
+        $groups = Notification::find()
+            ->forUser(3)
+            ->grouped()
+            ->andWhere(['notification.class' => MailNotification::class])
+            ->orderBy(['group_max_id' => SORT_ASC])
+            ->all();
+        $this->assertSame([2, 1], array_map(fn(Notification $group) => (int)$group->group_count, $groups));
+        $this->assertSame('Peter Tester sent you a new message in “First”', NotificationManager::load($groups[1])->asMailText());
+    }
+
+    public function testLeavingMarksTheLeaversNotificationsSeen()
+    {
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid, User::findOne(['id' => 4])->guid]);
+        $this->createReply($message, 'Reply message');
+        $conversation = $message->messageInstance;
+
+        $conversation->leave(3);
+
+        foreach ([ConversationNotification::class, MailNotification::class] as $class) {
+            foreach ($this->notificationRows($class, $conversation) as $row) {
+                $row->user_id == 3
+                    ? $this->assertNotNull($row->seen_at, $class . ' of the leaving user')
+                    : $this->assertNull($row->seen_at, $class . ' of another participant');
+            }
+        }
+    }
+
+    public function testAddingAParticipantNotifiesThem()
+    {
+        // as the REST API adds a participant
+        $message = $this->createMessage('First', 'First', [User::findOne(['id' => 3])->guid]);
+        $conversation = $message->messageInstance;
+        $user3 = User::findOne(['id' => 4]);
+
+        $this->assertTrue($conversation->addRecepient($user3));
+        $conversation->notifyAddedParticipants([$user3], User::findOne(['id' => 2]));
+
+        $rows = $this->notificationRows(ConversationNotification::class, $conversation);
+        $this->assertSame([3, 4], array_map(fn(Notification $row) => (int)$row->user_id, $rows));
+        $this->assertTrue(NotificationManager::fromRecord($rows[1])->payload['invited']);
+        $this->assertEqualsLastEmailSubject('Peter Tester added you to the conversation “First”');
+        $this->assertEqualsLastEmailTo($user3->email);
+        $this->assertCount(1, Live::find()->where(['contentcontainer_id' => $user3->contentcontainer_id])->all());
+    }
+
+    public function testInvitingSeveralUsersSendsTheLiveEventsOnce()
+    {
+        $user2 = User::findOne(['id' => 3]);
+        $message = $this->createMessage('First', 'First', [$user2->guid]);
+        $this->assertCount(1, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
+
+        $inviteForm = new InviteParticipantForm([
+            'message' => $message->messageInstance,
+            'recipients' => [User::findOne(['id' => 4])->guid, User::findOne(['id' => 1])->guid],
+        ]);
+        $this->assertTrue($inviteForm->save());
+
+        $this->assertCount(2, Live::find()->where(['contentcontainer_id' => $user2->contentcontainer_id])->all());
+        $this->assertCount(2, $this->notificationRows(ConversationNotification::class, $message->messageInstance, true));
+    }
+
+    /**
+     * @return Notification[] the notifications of the class about the conversation, by recipient
+     */
+    private function notificationRows(string $class, Message $conversation, bool $invitedOnly = false): array
+    {
+        return Notification::find()
+            ->andWhere(['class' => $class, 'source_record_id' => RecordMap::getId($conversation)])
+            ->andFilterWhere(['like', 'payload', $invitedOnly ? '"invited"' : null])
+            ->orderBy(['user_id' => SORT_ASC, 'id' => SORT_ASC])
+            ->all();
     }
 
     public function assertEqualsLastEmailTo($email, $strict = true)
@@ -209,24 +426,15 @@ class NotificationTest extends HumHubDbTestCase
         );
     }
 
-    private function setNotifications(User $user, array $config)
+    /**
+     * Switches the messenger category of the e-mail channel on or off for the user.
+     */
+    private function setNotifications(User $user, bool $enabled)
     {
-        $this->becomeUser($user->username);
-
-        $mailTarget = Yii::$app->notification->getTarget(MailTarget::class);
-
-        $settings = [];
-        foreach ($config as $notificationClass => $state) {
-            /* @var BaseNotification $notification */
-            $notification = new $notificationClass();
-            $settings[$mailTarget->getSettingKey($notification->getCategory())] = $state;
-        }
-
-        $settingForm = new NotificationSettings([
-            'user' => $user,
-            'settings' => $settings,
-        ]);
-
-        $settingForm->save();
+        (new NotificationSettingsService($user))->setCategory(
+            Yii::$app->notification->getTarget(MailTarget::ID),
+            MailNotification::category(),
+            $enabled,
+        );
     }
 }
