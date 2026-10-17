@@ -100,6 +100,8 @@ class ReplyForm extends Model
 
                 if ($userMessage->user) {
                     UnreadCountChangedEvent::triggerChanged($userMessage->user);
+                    // Replying reads the conversation
+                    $this->model->markNotificationsSeen($userMessage->user);
                 }
             }
 

@@ -3,7 +3,11 @@
 namespace humhub\modules\mail\models;
 
 use humhub\components\ActiveRecord;
+use humhub\components\db\AfterCommit;
+use humhub\modules\mail\live\NewUserMessage;
 use humhub\modules\mail\Module;
+use humhub\modules\mail\notifications\ConversationNotification;
+use humhub\modules\mail\notifications\MailNotification;
 use humhub\modules\notification\events\UnreadCountChangedEvent;
 use humhub\widgets\Icon;
 use humhub\modules\user\models\User;
@@ -402,6 +406,10 @@ class Message extends ActiveRecord
         }
 
         if (count($this->users) > 1) {
+            // Pending mails and pushes about the conversation are no longer wanted
+            if ($userMessage->user) {
+                $this->markNotificationsSeen($userMessage->user);
+            }
             $userMessage->delete();
         } else {
             $this->delete();
@@ -429,6 +437,74 @@ class Message extends ActiveRecord
             // Only the transition from unread to read changes the unread count.
             if ($wasUnread && $userMessage->user) {
                 UnreadCountChangedEvent::triggerChanged($userMessage->user);
+            }
+
+            if ($userMessage->user) {
+                $this->markNotificationsSeen($userMessage->user);
+            }
+        }
+    }
+
+    /**
+     * Marks the user's messenger notifications about this conversation seen, which cancels their
+     * pending mail and push deliveries.
+     *
+     * @since 3.5
+     */
+    public function markNotificationsSeen(User $user): void
+    {
+        try {
+            MailNotification::markSeen($this, $user);
+            ConversationNotification::markSeen($this, $user);
+        } catch (\Throwable $e) {
+            Yii::error('Could not mark the notifications of conversation #' . $this->id . ' seen: ' . $e, 'mail');
+        }
+    }
+
+    /**
+     * Informs about users added to the conversation: updates the inbox of all participants
+     * (after the commit of an open transaction) and notifies the added users by
+     * {@see ConversationNotification}.
+     *
+     * @param User[] $users the added users
+     * @param User|null $inviter the user who added them
+     * @since 3.5
+     */
+    public function notifyAddedParticipants(array $users, ?User $inviter): void
+    {
+        if ($users === []) {
+            return;
+        }
+
+        // After the commit: the clients fetch the conversation on the live event
+        AfterCommit::run(fn() => $this->sendLiveEvents(), static::getDb());
+
+        ConversationNotification::send(
+            $users,
+            source: $this,
+            originator: $inviter,
+            payload: ['invited' => true],
+            dedupe: false,
+        );
+    }
+
+    /**
+     * Sends the live event of a new message to all participants, which updates their inbox.
+     *
+     * @since 3.5
+     */
+    public function sendLiveEvents(): void
+    {
+        // fresh: the participants may have changed since the relation was loaded
+        foreach ($this->getUsers()->all() as $user) {
+            try {
+                Yii::$app->live->send(new NewUserMessage([
+                    'contentContainerId' => $user->contentcontainer_id,
+                    'message_id' => $this->id,
+                    'user_guid' => $user->guid,
+                ]));
+            } catch (\Throwable $e) {
+                Yii::error('Could not send the live event of conversation #' . $this->id . ' to user ' . $user->id . ': ' . $e, 'mail');
             }
         }
     }

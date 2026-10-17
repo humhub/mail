@@ -51,6 +51,9 @@ class MessageController extends BaseController
     public function actionView($id)
     {
         $message = static::getMessage($id);
+        // Reading the conversation, as in the web view
+        $message->seen(Yii::$app->user->id);
+
         return RestDefinitions::getMessage($message);
     }
 

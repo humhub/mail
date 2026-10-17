@@ -7,6 +7,11 @@ Changelog
 - Enh: Use Tabler icon names and markup instead of Font Awesome (humhub/humhub#8504)
 - Enh: Use the core classes that replaced the removed `ui` module (`Icon`, `MenuLink`, filter and picker widgets)
 - Enh: Add a "Send message" action to the cards of the People directory (humhub/humhub#8525)
+- Enh: Adapt to the rebuilt core notification system (humhub/humhub#8576): the notification categories "Message" and "Conversation" are replaced by one "Messenger" category, switched on or off per channel; users' settings of the former "Conversation" category are reset to the defaults; under the core's privacy mode "Hide content" mails and push name the sender without the conversation title or message ("Anna sent you a new message.")
+- Enh: Send the mail and push of a new message through the core notification channels (humhub/humhub#8576): a new conversation (or being added to one) dispatches `ConversationNotification` with high priority, a further message `MailNotification` with normal priority, so a burst of messages is collected into one mail ("Anna sent you 3 messages in …")
+- Enh: Opening, replying to or leaving a conversation (also through the REST API) marks its notifications seen, so their pending mail and push are no longer sent; read messages no longer count into the grouped mail
+- Enh: Adding a participant through the REST API notifies them like adding one in the messenger
+- Chg: Removed `MessageNotification` and the module's own "New message" mail views; existing participants are no longer mailed when someone joins a conversation
 
 3.4.6 (October 4, 2026)
 -----------------------

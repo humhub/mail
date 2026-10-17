@@ -3,8 +3,6 @@
 namespace humhub\modules\mail;
 
 use humhub\modules\mail\models\MessageEntry;
-use humhub\modules\mail\notifications\MailNotification;
-use humhub\modules\mail\notifications\ConversationNotification;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\permissions\SendMail;
 use humhub\modules\user\models\User;
@@ -71,14 +69,6 @@ class Module extends \humhub\components\Module
         }
 
         return [];
-    }
-
-    public function getNotifications()
-    {
-        return [
-            MailNotification::class,
-            ConversationNotification::class,
-        ];
     }
 
     /**
