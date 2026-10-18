@@ -26,7 +26,7 @@ class RecipientStateServiceTest extends HumHubDbTestCase
     public function _after()
     {
         Yii::$app->getModule('friendship')->settings->set('enable', 0);
-        Yii::$app->user->impersonation->allowPrivateContentAccess = false;
+        Yii::$app->user->impersonation->allowPrivateContentAccess = true;
 
         parent::_after();
     }
@@ -106,6 +106,7 @@ class RecipientStateServiceTest extends HumHubDbTestCase
 
     public function testNobodyCanBeMessagedWhileImpersonating()
     {
+        Yii::$app->user->impersonation->allowPrivateContentAccess = false;
         $this->becomeUser('Admin');
         $this->assertTrue(Yii::$app->user->impersonation->start(User::findOne(['username' => 'User1'])));
 
