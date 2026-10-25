@@ -237,14 +237,14 @@ class Events
     }
 
     /**
-     * Registers the "Send message" action of the cards of the People directory (the entry `mail`
+     * Registers the "Send message" action of the cards of the People browser (the entry `mail`
      * of the `user.card-actions` slot, `vue/components/MailPeopleCardAction.vue`) for a caller who
      * may start conversations.
      *
      * @param $event
      * @since 3.5.0
      */
-    public static function onPeopleDirectoryInit($event)
+    public static function onPeopleBrowserInit($event)
     {
         if (RecipientStateService::canStartConversation()) {
             MailVueAsset::register(Yii::$app->view);

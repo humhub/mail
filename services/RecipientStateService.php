@@ -21,7 +21,7 @@ use Yii;
 
 /**
  * Whether the current user may write to other users — the "Send message" action on the cards of
- * the People directory (`vue/components/MailPeopleCardAction.vue`), answered by
+ * the People browser (`vue/components/MailPeopleCardAction.vue`), answered by
  * `GET /api/v2/mail/recipient-states` ({@see \humhub\modules\mail\controllers\api\RecipientController}).
  *
  * The rules are the ones of the profile's "Send message" entry ({@see \humhub\modules\mail\Events::onProfileHeaderControlsMenuInit()})
@@ -35,7 +35,7 @@ use Yii;
 class RecipientStateService
 {
     /**
-     * @var int the most users one request may name — a card directory asks for the page it
+     * @var int the most users one request may name — an entity browser asks for the page it
      * displays (as the core's `user/states`)
      */
     public const MAX_IDS = 100;
@@ -55,7 +55,7 @@ class RecipientStateService
     }
 
     /**
-     * The state of each of the users `$ids` the current user may see, as the People directory
+     * The state of each of the users `$ids` the current user may see, as the People browser
      * lists them (available, not hidden): `canMessage` — whether a conversation with them may be
      * started (never with oneself) — and `url`, the "new conversation" form preselecting them
      * (`null` where `canMessage` is `false`).

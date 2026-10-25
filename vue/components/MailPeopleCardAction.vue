@@ -2,7 +2,7 @@
     <button
         v-if="state && state.canMessage && state.url"
         type="button"
-        class="c-entity-card__action c-entity-card__action--icon"
+        class="entity-card-action entity-card-action-icon"
         :class="buttons.mailClass || 'btn btn-light'"
         :title="label"
         :aria-label="label"
@@ -12,11 +12,11 @@
 
 <script>
 /**
- * The "Send message" action on the cards of the core's People directory — the mail module's entry
+ * The "Send message" action on the cards of the core's People browser — the mail module's entry
  * `mail` (sortOrder 300) of the extension slot `user.card-actions` (see `vue/index.js` and the
  * user module's `PeopleCard`): an icon button opening the new-conversation form with the user
  * preselected in the global modal. The bundle is only registered on the page for a viewer who
- * may start conversations (`Events::onPeopleDirectoryInit()`).
+ * may start conversations (`Events::onPeopleBrowserInit()`).
  *
  * Whether the viewer may write to the user comes from `GET /api/v2/mail/recipient-states`, not
  * with the user: the cards of one render ask together, in a single request for all of their
@@ -26,7 +26,7 @@
  * request — a slot component's own categories are not preloaded by the island.
  *
  * The button classes are `buttons.mailClass` of the slot's context (a theme may add it to
- * `PeopleDirectory::$buttonClasses`), else `btn btn-light`.
+ * `PeopleBrowser::$buttonClasses`), else `btn btn-light`.
  *
  * @since 3.5.0
  */

@@ -15,7 +15,7 @@ use yii\web\ForbiddenHttpException;
 
 /**
  * Whether the caller may write to users — the "Send message" action on the cards of the core's
- * People directory (`vue/components/MailPeopleCardAction.vue` in the extension slot
+ * People browser (`vue/components/MailPeopleCardAction.vue` in the extension slot
  * `user.card-actions`).
  *
  * @since 3.5.0

@@ -5,17 +5,17 @@ namespace tests\codeception\unit;
 use humhub\libs\BasePermission;
 use humhub\modules\mail\assets\MailVueAsset;
 use humhub\modules\mail\permissions\StartConversation;
-use humhub\modules\user\widgets\PeopleDirectory;
+use humhub\modules\user\widgets\PeopleBrowser;
 use tests\codeception\_support\HumHubDbTestCase;
 use Yii;
 
 /**
- * The "Send message" action on the cards of the People directory is registered with the
+ * The "Send message" action on the cards of the People browser is registered with the
  * directory, for a viewer who may start conversations only.
  *
  * @since 3.5.0
  */
-class PeopleDirectoryCardActionTest extends HumHubDbTestCase
+class PeopleBrowserCardActionTest extends HumHubDbTestCase
 {
     protected $fixtureConfig = ['default'];
 
@@ -44,6 +44,6 @@ class PeopleDirectoryCardActionTest extends HumHubDbTestCase
     private function renderDirectory(): void
     {
         Yii::$app->view->assetBundles = [];
-        PeopleDirectory::widget();
+        PeopleBrowser::widget();
     }
 }

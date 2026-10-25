@@ -77,7 +77,7 @@ describe('MailPeopleCardAction', () => {
         const button = wrapper.find('button');
         expect(button.attributes('aria-label')).toBe('Send message');
         expect(button.attributes('title')).toBe('Send message');
-        expect(button.classes()).toEqual(expect.arrayContaining(['c-entity-card__action', 'c-entity-card__action--icon', 'btn', 'btn-light']));
+        expect(button.classes()).toEqual(expect.arrayContaining(['entity-card-action', 'entity-card-action-icon', 'btn', 'btn-light']));
         expect(button.find('i.ti.ti-mail').attributes('aria-hidden')).toBe('true');
         expect(button.text()).toBe('');
         // The rest of the slot context does not leak onto the button.
@@ -89,7 +89,7 @@ describe('MailPeopleCardAction', () => {
         const wrapper = mountAction(2, { buttons: { mailClass: 'btn btn-accent' } });
         await tick();
 
-        expect(wrapper.find('button').classes()).toEqual(expect.arrayContaining(['c-entity-card__action', 'btn', 'btn-accent']));
+        expect(wrapper.find('button').classes()).toEqual(expect.arrayContaining(['entity-card-action', 'btn', 'btn-accent']));
         expect(wrapper.find('button').classes()).not.toContain('btn-light');
     });
 

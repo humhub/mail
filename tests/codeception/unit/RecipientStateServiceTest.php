@@ -11,7 +11,7 @@ use tests\codeception\_support\HumHubDbTestCase;
 use Yii;
 
 /**
- * Whether the current user may write to the users of a People directory page — the states behind
+ * Whether the current user may write to the users of a People browser page — the states behind
  * the "Send message" card action (`GET /api/v2/mail/recipient-states`).
  *
  * Fixture ground truth: the enabled users are 1 (`Admin`), 2 (`User1`), 3 (`User2`), 4 (`User3`)
