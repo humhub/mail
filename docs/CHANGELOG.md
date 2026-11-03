@@ -12,6 +12,7 @@ Changelog
 - Enh: Opening, replying to or leaving a conversation (also through the REST API) marks its notifications seen, so their pending mail and push are no longer sent; read messages no longer count into the grouped mail
 - Enh: Adding a participant through the REST API notifies them like adding one in the messenger
 - Chg: Removed `MessageNotification` and the module's own "New message" mail views; existing participants are no longer mailed when someone joins a conversation
+- Enh: Compatibility with the core picker that replaces Select2 (humhub/humhub#8677)
 
 3.4.7 (Unreleased)
 ------------------

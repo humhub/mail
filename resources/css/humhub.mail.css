@@ -360,7 +360,7 @@
   color: var(--hh-text-color-highlight);
 }
 
-.message-tag-filter-group .select2-selection {
+.message-tag-filter-group .picker-field {
   border-bottom-right-radius: 0;
 }
 .message-tag-filter-group .manage-tags-link {
