@@ -5,7 +5,6 @@ namespace humhub\modules\mail\widgets;
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\models\MessageTag;
-use humhub\widgets\Icon;
 use humhub\widgets\bootstrap\Badge;
 use humhub\widgets\bootstrap\Link;
 
@@ -19,7 +18,7 @@ class ConversationTagBadge extends Badge
                     ->options([
                         'data-tag-id' => $tag->id,
                         'data-tag-name' => $tag->name,
-                        'data-tag-image' => Icon::get('star-filled'),
+                        'data-tag-image' => ConversationTagPicker::ICON,
                     ])
                     ->encodeLabel(false),
             );

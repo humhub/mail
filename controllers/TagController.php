@@ -97,7 +97,7 @@ class TagController extends Controller
     {
         $results = MessageTag::search(Yii::$app->user->id, $keyword);
 
-        return $this->asJson(array_map(fn(MessageTag $tag) => ['id' => $tag->id, 'text' => $tag->name, 'image' => ConversationTagPicker::getIcon()], $results));
+        return $this->asJson(array_map(fn(MessageTag $tag) => ['id' => $tag->id, 'text' => $tag->name, 'image' => ConversationTagPicker::ICON], $results));
     }
 
     public function actionEditConversation($messageId)

@@ -472,6 +472,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     var view = require('ui.view');
     var loader = require('ui.loader');
     var client = require('client');
+    var picker = require('ui.picker');
 
     var ConversationFilter = Filter.extend();
 
@@ -700,7 +701,7 @@ humhub.module('mail.inbox', function (module, require, $) {
     var setTagFilter = function (evt) {
         Widget.instance('#inbox').show().then(function() {
             $('#mail-filter-menu').collapse('show');
-            Widget.instance('#inbox-tag-picker').setSelection([{
+            picker.setItems($('#inbox-tag-picker'), [{
                 id: evt.$trigger.data('tagId'),
                 text: evt.$trigger.data('tagName'),
                 image: evt.$trigger.data('tagImage'),

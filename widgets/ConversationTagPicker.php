@@ -12,6 +12,11 @@ use Yii;
 class ConversationTagPicker extends BasePicker
 {
     /**
+     * Tabler icon name of a tag, the image of a picker item
+     */
+    public const ICON = 'star-filled';
+
+    /**
      * @inheritDoc
      */
     public $defaultRoute = Url::ROUTE_SEARCH_TAG;
@@ -46,12 +51,11 @@ class ConversationTagPicker extends BasePicker
      * Used to retrieve the option image url of a given $item.
      *
      * @param UserMessageTag $item selected item
-     * @return string|null image url or null if no selection image required.
-     * @throws \Exception
+     * @return string the Tabler icon name of a tag
      */
     protected function getItemImage($item)
     {
-        return static::getIcon();
+        return static::ICON;
     }
 
     public static function getIcon()
