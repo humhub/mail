@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: The mobile arrow offset of the messages dropdown no longer moves the arrow of other dropdowns (humhub/humhub#8699)
 - Enh: Compatibility with HumHub 1.20
 - Enh: Use Tabler icon names and markup instead of Font Awesome (humhub/humhub#8504)
 - Enh: Use the core classes that replaced the removed `ui` module (`Icon`, `MenuLink`, filter and picker widgets)

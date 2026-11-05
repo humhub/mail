@@ -423,7 +423,7 @@
   #dropdown-messages {
     width: 300px !important;
   }
-  .arrow {
+  #dropdown-messages .arrow {
     margin-left: -101px !important;
   }
   #inbox {
