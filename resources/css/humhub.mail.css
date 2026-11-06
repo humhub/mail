@@ -73,7 +73,7 @@
 .conversation-entry-content {
   display: table;
   float: left;
-  background-color: var(--hh-background-color-secondary);
+  background-color: var(--bs-tertiary-bg);
   border-radius: 10px;
   padding: 10px;
 }
@@ -81,7 +81,7 @@
   max-width: 485px;
 }
 .conversation-entry-content.own {
-  background: var(--hh-background-color-highlight);
+  background: var(--bs-accent-bg-subtle);
 }
 .conversation-entry-content .markdown-render {
   float: left;
@@ -117,7 +117,7 @@
 
 #mail-conversation-header {
   padding: 6px 10px;
-  border-bottom: 1px solid var(--hh-background3);
+  border-bottom: 1px solid var(--hh-border-color-strong);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -140,7 +140,7 @@
   font-weight: normal;
 }
 #mail-conversation-header small a {
-  color: var(--hh-text-color-main);
+  color: var(--bs-body-color);
 }
 @media (max-height: 500px) {
   #mail-conversation-header h1 {
@@ -192,7 +192,7 @@
   font-size: 14px;
   line-height: 16px;
   font-weight: 500 !important;
-  color: var(--hh-text-color-highlight) !important;
+  color: var(--bs-emphasis-color) !important;
   display: flex;
   justify-content: space-between;
   margin: 7px 0;
@@ -205,7 +205,7 @@
 .mail-inbox-messages .text-break .mail-last-entry {
   font-size: 14px;
   font-weight: 500;
-  color: var(--hh-text-color-secondary);
+  color: var(--bs-secondary-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -265,22 +265,22 @@
   text-transform: none;
 }
 .mail-conversation-entry .conversation-menu .badge {
-  background-color: var(--hh-background-color-secondary);
+  background-color: var(--bs-tertiary-bg);
   border-radius: 10px;
   color: inherit;
 }
 .mail-conversation-entry .conversation-menu .conversation-edit-button {
-  background-color: var(--hh-background-color-secondary);
+  background-color: var(--bs-tertiary-bg);
   border-radius: 50%;
   color: inherit;
 }
 .mail-conversation-entry .conversation-menu .conversation-edit-button:hover {
-  background-color: var(--hh-background-color-secondary);
+  background-color: var(--bs-tertiary-bg);
   color: inherit;
 }
 .mail-conversation-entry .conversation-menu .conversation-edit-button:focus-visible {
   outline: 0;
-  box-shadow: 0 0 0 2px var(--accent);
+  box-shadow: 0 0 0 2px var(--bs-accent);
 }
 .mail-conversation-entry:hover .conversation-menu, .mail-conversation-entry:focus-within .conversation-menu {
   opacity: 1;
@@ -302,7 +302,7 @@
 .mail-conversation-entry .conversation-entry-time {
   float: right;
   font-size: 10px;
-  color: var(--hh-text-color-main);
+  color: var(--bs-body-color);
 }
 .mail-conversation-entry .conversation-entry-time > span {
   font-style: italic;
@@ -339,13 +339,13 @@
   text-decoration: none;
 }
 .hh-list > .messagePreviewEntry:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--bs-accent);
   outline-offset: -2px;
-  border-left-color: var(--accent);
+  border-left-color: var(--bs-accent);
 }
 .messagePreviewEntry time {
   font-size: 10px;
-  color: var(--hh-text-color-secondary);
+  color: var(--bs-secondary-color);
 }
 .messagePreviewEntry .new-message-badge {
   display: none;
@@ -357,7 +357,7 @@
   color: var(--bs-info);
 }
 .messagePreviewEntry.unread .mail-last-entry {
-  color: var(--hh-text-color-highlight);
+  color: var(--bs-emphasis-color);
 }
 
 .message-tag-filter-group .picker-field {

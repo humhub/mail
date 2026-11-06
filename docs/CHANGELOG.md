@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Enh: Colour tokens of the core 1.20 instead of the deprecated ones (humhub/humhub#8707)
 - Fix: The mobile arrow offset of the messages dropdown no longer moves the arrow of other dropdowns (humhub/humhub#8699)
 - Enh: Compatibility with HumHub 1.20
 - Enh: Use Tabler icon names and markup instead of Font Awesome (humhub/humhub#8504)

@@ -3,7 +3,7 @@
 @import "../../../../vendor/twbs/bootstrap/scss/variables";
 @import "../../../../vendor/twbs/bootstrap/scss/mixins/breakpoints";
 
-$bgColorDefault: var(--hh-background-color-secondary);
+$bgColorDefault: var(--bs-tertiary-bg);
 $colorUnread: var(--bs-info);
 
 $radius: 10px;
@@ -116,7 +116,7 @@ $radiusNone: 0;
     }
 
     &.own {
-        background: var(--hh-background-color-highlight);
+        background: var(--bs-accent-bg-subtle);
     }
 
     .markdown-render {
@@ -162,7 +162,7 @@ $radiusNone: 0;
 
 #mail-conversation-header {
     padding: 6px 10px;
-    border-bottom: 1px solid var(--hh-background3);
+    border-bottom: 1px solid var(--hh-border-color-strong);
     border-bottom-left-radius: $radiusNone;
     border-bottom-right-radius: $radiusNone;
 
@@ -185,7 +185,7 @@ $radiusNone: 0;
         font-weight: normal;
 
         a {
-            color: var(--hh-text-color-main);
+            color: var(--bs-body-color);
         }
     }
 
@@ -248,7 +248,7 @@ $radiusNone: 0;
             font-size: 14px;
             line-height: 16px;
             font-weight: 500 !important;
-            color: var(--hh-text-color-highlight) !important;
+            color: var(--bs-emphasis-color) !important;
             display: flex;
             justify-content: space-between;
             margin: 7px 0;
@@ -263,7 +263,7 @@ $radiusNone: 0;
         .mail-last-entry {
             font-size: 14px;
             font-weight: 500;
-            color: var(--hh-text-color-secondary);
+            color: var(--bs-secondary-color);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -360,7 +360,7 @@ $radiusNone: 0;
             // tasks module.
             &:focus-visible {
                 outline: 0;
-                box-shadow: 0 0 0 2px var(--accent);
+                box-shadow: 0 0 0 2px var(--bs-accent);
             }
         }
     }
@@ -398,7 +398,7 @@ $radiusNone: 0;
     .conversation-entry-time {
         float: right;
         font-size: 10px;
-        color: var(--hh-text-color-main);
+        color: var(--bs-body-color);
 
         > span {
             font-style: italic;
@@ -442,14 +442,14 @@ $radiusNone: 0;
 
     // Specificity must beat `.hh-list > a:not(.stream-end)` (core sets a 3px border-left)
     .hh-list > &:focus-visible {
-        outline: 2px solid var(--accent);
+        outline: 2px solid var(--bs-accent);
         outline-offset: -2px;
-        border-left-color: var(--accent);
+        border-left-color: var(--bs-accent);
     }
 
     time {
         font-size: 10px;
-        color: var(--hh-text-color-secondary);
+        color: var(--bs-secondary-color);
     }
 
     .new-message-badge {
@@ -466,7 +466,7 @@ $radiusNone: 0;
         }
 
         .mail-last-entry {
-            color: var(--hh-text-color-highlight);
+            color: var(--bs-emphasis-color);
         }
     }
 }
