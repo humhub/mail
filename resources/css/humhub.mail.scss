@@ -35,7 +35,7 @@ $radiusNone: 0;
 
 #dropdown-messages {
     .dropdown-header {
-        color: #000;
+        color: var(--bs-emphasis-color);
         margin-bottom: 12px;
         @include semiBold;
     }
@@ -68,7 +68,7 @@ $radiusNone: 0;
 }
 
 #conversation-tags-root {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--bs-secondary-bg);
 
     .my-tags-label {
         padding-right: 10px;
@@ -88,7 +88,7 @@ $radiusNone: 0;
     right: 25px;
     width: 38px;
     height: 38px;
-    background: #fff;
+    background: var(--bs-body-bg);
     border-radius: 50%;
     box-shadow: 1px 1px 2px #999;
     display: flex;
@@ -133,7 +133,7 @@ $radiusNone: 0;
 
 #mail-conversation-root {
     hr {
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--bs-secondary-bg);
     }
 
     .ProsemirrorEditor.focusMenu {
@@ -479,7 +479,7 @@ $radiusNone: 0;
     .manage-tags-link {
         @include semiBold;
         font-size: 0.8em;
-        border: 1px solid #ededed;
+        border: 1px solid var(--bs-secondary-bg);
         border-top: 0;
         border-bottom-left-radius: $radiusSmall;
         border-bottom-right-radius: $radiusSmall;

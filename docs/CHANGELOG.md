@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
 - Enh: Colour tokens of the core 1.20 instead of the deprecated ones (humhub/humhub#8707)
 - Fix: The mobile arrow offset of the messages dropdown no longer moves the arrow of other dropdowns (humhub/humhub#8699)
 - Enh: Compatibility with HumHub 1.20

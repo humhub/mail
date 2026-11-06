@@ -310,7 +310,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                     that.getContainerNode().niceScroll({
                         cursorwidth: "7",
                         cursorborder: "",
-                        cursorcolor: "#555",
+                        cursorcolor: "var(--bs-body-color)",
                         cursoropacitymax: "0.2",
                         nativeparentscrolling: false,
                         railpadding: {top: 0, right: 0, left: 0, bottom: 0}
@@ -516,7 +516,7 @@ humhub.module('mail.inbox', function (module, require, $) {
             this.$.niceScroll({
                 cursorwidth: "7",
                 cursorborder: "",
-                cursorcolor: "#555",
+                cursorcolor: "var(--bs-body-color)",
                 cursoropacitymax: "0.2",
                 nativeparentscrolling: false,
                 railpadding: {top: 0, right: 3, left: 0, bottom: 0}
