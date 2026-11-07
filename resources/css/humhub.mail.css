@@ -354,7 +354,7 @@
   display: block;
 }
 .messagePreviewEntry.unread time {
-  color: var(--bs-info);
+  color: var(--hh-info-fg);
 }
 .messagePreviewEntry.unread .mail-last-entry {
   color: var(--bs-emphasis-color);

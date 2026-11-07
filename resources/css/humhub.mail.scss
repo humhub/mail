@@ -462,7 +462,7 @@ $radiusNone: 0;
         }
 
         time {
-            color: $colorUnread;
+            color: var(--hh-info-fg); // The readable shade of $colorUnread
         }
 
         .mail-last-entry {
