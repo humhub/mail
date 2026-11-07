@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Enh: The time of an unread conversation in the readable shade of the info colour (humhub/humhub#8715)
 - Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
 - Enh: Colour tokens of the core 1.20 instead of the deprecated ones (humhub/humhub#8707)
 - Fix: The mobile arrow offset of the messages dropdown no longer moves the arrow of other dropdowns (humhub/humhub#8699)
