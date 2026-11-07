@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: Compatibility with the core's People browser, which replaced the People directory (humhub/humhub#8637)
 - Enh: The time of an unread conversation in the readable shade of the info colour (humhub/humhub#8715)
 - Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
 - Enh: Colour tokens of the core 1.20 instead of the deprecated ones (humhub/humhub#8707)
