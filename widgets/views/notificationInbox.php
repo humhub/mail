@@ -5,6 +5,7 @@ use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\permissions\StartConversation;
 use humhub\modules\mail\widgets\NewMessageButton;
 use humhub\widgets\bootstrap\Badge;
+use humhub\helpers\Html;
 use humhub\widgets\Icon;
 
 /* @var $this \humhub\components\View */
@@ -15,7 +16,7 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
 ?>
 <div class="btn-group">
-    <a href="#" id="icon-messages" data-bs-toggle="dropdown"><?= Icon::get('mail') ?></a>
+    <a href="#" id="icon-messages" data-bs-toggle="dropdown" aria-label="<?= Html::encode(Yii::t('MailModule.base', 'Conversations')) ?>"><?= Icon::get('mail') ?></a>
     <?= Badge::danger()->id('badge-messages')->cssClass('d-none') ?>
     <ul id="dropdown-messages" class="dropdown-menu mail-inbox-messages">
         <li>
