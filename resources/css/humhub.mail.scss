@@ -353,15 +353,6 @@ $radiusNone: 0;
                 background-color: $bgColorDefault;
                 color: inherit;
             }
-
-            // Now that the button is a real, focusable link (see ConversationEntryMenu::initMenus()),
-            // give it its own visible focus indicator - the round shape/badge background can make the
-            // browser's default outline hard to notice. Same treatment as .task-list-edit etc. in the
-            // tasks module.
-            &:focus-visible {
-                outline: 0;
-                box-shadow: 0 0 0 2px var(--bs-accent);
-            }
         }
     }
 
@@ -440,11 +431,10 @@ $radiusNone: 0;
         text-decoration: none;
     }
 
-    // Specificity must beat `.hh-list > a:not(.stream-end)` (core sets a 3px border-left)
+    // Keyboard focus: the core's ring (its tokens, the mixin is not available here), inside the row as `.hh-list` clips
     .hh-list > &:focus-visible {
-        outline: 2px solid var(--bs-accent);
-        outline-offset: -2px;
-        border-left-color: var(--bs-accent);
+        outline: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+        outline-offset: calc((var(--bs-focus-ring-width) + var(--hh-focus-ring-offset)) * -1);
     }
 
     time {

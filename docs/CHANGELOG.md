@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Enh: The keyboard focus ring of the core instead of own rings on the edit button and the conversation list (humhub/humhub#8719)
 - Fix: Compatibility with the core's People browser, which replaced the People directory (humhub/humhub#8637)
 - Enh: The time of an unread conversation in the readable shade of the info colour (humhub/humhub#8715)
 - Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
