@@ -278,10 +278,6 @@
   background-color: var(--bs-tertiary-bg);
   color: inherit;
 }
-.mail-conversation-entry .conversation-menu .conversation-edit-button:focus-visible {
-  outline: 0;
-  box-shadow: 0 0 0 2px var(--bs-accent);
-}
 .mail-conversation-entry:hover .conversation-menu, .mail-conversation-entry:focus-within .conversation-menu {
   opacity: 1;
 }
@@ -339,9 +335,8 @@
   text-decoration: none;
 }
 .hh-list > .messagePreviewEntry:focus-visible {
-  outline: 2px solid var(--bs-accent);
-  outline-offset: -2px;
-  border-left-color: var(--bs-accent);
+  outline: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+  outline-offset: calc((var(--bs-focus-ring-width) + var(--hh-focus-ring-offset)) * -1);
 }
 .messagePreviewEntry time {
   font-size: 10px;
