@@ -48,6 +48,7 @@ return [
     'Add recipients' => '',
     'Add user' => '',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Conversations' => '',
     'Delete conversation' => '',

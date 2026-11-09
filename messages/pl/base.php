@@ -104,6 +104,7 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} wysłał ci nową wiadomość w {conversationTitle}',
     '{username} joined the conversation.' => '{username} dołączył do konwersacji.',
     '{username} left the conversation.' => '{username} opuścił konwersację.',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     '{displayNames} sent you {count} messages' => '',

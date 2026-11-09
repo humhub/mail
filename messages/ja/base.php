@@ -104,6 +104,7 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} が {conversationTitle} で新しいメッセージを送信しました',
     '{username} joined the conversation.' => '{username} が会話に参加しました。',
     '{username} left the conversation.' => '{username} さんが会話から退出しました。',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     '{displayNames} sent you {count} messages' => '',

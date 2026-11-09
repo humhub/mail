@@ -69,6 +69,7 @@ return [
     '<strong>Messenger</strong> module configuration' => '',
     'Add participants' => '',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Created At' => '',
     'Created By' => '',
     'Edit conversation subject' => '',

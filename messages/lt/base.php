@@ -104,6 +104,7 @@ return [
     '{username} joined the conversation.' => '{username} prisijungė prie pokalbio.',
     '{username} left the conversation.' => '{username} paliko pokalbį.',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     '{displayNames} sent you {count} messages' => '',

@@ -90,6 +90,7 @@ return [
     '<strong>Messenger</strong> module configuration' => '',
     'Add participants' => '',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     'Mark Unread' => '',

@@ -23,6 +23,7 @@ return [
     'Allow users to start new conversations' => '',
     'Cancel' => '',
     'Confirm' => '',
+    'Conversation settings' => '',
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Conversations' => '',
     'Created At' => '',

@@ -65,6 +65,7 @@ return [
     'Add Tag' => '',
     'Advanced Messages Search' => '',
     'Allow users to start new conversations' => '',
+    'Conversation settings' => '',
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Do you really want to delete this tag?' => '',
     'Edit conversation subject' => '',

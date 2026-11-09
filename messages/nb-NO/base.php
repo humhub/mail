@@ -74,6 +74,7 @@ return [
     'A tag with the same name already exists.' => '',
     'Add Tag' => '',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Do you really want to delete this tag?' => '',
     'Edit conversation subject' => '',

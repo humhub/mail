@@ -101,6 +101,7 @@ return [
     '{username} joined the conversation.' => '{username} присоединился к разговору.',
     '{username} left the conversation.' => '{username} покинул разговор.',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     'You are not allowed to send user {name} is already!' => '',

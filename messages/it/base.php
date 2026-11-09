@@ -102,6 +102,7 @@ return [
     '{username} joined the conversation.' => '{username} si è unito alla conversazione.',
     '{username} left the conversation.' => '{username} ha lasciato la conversazione.',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     'Mark Unread' => '',

@@ -104,6 +104,7 @@ return [
     '{senderName} sent you a new message in {conversationTitle}' => '{senderName} új üzenetet küldött ebben a témában: {conversationTitle}',
     '{username} joined the conversation.' => '{username} csatlakozott a beszélgetéshez.',
     '{username} left the conversation.' => '{username} kilépett a beszélgetésből.',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     '{displayNames} sent you {count} messages' => '',

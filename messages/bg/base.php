@@ -91,6 +91,7 @@ return [
     '{n,plural,=1{# other} other{# others}}' => '{n,plural,=1{# друг} other{# други}}',
     '<strong>Messenger</strong> module configuration' => '',
     'Advanced Messages Search' => '',
+    'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
     'Mark Unread' => '',

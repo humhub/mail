@@ -43,6 +43,7 @@ return [
     'Advanced Messages Search' => '',
     'Allow others to send you private messages' => '',
     'Allow users to start new conversations' => '',
+    'Conversation settings' => '',
     'Conversation tags can be used to filter conversations and are only visible to you.' => '',
     'Delete conversation' => '',
     'Disabled' => '',
