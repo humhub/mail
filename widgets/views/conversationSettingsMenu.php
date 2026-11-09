@@ -3,6 +3,7 @@
 use humhub\modules\mail\helpers\Url;
 use humhub\modules\mail\models\Message;
 use humhub\modules\mail\widgets\PinLink;
+use humhub\helpers\Html;
 use humhub\widgets\Icon;
 use humhub\widgets\bootstrap\Link;
 use humhub\widgets\modal\ModalButton;
@@ -24,14 +25,9 @@ if (!$isSingleParticipant) {
 }
 ?>
 <div class="dropdown d-inline-block">
-    <?= Icon::get('chevron-down', [
-        'htmlOptions' => [
-            'id' => 'conversation-settings-button',
-            'data-bs-toggle' => 'dropdown',
-            'aria-haspopup' => 'true',
-            'aria-expanded' => 'false',
-        ],
-    ]) ?>
+    <button type="button" id="conversation-settings-button" class="btn btn-link" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"
+            aria-label="<?= Html::encode(Yii::t('MailModule.base', 'Conversation settings')) ?>"><?= Icon::get('chevron-down') ?></button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="conversation-settings-button">
         <li>
             <?= ModalButton::none(Yii::t('MailModule.base', 'Tags'))

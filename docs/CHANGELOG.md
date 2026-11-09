@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: The messages icon in the top bar has a name, and the conversation settings toggle is a button reachable by keyboard (humhub/humhub#8721)
 - Enh: The keyboard focus ring of the core instead of own rings on the edit button and the conversation list (humhub/humhub#8719)
 - Fix: Compatibility with the core's People browser, which replaced the People directory (humhub/humhub#8637)
 - Enh: The time of an unread conversation in the readable shade of the info colour (humhub/humhub#8715)
