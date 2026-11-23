@@ -30,7 +30,7 @@ class NewMessageButton extends Widget
     public $icon = null;
 
     /**
-     * @var string
+     * @var string an empty string shows only the icon, named by its tooltip
      */
     public $label;
 
@@ -49,10 +49,20 @@ class NewMessageButton extends Widget
      */
     public function run()
     {
-        $button = ModalButton::light($this->getLabel())->load(Url::toCreateConversation($this->guid))->id($this->id);
+        $iconOnly = $this->icon && $this->label === '';
+        $button = ModalButton::light($iconOnly ? null : $this->getLabel())
+            ->load(Url::toCreateConversation($this->guid))
+            ->id($this->id);
 
         if ($this->icon) {
             $button->icon($this->icon);
+        }
+
+        if ($iconOnly) {
+            // The core's icon-only button takes its aria-label from the tooltip
+            $button->tooltip($this->guid
+                ? Yii::t('MailModule.base', 'Send message')
+                : Yii::t('MailModule.base', 'New message'));
         }
 
         if ($this->right) {

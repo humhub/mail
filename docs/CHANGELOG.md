@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: The plus button for a new conversation has a name for screen readers and a tooltip
 - Enh: The conversation list, a conversation and the messages dropdown scroll natively instead of with jQuery NiceScroll, which the core removes in 1.20
 - Fix: The messages icon in the top bar has a name, and the conversation settings toggle is a button reachable by keyboard (humhub/humhub#8721)
 - Enh: The keyboard focus ring of the core instead of own rings on the edit button and the conversation list (humhub/humhub#8719)
