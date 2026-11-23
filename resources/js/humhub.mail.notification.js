@@ -40,14 +40,6 @@ humhub.module('mail.notification', function (module, require, $) {
                     currentXhr = undefined;
                     messageList.prepend($(response.html));
                     messageLoader.addClass('d-none');
-                    messageList.niceScroll({
-                        cursorwidth: '7',
-                        cursorborder: '',
-                        cursorcolor: 'var(--bs-body-color)',
-                        cursoropacitymax: '0.2',
-                        nativeparentscrolling: false,
-                        railpadding: {top: 0, right: 3, left: 0, bottom: 0}
-                    });
                 });
             });
         }

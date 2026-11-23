@@ -196,7 +196,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
 
         return new Promise(function (resolve, reject) {
             $elements.css('opacity', 1).removeClass('d-none', function () {
-                that.onUpdate();
                 setTimeout(function () {
                     that.scrollToBottom()
                 }, 100);
@@ -307,15 +306,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
             return this.assureScroll().then(function () {
                 observer.observe($streamEnd[0]);
                 if (view.isLarge()) {
-                    that.getContainerNode().niceScroll({
-                        cursorwidth: "7",
-                        cursorborder: "",
-                        cursorcolor: "var(--bs-body-color)",
-                        cursoropacitymax: "0.2",
-                        nativeparentscrolling: false,
-                        railpadding: {top: 0, right: 0, left: 0, bottom: 0}
-                    });
-
                     that.scrollDownButton = undefined;
                     that.getContainerNode().on('scroll', () => that.getScrollDownButton().toggle(!that.isScrolledToBottom()));
                 }
@@ -433,12 +423,6 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         return this.$.find('.conversation-entry-list');
     };
 
-    ConversationView.prototype.onUpdate = function () {
-        if (view.isLarge()) {
-            this.getContainerNode().getNiceScroll().resize();
-        }
-    };
-
     module.export = ConversationView;
 });
 
@@ -511,17 +495,6 @@ humhub.module('mail.inbox', function (module, require, $) {
                 that.updateActiveItem();
             });
         });
-
-        if(view.isLarge()) {
-            this.$.niceScroll({
-                cursorwidth: "7",
-                cursorborder: "",
-                cursorcolor: "var(--bs-body-color)",
-                cursoropacitymax: "0.2",
-                nativeparentscrolling: false,
-                railpadding: {top: 0, right: 3, left: 0, bottom: 0}
-            });
-        }
 
         this.$.on('click', '.entry', function() {
             that.$.find('.entry').removeClass('selected').removeAttr('aria-current');

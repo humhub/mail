@@ -44,17 +44,6 @@ humhub.module('mail.inbox', function (module, require, $) {
             });
         });
 
-        if(view.isLarge()) {
-            this.$.niceScroll({
-                cursorwidth: "7",
-                cursorborder: "",
-                cursorcolor: "var(--bs-body-color)",
-                cursoropacitymax: "0.2",
-                nativeparentscrolling: false,
-                railpadding: {top: 0, right: 3, left: 0, bottom: 0}
-            });
-        }
-
         this.$.on('click', '.entry', function() {
             that.$.find('.entry').removeClass('selected').removeAttr('aria-current');
             $(this).addClass('selected').attr('aria-current', 'true');
