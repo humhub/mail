@@ -104,6 +104,7 @@ return [
     'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
+    'New message' => '',
     'You are not allowed to send user {name} is already!' => '',
     '{displayNames} sent you {count} messages' => '',
     '{displayNames} sent you {count} messages in {conversationTitle}' => '',

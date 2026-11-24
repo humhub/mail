@@ -80,6 +80,7 @@ return [
     'Max number of new conversations allowed for a new user per day' => '',
     'Max number of new conversations allowed for a user per day' => '',
     'My Tags' => '',
+    'New message' => '',
     'Pin' => '',
     'Receive private messages' => '',
     'Seperate restrictions for new users' => '',

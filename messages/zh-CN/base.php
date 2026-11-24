@@ -72,6 +72,7 @@ return [
     'Max number of new conversations allowed for a user per day' => '',
     'Monday' => '',
     'My Tags' => '',
+    'New message' => '',
     'Optional' => '',
     'Participants' => '',
     'Pin' => '',

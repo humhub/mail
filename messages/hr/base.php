@@ -93,6 +93,7 @@ return [
     'Edit conversation subject' => '',
     'Edit subject' => '',
     'Mark Unread' => '',
+    'New message' => '',
     'Optional' => '',
     'Pin' => '',
     'Yesterday' => '',

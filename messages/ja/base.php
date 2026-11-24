@@ -107,6 +107,7 @@ return [
     'Conversation settings' => '',
     'Edit conversation subject' => '',
     'Edit subject' => '',
+    'New message' => '',
     '{displayNames} sent you {count} messages' => '',
     '{displayNames} sent you {count} messages in {conversationTitle}' => '',
     '{displayNames} sent you {groupCount} messages.' => '',

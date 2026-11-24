@@ -68,6 +68,7 @@ return [
     'Mark Unread' => '',
     'Monday' => '',
     'My Tags' => '',
+    'New message' => '',
     'Optional' => '',
     'Pin' => '',
     'Recipient' => '',

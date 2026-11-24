@@ -90,6 +90,7 @@ return [
     'Manage Tags' => '',
     'Mark Unread' => '',
     'My Tags' => '',
+    'New message' => '',
     'Optional' => '',
     'Pin' => '',
     'Reply' => '',

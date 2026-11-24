@@ -65,6 +65,7 @@ return [
     'Messages' => '',
     'Monday' => '',
     'My Tags' => '',
+    'New message' => '',
     'Optional' => '',
     'Participants' => '',
     'Pin' => '',

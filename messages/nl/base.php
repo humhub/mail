@@ -109,6 +109,7 @@ return [
     '{username} joined the conversation.' => '{username}  neemt deel aan het gesprek.',
     '{username} left the conversation.' => '{username} verliet het gesprek.',
     'Conversation settings' => '',
+    'New message' => '',
     '{displayNames} sent you {count} messages' => '',
     '{displayNames} sent you {count} messages in {conversationTitle}' => '',
     '{displayNames} sent you {groupCount} messages.' => '',

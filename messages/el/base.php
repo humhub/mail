@@ -71,6 +71,7 @@ return [
     'Max number of new conversations allowed for a user per day' => '',
     'Messages' => '',
     'My Tags' => '',
+    'New message' => '',
     'Optional' => '',
     'Pin' => '',
     'Receive private messages' => '',

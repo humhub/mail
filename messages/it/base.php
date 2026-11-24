@@ -106,6 +106,7 @@ return [
     'Edit conversation subject' => '',
     'Edit subject' => '',
     'Mark Unread' => '',
+    'New message' => '',
     'Pin' => '',
     '{displayNames} sent you {count} messages' => '',
     '{displayNames} sent you {count} messages in {conversationTitle}' => '',
