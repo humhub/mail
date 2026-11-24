@@ -31,13 +31,13 @@ use yii\helpers\Html;
                 ]) : '' ?>
             </div>
             <div class="text-break flex-grow-1">
-                <h4 class="mt-0">
+                <h4 class="mt-0 fs-6 fw-semibold">
                     <?= Html::encode($messageTitle) . ' ' . $message->getPinIcon(isPinned: $isPinned) ?>
                     <time><?= $messageTime ?></time>
                 </h4>
                 <span class="new-message-badge"></span>
                 <?php if ($message->title): ?>
-                    <h5>
+                    <h5 class="fs-6 fw-normal">
                         <?= Html::encode($message->title) ?>
                     </h5>
                 <?php endif; ?>
