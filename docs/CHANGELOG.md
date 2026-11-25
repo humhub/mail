@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: The inbox filter's fields have a name for screen readers (WAVE "Missing form label", humhub/humhub@b2aef7c2a1)
 - Fix #539: A new message in a conversation open in a background tab or minimized window is only marked seen once the page is visible again, so its mail is no longer skipped
 - Enh: Cards instead of Bootstrap 3 panels, sizes in rem and the text styles of the core 1.20 (humhub/humhub#8777)
 - Fix: The plus button for a new conversation has a name for screen readers and a tooltip

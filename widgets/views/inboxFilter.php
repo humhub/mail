@@ -32,6 +32,7 @@ use humhub\widgets\form\ActiveForm;
     <?= TextFilterInput::widget([
         'id' => 'term',
         'category' => 'term',
+        'title' => Yii::t('MailModule.base', 'Search'),
         'view' => '@mail/widgets/views/inboxFilterTextInput',
         'options' => [
             'placeholder' => Yii::t('MailModule.base', 'Search'),
@@ -42,12 +43,14 @@ use humhub\widgets\form\ActiveForm;
     <div class="mb-3">
         <?= PickerFilterInput::widget([
             'id' => 'participants', 'category' => 'participants',
+            'title' => Yii::t('MailModule.base', 'Participants'),
             'picker' => UserPickerField::class,
             'pickerOptions' => ['name' => 'participants', 'placeholder' => Yii::t('MailModule.base', 'Participants')]]) ?>
     </div>
     <div class="message-tag-filter-group">
         <?= PickerFilterInput::widget([
             'id' => 'tags', 'category' => 'tags',
+            'title' => Yii::t('MailModule.base', 'Tags'),
             'picker' => ConversationTagPicker::class,
             'pickerOptions' => ['id' => 'inbox-tag-picker', 'name' => 'tags', 'placeholder' => Yii::t('MailModule.base', 'Tags'), 'placeholderMore' => Yii::t('MailModule.base', 'Tags')]]) ?>
 
