@@ -17,7 +17,7 @@ class ConversationTags extends Widget
     {
         $tags = MessageTag::findByMessage(Yii::$app->user->id, $this->message)->all();
 
-        $result = Html::beginTag('div', ['id' => static::ID, 'class' => 'panel-body', 'style' => ['display' => count($tags) ? 'block' : 'none']]);
+        $result = Html::beginTag('div', ['id' => static::ID, 'class' => 'card-body', 'style' => ['display' => count($tags) ? 'block' : 'none']]);
 
         $result .= '<span class="my-tags-label">' . Yii::t('MailModule.base', 'My Tags') . '</span>';
 

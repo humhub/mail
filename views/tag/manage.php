@@ -24,14 +24,16 @@ $dataProvider = new ActiveDataProvider([
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div id="mail-conversation-header" class="panel-heading">
-                    <?= Yii::t('MailModule.base', '<strong>Manage</strong> conversation tags') ?>
+            <div class="card content-card">
+                <div id="mail-conversation-header" class="card-header">
+                    <div class="card-title"><?= Yii::t('MailModule.base', '<strong>Manage</strong> conversation tags') ?></div>
 
-                    <?= Button::back(Url::toMessenger())->right()->sm() ?>
+                    <div class="card-header-actions">
+                        <?= Button::back(Url::toMessenger())->right()->sm() ?>
+                    </div>
                 </div>
 
-                <div class="panel-body">
+                <div class="card-body">
 
                     <div class="text-body-secondary">
                         <?= Yii::t('MailModule.base', 'Here you can manage your private conversation tags.') ?><br>

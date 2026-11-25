@@ -8,12 +8,14 @@ use humhub\modules\mail\widgets\ParticipantUserList;
 /* @var $message Message */
 ?>
 
-<div class="float-end">
-    <?= ConversationSettingsMenu::widget(['message' => $message]) ?>
+<div class="card-heading">
+    <?php if ($message->title): ?>
+        <h1 class="card-title mb-0"><?= Html::encode($message->title) . ' ' . $message->getPinIcon() ?></h1>
+    <?php endif; ?>
+
+    <small class="py-2"><?= ParticipantUserList::widget(['message' => $message]) ?></small>
 </div>
 
-<?php if ($message->title): ?>
-    <h1 class="panel-title mb-0"><?= Html::encode($message->title) . ' ' . $message->getPinIcon() ?></h1>
-<?php endif; ?>
-
-<small class="py-2"><?= ParticipantUserList::widget(['message' => $message]) ?></small>
+<div class="card-header-actions">
+    <?= ConversationSettingsMenu::widget(['message' => $message]) ?>
+</div>

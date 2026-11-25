@@ -31,6 +31,7 @@
 }
 
 #conversation-tags-root {
+  flex: none;
   border-bottom: 1px solid var(--bs-secondary-bg);
 }
 #conversation-tags-root .my-tags-label {
@@ -95,17 +96,17 @@
 #mail-conversation-root .ProsemirrorEditor.focusMenu .ProseMirror-menubar {
   margin-top: 0;
 }
-#mail-conversation-root > .panel {
+#mail-conversation-root > .card {
   display: flex;
   flex-direction: column;
   height: calc(100svh - var(--hh-mail-conversation-bottom-margin) - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
   margin-bottom: var(--hh-mail-conversation-bottom-margin);
 }
-#mail-conversation-root > .panel > .conversation-entry-container {
+#mail-conversation-root > .card > .conversation-entry-container {
   flex: 1;
   overflow: auto;
 }
-#mail-conversation-root > .panel .content_create .richtext-create-input-group > .mb-3 [data-ui-markdown] {
+#mail-conversation-root > .card .content_create .richtext-create-input-group > .mb-3 [data-ui-markdown] {
   max-height: calc(50svh - var(--hh-fixed-header-height) - var(--hh-fixed-footer-height) - var(--hh-mobile-app-safe-area-inset-bottom, env(safe-area-inset-bottom)) - var(--hh-mail-top-conversation-height));
   overflow-y: auto;
 }
@@ -153,11 +154,14 @@
 .mail-inbox-messages .mail-link {
   overflow-x: hidden;
 }
-.mail-inbox-messages .panel-heading > a {
+.mail-inbox-messages > .card-header .card-title > a {
   font-weight: 600;
 }
-.mail-inbox-messages .panel-heading #mail-filter-root > a {
-  font-weight: normal;
+.mail-inbox-messages > .card-header > .inbox-wrapper {
+  flex: 0 0 100%;
+}
+.mail-inbox-messages > .card-header #mail-filter-root > a {
+  font-weight: 400;
 }
 .mail-inbox-messages .text-break {
   min-width: 0;

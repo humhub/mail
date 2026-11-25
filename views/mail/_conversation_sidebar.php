@@ -11,13 +11,17 @@ $canStartConversation = Yii::$app->user->can(StartConversation::class);
 
 $filterModel = new InboxFilterForm();
 ?>
-<div id="mail-conversation-overview" class="panel panel-default mail-inbox-messages">
-    <div class="panel-heading">
-        <a data-action-click="mail.inbox.toggleInbox">
-            <span class="d-sm-none"><?=Icon::get('menu-2')?></span> <?= Yii::t('MailModule.base', 'Conversations') ?>
-        </a>
+<div id="mail-conversation-overview" class="card content-card mail-inbox-messages">
+    <div class="card-header">
+        <div class="card-title">
+            <a data-action-click="mail.inbox.toggleInbox">
+                <span class="d-sm-none"><?=Icon::get('menu-2')?></span> <?= Yii::t('MailModule.base', 'Conversations') ?>
+            </a>
+        </div>
         <?php if ($canStartConversation) : ?>
-            <?= NewMessageButton::widget(['icon' => 'plus', 'label' => '', 'id' => 'mail-conversation-create-button'])?>
+            <div class="card-header-actions">
+                <?= NewMessageButton::widget(['icon' => 'plus', 'label' => '', 'id' => 'mail-conversation-create-button'])?>
+            </div>
         <?php endif; ?>
 
         <div class="inbox-wrapper">

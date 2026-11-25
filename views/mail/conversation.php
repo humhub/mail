@@ -23,23 +23,23 @@ use humhub\widgets\form\ActiveForm;
 /* @var $fileHandlers BaseFileHandler[] */
 
 ?>
-<div class="panel panel-default">
+<div class="card content-card">
 
     <?php if ($message === null) : ?>
 
-        <div class="panel-body">
+        <div class="card-body">
             <?= Yii::t('MailModule.base', 'There are no messages yet.'); ?>
         </div>
 
     <?php else : ?>
 
-        <div id="mail-conversation-header" class="panel-heading">
+        <div id="mail-conversation-header" class="card-header">
             <?= ConversationHeader::widget(['message' => $message]) ?>
         </div>
 
         <?= ConversationTags::widget(['message' => $message]) ?>
 
-        <div class="panel-body conversation-entry-container">
+        <div class="card-body conversation-entry-container">
 
             <div class="conversation-entry-list">
                 <?= Messages::widget(['message' => $message]) ?>
@@ -47,8 +47,8 @@ use humhub\widgets\form\ActiveForm;
 
         </div>
 
-        <div id="'mail-create-form-<?= $message->id ?>" class="panel panel-default mail-message-form content_create">
-            <div class="panel-body">
+        <div id="'mail-create-form-<?= $message->id ?>" class="card content-card mail-message-form content_create">
+            <div class="card-body">
                 <?php if ($message->isBlocked()) : ?>
                     <div class="alert alert-danger">
                         <?= Yii::t('MailModule.base', 'You are not allowed to participate in this conversation. You have been blocked by: {userNames}.', [

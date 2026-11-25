@@ -3,7 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
-- Enh: Sizes in rem on Bootstrap's steps and by the core's text size variables, the conversation title is the panel's title (humhub/humhub#8777)
+- Enh: Cards instead of Bootstrap 3 panels, sizes in rem and the text styles of the core 1.20 (humhub/humhub#8777)
 - Fix: The plus button for a new conversation has a name for screen readers and a tooltip
 - Enh: The conversation list, a conversation and the messages dropdown scroll natively instead of with jQuery NiceScroll, which the core removes in 1.20
 - Fix: The messages icon in the top bar has a name, and the conversation settings toggle is a button reachable by keyboard (humhub/humhub#8721)
