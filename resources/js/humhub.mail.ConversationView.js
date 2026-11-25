@@ -43,7 +43,7 @@ humhub.module('mail.ConversationView', function (module, require, $) {
     };
 
     ConversationView.prototype.markSeen = function (id) {
-        client.post(this.options.markSeenUrl, {data: {id: id}}).then(function (response) {
+        return client.post(this.options.markSeenUrl, {data: {id: id}}).then(function (response) {
             if (object.isDefined(response.messageCount)) {
                 mail.setMailMessageCount(response.messageCount);
             }
