@@ -13,7 +13,7 @@ use humhub\modules\mail\widgets\ParticipantUserList;
 </div>
 
 <?php if ($message->title): ?>
-    <h1 class="mb-0"><?= Html::encode($message->title) . ' ' . $message->getPinIcon() ?></h1>
+    <h1 class="panel-title mb-0"><?= Html::encode($message->title) . ' ' . $message->getPinIcon() ?></h1>
 <?php endif; ?>
 
 <small class="py-2"><?= ParticipantUserList::widget(['message' => $message]) ?></small>
