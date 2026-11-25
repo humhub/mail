@@ -69,7 +69,46 @@ humhub.module('mail.conversation', function (module, require, $) {
         return Widget.instance('#mail-conversation-root');
     };
 
+    // The open conversation, if a new message arrived in it while the page was hidden
+    var unseenMessageId = null;
+
+    /**
+     * Only a message the user can actually see counts as seen, as marking it seen also skips
+     * the pending mail of its notification. A message arriving in a background tab or a
+     * minimized window is marked seen once the page becomes visible again.
+     */
+    var markSeenIfVisible = function (root, messageId) {
+        if (document.visibilityState === 'visible') {
+            root.markSeen(messageId);
+        } else {
+            unseenMessageId = messageId;
+        }
+    };
+
+    var markSeenOnceVisible = function () {
+        if (document.visibilityState !== 'visible' || !unseenMessageId) {
+            return;
+        }
+
+        var messageId = unseenMessageId;
+        unseenMessageId = null;
+
+        var root = getRootView();
+        if (!root || root.options.messageId != messageId) {
+            return;
+        }
+
+        root.markSeen(messageId).then(function () {
+            var inbox = Widget.instance('#inbox');
+            if (inbox) {
+                inbox.updateEntries([messageId]);
+            }
+        });
+    };
+
     var init = function () {
+        document.addEventListener('visibilitychange', markSeenOnceVisible);
+
         event.on('humhub:modules:mail:live:NewUserMessage', function (evt, events) {
             if(!$('#inbox').length) {
                 return;
@@ -83,7 +122,7 @@ humhub.module('mail.conversation', function (module, require, $) {
                 if (!updated && root && root.options.messageId == event.data.message_id) {
                     root.loadUpdate();
                     updated = true;
-                    root.markSeen(event.data.message_id);
+                    markSeenIfVisible(root, event.data.message_id);
                 }
             });
 
