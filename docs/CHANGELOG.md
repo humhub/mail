@@ -3,6 +3,7 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: The author names of a conversation keep their colour's hue at a lightness readable in each colour mode and in high contrast (some read only 1.7:1)
 - Fix: The inbox filter's fields have a name for screen readers (WAVE "Missing form label", humhub/humhub@b2aef7c2a1)
 - Fix #539: A new message in a conversation open in a background tab or minimized window is only marked seen once the page is visible again, so its mail is no longer skipped
 - Enh: Cards instead of Bootstrap 3 panels, sizes in rem and the text styles of the core 1.20 (humhub/humhub#8777)

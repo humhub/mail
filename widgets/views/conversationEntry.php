@@ -43,7 +43,7 @@ use humhub\modules\user\widgets\Image;
         <div class="markdown-render">
             <?php if ($showUser) : ?>
                 <div class="author-label"
-                     style="color:<?= $userColor ?>"><?= Html::encode($entry->user->displayName) ?></div>
+                     style="--mail-author-color:<?= Html::encode($userColor) ?>"><?= Html::encode($entry->user->displayName) ?></div>
             <?php endif; ?>
             <?= RichText::output($entry->content) ?>
             <?= ShowFiles::widget(['object' => $entry]) ?>

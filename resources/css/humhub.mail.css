@@ -269,8 +269,11 @@
   max-width: 100%;
 }
 .mail-conversation-entry .author-label {
+  --mail-author-lightness: .5;
   font-size: var(--hh-font-size-meta);
   font-weight: 600;
+  color: var(--mail-author-color);
+  color: oklch(from var(--mail-author-color) var(--mail-author-lightness) c h);
 }
 .mail-conversation-entry.hideUserInfo .author-label {
   display: none;
@@ -417,5 +420,25 @@
   .conversation-entry-content pre {
     max-width: 245px;
     padding: 0;
+  }
+}
+[data-bs-theme=dark] .mail-conversation-entry .author-label {
+  --mail-author-lightness: .78;
+}
+
+:root[data-hh-contrast=more] .mail-conversation-entry .author-label {
+  --mail-author-lightness: .4;
+}
+
+:root[data-hh-contrast=more][data-bs-theme=dark] .mail-conversation-entry .author-label {
+  --mail-author-lightness: .94;
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-hh-contrast]) .mail-conversation-entry .author-label {
+    --mail-author-lightness: .4;
+  }
+  :root:not([data-hh-contrast])[data-bs-theme=dark] .mail-conversation-entry .author-label {
+    --mail-author-lightness: .94;
   }
 }

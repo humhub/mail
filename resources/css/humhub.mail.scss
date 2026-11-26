@@ -360,9 +360,14 @@ $radiusNone: 0;
         }
     }
 
+    // The author's colour (`--mail-author-color`, one per user) at a lightness where it reads on the message: 4.5:1 for
+    // every colour of `ConversationEntry::$userColors`, 7:1 in high contrast (WCAG 1.4.3)
     .author-label {
+        --mail-author-lightness: .5;
         font-size: var(--hh-font-size-meta);
         @include semiBold;
+        color: var(--mail-author-color);
+        color: oklch(from var(--mail-author-color) var(--mail-author-lightness) c h);
     }
 
     &.hideUserInfo {
@@ -546,5 +551,29 @@ $radiusNone: 0;
             max-width: 245px;
             padding: 0;
         }
+    }
+}
+
+// The lightness of an author's colour (see `.author-label`) on the messages of the dark mode, and in high contrast
+// (`data-hh-contrast`, else the system's setting)
+[data-bs-theme=dark] .mail-conversation-entry .author-label {
+    --mail-author-lightness: .78;
+}
+
+:root[data-hh-contrast=more] .mail-conversation-entry .author-label {
+    --mail-author-lightness: .4;
+}
+
+:root[data-hh-contrast=more][data-bs-theme=dark] .mail-conversation-entry .author-label {
+    --mail-author-lightness: .94;
+}
+
+@media (prefers-contrast: more) {
+    :root:not([data-hh-contrast]) .mail-conversation-entry .author-label {
+        --mail-author-lightness: .4;
+    }
+
+    :root:not([data-hh-contrast])[data-bs-theme=dark] .mail-conversation-entry .author-label {
+        --mail-author-lightness: .94;
     }
 }
