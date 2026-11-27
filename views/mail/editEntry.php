@@ -4,7 +4,6 @@ use humhub\modules\file\handler\BaseFileHandler;
 use humhub\modules\file\widgets\FileHandlerButtonDropdown;
 use humhub\modules\file\widgets\FilePreview;
 use humhub\modules\file\widgets\UploadButton;
-use humhub\modules\file\widgets\UploadProgress;
 use humhub\modules\mail\models\MessageEntry;
 use humhub\modules\mail\widgets\MailRichtextEditor;
 use humhub\widgets\bootstrap\Button;
@@ -40,7 +39,6 @@ use humhub\widgets\modal\ModalButton;
         'tooltip' => false,
         'cssButtonClass' => 'btn-light',
         'attribute' => 'files',
-        'progress' => '#mail-edit-progress',
         'preview' => '#mail-edit-preview',
         'dropZone' => '#mail-edit',
         'max' => Yii::$app->getModule('content')->maxAttachedFiles,
@@ -51,7 +49,6 @@ use humhub\widgets\modal\ModalButton;
         'cssButtonClass' => 'btn-light',
         'pullRight' => true,
     ]) ?>
-    <?= UploadProgress::widget(['id' => 'mail-edit-progress']) ?>
     <?= FilePreview::widget([
         'id' => 'mail-edit-preview',
         'model' => $entry,

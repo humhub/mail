@@ -80,8 +80,8 @@ humhub.module('mail.ConversationView', function (module, require, $) {
                     }
                     var filePreview = that.getReplyFilePreview();
                     if (filePreview.length) {
-                        filePreview.hide();
-                        filePreview.children('ul.files').html('');
+                        // Clears the rows; the files stay attached to the sent message
+                        Widget.instance(filePreview).reset();
                     }
                     var fileListInputs = that.getReplyFileListInputs();
                     if (fileListInputs.length) {
@@ -264,6 +264,9 @@ humhub.module('mail.ConversationView', function (module, require, $) {
         filePreview.each(function (index, element) {
             observer.observe(element, { childList: true, subtree: true });
         });
+
+        // A reply can't be sent while its files are still uploading
+        require('file').lockFormWhileUploading(that.$.find('.mail-message-form'), that.$.find('.reply-button'));
 
         that.focus();
     };

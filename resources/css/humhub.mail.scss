@@ -270,7 +270,8 @@ $radiusNone: 0;
     border: none;
     margin-bottom: 0 !important;
 
-    .content-create-input-group {
+    // The buttons' anchor: they stay in the editor while file rows show below it
+    .richtext-create-input-group {
         position: relative;
     }
 
@@ -286,8 +287,8 @@ $radiusNone: 0;
 
         .richtext-create-buttons {
             position: absolute;
-            right: $spacer * 1.5;
-            bottom: $spacer * 1.5;
+            right: 0;
+            bottom: 0;
             z-index: 500;
         }
     }

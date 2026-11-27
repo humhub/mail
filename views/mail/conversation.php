@@ -72,7 +72,6 @@ use humhub\widgets\form\ActiveForm;
                                 'id' => 'mail-create-upload-' . $message->id,
                                 'tooltip' => Yii::t('ContentModule.base', 'Attach Files'),
                                 'options' => ['class' => 'main_mail_upload'],
-                                'progress' => '#mail-create-upload-progress-' . $message->id,
                                 'preview' => '#mail-create-upload-preview-' . $message->id,
                                 'dropZone' => '#mail-create-form-' . $message->id,
                                 'max' => Yii::$app->getModule('content')->maxAttachedFiles,
@@ -94,8 +93,6 @@ use humhub\widgets\form\ActiveForm;
                         </div>
                     </div>
                 </div>
-
-                <div id="mail-create-upload-progress-<?= $message->id ?>" style="display:none;margin:10px 0;"></div>
 
                 <?= FilePreview::widget([
                     'id' => 'mail-create-upload-preview-' . $message->id,

@@ -202,7 +202,7 @@
   border: none;
   margin-bottom: 0 !important;
 }
-.mail-message-form .content-create-input-group {
+.mail-message-form .richtext-create-input-group {
   position: relative;
 }
 .mail-message-form .humhub-ui-richtext {
@@ -214,8 +214,8 @@
   }
   .mail-message-form .richtext-create-buttons {
     position: absolute;
-    right: 1.5rem;
-    bottom: 1.5rem;
+    right: 0;
+    bottom: 0;
     z-index: 500;
   }
 }

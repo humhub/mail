@@ -3,6 +3,8 @@ Changelog
 
 3.5.0 (Unreleased)
 ------------------
+- Fix: With the file rows of the core 1.20 a reply waits until its files are uploaded and clears the rows after it, so the next reply no longer shows the files sent before; uploads show their progress in the rows instead of a separate bar (humhub/humhub#8793)
+- Fix: The reply buttons stay in the message field instead of covering the remove button of the attached files' rows
 - Fix: The author names of a conversation keep their colour's hue at a lightness readable in each colour mode and in high contrast (some read only 1.7:1)
 - Fix: The inbox filter's fields have a name for screen readers (WAVE "Missing form label", humhub/humhub@b2aef7c2a1)
 - Fix #539: A new message in a conversation open in a background tab or minimized window is only marked seen once the page is visible again, so its mail is no longer skipped
